@@ -6,17 +6,32 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPIv1
 {
-    class MusicHandler
+    public class MusicHandler
     {
-
+        RemoteHandler rh;
+        StatusResponse sr;
         public MusicHandler()
         {
-
+            rh = RemoteHandler.GetInstance();
+        }
+        public Boolean IsPlaying()
+        {
+            return sr.playing;
         }
 
-        public void Update()
+        public Track GetCurrentTrack()
         {
+            return sr.track;
+        }
 
+        public StatusResponse GetStatusResponse()
+        {
+            return sr;
+        }
+
+        internal void Update(StatusResponse sr)
+        {
+            this.sr = sr;
         }
     }
 }

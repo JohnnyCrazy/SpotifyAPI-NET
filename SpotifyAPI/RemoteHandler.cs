@@ -18,8 +18,8 @@ namespace SpotifyAPIv1
         public String host = "127.0.0.1";
 
         WebClient wc;
-
-        public static RemoteHandler GetInstance()
+        MusicHandler mh;
+        internal static RemoteHandler GetInstance()
         {
             return instance;
         }
@@ -30,10 +30,21 @@ namespace SpotifyAPIv1
             wc.Headers.Add("Origin", "https://embed.spotify.com");
             wc.Headers.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
         }
-        public void Init()
+        internal void Init()
         {
             oauthKey = GetOAuthKey();
             cfidKey = GetCFID();
+        }
+        internal StatusResponse Update()
+        {
+            String response = recv("remote/status.json", true, true, -1);
+            if(response == "")
+            {
+                return Update();
+            }
+            response = response.Replace("\\n", "");
+            List<StatusResponse> raw = (List<StatusResponse>)JsonConvert.DeserializeObject(response,typeof(List<StatusResponse>));
+            return raw[0];
         }
         private String GetOAuthKey()
         {
