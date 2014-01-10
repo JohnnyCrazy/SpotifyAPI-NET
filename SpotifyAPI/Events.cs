@@ -10,7 +10,7 @@ namespace SpotifyAPIv1
     {
         
     }
-    public class NameChangeEventArgs
+    public class TrackChangeEventArgs
     {
         public Track old_track { get; set; }
         public Track new_track { get; set; }
@@ -23,5 +23,9 @@ namespace SpotifyAPIv1
     {
         public double old_volume { get; set; }
         public double new_volume { get; set; }
+    }
+    public class TrackTimeChangeEventArgs
+    {
+        public double track_time { get; set; }
     }
 }

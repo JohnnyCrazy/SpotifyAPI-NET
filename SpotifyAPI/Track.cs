@@ -14,10 +14,21 @@ namespace SpotifyAPIv1
         public TrackResource track_resource { get; set; }
         public TrackResource artist_resource { get; set; }
         public TrackResource album_resource { get; set; }
+        public int length { get; set; }
+        public string track_type { get; set; }
 
         public String GetName()
         {
             return track_resource.name;
+        }
+        public int GetLength()
+        {
+            return length;
+        }
+        public String GetFormatedLength()
+        {
+            String format = "{0}:{1}";
+            return String.Format(format, TimeSpan.FromSeconds(GetLength()).ToString("mm:ss"));
         }
         public String GetAlbum()
         {
@@ -42,7 +53,12 @@ namespace SpotifyAPIv1
                     albumsize = 640;
                     break;
             }
-            String raw = new WebClient().DownloadString("http://open.spotify.com/album/" + album_resource.uri.Split(new string[] { ":" }, StringSplitOptions.None)[2]);
+            String raw = "";
+            using(WebClient wc = new WebClient())
+            {
+                wc.Proxy = null;
+                raw = wc.DownloadString("http://open.spotify.com/album/" + album_resource.uri.Split(new string[] { ":" }, StringSplitOptions.None)[2]);
+            }
             raw = raw.Replace("\t", ""); ;
             string[] lines = raw.Split(new string[] { "\n" }, StringSplitOptions.None);
             foreach (string line in lines)
@@ -57,7 +73,6 @@ namespace SpotifyAPIv1
         }
         public Bitmap GetAlbumArt(SizeEnum size)
         {
-            WebClient wc = new WebClient();
             int albumsize = 0;
             switch (size)
             {
@@ -71,22 +86,27 @@ namespace SpotifyAPIv1
                     albumsize = 640;
                     break;
             }
-            String raw = wc.DownloadString("http://open.spotify.com/album/" + album_resource.uri.Split(new string[] { ":" }, StringSplitOptions.None)[2]);
-            raw = raw.Replace("\t", ""); ;
-            string[] lines = raw.Split(new string[] { "\n" }, StringSplitOptions.None);
-            foreach (string line in lines)
+            String raw = "";
+            using(WebClient wc = new WebClient())
             {
-                if (line.StartsWith("<meta property=\"og:image\""))
+                wc.Proxy = null;
+                raw = wc.DownloadString("http://open.spotify.com/album/" + album_resource.uri.Split(new string[] { ":" }, StringSplitOptions.None)[2]);
+                raw = raw.Replace("\t", ""); ;
+                string[] lines = raw.Split(new string[] { "\n" }, StringSplitOptions.None);
+                foreach (string line in lines)
                 {
-                    string[] l = line.Split(new string[] { "/" }, StringSplitOptions.None);
-                    String url = "http://o.scdn.co/" + albumsize + @"/" + l[4].Replace("\"", "").Replace(">", "");
-                    using (MemoryStream ms = new MemoryStream(wc.DownloadData(url)))
+                    if (line.StartsWith("<meta property=\"og:image\""))
                     {
-                        return (Bitmap)Image.FromStream(ms);
+                        string[] l = line.Split(new string[] { "/" }, StringSplitOptions.None);
+                        String url = "http://o.scdn.co/" + albumsize + @"/" + l[4].Replace("\"", "").Replace(">", "");
+                        using (MemoryStream ms = new MemoryStream(wc.DownloadData(url)))
+                        {
+                            return (Bitmap)Image.FromStream(ms);
+                        }
                     }
                 }
+                return null;
             }
-            return null;
         }
     }
     public class TrackResource
@@ -99,7 +119,7 @@ namespace SpotifyAPIv1
     {
         public String og { get; set; }
     }
-    internal class OpenGraphState
+    public class OpenGraphState
     {
         public Boolean private_session { get; set; }
         public Boolean posting_disabled { get; set; }

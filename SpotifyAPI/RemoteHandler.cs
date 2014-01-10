@@ -23,10 +23,12 @@ namespace SpotifyAPIv1
         {
             return instance;
         }
-  
-        public RemoteHandler()
+
+        internal RemoteHandler()
         {
+            
             wc = new WebClient();
+            wc.Proxy = null;
             wc.Headers.Add("Origin", "https://embed.spotify.com");
             wc.Headers.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
         }
@@ -34,6 +36,18 @@ namespace SpotifyAPIv1
         {
             oauthKey = GetOAuthKey();
             cfidKey = GetCFID();
+        }
+        internal void SendPauseRequest()
+        {
+            recv("remote/pause.json?pause=true", true, true, -1);
+        }
+        internal void SetVolumeRequest()
+        {
+            Console.WriteLine(recv("remote/info.json", true, true, -1));
+        }
+        internal void SendPlayRequest()
+        {
+            recv("remote/pause.json?pause=false", true, true, -1);
         }
         internal StatusResponse Update()
         {
@@ -49,25 +63,13 @@ namespace SpotifyAPIv1
         private String GetOAuthKey()
         {
             String raw = "";
-            try
+            using(WebClient wc = new WebClient())
             {
-                raw = new WebClient().DownloadString("https://embed.spotify.com/openplay/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
+                wc.Proxy = null;
+                raw = wc.DownloadString("http://open.spotify.com/token");
             }
-            catch(WebException e)
-            {
-                
-            }
-            raw = raw.Replace(" ", "");
-            string[] lines = raw.Split(new string[] { "\n" }, StringSplitOptions.None);
-            foreach (string line in lines)
-            {
-                if (line.StartsWith("tokenData"))
-                {
-                    string[] l = line.Split(new string[] { "'" }, StringSplitOptions.None);
-                    return l[1];
-                }
-            }
-            throw new Exception("OAuth Token konnte nicht gefunden werden");
+            Dictionary<String, object> lol = (Dictionary<String, object>)JsonConvert.DeserializeObject<Dictionary<String, object>>(raw);
+            return (String)lol["t"];
         }
 
         private String GetCFID()
@@ -80,7 +82,7 @@ namespace SpotifyAPIv1
         }
         private string recv(string request, bool oauth, bool cfid, int wait)
         {
-            string parameters = "?&ref=&cors=&_=" + "";
+            string parameters = "?&ref=&cors=&_=" + TimeStamp;
             if (request.Contains("?"))
             {
                 parameters = parameters.Substring(1);
@@ -113,6 +115,13 @@ namespace SpotifyAPIv1
 
             }
             return derp;
+        }
+        private int TimeStamp
+        {
+            get
+            {
+                return Convert.ToInt32((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
+            }
         }
     }
 }
