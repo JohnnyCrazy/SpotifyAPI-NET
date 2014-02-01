@@ -88,16 +88,16 @@ namespace SpotifyAPIv1
                 String url = GetAlbumArtURL(size);
                 if (url == "")
                     return new Bitmap(640, 640);
-                byte[] stream = null;
+                byte[] data = null;
                 try
                 {
-                    stream = await wc.DownloadDataTaskAsync(url);
+                    data = await wc.DownloadDataTaskAsync(url);
                 }
                 catch(WebException e)
                 {
-                    stream = wc.DownloadData(@"http://www.51allout.co.uk/wp-content/uploads/2012/02/Image-not-found.gif");
+                    throw;
                 }
-                using (MemoryStream ms = new MemoryStream(stream))
+                using (MemoryStream ms = new MemoryStream(data))
                 {
                     return (Bitmap)Image.FromStream(ms);
                 }
@@ -111,7 +111,16 @@ namespace SpotifyAPIv1
                 String url = GetAlbumArtURL(size);
                 if (url == "")
                     return new Bitmap(640,640);
-                using (MemoryStream ms = new MemoryStream(wc.DownloadData(url)))
+                byte[] data = null;
+                try
+                {
+                    data = wc.DownloadData(url);
+                }
+                catch (WebException e)
+                {
+                    throw;
+                }
+                using (MemoryStream ms = new MemoryStream(data))
                 {
                     return (Bitmap)Image.FromStream(ms);
                 }
