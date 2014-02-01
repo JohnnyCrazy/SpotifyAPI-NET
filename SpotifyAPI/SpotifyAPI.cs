@@ -15,46 +15,70 @@ namespace SpotifyAPIv1
 {
     public class SpotifyAPI
     {
-        MusicHandler mh;
+        SpotifyMusicHandler mh;
         RemoteHandler rh;
-        EventHandler eh;
+        SpotifyEventHandler eh;
         public SpotifyAPI()
         {
             rh = RemoteHandler.GetInstance();
-            mh = new MusicHandler();
-            eh = new EventHandler(this, mh);
+            mh = new SpotifyMusicHandler();
+            eh = new SpotifyEventHandler(this, mh);
         }
 
         public void Connect()
         {
             rh.Init();
         }
-        public MusicHandler GetMusicHandler()
+        public SpotifyMusicHandler GetMusicHandler()
         {
             return mh;
         }
-        public EventHandler GetEventHandler()
+        public SpotifyEventHandler GetEventHandler()
         {
             return eh;
         }
-        public Boolean IsSpotifyRunning(Boolean runIt)
+        public static Boolean IsSpotifyRunning()
         {
-            if (Process.GetProcessesByName("SpotifyWebHelper").Length < 1)
+            if (Process.GetProcessesByName("spotify").Length < 1)
             {
-                if (runIt)
-                {
-                    System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Spotify\\Data\\SpotifyWebHelper.exe");
-                    return IsSpotifyRunning(false);
-                }
-                else
-                    return false;
+                return false;
             }
             else
                 return true;
         }
+        public static Boolean IsSpotifyWebHelperRunning()
+        {
+            if (Process.GetProcessesByName("SpotifyWebHelper").Length < 1)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+        public void RunSpotify()
+        {
+            if(!IsSpotifyRunning())
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Spotify\\spotify.exe");
+        }
+        public void RunSpotifyWebHelper()
+        {
+            if (!IsSpotifyWebHelperRunning())
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Spotify\\Data\\SpotifyWebHelper.exe");
+        }
+        public Boolean IsValidSpotifyURL(String url)
+        {
+            String[] types = new String[] { "track","album","local","artist"};
+            String[] split = url.Split(':');
+            if (split.Length < 3)
+                return false;
+            return split[0] == "spotify" && Array.IndexOf(types, split[1]) > -1 && split[2].Length == 22;
+        }
         public void Update()
         {
+            if (!SpotifyAPI.IsSpotifyWebHelperRunning())
+                return;
             mh.Update(rh.Update());
+            rh.SendVolumeRequest();
         }
     }
 }

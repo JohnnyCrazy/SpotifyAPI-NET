@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\DebugExample\bin\Debug\</OutputPath>
+    <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DebugExample\bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,9 +47,9 @@
   <ItemGroup>
     <Compile Include="CFID.cs" />
     <Compile Include="Enum.cs" />
-    <Compile Include="EventHandler.cs" />
+    <Compile Include="SpotifyEventHandler.cs" />
     <Compile Include="Events.cs" />
-    <Compile Include="MusicHandler.cs" />
+    <Compile Include="SpotifyMusicHandler.cs" />
     <Compile Include="RemoteHandler.cs" />
     <Compile Include="SpotifyAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

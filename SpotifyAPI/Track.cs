@@ -17,7 +17,7 @@ namespace SpotifyAPIv1
         public int length { get; set; }
         public string track_type { get; set; }
 
-        public String GetName()
+        public String GetTrackName()
         {
             return track_resource.name;
         }
@@ -25,31 +25,40 @@ namespace SpotifyAPIv1
         {
             return length;
         }
-        public String GetFormatedLength()
+        public String GetAlbumURI()
         {
-            String format = "{0}:{1}";
-            return String.Format(format, TimeSpan.FromSeconds(GetLength()).ToString("mm:ss"));
+            return album_resource.uri;
         }
-        public String GetAlbum()
+        public String GetTrackURI()
+        {
+            return track_resource.uri;
+        }
+        public String GetArtistURI()
+        {
+            return artist_resource.uri;
+        }
+        public String GetAlbumName()
         {
             return album_resource.name;
         }
-        public String GetArtist()
+        public String GetArtistName()
         {
             return artist_resource.name;
         }
-        public String GetAlbumArtURL(SizeEnum size)
+        public String GetAlbumArtURL(AlbumArtSize size)
         {
+            if (album_resource.uri.Contains("local"))
+                return "";
             int albumsize = 0;
             switch (size)
             {
-                case SizeEnum.SIZE_160:
+                case AlbumArtSize.SIZE_160:
                     albumsize = 160;
                     break;
-                case SizeEnum.SIZE_320:
+                case AlbumArtSize.SIZE_320:
                     albumsize = 320;
                     break;
-                case SizeEnum.SIZE_640:
+                case AlbumArtSize.SIZE_640:
                     albumsize = 640;
                     break;
             }
@@ -71,41 +80,41 @@ namespace SpotifyAPIv1
             }
             return "";
         }
-        public Bitmap GetAlbumArt(SizeEnum size)
+        public async Task<Bitmap> GetAlbumArtAsync(AlbumArtSize size)
         {
-            int albumsize = 0;
-            switch (size)
+            using (WebClient wc = new WebClient())
             {
-                case SizeEnum.SIZE_160:
-                    albumsize = 160;
-                    break;
-                case SizeEnum.SIZE_320:
-                    albumsize = 320;
-                    break;
-                case SizeEnum.SIZE_640:
-                    albumsize = 640;
-                    break;
+                wc.Proxy = null;
+                String url = GetAlbumArtURL(size);
+                if (url == "")
+                    return new Bitmap(640, 640);
+                byte[] stream = null;
+                try
+                {
+                    stream = await wc.DownloadDataTaskAsync(url);
+                }
+                catch(WebException e)
+                {
+                    stream = wc.DownloadData(@"http://www.51allout.co.uk/wp-content/uploads/2012/02/Image-not-found.gif");
+                }
+                using (MemoryStream ms = new MemoryStream(stream))
+                {
+                    return (Bitmap)Image.FromStream(ms);
+                }
             }
-            String raw = "";
+        }
+        public Bitmap GetAlbumArt(AlbumArtSize size)
+        {
             using(WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
-                raw = wc.DownloadString("http://open.spotify.com/album/" + album_resource.uri.Split(new string[] { ":" }, StringSplitOptions.None)[2]);
-                raw = raw.Replace("\t", ""); ;
-                string[] lines = raw.Split(new string[] { "\n" }, StringSplitOptions.None);
-                foreach (string line in lines)
+                String url = GetAlbumArtURL(size);
+                if (url == "")
+                    return new Bitmap(640,640);
+                using (MemoryStream ms = new MemoryStream(wc.DownloadData(url)))
                 {
-                    if (line.StartsWith("<meta property=\"og:image\""))
-                    {
-                        string[] l = line.Split(new string[] { "/" }, StringSplitOptions.None);
-                        String url = "http://o.scdn.co/" + albumsize + @"/" + l[4].Replace("\"", "").Replace(">", "");
-                        using (MemoryStream ms = new MemoryStream(wc.DownloadData(url)))
-                        {
-                            return (Bitmap)Image.FromStream(ms);
-                        }
-                    }
+                    return (Bitmap)Image.FromStream(ms);
                 }
-                return null;
             }
         }
     }

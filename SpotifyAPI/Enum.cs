@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPIv1
 {
-    public enum SizeEnum
+    public enum AlbumArtSize
     {
-        SIZE_160 = 160,
-        SIZE_320 = 320,
-        SIZE_640 = 640
+        SIZE_160,
+        SIZE_320,
+        SIZE_640
+    }
+    public enum CFIDResponse
+    {
+        SUCCESS,
+        ERROR,
+        NOT_LOGGED_IN
     }
 }

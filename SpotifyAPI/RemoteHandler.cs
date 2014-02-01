@@ -18,7 +18,7 @@ namespace SpotifyAPIv1
         public String host = "127.0.0.1";
 
         WebClient wc;
-        MusicHandler mh;
+        SpotifyMusicHandler mh;
         internal static RemoteHandler GetInstance()
         {
             return instance;
@@ -39,24 +39,30 @@ namespace SpotifyAPIv1
         }
         internal void SendPauseRequest()
         {
-            recv("remote/pause.json?pause=true", true, true, -1);
-        }
-        internal void SetVolumeRequest()
-        {
-            Console.WriteLine(recv("remote/info.json", true, true, -1));
+            query("remote/pause.json?pause=true", true, true, -1);
         }
         internal void SendPlayRequest()
         {
-            recv("remote/pause.json?pause=false", true, true, -1);
+            query("remote/pause.json?pause=false", true, true, -1);
+        }
+        internal void SendPlayRequest(String url)
+        {
+            query("remote/play.json?uri=" + url, true, true, -1);
+        }
+        public void SendVolumeRequest()
+        {
+            String s = query("remote/volume.json?volume=" + 50, false, false, -1);
         }
         internal StatusResponse Update()
         {
-            String response = recv("remote/status.json", true, true, -1);
+            String response = query("remote/status.json", true, true, -1);
             if(response == "")
             {
                 return Update();
             }
             response = response.Replace("\\n", "");
+            byte[] bytes = Encoding.Default.GetBytes(response);
+            response = Encoding.UTF8.GetString(bytes);
             List<StatusResponse> raw = (List<StatusResponse>)JsonConvert.DeserializeObject(response,typeof(List<StatusResponse>));
             return raw[0];
         }
@@ -74,15 +80,18 @@ namespace SpotifyAPIv1
 
         private String GetCFID()
         {
-            string a = recv("simplecsrf/token.json", false, false, -1);
+            string a = query("simplecsrf/token.json", false, false, -1);
+            a = a.Replace(@"\", "");
             List<CFID> d = (List<CFID>)JsonConvert.DeserializeObject(a, typeof(List<CFID>));
             if (d.Count != 1)
-                throw new Exception("CFID konnte nicht geladen werden.");
+                throw new Exception("CFID couldn't be loaded");
+            if (d[0].error != null)
+                throw new Exception("SpotifyWebHelper Error: " + d[0].error.message);
             return d[0].token;
         }
-        private string recv(string request, bool oauth, bool cfid, int wait)
+        private string query(string request, bool oauth, bool cfid, int wait)
         {
-            string parameters = "?&ref=&cors=&_=" + TimeStamp;
+            string parameters = "?&ref=&cors=&_=" + GetTimestamp();
             if (request.Contains("?"))
             {
                 parameters = parameters.Substring(1);
@@ -116,12 +125,9 @@ namespace SpotifyAPIv1
             }
             return derp;
         }
-        private int TimeStamp
+        private int GetTimestamp()
         {
-            get
-            {
-                return Convert.ToInt32((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
-            }
+            return Convert.ToInt32((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
         }
     }
 }

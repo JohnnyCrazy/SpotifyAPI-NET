@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpotifyAPIv1;
 
 namespace SpotifyAPIv1
 {
-    public class EventHandler
+    public class SpotifyEventHandler
     {
         private Boolean listen = false;
         private System.Timers.Timer timer;
         private SpotifyAPI api;
-        private MusicHandler mh;
+        private SpotifyMusicHandler mh;
 
         private StatusResponse response;
 
@@ -24,7 +25,7 @@ namespace SpotifyAPIv1
         public event VolumeChangeEventHandler OnVolumeChange;
         public event TrackTimeChangeEventHandler OnTrackTimeChange;
 
-        public EventHandler(SpotifyAPI api, MusicHandler mh)
+        public SpotifyEventHandler(SpotifyAPI api, SpotifyMusicHandler mh)
         {
             timer = new System.Timers.Timer();
             timer.Interval = 50;
@@ -41,7 +42,10 @@ namespace SpotifyAPIv1
         {
             this.listen = listen;
         }
-
+        public void SetSynchronizingObject(System.ComponentModel.ISynchronizeInvoke obj)
+        {
+            timer.SynchronizingObject = obj;
+        }
         private void tick(object sender, EventArgs e)
         {
             if (!listen)
@@ -57,7 +61,9 @@ namespace SpotifyAPIv1
                 return;
             }
             StatusResponse new_response = mh.GetStatusResponse();
-            if (new_response.track.GetName() != response.track.GetName() && OnTrackChange != null)
+            if (!new_response.running && new_response.track == null)
+                return;
+            if (new_response.track.GetTrackName() != response.track.GetTrackName() && OnTrackChange != null)
             {
                 OnTrackChange(new TrackChangeEventArgs()
                 {

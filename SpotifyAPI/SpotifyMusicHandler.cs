@@ -5,20 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.IO;
 
 namespace SpotifyAPIv1
 {
-    public class MusicHandler
+    public class SpotifyMusicHandler
     {
         [DllImport("user32.dll")]
         static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+        [DllImport("nircmd.dll")]
+        public static extern bool DoNirCmd(String NirCmdStr);
 
         RemoteHandler rh;
         StatusResponse sr;
         const byte VK_MEDIA_NEXT_TRACK = 0xb0;
         const byte VK_MEDIA_PREV_TRACK = 0xb1;
 
-        public MusicHandler()
+        public SpotifyMusicHandler()
         {
             rh = RemoteHandler.GetInstance();
         }
@@ -33,7 +36,18 @@ namespace SpotifyAPIv1
         {
             return sr.playing;
         }
-
+        public double GetVolume()
+        {
+            return sr.volume;
+        }
+        public void PlayURL(String url)
+        {
+            rh.SendPlayRequest(url);
+        }
+        public Boolean IsAdRunning()
+        {
+            return !sr.next_enabled && !sr.prev_enabled;
+        }
         public Track GetCurrentTrack()
         {
             return sr.track;
@@ -45,6 +59,16 @@ namespace SpotifyAPIv1
         public double GetTrackPosition()
         {
             return sr.playing_position;
+        }
+        public void Mute()
+        {
+            if(File.Exists("nircmd.dll"))
+                DoNirCmd("muteappvolume spotify.exe 1");
+        }
+        public void UnMute()
+        {
+            if (File.Exists("nircmd.dll"))
+                DoNirCmd("muteappvolume spotify.exe 0");
         }
         public void Previous()
         {

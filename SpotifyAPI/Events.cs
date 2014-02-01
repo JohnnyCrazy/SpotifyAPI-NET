@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPIv1
 {
-    class Events
-    {
-        
-    }
     public class TrackChangeEventArgs
     {
         public Track old_track { get; set; }
