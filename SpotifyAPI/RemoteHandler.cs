@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json;
 
@@ -48,10 +47,6 @@ namespace SpotifyAPIv1
         internal void SendPlayRequest(String url)
         {
             query("remote/play.json?uri=" + url, true, true, -1);
-        }
-        public void SendVolumeRequest()
-        {
-            String s = query("remote/volume.json?volume=" + 50, false, false, -1);
         }
         internal StatusResponse Update()
         {

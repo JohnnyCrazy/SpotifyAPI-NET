@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Management;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace SpotifyAPIv1
 {
@@ -40,20 +33,14 @@ namespace SpotifyAPIv1
         public static Boolean IsSpotifyRunning()
         {
             if (Process.GetProcessesByName("spotify").Length < 1)
-            {
                 return false;
-            }
-            else
-                return true;
+            return true;
         }
         public static Boolean IsSpotifyWebHelperRunning()
         {
             if (Process.GetProcessesByName("SpotifyWebHelper").Length < 1)
-            {
                 return false;
-            }
-            else
-                return true;
+            return true;
         }
         public void RunSpotify()
         {
@@ -65,7 +52,7 @@ namespace SpotifyAPIv1
             if (!IsSpotifyWebHelperRunning())
                 Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Spotify\\Data\\SpotifyWebHelper.exe");
         }
-        public Boolean IsValidSpotifyURL(String url)
+        public static Boolean IsValidSpotifyURL(String url)
         {
             String[] types = new String[] { "track","album","local","artist"};
             String[] split = url.Split(':');
@@ -78,7 +65,6 @@ namespace SpotifyAPIv1
             if (!SpotifyAPI.IsSpotifyWebHelperRunning())
                 return;
             mh.Update(rh.Update());
-            rh.SendVolumeRequest();
         }
     }
 }

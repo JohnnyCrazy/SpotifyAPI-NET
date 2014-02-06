@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.IO;
@@ -18,8 +17,11 @@ namespace SpotifyAPIv1
 
         RemoteHandler rh;
         StatusResponse sr;
+
         const byte VK_MEDIA_NEXT_TRACK = 0xb0;
         const byte VK_MEDIA_PREV_TRACK = 0xb1;
+        const int KEYEVENTF_EXTENDEDKEY = 0x1;
+        const int KEYEVENTF_KEYUP = 0x2;
 
         public SpotifyMusicHandler()
         {
@@ -27,8 +29,6 @@ namespace SpotifyAPIv1
         }
         void PressKey(byte keyCode)
         {
-            const int KEYEVENTF_EXTENDEDKEY = 0x1;
-            const int KEYEVENTF_KEYUP = 0x2;
             keybd_event(keyCode, 0x45, KEYEVENTF_EXTENDEDKEY, 0);
             keybd_event(keyCode, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         }
@@ -77,7 +77,7 @@ namespace SpotifyAPIv1
         public void Pause()
         {
             rh.SendPauseRequest();
-            
+       
         }
         public void Play()
         {
@@ -87,7 +87,6 @@ namespace SpotifyAPIv1
         {
             return sr;
         }
-
         internal void Update(StatusResponse sr)
         {
             this.sr = sr;
