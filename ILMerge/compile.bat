@@ -1,1 +1,1 @@
-ilmerge /targetplatform:"v4" /log:log.txt /out:SpotifyAPIMerged.dll "Newtonsoft.Json.dll" "SpotifyAPI.dll" /target:library
+ilmerge /targetplatform:"v4" /log:log.txt /out:SpotifyAPI.dll "Newtonsoft.Json.dll" "SpotifyAPIOld.dll" /target:library
