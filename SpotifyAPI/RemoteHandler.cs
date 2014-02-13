@@ -53,7 +53,7 @@ namespace SpotifyAPIv1
             String response = query("remote/status.json", true, true, -1);
             if(response == "")
             {
-                return Update();
+                return null;
             }
             response = response.Replace("\\n", "");
             byte[] bytes = Encoding.Default.GetBytes(response);
@@ -61,7 +61,7 @@ namespace SpotifyAPIv1
             List<StatusResponse> raw = (List<StatusResponse>)JsonConvert.DeserializeObject(response,typeof(List<StatusResponse>));
             return raw[0];
         }
-        private String GetOAuthKey()
+        internal String GetOAuthKey()
         {
             String raw = "";
             using(WebClient wc = new WebClient())
@@ -73,7 +73,7 @@ namespace SpotifyAPIv1
             return (String)lol["t"];
         }
 
-        private String GetCFID()
+        internal String GetCFID()
         {
             string a = query("simplecsrf/token.json", false, false, -1);
             a = a.Replace(@"\", "");
@@ -84,7 +84,7 @@ namespace SpotifyAPIv1
                 throw new Exception("SpotifyWebHelper Error: " + d[0].error.message);
             return d[0].token;
         }
-        private string query(string request, bool oauth, bool cfid, int wait)
+        internal string query(string request, bool oauth, bool cfid, int wait)
         {
             string parameters = "?&ref=&cors=&_=" + GetTimestamp();
             if (request.Contains("?"))
@@ -108,19 +108,18 @@ namespace SpotifyAPIv1
             }
 
             string a = "http://" + host + ":4380/" + request + parameters;
-            string derp = "";
+            string response = "";
             try
             {
-                derp = wc.DownloadString(a);
-                derp = "[ " + derp + " ]";
+                response = "[ " + wc.DownloadString(a) + " ]";
             }
             catch (Exception z)
             {
-
+                throw;
             }
-            return derp;
+            return response;
         }
-        private int GetTimestamp()
+        internal int GetTimestamp()
         {
             return Convert.ToInt32((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
         }

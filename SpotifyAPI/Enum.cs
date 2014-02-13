@@ -3,12 +3,18 @@ using System.Text;
 
 namespace SpotifyAPIv1
 {
+    /// <summary>
+    /// Enum for the AlbumArt
+    /// </summary>
     public enum AlbumArtSize
     {
         SIZE_160,
         SIZE_320,
         SIZE_640
     }
+    /// <summary>
+    /// Not implemented yet
+    /// </summary>
     public enum CFIDResponse
     {
         SUCCESS,

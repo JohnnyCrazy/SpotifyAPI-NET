@@ -30,28 +30,31 @@ namespace SpotifyAPIv1
             timer.Interval = 50;
             timer.Elapsed += tick;
             timer.AutoReset = false;
-            timer.Enabled = true;
-            timer.Start();
+            timer.Enabled = false;
 
             this.api = api;
             this.mh = mh;
         }
-
+        /// <summary>
+        /// If Events should be triggered
+        /// </summary>
+        /// <param name="listen">True if you want to listen for events, false if not</param>
         public void ListenForEvents(Boolean listen)
         {
-            this.listen = listen;
+            timer.Enabled = listen;
+            if (listen)
+                timer.Start();
         }
+        /// <summary>
+        /// Sets a synchronizing object, so you don't need to Invoke
+        /// </summary>
+        /// <param name="obj">The SynchronizingObject e.g a Form</param>
         public void SetSynchronizingObject(System.ComponentModel.ISynchronizeInvoke obj)
         {
             timer.SynchronizingObject = obj;
         }
-        private void tick(object sender, EventArgs e)
+        internal void tick(object sender, EventArgs e)
         {
-            if (!listen)
-            {
-                timer.Start();
-                return;
-            }
             api.Update();
             if (response == null)
             {

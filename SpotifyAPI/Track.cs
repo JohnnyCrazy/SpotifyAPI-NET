@@ -16,34 +16,67 @@ namespace SpotifyAPIv1
         public int length { get; set; }
         public string track_type { get; set; }
 
+        /// <summary>
+        /// Returns the track name
+        /// </summary>
+        /// <returns>A String. which is the track name</returns>
         public String GetTrackName()
         {
             return track_resource.name;
         }
+        /// <summary>
+        /// Returns the track lenght
+        /// </summary>
+        /// <returns>A integer, which is the track length</returns>
         public int GetLength()
         {
             return length;
         }
+        /// <summary>
+        /// Returns the URI for the album
+        /// </summary>
+        /// <returns>A String, which is the album URI</returns>
         public String GetAlbumURI()
         {
             return album_resource.uri;
         }
+        /// <summary>
+        /// Returns the URI for the track
+        /// </summary>
+        /// <returns>A String, which is the track URI</returns>
         public String GetTrackURI()
         {
             return track_resource.uri;
         }
+        /// <summary>
+        /// Returns the URI for the artist
+        /// </summary>
+        /// <returns>A String, which is the artist URI</returns>
         public String GetArtistURI()
         {
             return artist_resource.uri;
         }
+        /// <summary>
+        /// Returns the albume name
+        /// </summary>
+        /// <returns>A String, which is the album name</returns>
         public String GetAlbumName()
         {
             return album_resource.name;
         }
+        /// <summary>
+        /// Returns the artist name
+        /// </summary>
+        /// <returns>A String, which is the artist name</returns>
         public String GetArtistName()
         {
             return artist_resource.name;
         }
+        /// <summary>
+        /// Returns a URL to the album cover in the provided size
+        /// </summary>
+        /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <returns>A String, which is the URL to the Albumart</returns>
         public String GetAlbumArtURL(AlbumArtSize size)
         {
             if (album_resource.uri.Contains("local"))
@@ -79,6 +112,11 @@ namespace SpotifyAPIv1
             }
             return "";
         }
+        /// <summary>
+        /// Returns a Bitmap of the album cover in the provided size asynchronous
+        /// </summary>
+        /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <returns>A Bitmap, which is the albumart</returns>
         public async Task<Bitmap> GetAlbumArtAsync(AlbumArtSize size)
         {
             using (WebClient wc = new WebClient())
@@ -102,6 +140,11 @@ namespace SpotifyAPIv1
                 }
             }
         }
+        /// <summary>
+        /// Returns a Bitmap of the album cover in the provided size
+        /// </summary>
+        /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <returns>A Bitmap, which is the albumart</returns>
         public Bitmap GetAlbumArt(AlbumArtSize size)
         {
             using(WebClient wc = new WebClient())

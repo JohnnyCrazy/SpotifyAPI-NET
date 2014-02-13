@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SpotifyAPIv1
 {
+    /// <summary>
+    /// JSON Response, used internaly
+    /// </summary>
     class CFID
     {
         public Error error { get; set; }
@@ -13,6 +16,9 @@ namespace SpotifyAPIv1
         public String client_version { get; set; }
         public Boolean running { get; set; }
     }
+    /// <summary>
+    /// JSON Response, used internaly
+    /// </summary>
     class Error
     {
         public String type { get; set; }

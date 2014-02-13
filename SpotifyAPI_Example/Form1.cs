@@ -106,7 +106,7 @@ namespace SpotifyAPI_Example
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (SpotifyAPI.IsValidSpotifyURL(textBox1.Text))
+            if (SpotifyAPI.IsValidSpotifyURI(textBox1.Text))
                 mh.PlayURL(textBox1.Text);
         }
 

@@ -7,6 +7,7 @@ namespace SpotifyAPIv1
 {
     public class StatusResponse
     {
+        //All information got from the JSON Response
         public int version { get; set; }
         public string client_version { get; set; }
         public bool playing { get; set; }
