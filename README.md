@@ -4,7 +4,6 @@ SpotifyAPI-NET
 An API for the Spotify-Client, written in .NET  
 Look at the example provided in the Repo
 
-
 Following 3 files will be needed for all features:
 + SpotifyAPI.dll
 + Newtonsoft.Json.dll (Will be merged into SpotifyAPI.dll in the official Releases using ILMerge)
@@ -12,6 +11,8 @@ Following 3 files will be needed for all features:
 
 Usage:
 ==============  
+
+
 ### SpotifyAPI
 #####void Connect()
 > Connects the SpotifyAPI to the Spotify Client (Needs to be called before making calls, Spotify has to run)
@@ -34,11 +35,12 @@ Usage:
 #####static Boolean IsValidSpotifyURL(String SpotifyURL)
 > Returns true, if the provided Spotify URL is working (Not working yet)
 
-#####MusicHandler GetMusicHandler()
+#####[SpotifyMusicHandler](https://github.com/JohnnyCrazy/SpotifyAPI-NET#spotifymusichandler) GetMusicHandler()
 > Returns the MusicHandler
 
-#####EventHandler GetEventHandler()
-> Returns the EventHandler
+#####[SpotifyEventHandler](https://github.com/JohnnyCrazy/SpotifyAPI-NET#spotifyeventhandler) GetEventHandler()
+> Returns the EventHandler  
+  
 
 ### SpotifyMusicHandler
 #####void Play()  
@@ -74,11 +76,31 @@ Usage:
 #####Boolean IsPlaying() 
 > Returns true, if Spotify is playing atm
 
-#####Track GetCurrentTrack() 
+#####[Track](https://github.com/JohnnyCrazy/SpotifyAPI-NET#track) GetCurrentTrack() 
 > Returns the current Track
 
 #####StatusResponse GetStatusResponse() 
 > Returns the StatusResponse, which contains all Information gathered by the Call
+
+
+### SpotifyEventHandler
+#####Event OnTrackChange 
+> Triggered, when the Track gets changed
+
+#####Event OnPlayStateChange
+> Triggered, when Spotify's Play/Pause-State changes
+
+#####Event OnVolumeChange
+> Triggered, when the volume gets changed
+
+#####Event TrackTimeChangeEventHandler
+> Triggered, when the current trackposition changes
+
+#####void ListenForEvents(Boolean listen)
+> Should it listen for events?
+
+#####void SetSynchronizingObject(ISynchronizeInvoke obj)
+> Sets the synced object, so no Invoke is required (Events doesnt get called from the Main-Thread)
 
 
 ### Track
@@ -99,23 +121,3 @@ Usage:
 
 #####Bitmap GetAlbumArtAsync(AlbumArtSize size)
 > Returns a Bitmap of the Albumart based on the choosen size asynchronously
-
-### EventHandler
-#####Event OnTrackChange 
-> Triggered, when the Track gets changed
-
-#####Event OnPlayStateChange
-> Triggered, when Spotify's Play/Pause-State changes
-
-#####Event OnVolumeChange
-> Triggered, when the volume gets changed
-
-#####Event TrackTimeChangeEventHandler
-> Triggered, when the current trackposition changes
-
-#####void ListenForEvents(Boolean listen)
-> Should it listen for events?
-
-#####void SetSynchronizingObject(ISynchronizeInvoke obj)
-> Sets the synced object, so no Invoke is required (Events doesnt get called from the Main-Thread)
-
