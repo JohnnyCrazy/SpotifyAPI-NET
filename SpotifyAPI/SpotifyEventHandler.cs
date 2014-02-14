@@ -42,8 +42,6 @@ namespace SpotifyAPIv1
         public void ListenForEvents(Boolean listen)
         {
             timer.Enabled = listen;
-            if (listen)
-                timer.Start();
         }
         /// <summary>
         /// Sets a synchronizing object, so you don't need to Invoke
@@ -65,13 +63,16 @@ namespace SpotifyAPIv1
             StatusResponse new_response = mh.GetStatusResponse();
             if (!new_response.running && new_response.track == null)
                 return;
-            if (new_response.track.GetTrackName() != response.track.GetTrackName() && OnTrackChange != null)
+            if (new_response.track != null && response.track != null)
             {
-                OnTrackChange(new TrackChangeEventArgs()
+                if (new_response.track.GetTrackName() != response.track.GetTrackName() && OnTrackChange != null)
                 {
-                    old_track = response.track,
-                    new_track = new_response.track
-                });
+                    OnTrackChange(new TrackChangeEventArgs()
+                    {
+                        old_track = response.track,
+                        new_track = new_response.track
+                    });
+                }
             }
             if (new_response.playing != response.playing && OnPlayStateChange != null)
             {

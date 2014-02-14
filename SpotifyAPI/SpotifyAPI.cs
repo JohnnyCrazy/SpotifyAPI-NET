@@ -21,9 +21,9 @@ namespace SpotifyAPIv1
         /// <summary>
         /// Connects with Spotify. Needs to be called before all other SpotifyAPI functions
         /// </summary>
-        public void Connect()
+        public Boolean Connect()
         {
-            rh.Init();
+            return rh.Init();
         }
         /// <summary>
         /// Returns the MusicHandler
@@ -95,7 +95,7 @@ namespace SpotifyAPIv1
         /// </summary>
         public void Update()
         {
-            if (!SpotifyAPI.IsSpotifyWebHelperRunning())
+            if (!SpotifyAPI.IsSpotifyWebHelperRunning() || !SpotifyAPI.IsSpotifyRunning())
                 return;
             mh.Update(rh.Update());
         }

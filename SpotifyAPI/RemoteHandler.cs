@@ -31,10 +31,13 @@ namespace SpotifyAPIv1
             wc.Headers.Add("Origin", "https://embed.spotify.com");
             wc.Headers.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
         }
-        internal void Init()
+        internal Boolean Init()
         {
             oauthKey = GetOAuthKey();
             cfidKey = GetCFID();
+            if (cfidKey == "")
+                return false;
+            return true;
         }
         internal void SendPauseRequest()
         {
@@ -81,7 +84,7 @@ namespace SpotifyAPIv1
             if (d.Count != 1)
                 throw new Exception("CFID couldn't be loaded");
             if (d[0].error != null)
-                throw new Exception("SpotifyWebHelper Error: " + d[0].error.message);
+                return "";
             return d[0].token;
         }
         internal string query(string request, bool oauth, bool cfid, int wait)
@@ -111,7 +114,9 @@ namespace SpotifyAPIv1
             string response = "";
             try
             {
-                response = "[ " + wc.DownloadString(a) + " ]";
+                //Need to find a better solution...
+                if(SpotifyAPI.IsSpotifyRunning())
+                    response = "[ " + wc.DownloadString(a) + " ]";
             }
             catch (Exception z)
             {
