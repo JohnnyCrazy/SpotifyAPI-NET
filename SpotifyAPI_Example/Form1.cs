@@ -26,7 +26,7 @@ namespace SpotifyAPI_Example
             if (!SpotifyAPI.IsSpotifyRunning())
             {
                 spotify.RunSpotify();
-                Thread.Sleep(4000);
+                Thread.Sleep(5000);
             }
                 
             if (!SpotifyAPI.IsSpotifyWebHelperRunning())
