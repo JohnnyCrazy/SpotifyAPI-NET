@@ -18,8 +18,9 @@ Usage:
 
 
 ### SpotifyAPI
-#####void Connect()
-> Connects the SpotifyAPI to the Spotify Client (Needs to be called before making calls, Spotify has to run)
+#####Boolean Connect()
+> Connects the SpotifyAPI to the Spotify Client (Needs to be called before making calls, Spotify has to run)   
+> Returns true if it was successful
 
 #####void Update()  
 > Updates Information about Tracks etc.
