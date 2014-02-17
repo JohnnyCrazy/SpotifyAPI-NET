@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="CFID.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="ExtendedWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SpotifyEventHandler.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="SpotifyMusicHandler.cs" />

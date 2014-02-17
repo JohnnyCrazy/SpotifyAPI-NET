@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
+using System.Threading.Tasks;
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace SpotifyAPIv1
@@ -16,8 +18,7 @@ namespace SpotifyAPIv1
 
         public String host = "127.0.0.1";
 
-        WebClient wc;
-        SpotifyMusicHandler mh;
+        ExtendedWebClient wc;
         internal static RemoteHandler GetInstance()
         {
             return instance;
@@ -25,8 +26,9 @@ namespace SpotifyAPIv1
 
         internal RemoteHandler()
         {
-            
-            wc = new WebClient();
+
+            wc = new ExtendedWebClient();
+            wc.Timeout = 2000;
             wc.Proxy = null;
             wc.Headers.Add("Origin", "https://embed.spotify.com");
             wc.Headers.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
@@ -81,13 +83,15 @@ namespace SpotifyAPIv1
             string a = query("simplecsrf/token.json", false, false, -1);
             a = a.Replace(@"\", "");
             List<CFID> d = (List<CFID>)JsonConvert.DeserializeObject(a, typeof(List<CFID>));
+            if (d == null)
+                return "";
             if (d.Count != 1)
                 throw new Exception("CFID couldn't be loaded");
             if (d[0].error != null)
                 return "";
             return d[0].token;
         }
-        internal string query(string request, bool oauth, bool cfid, int wait)
+        internal String query(string request, bool oauth, bool cfid, int wait)
         {
             string parameters = "?&ref=&cors=&_=" + GetTimestamp();
             if (request.Contains("?"))
@@ -114,13 +118,13 @@ namespace SpotifyAPIv1
             string response = "";
             try
             {
-                //Need to find a better solution...
-                if(SpotifyAPI.IsSpotifyRunning())
+                //Need to find a better solution
+                if (SpotifyAPI.IsSpotifyRunning())
                     response = "[ " + wc.DownloadString(a) + " ]";
             }
             catch (Exception z)
             {
-                throw;
+                return "";
             }
             return response;
         }

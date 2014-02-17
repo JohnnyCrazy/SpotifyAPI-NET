@@ -61,8 +61,16 @@ namespace SpotifyAPIv1
                 return;
             }
             StatusResponse new_response = mh.GetStatusResponse();
-            if (!new_response.running && new_response.track == null)
+            if(new_response == null)
+            {
+                timer.Start();
                 return;
+            }
+            if (!new_response.running && new_response.track == null)
+            {
+                timer.Start();
+                return;
+            }
             if (new_response.track != null && response.track != null)
             {
                 if (new_response.track.GetTrackName() != response.track.GetTrackName() && OnTrackChange != null)

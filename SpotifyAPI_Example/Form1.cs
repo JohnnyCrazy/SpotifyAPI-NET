@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SpotifyAPIv1;
+using System.Threading;
 using SpotifyEventHandler = SpotifyAPIv1.SpotifyEventHandler;
 
 
@@ -22,11 +23,37 @@ namespace SpotifyAPI_Example
         {
             InitializeComponent();
             spotify = new SpotifyAPI();
-            if(!SpotifyAPI.IsSpotifyRunning())
+            if (!SpotifyAPI.IsSpotifyRunning())
+            {
                 spotify.RunSpotify();
+                Thread.Sleep(4000);
+            }
+                
             if (!SpotifyAPI.IsSpotifyWebHelperRunning())
+            {
                 spotify.RunSpotifyWebHelper();
-            spotify.Connect();
+                Thread.Sleep(4000);
+            }
+                
+            if(!spotify.Connect())
+            {
+                Boolean retry = true;
+                while(retry)
+                {
+                    if (MessageBox.Show("SpotifyAPI could'nt load!", "Error", MessageBoxButtons.RetryCancel) == System.Windows.Forms.DialogResult.Retry)
+                    {
+                        if(spotify.Connect())
+                            retry = false;
+                        else
+                            retry = true;
+                    }
+                    else
+                    {
+                        this.Close();
+                        return;
+                    }
+                }
+            }
             mh = spotify.GetMusicHandler();
             eh = spotify.GetEventHandler();
         }
