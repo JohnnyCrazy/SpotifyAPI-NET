@@ -60,7 +60,7 @@ Usage:
 #####void Previous() 
 > Previous Track
 
-#####void SetTrack(String SpotifyURI)
+#####void PlayURL(String SpotifyURI)
 > Plays the provided URI
 
 #####double GetVolume()
@@ -85,7 +85,7 @@ Usage:
 > Returns the current Track
 
 #####StatusResponse GetStatusResponse() 
-> Returns the StatusResponse, which contains all Information gathered by the Call
+> Returns the StatusResponse, which contains all Information gathered by the Call (Should not be used at all)
 
 
 ### SpotifyEventHandler
@@ -109,14 +109,26 @@ Usage:
 
 
 ### Track
-#####String GetName()
-> Returns Track-Name
+#####String GetTrackName()
+> Returns Track-name
 
-#####String GetArtist()
-> Returns Artist
+#####String GetArtistName()
+> Returns Artist-name
 
-#####String GetAlbum()
+#####String GetAlbumName()
 > Returns Album-name
+
+#####int GetLength()
+> Returns the Track lenght
+
+#####String GetAlbumURI()
+> Returns the URI for the album
+
+#####String GetTrackURI()
+> Returns the URI for the Track
+
+#####String GetArtistURI()
+> Returns the URI for the Artist
 
 #####String GetAlbumArtURL(AlbumArtSize size)
 > Returns the URL of the Albumart based on the choosen size
