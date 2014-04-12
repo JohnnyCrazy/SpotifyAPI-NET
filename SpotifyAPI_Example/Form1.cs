@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -64,9 +65,12 @@ namespace SpotifyAPI_Example
             pictureBox1.Image = await spotify.GetMusicHandler().GetCurrentTrack().GetAlbumArtAsync(AlbumArtSize.SIZE_160);
             pictureBox2.Image = await spotify.GetMusicHandler().GetCurrentTrack().GetAlbumArtAsync(AlbumArtSize.SIZE_640);
 
-            label1.Text = mh.GetCurrentTrack().GetTrackName();
-            label2.Text = mh.GetCurrentTrack().GetArtistName();
-            currentAlbumValue.Text = mh.GetCurrentTrack().GetAlbumName();
+            linkLabel1.Text = mh.GetCurrentTrack().GetTrackName();
+            linkLabel1.LinkClicked += (senderTwo, args) => Process.Start(mh.GetCurrentTrack().GetTrackURI());
+            linkLabel2.Text = mh.GetCurrentTrack().GetArtistName();
+            linkLabel2.LinkClicked += (senderTwo, args) => Process.Start(mh.GetCurrentTrack().GetArtistURI());
+            linkLabel3.Text = mh.GetCurrentTrack().GetAlbumName();
+            linkLabel3.LinkClicked += (senderTwo, args) => Process.Start(mh.GetCurrentTrack().GetAlbumURI());
 
             label9.Text = mh.IsPlaying().ToString();
             label11.Text = ((int)(mh.GetVolume() * 100)).ToString();
@@ -90,9 +94,9 @@ namespace SpotifyAPI_Example
         private async void trackchange(TrackChangeEventArgs e)
         {
             progressBar1.Maximum = (int)mh.GetCurrentTrack().GetLength()*100;
-            label1.Text = e.new_track.GetTrackName();
-            label2.Text = e.new_track.GetArtistName();
-            currentAlbumValue.Text = e.new_track.GetAlbumName();
+            linkLabel1.Text = e.new_track.GetTrackName();
+            linkLabel2.Text = e.new_track.GetArtistName();
+            linkLabel3.Text = e.new_track.GetAlbumName();
             pictureBox1.Image = await e.new_track.GetAlbumArtAsync(AlbumArtSize.SIZE_160);
             pictureBox2.Image = await e.new_track.GetAlbumArtAsync(AlbumArtSize.SIZE_640);
             label7.Text = mh.IsAdRunning().ToString();
@@ -133,8 +137,9 @@ namespace SpotifyAPI_Example
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (SpotifyAPI.IsValidSpotifyURI(textBox1.Text))
-                mh.PlayURL(textBox1.Text);
+            //Not working yet
+            //if (SpotifyAPI.IsValidSpotifyURI(textBox1.Text))
+            mh.PlayURL(textBox1.Text);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
