@@ -1,5 +1,5 @@
 SpotifyAPI-NET
-==============
+===
 
 An API for the Spotify-Client, written in .NET  
 Look at the example provided in the Repo
@@ -12,6 +12,37 @@ Following 3 files will be needed for all features:
 Screenshot of the Example:
 ![alt text](http://i.imgur.com/R9Xsma0.png "Example Screen")
 
+Update:
+===
+This API will also support the "new" Spotify Web API soon, following things will be possible:
+
+(Ticked = implemented and ready to push,Not ticked = Work in Progress)
+
+- [ ] Get an Album
+- [ ] Get Several Albums
+- [ ] Get an Album'S Tracks 
+- [ ] Get an Artist
+- [ ] Get Several Artists
+- [ ] Get an Artist's Albums
+- [ ] Get an Artist's Top Tracks
+- [ ] Get an Artist'S Related Artists
+- [ ] Get a Track
+- [ ] Get several Tracks
+- [ ] Search for an Item
+- [x] Get a User's Profile
+- [x] Get Current User’s Profile
+- [x] Get a List of a User's Profile
+- [x] Get a Playlist
+- [x] Get a Playlist's Tracks
+- [ ] Create a Playlist
+- [ ] Add Tracks to a Playlist
+
+With this Update, there will be 2 new/modified namespaces:
+> SpotifyAPI.SpotifyLocalAPI (Old local API)
+
+> SpotifyAPI.SpotifyWebAPI (New web API)
+
+___
 
 Usage:
 ==============  
