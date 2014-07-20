@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
     /// <summary>
     /// Enum for the AlbumArt

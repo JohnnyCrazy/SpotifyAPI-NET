@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SpotifyAPIv1;
+using SpotifyAPI.SpotifyLocalAPI;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
     public class SpotifyEventHandler
     {
         private Boolean listen = false;
         private System.Timers.Timer timer;
-        private SpotifyAPI api;
+        private SpotifyLocalAPIClass api;
         private SpotifyMusicHandler mh;
 
         private StatusResponse response;
@@ -24,7 +24,7 @@ namespace SpotifyAPIv1
         public event VolumeChangeEventHandler OnVolumeChange;
         public event TrackTimeChangeEventHandler OnTrackTimeChange;
 
-        public SpotifyEventHandler(SpotifyAPI api, SpotifyMusicHandler mh)
+        public SpotifyEventHandler(SpotifyLocalAPIClass api, SpotifyMusicHandler mh)
         {
             timer = new System.Timers.Timer();
             timer.Interval = 50;

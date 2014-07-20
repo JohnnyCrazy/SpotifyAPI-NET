@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
     public class StatusResponse
     {

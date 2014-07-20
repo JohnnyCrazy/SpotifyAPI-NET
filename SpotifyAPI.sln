@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI", "SpotifyAPI\SpotifyAPI.csproj", "{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyWebAPIExample", "SpotifyWebAPIExample\SpotifyWebAPIExample.csproj", "{004B45C3-BB98-4E62-AD11-D80BA64FEB8E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI_Example", "SpotifyAPI_Example\SpotifyAPI_Example.csproj", "{C12D46F9-BB35-46D6-B821-522B8F9C3CBE}"
 EndProject
@@ -17,6 +19,10 @@ Global
 		{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{004B45C3-BB98-4E62-AD11-D80BA64FEB8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004B45C3-BB98-4E62-AD11-D80BA64FEB8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004B45C3-BB98-4E62-AD11-D80BA64FEB8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004B45C3-BB98-4E62-AD11-D80BA64FEB8E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C12D46F9-BB35-46D6-B821-522B8F9C3CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C12D46F9-BB35-46D6-B821-522B8F9C3CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C12D46F9-BB35-46D6-B821-522B8F9C3CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU

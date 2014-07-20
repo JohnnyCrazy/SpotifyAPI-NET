@@ -4,14 +4,14 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
-    public class SpotifyAPI
+    public class SpotifyLocalAPIClass
     {
         SpotifyMusicHandler mh;
         RemoteHandler rh;
         SpotifyEventHandler eh;
-        public SpotifyAPI()
+        public SpotifyLocalAPIClass()
         {
             rh = RemoteHandler.GetInstance();
             mh = new SpotifyMusicHandler();
@@ -21,6 +21,7 @@ namespace SpotifyAPIv1
         /// <summary>
         /// Connects with Spotify. Needs to be called before all other SpotifyAPI functions
         /// </summary>
+        /// <returns>Returns true, if it was successful, false if not</returns>
         public Boolean Connect()
         {
             return rh.Init();
@@ -95,7 +96,7 @@ namespace SpotifyAPIv1
         /// </summary>
         public void Update()
         {
-            if (!SpotifyAPI.IsSpotifyWebHelperRunning() || !SpotifyAPI.IsSpotifyRunning())
+            if (!SpotifyLocalAPIClass.IsSpotifyWebHelperRunning() || !SpotifyLocalAPIClass.IsSpotifyRunning())
                 return;
             mh.Update(rh.Update());
         }

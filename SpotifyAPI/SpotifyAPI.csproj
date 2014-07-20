@@ -7,7 +7,7 @@
     <ProjectGuid>{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpotifyAPIv1</RootNamespace>
+    <RootNamespace>SpotifyAPI.SpotifyLocalAPI</RootNamespace>
     <AssemblyName>SpotifyAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,23 +47,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CFID.cs" />
-    <Compile Include="Enum.cs" />
-    <Compile Include="ExtendedWebClient.cs">
+    <Compile Include="SpoitfyLocalAPI\CFID.cs" />
+    <Compile Include="SpoitfyLocalAPI\Enum.cs" />
+    <Compile Include="SpoitfyLocalAPI\ExtendedWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SpotifyEventHandler.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="SpotifyMusicHandler.cs" />
-    <Compile Include="RemoteHandler.cs" />
-    <Compile Include="SpotifyAPI.cs" />
+    <Compile Include="SpoitfyLocalAPI\SpotifyEventHandler.cs" />
+    <Compile Include="SpoitfyLocalAPI\Events.cs" />
+    <Compile Include="SpoitfyLocalAPI\SpotifyMusicHandler.cs" />
+    <Compile Include="SpoitfyLocalAPI\RemoteHandler.cs" />
+    <Compile Include="SpoitfyLocalAPI\SpotifyAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatusResponse.cs" />
-    <Compile Include="Track.cs" />
+    <Compile Include="SpoitfyLocalAPI\StatusResponse.cs" />
+    <Compile Include="SpoitfyLocalAPI\Track.cs" />
+    <Compile Include="SpotifyWebAPI\AlbumType.cs" />
+    <Compile Include="SpotifyWebAPI\AutorizationCodeAuth.cs" />
+    <Compile Include="SpotifyWebAPI\ClientCredentialsAuth.cs" />
+    <Compile Include="SpotifyWebAPI\ImplicitGrantAuth.cs" />
+    <Compile Include="SpotifyWebAPI\Models\BasicModel.cs" />
+    <Compile Include="SpotifyWebAPI\Models\FullAlbum.cs" />
+    <Compile Include="SpotifyWebAPI\Models\FullArtist.cs" />
+    <Compile Include="SpotifyWebAPI\Models\FullTrack.cs" />
+    <Compile Include="SpotifyWebAPI\Models\SearchItem.cs" />
+    <Compile Include="SpotifyWebAPI\Models\PrivateProfile.cs" />
+    <Compile Include="SpotifyWebAPI\Models\GeneralModels.cs" />
+    <Compile Include="SpotifyWebAPI\Models\FullPlaylist.cs" />
+    <Compile Include="SpotifyWebAPI\Models\PublicProfile.cs" />
+    <Compile Include="SpotifyWebAPI\Models\SimpleAlbum.cs" />
+    <Compile Include="SpotifyWebAPI\Models\SimpleArtist.cs" />
+    <Compile Include="SpotifyWebAPI\Models\SimpleTrack.cs" />
+    <Compile Include="SpotifyWebAPI\Models\Token.cs" />
+    <Compile Include="SpotifyWebAPI\Models\SimplePlaylist.cs" />
+    <Compile Include="SpotifyWebAPI\Models\Paging.cs" />
+    <Compile Include="SpotifyWebAPI\Scope.cs" />
+    <Compile Include="SpotifyWebAPI\SearchType.cs" />
+    <Compile Include="SpotifyWebAPI\SimpleHttpServer.cs" />
+    <Compile Include="SpotifyWebAPI\SpotifyWebAPIClass.cs" />
+    <Compile Include="SpotifyWebAPI\StringAttribute.cs" />
+    <Compile Include="SpotifyWebAPI\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

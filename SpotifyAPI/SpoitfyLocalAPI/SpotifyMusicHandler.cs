@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.IO;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
     public class SpotifyMusicHandler
     {
@@ -56,7 +56,7 @@ namespace SpotifyAPIv1
         /// <summary>
         /// Plays a Spotify URI
         /// </summary>
-        /// <param name="uri">The Spotify URI. Can be checked with <seealso cref="SpotifyAPI.IsValidSpotifyURI"/></param>
+        /// <param name="uri">The Spotify URI. Can be checked with <seealso cref="SpotifyLocalAPIClass.IsValidSpotifyURI"/></param>
         public void PlayURL(String uri)
         {
             rh.SendPlayRequest(uri);

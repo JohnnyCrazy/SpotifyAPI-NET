@@ -336,7 +336,7 @@
             this.MaximumSize = new System.Drawing.Size(1018, 702);
             this.MinimumSize = new System.Drawing.Size(1018, 702);
             this.Name = "Form1";
-            this.Text = "SpotifyAPI Example";
+            this.Text = "SpotifyLocalAPIClass Example";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

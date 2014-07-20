@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
     /// <summary>
     /// Event gets triggered, when the Track is changed

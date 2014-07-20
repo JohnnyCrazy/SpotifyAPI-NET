@@ -8,29 +8,29 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SpotifyAPIv1;
+using SpotifyAPI.SpotifyLocalAPI;
 using System.Threading;
-using SpotifyEventHandler = SpotifyAPIv1.SpotifyEventHandler;
+using SpotifyEventHandler = SpotifyAPI.SpotifyLocalAPI.SpotifyEventHandler;
 
 
 namespace SpotifyAPI_Example
 {
     public partial class Form1 : Form
     {
-        SpotifyAPI spotify;
+        SpotifyLocalAPIClass spotify;
         SpotifyMusicHandler mh;
         SpotifyEventHandler eh;
         public Form1()
         {
             InitializeComponent();
-            spotify = new SpotifyAPI();
-            if (!SpotifyAPI.IsSpotifyRunning())
+            spotify = new SpotifyLocalAPIClass();
+            if (!SpotifyLocalAPIClass.IsSpotifyRunning())
             {
                 spotify.RunSpotify();
                 Thread.Sleep(5000);
             }
-                
-            if (!SpotifyAPI.IsSpotifyWebHelperRunning())
+
+            if (!SpotifyLocalAPIClass.IsSpotifyWebHelperRunning())
             {
                 spotify.RunSpotifyWebHelper();
                 Thread.Sleep(4000);
@@ -41,7 +41,7 @@ namespace SpotifyAPI_Example
                 Boolean retry = true;
                 while(retry)
                 {
-                    if (MessageBox.Show("SpotifyAPI could'nt load!", "Error", MessageBoxButtons.RetryCancel) == System.Windows.Forms.DialogResult.Retry)
+                    if (MessageBox.Show("SpotifyLocalAPIClass could'nt load!", "Error", MessageBoxButtons.RetryCancel) == System.Windows.Forms.DialogResult.Retry)
                     {
                         if(spotify.Connect())
                             retry = false;

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden 
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
-[assembly: AssemblyTitle("SpotifyLocalAPIClass")]
+[assembly: AssemblyTitle("SpotifyWebAPIExample")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SpotifyLocalAPIClass")]
+[assembly: AssemblyProduct("SpotifyWebAPIExample")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
-[assembly: Guid("3a30f0ac-4874-4d18-ba0e-d20d0f67ed32")]
+[assembly: Guid("a09c6b3c-dd43-4423-9daa-4b69f031e695")]
 
 // Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 //

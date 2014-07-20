@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Newtonsoft.Json;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
     class RemoteHandler
     {
@@ -119,7 +119,7 @@ namespace SpotifyAPIv1
             try
             {
                 //Need to find a better solution
-                if (SpotifyAPI.IsSpotifyRunning())
+                if (SpotifyLocalAPIClass.IsSpotifyRunning())
                     response = "[ " + wc.DownloadString(a) + " ]";
             }
             catch (Exception z)

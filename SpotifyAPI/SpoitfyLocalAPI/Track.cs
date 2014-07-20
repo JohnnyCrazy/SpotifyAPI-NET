@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Net;
 using System.IO;
 
-namespace SpotifyAPIv1
+namespace SpotifyAPI.SpotifyLocalAPI
 {
     public class Track
     {
