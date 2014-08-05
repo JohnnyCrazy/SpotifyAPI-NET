@@ -62,6 +62,14 @@ namespace SpotifyAPI.SpotifyLocalAPI
             rh.SendPlayRequest(uri);
         }
         /// <summary>
+        /// Adds a Spotify URI to the Queue
+        /// </summary>
+        /// <param name="uri">The Spotify URI. Can be checked with <seealso cref="SpotifyLocalAPIClass.IsValidSpotifyURI"/></param>
+        public void AddToQueue(String uri)
+        {
+            rh.SendQueueRequest(uri);
+        }
+        /// <summary>
         /// Checks if the current "Track" is an Advert
         /// </summary>
         /// <returns>True if it's an Advert, false if not</returns>
