@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI", "SpotifyAPI\Sp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyWebAPIExample", "SpotifyWebAPIExample\SpotifyWebAPIExample.csproj", "{004B45C3-BB98-4E62-AD11-D80BA64FEB8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI_Example", "SpotifyAPI_Example\SpotifyAPI_Example.csproj", "{C12D46F9-BB35-46D6-B821-522B8F9C3CBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyLocalAPIExample", "SpotifyLocalAPIExample\SpotifyLocalAPIExample.csproj", "{C12D46F9-BB35-46D6-B821-522B8F9C3CBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

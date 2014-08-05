@@ -53,6 +53,10 @@ namespace SpotifyAPI.SpotifyLocalAPI
         {
             query("remote/play.json?uri=" + url, true, true, -1);
         }
+        internal void SendQueueRequest(String url)
+        {
+            query("remote/play.json?uri=" + url + "?action=queue", true, true, -1);
+        }
         internal StatusResponse Update()
         {
             String response = query("remote/status.json", true, true, -1);
