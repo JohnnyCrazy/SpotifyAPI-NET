@@ -14,8 +14,8 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         /// </summary>
         [JsonProperty("album")]
         public SimpleAlbum Album { get; set; }
-        [JsonProperty("artist")]
-        public SimpleArtist Artist { get; set; }
+        [JsonProperty("artists")]
+        public List<SimpleArtist> Artists { get; set; }
         [JsonProperty("available_markets")]
         public List<String> AvailableMarkets { get; set; }
         [JsonProperty("disc_number")]

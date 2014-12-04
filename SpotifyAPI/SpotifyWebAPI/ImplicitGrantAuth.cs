@@ -58,13 +58,7 @@ namespace SpotifyAPI.SpotifyWebAPI
         }
         public void StopHttpServer()
         {
-            try
-            {
-                httpThread.Abort();
-            }catch(ThreadAbortException e)
-            {
-
-            }
+            httpServer.Dispose();
             httpServer = null;
         }
     }

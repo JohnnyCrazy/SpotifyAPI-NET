@@ -15,6 +15,8 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         public String DisplayName { get; set; }
         [JsonProperty("external_urls")]
         public Dictionary<string, string> ExternalUrls { get; set; }
+        [JsonProperty("followers")]
+        public Followers Followers { get; set; }
         [JsonProperty("href")]
         public String Href { get; set; }
         [JsonProperty("id")]

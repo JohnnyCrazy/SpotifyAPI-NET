@@ -16,6 +16,12 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         [JsonProperty("height")]
         public int Height { get; set; }
     }
+    public class ErrorResponse
+    {
+        [JsonProperty("error")]
+        public Error Error { get; set; }
+    }
+
     public class Error
     {
         [JsonProperty("status")]
@@ -46,12 +52,30 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         [JsonProperty("track")]
         public FullTrack Track { get; set; }
     }
-    internal class CreatePlaylistArgs
+    public class CreatePlaylistArgs
     {
         [JsonProperty("name")]
         public String Name { get; set; }
         [JsonProperty("public")]
         public Boolean Public { get; set; }
+    }
+    public class DeleteTrackArg
+    {
+        [JsonProperty("uri")]
+        public String Uri { get; set; }
+        [JsonProperty("positions")]
+        public List<int> Positions { get; set; }
+
+        public DeleteTrackArg(String uri, params int[] positions)
+        {
+            this.Positions = positions.ToList();
+            this.Uri = uri;
+        }
+        public bool ShouldSerializePositions()
+        {
+            // don't serialize the Manager property if an employee is their own manager
+            return (Positions.Count > 0);
+        }
     }
     public class SeveralTracks
     {
@@ -67,5 +91,17 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
     {
         [JsonProperty("albums")]
         public List<FullAlbum> Albums { get; set; }
+    }
+    public class Copyright
+    {
+        [JsonProperty("text")]
+        public String Text { get; set; }
+        [JsonProperty("type")]
+        public String Type { get; set; }
+    }
+
+    public class CheckUserTracks : BasicModel
+    {
+        public List<Boolean> Checked { get; set; }
     }
 }

@@ -10,11 +10,11 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
     public abstract class BasicModel
     {
         [JsonProperty("error")]
-        public Error Error { get; set; }
+        public Error ErrorResponse { get; set; }
 
         public Boolean HasError()
         {
-            return Error != null;
+            return ErrorResponse != null;
         }
     }
 }

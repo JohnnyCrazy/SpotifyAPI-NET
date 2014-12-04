@@ -7,7 +7,7 @@
     <ProjectGuid>{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpotifyAPI.SpotifyLocalAPI</RootNamespace>
+    <RootNamespace>SpotifyAPI</RootNamespace>
     <AssemblyName>SpotifyAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -65,9 +65,11 @@
     <Compile Include="SpotifyWebAPI\ClientCredentialsAuth.cs" />
     <Compile Include="SpotifyWebAPI\ImplicitGrantAuth.cs" />
     <Compile Include="SpotifyWebAPI\Models\BasicModel.cs" />
+    <Compile Include="SpotifyWebAPI\Models\FeaturedPlaylists.cs" />
     <Compile Include="SpotifyWebAPI\Models\FullAlbum.cs" />
     <Compile Include="SpotifyWebAPI\Models\FullArtist.cs" />
     <Compile Include="SpotifyWebAPI\Models\FullTrack.cs" />
+    <Compile Include="SpotifyWebAPI\Models\NewAlbumReleases.cs" />
     <Compile Include="SpotifyWebAPI\Models\SearchItem.cs" />
     <Compile Include="SpotifyWebAPI\Models\PrivateProfile.cs" />
     <Compile Include="SpotifyWebAPI\Models\GeneralModels.cs" />

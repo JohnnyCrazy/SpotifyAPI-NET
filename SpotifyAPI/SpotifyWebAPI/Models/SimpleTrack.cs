@@ -11,6 +11,8 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
     {
         [JsonProperty("artist")]
         public SimpleArtist Artist { get; set; }
+        [JsonProperty("available_markets")]
+        public List<String> AvailableMarkets { get; set; }
         [JsonProperty("disc_number")]
         public int DiscNumber { get; set; }
         [JsonProperty("duration_ms")]

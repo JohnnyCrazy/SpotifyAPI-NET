@@ -24,7 +24,7 @@ namespace SpotifyWebAPIExample
                 //Set this to localhost if you want to use the built-in HTTP Server
                 RedirectUri = "http://localhost",
                 //How many permissions we need?
-                Scope = Scope.USER_READ_PRIVATE | Scope.USER_READ_EMAIL | Scope.PLAYLIST_READ_PRIVATE 
+                Scope = Scope.USER_READ_PRIVATE | Scope.USER_READ_EMAIL | Scope.PLAYLIST_READ_PRIVATE | Scope.USER_LIBRARAY_READ | Scope.USER_LIBRARY_MODIFY | Scope.USER_READ_PRIVATE
             };
             //Start the internal http server
             auth.StartHttpServer();
@@ -108,7 +108,7 @@ namespace SpotifyWebAPIExample
                 Console.WriteLine(playlist.Name + " (" + playlist.Id + ")");
             while(playlists.Next != null)
             {
-                playlists = spotify.DownloadString<Paging<SimplePlaylist>>(playlists.Next);
+                playlists = spotify.DownloadData<Paging<SimplePlaylist>>(playlists.Next);
                 foreach (SimplePlaylist playlist in playlists.Items)
                     Console.WriteLine(playlist.Name + " (" + playlist.Id + ")");
             }
@@ -127,7 +127,7 @@ namespace SpotifyWebAPIExample
             Paging<PlaylistTrack> col = spotify.GetPlaylistTracks(spotify.GetPrivateProfile().Id, id);
             if(col.HasError())
             {
-                Console.WriteLine("ERROR: " + col.Error.Message);
+                Console.WriteLine("ERROR: " + col.ErrorResponse.Message);
                 DisplayMenu(spotify);
                 return;
             }
@@ -135,7 +135,7 @@ namespace SpotifyWebAPIExample
                 Console.WriteLine(track.Track.Name + " (" + track.Track.Id + ")");
             while (col.Next != null)
             {
-                col = spotify.DownloadString<Paging<PlaylistTrack>>(col.Next);
+                col = spotify.DownloadData<Paging<PlaylistTrack>>(col.Next);
                 foreach (PlaylistTrack track in col.Items)
                     Console.WriteLine(track.Track.Name + " (" + track.Track.Id + ")");
             }

@@ -15,6 +15,8 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         public List<SimpleArtist> Artists { get; set; }
         [JsonProperty("available_markets")]
         public List<String> AvailableMarkets { get; set; }
+        [JsonProperty("copyrights")]
+        public List<Copyright> Copyrights { get; set; }
         [JsonProperty("external_ids")]
         public Dictionary<String, String> ExternalIds { get; set; }
         [JsonProperty("external_urls")]

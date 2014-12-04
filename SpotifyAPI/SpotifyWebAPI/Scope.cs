@@ -11,8 +11,8 @@ namespace SpotifyAPI.SpotifyWebAPI
     {
         [StringAttribute("")]
         NONE = 1,
-        [StringAttribute("playlist-modify")]
-        PLAYLIST_MODIFY = 2,
+        [StringAttribute("playlist-modify-public")]
+        PLAYLIST_MODIFY_PUBLIC = 2,
         [StringAttribute("playlist-modify-private")]
         PLAYLIST_MODIFY_PRIVATE = 4, 
         [StringAttribute("playlist-read-private")]
@@ -22,6 +22,10 @@ namespace SpotifyAPI.SpotifyWebAPI
         [StringAttribute("user-read-private")]
         USER_READ_PRIVATE = 32,
         [StringAttribute("user-read-email")]
-        USER_READ_EMAIL = 64
+        USER_READ_EMAIL = 64,
+        [StringAttribute("user-library-read")]
+        USER_LIBRARAY_READ = 128,
+        [StringAttribute("user-library-modify")]
+        USER_LIBRARY_MODIFY = 256
     }
 }

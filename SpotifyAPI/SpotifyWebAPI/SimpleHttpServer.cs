@@ -162,32 +162,49 @@ namespace SpotifyAPI.SpotifyWebAPI
         }
     }
 
-    public abstract class HttpServer {
+    public abstract class HttpServer : IDisposable {
 
         protected int port;
         TcpListener listener;
-        bool is_active = true;
+        public bool IsActive { get; set; }
        
-        public HttpServer(int port) {
+        public HttpServer(int port) 
+        {
+            this.IsActive = true;
             this.port = port;
         }
 
         public void listen()
         {
-            listener = new TcpListener(port);
-            listener.Start();
-            while (is_active) {                
-                TcpClient s = listener.AcceptTcpClient();
-                HttpProcessor processor = new HttpProcessor(s, this);
-                Thread thread = new Thread(new ThreadStart(processor.process));
-                thread.Start();
-                Thread.Sleep(1);
+            try
+            {
+                listener = new TcpListener(port);
+                listener.Start();
+                while (IsActive)
+                {
+                    TcpClient s = listener.AcceptTcpClient();
+                    HttpProcessor processor = new HttpProcessor(s, this);
+                    Thread thread = new Thread(new ThreadStart(processor.process));
+                    thread.Start();
+                    Thread.Sleep(1);
+                }
+            }catch(Exception)
+            {
+                
             }
+        }
+
+        public void Dispose()
+        {
+            IsActive = false;
+            listener.Stop();
         }
 
         public abstract void handleGETRequest(HttpProcessor p);
         public abstract void handlePOSTRequest(HttpProcessor p, StreamReader inputData);
-    }
+    
+
+}
 
     public class SimpleHttpServer : HttpServer {
 
