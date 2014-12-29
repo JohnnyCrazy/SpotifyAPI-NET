@@ -104,7 +104,7 @@ namespace SpotifyAPI.SpotifyLocalAPI
             string[] lines = raw.Split(new string[] { "\n" }, StringSplitOptions.None);
             foreach (string line in lines)
             {
-                if (line.StartsWith("<meta property=\"og:image\""))
+                if (line.Trim().StartsWith("<meta property=\"og:image\""))
                 {
                     string[] l = line.Split(new string[] { "/" }, StringSplitOptions.None);
                     return "http://o.scdn.co/" + albumsize + @"/" + l[4].Replace("\"", "").Replace(">", "");
