@@ -137,9 +137,11 @@ namespace SpotifyAPI.SpotifyLocalAPI
             try
             {
                 //Need to find a better solution
-                var wc = new ExtendedWebClientInstance();
-                if (SpotifyLocalAPIClass.IsSpotifyRunning())
-                    response = "[ " + wc.DownloadString(a) + " ]";
+                using (var wc = new ExtendedWebClientInstance())
+                {
+                    if (SpotifyLocalAPIClass.IsSpotifyRunning())
+                        response = "[ " + wc.DownloadString(a) + " ]";
+                }
             }
             catch (Exception z)
             {
@@ -177,9 +179,11 @@ namespace SpotifyAPI.SpotifyLocalAPI
             try
             {
                 //Need to find a better solution
-                var wc = new ExtendedWebClientInstance();
-                if (SpotifyLocalAPIClass.IsSpotifyRunning())
-                    response = "[ " + await wc.DownloadStringTaskAsync(new Uri(a)) + " ]";
+                using (var wc = new ExtendedWebClientInstance())
+                {
+                    if (SpotifyLocalAPIClass.IsSpotifyRunning())
+                        response = "[ " + await wc.DownloadStringTaskAsync(new Uri(a)) + " ]";
+                }
             }
             catch (Exception ex)
             {
