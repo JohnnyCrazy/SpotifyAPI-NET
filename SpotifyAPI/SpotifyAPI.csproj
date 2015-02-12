@@ -63,8 +63,13 @@
     <Compile Include="SpotifyWebAPI\AlbumType.cs" />
     <Compile Include="SpotifyWebAPI\AutorizationCodeAuth.cs" />
     <Compile Include="SpotifyWebAPI\ClientCredentialsAuth.cs" />
+    <Compile Include="SpotifyWebAPI\FollowType.cs" />
     <Compile Include="SpotifyWebAPI\ImplicitGrantAuth.cs" />
+    <Compile Include="SpotifyWebAPI\Models\ArrayResponse.cs" />
     <Compile Include="SpotifyWebAPI\Models\BasicModel.cs" />
+    <Compile Include="SpotifyWebAPI\Models\Category.cs" />
+    <Compile Include="SpotifyWebAPI\Models\CategoryList.cs" />
+    <Compile Include="SpotifyWebAPI\Models\CategoryPlaylist.cs" />
     <Compile Include="SpotifyWebAPI\Models\FeaturedPlaylists.cs" />
     <Compile Include="SpotifyWebAPI\Models\FullAlbum.cs" />
     <Compile Include="SpotifyWebAPI\Models\FullArtist.cs" />

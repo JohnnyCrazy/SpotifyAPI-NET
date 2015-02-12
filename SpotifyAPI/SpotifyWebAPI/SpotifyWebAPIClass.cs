@@ -46,6 +46,36 @@ namespace SpotifyAPI.SpotifyWebAPI
                 return DownloadData<PublicProfile>("https://api.spotify.com/v1/users/" + userId);
         }
 
+        public ErrorResponse Follow(FollowType followType, List<String> ids)
+        {
+            JObject ob = new JObject();
+            ob.Add("ids", new JArray(ids.ToArray()));
+            return UploadData<ErrorResponse>("https://api.spotify.com/v1/me/following?type=" + followType.GetStringAttribute(""), ob.ToString(Formatting.None), "PUT");
+        }
+
+        public ErrorResponse Unfollow(FollowType followType, List<String> ids)
+        {
+            JObject ob = new JObject();
+            ob.Add("ids", new JArray(ids.ToArray()));
+            return UploadData<ErrorResponse>("https://api.spotify.com/v1/me/following?type=" + followType.GetStringAttribute(""), ob.ToString(Formatting.None), "DELETE");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ListResponse<Boolean> IsFollowing(FollowType followType, List<String> ids)
+        {
+            JToken res = DownloadData<JToken>("https://api.spotify.com/v1/me/following/contains?type=" + followType.GetStringAttribute("") + "&ids=" + string.Join(",", ids));
+            if (res is JArray)
+            {
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), ErrorResponse = null };
+            }
+            else
+            {
+                return new ListResponse<Boolean> { List = null, ErrorResponse = res.ToObject<Error>() };
+            }
+        }
+
         #endregion
 
         #region User-Library
@@ -54,26 +84,29 @@ namespace SpotifyAPI.SpotifyWebAPI
             JArray array = new JArray(ids.ToArray());
             return UploadData<ErrorResponse>("https://api.spotify.com/v1/me/tracks/", array.ToString(Formatting.None), "PUT");
         }
-        public Paging<FullTrack> GetSavedTracks()
+        public Paging<FullTrack> GetSavedTracks(String market = "")
         {
-            return DownloadData<Paging<FullTrack>>("https://api.spotify.com/v1/me/tracks");
+            if(market == "")
+                return DownloadData<Paging<FullTrack>>("https://api.spotify.com/v1/me/tracks");
+            else
+                return DownloadData<Paging<FullTrack>>("https://api.spotify.com/v1/me/tracks?market=" + market);
         }
         public ErrorResponse RemoveSavedTracks(List<String> ids)
         {
             JArray array = new JArray(ids.ToArray());
             return UploadData<ErrorResponse>("https://api.spotify.com/v1/me/tracks/", array.ToString(Formatting.None), "DELETE");
         }
-        public CheckUserTracks CheckSavedTracks(List<String> ids)
+        public ListResponse<Boolean> CheckSavedTracks(List<String> ids)
         {
             String resp = DownloadString("https://api.spotify.com/v1/me/tracks/contains?ids=" + string.Join(",", ids));
             JToken res = JToken.Parse(resp);
             if (res is JArray)
             {
-                return new CheckUserTracks { Checked = res.ToObject<List<Boolean>>(), ErrorResponse = null };
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), ErrorResponse = null };
             }
             else
             {
-                return new CheckUserTracks { Checked = null, ErrorResponse = res.ToObject<Error>() };
+                return new ListResponse<Boolean> { List = null, ErrorResponse = res.ToObject<Error>() };
             }
         }
         #endregion
@@ -87,9 +120,12 @@ namespace SpotifyAPI.SpotifyWebAPI
         {
             return DownloadData<FullPlaylist>("https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId);
         }
-        public Paging<PlaylistTrack> GetPlaylistTracks(String userId, String playlistId)
+        public Paging<PlaylistTrack> GetPlaylistTracks(String userId, String playlistId, String market = "")
         {
-            return DownloadData<Paging<PlaylistTrack>>("https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId + "/tracks");
+            if(market == "")
+                return DownloadData<Paging<PlaylistTrack>>("https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId + "/tracks");
+            else
+                return DownloadData<Paging<PlaylistTrack>>("https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId + "/tracks?market=" + market);
         }
         public FullPlaylist CreatePlaylist(String userId, String playlistName, Boolean isPublic = true)
         {
@@ -147,6 +183,28 @@ namespace SpotifyAPI.SpotifyWebAPI
                 builder.Append("&timestamp=" + timestamp.ToString("yyyy-MM-ddTHH:mm:ss"));
             return DownloadData<FeaturedPlaylists>(builder.ToString());
         }
+
+        public ErrorResponse FollowPlaylist(String ownerId, String playlistId, bool showPublic)
+        {
+            JObject ob = new JObject();
+            ob.Add("public", showPublic);
+            return UploadData<ErrorResponse>("https://api.spotify.com/v1/users/" + ownerId + "/playlists/" + playlistId + "/followers", ob.ToString(Formatting.None), "PUT");
+        }
+
+        public ErrorResponse UnfollowPlaylist(String ownerId, String playlistId)
+        {
+            return UploadData<ErrorResponse>("https://api.spotify.com/v1/users/" + ownerId + "/playlists/" + playlistId + "/followers", "", "DELETE");
+        }
+
+        public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, List<String> ids)
+        {
+            JToken res = DownloadData<JToken>("https://api.spotify.com/v1/users/" + ownerId + "/playlists/" + playlistId + "/followers/contains?ids=" + string.Join(",", ids));
+            if (res is JArray)
+                return new ListResponse<Boolean>() { List = res.ToObject<List<Boolean>>(), ErrorResponse = null };
+            else
+                return new ListResponse<Boolean>() { List = null, ErrorResponse = res.ToObject<Error>() };
+        }
+
         #endregion
 
         #region Search and Fetch
@@ -166,27 +224,36 @@ namespace SpotifyAPI.SpotifyWebAPI
             limit = Math.Min(50, limit);
             StringBuilder builder = new StringBuilder("https://api.spotify.com/v1/search");
             builder.Append("?q=" + q);
-            builder.Append("&type=" + type.GetSearchValue(","));
+            builder.Append("&type=" + type.GetStringAttribute(","));
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
 
             return DownloadData<SearchItem>(builder.ToString());
         }
-        public SeveralTracks GetSeveralTracks(List<String> ids)
+        public SeveralTracks GetSeveralTracks(List<String> ids, String market = "")
         {
-            return DownloadData<SeveralTracks>("https://api.spotify.com/v1/tracks?ids=" + string.Join(",", ids));
+            if(market == "")
+                return DownloadData<SeveralTracks>("https://api.spotify.com/v1/tracks?ids=" + string.Join(",", ids));
+            else
+                return DownloadData<SeveralTracks>("https://api.spotify.com/v1/tracks?market=" + market + "&ids=" + string.Join(",", ids));
         }
-        public SeveralAlbums GetSeveralAlbums(List<String> ids)
+        public SeveralAlbums GetSeveralAlbums(List<String> ids, String market = "")
         {
-            return DownloadData<SeveralAlbums>("https://api.spotify.com/v1/albums?ids=" + string.Join(",", ids));
+            if(market == "")
+                return DownloadData<SeveralAlbums>("https://api.spotify.com/v1/albums?ids=" + string.Join(",", ids));
+            else
+                return DownloadData<SeveralAlbums>("https://api.spotify.com/v1/albums?market=" + market + "&ids=" + string.Join(",", ids));
         }
         public SeveralArtists GetSeveralArtists(List<String> ids)
         {
             return DownloadData<SeveralArtists>("https://api.spotify.com/v1/artists?ids=" + string.Join(",", ids));
         }
-        public FullTrack GetTrack(String id)
+        public FullTrack GetTrack(String id, String market = "")
         {
-            return DownloadData<FullTrack>("https://api.spotify.com/v1/tracks/" + id);
+            if(market == "")
+                return DownloadData<FullTrack>("https://api.spotify.com/v1/tracks/" + id);
+            else
+                return DownloadData<FullTrack>("https://api.spotify.com/v1/tracks/" + id + "?market=" + market);
         }
         public SeveralArtists GetRelatedArtists(String id)
         {
@@ -200,7 +267,7 @@ namespace SpotifyAPI.SpotifyWebAPI
         {
             limit = Math.Min(50, limit);
             StringBuilder builder = new StringBuilder("https://api.spotify.com/v1/artists/" + id + "/albums");
-            builder.Append("?type=" + type.GetAlbumValue(","));
+            builder.Append("?type=" + type.GetStringAttribute(","));
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
             if (market != "")
@@ -211,18 +278,66 @@ namespace SpotifyAPI.SpotifyWebAPI
         {
             return DownloadData<FullArtist>("https://api.spotify.com/v1/artists/" + id);
         }
-        public Paging<SimpleTrack> GetAlbumTracks(String id, int limit = 20, int offset = 0)
+        public Paging<SimpleTrack> GetAlbumTracks(String id, String market, int limit = 20, int offset = 0)
         {
             limit = Math.Min(50, limit);
             StringBuilder builder = new StringBuilder("https://api.spotify.com/v1/albums/" + id + "/tracks");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
+            if (market != "")
+                builder.Append("&market=" + market);
             return DownloadData<Paging<SimpleTrack>>(builder.ToString());
         }
-        public FullAlbum GetAlbum(String id)
+        public FullAlbum GetAlbum(String id, String market = "")
         {
-            return DownloadData<FullAlbum>("https://api.spotify.com/v1/albums/" + id);
+            if(market == "")
+                return DownloadData<FullAlbum>("https://api.spotify.com/v1/albums/" + id);
+            else
+                return DownloadData<FullAlbum>("https://api.spotify.com/v1/albums/" + id + "?market=" + market);
         }
+        #endregion
+
+        #region Category
+
+        public CategoryList GetCategories(String country = "", String locale = "", int limit = 20, int offset = 0)
+        {
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder("https://api.spotify.com/v1/browse/categories");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (country != "")
+                builder.Append("&country=" + country);
+            if (locale != "")
+                builder.Append("&locale=" + locale);
+            return DownloadData<CategoryList>(builder.ToString());
+        }
+
+        public Category GetCategory(String categoryId, String country = "", String locale = "")
+        {
+            StringBuilder builder = new StringBuilder("https://api.spotify.com/v1/browse/categories/" + categoryId);
+            if(country != "")
+                builder.Append("?country=" + country);
+            if(locale != "")
+            {
+                if (country != "")
+                    builder.Append("&locale=" + locale);
+                else
+                    builder.Append("?locale=" + locale);
+            }
+            return DownloadData<Category>(builder.ToString());
+        }
+
+        public CategoryPlaylist GetCategoryPlaylists(String categoryId, String country = "", int limit = 20, int offset = 0)
+        {
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder("https://api.spotify.com/v1/browse/categories/" + categoryId + "/playlists");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (country != "")
+                builder.Append("&country=" + country);
+            return DownloadData<CategoryPlaylist>(builder.ToString());
+        }
+
         #endregion
 
         #region Util
@@ -263,7 +378,6 @@ namespace SpotifyAPI.SpotifyWebAPI
             {
                 response = new StreamReader(e.Response.GetResponseStream()).ReadToEnd();
             }
-            Debug.WriteLine(response);
             return response;
         }
         #endregion

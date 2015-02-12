@@ -26,6 +26,12 @@ namespace SpotifyAPI.SpotifyWebAPI
         [StringAttribute("user-library-read")]
         USER_LIBRARAY_READ = 128,
         [StringAttribute("user-library-modify")]
-        USER_LIBRARY_MODIFY = 256
+        USER_LIBRARY_MODIFY = 256,
+        [StringAttribute("user-follow-modify")]
+        USER_FOLLOW_MODIFY = 512,
+        [StringAttribute("user-follow-read")]
+        USER_FOLLOW_READ = 1024,
+        [StringAttribute("user-read-birthdate")]
+        USER_READ_BIRTHDATE = 2048
     }
 }

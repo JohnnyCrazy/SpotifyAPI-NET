@@ -36,7 +36,7 @@ namespace SpotifyAPI.SpotifyWebAPI
             builder.Append("&response_type=token");
             builder.Append("&redirect_uri=" + RedirectUri);
             builder.Append("&state=" + State);
-            builder.Append("&scope=" + Scope.GetScopeValue(" "));
+            builder.Append("&scope=" + Scope.GetStringAttribute(" "));
             builder.Append("&show_dialog=" + ShowDialog.ToString());
             return builder.ToString();
         }

@@ -25,6 +25,7 @@ namespace SpotifyWebAPIExample
                 RedirectUri = "http://localhost",
                 //How many permissions we need?
                 Scope = Scope.USER_READ_PRIVATE | Scope.USER_READ_EMAIL | Scope.PLAYLIST_READ_PRIVATE | Scope.USER_LIBRARAY_READ | Scope.USER_LIBRARY_MODIFY | Scope.USER_READ_PRIVATE
+                    | Scope.USER_FOLLOW_MODIFY | Scope.USER_FOLLOW_READ | Scope.PLAYLIST_MODIFY_PRIVATE | Scope.USER_READ_BIRTHDATE
             };
             //Start the internal http server
             auth.StartHttpServer();

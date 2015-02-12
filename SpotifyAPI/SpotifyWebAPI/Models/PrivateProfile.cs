@@ -9,6 +9,8 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
 {
     public class PrivateProfile : BasicModel
     {
+        [JsonProperty("birthdate")]
+        public String Birthdate { get; set; }
         [JsonProperty("country")]
         public String Country { get; set; }
         [JsonProperty("display_name")]

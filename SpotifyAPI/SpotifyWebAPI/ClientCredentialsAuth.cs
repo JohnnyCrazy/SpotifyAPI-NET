@@ -26,7 +26,7 @@ namespace SpotifyAPI.SpotifyWebAPI
                 
                 NameValueCollection col = new NameValueCollection();
                 col.Add("grant_type","client_credentials");
-                col.Add("scope", Scope.GetScopeValue(" "));
+                col.Add("scope", Scope.GetStringAttribute(" "));
 
                 byte[] data = null;
                 try

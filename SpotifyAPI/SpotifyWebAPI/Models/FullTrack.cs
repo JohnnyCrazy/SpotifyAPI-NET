@@ -44,5 +44,17 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         public String Type { get; set; }
         [JsonProperty("uri")]
         public String Uri { get; set; }
+
+        /// <summary>
+        /// Only filled when the "market"-parameter was supplied!
+        /// </summary>
+        [JsonProperty("is_playable")]
+        public Boolean? IsPlayable { get; set; }
+
+        /// <summary>
+        /// Only filled when the "market"-parameter was supplied!
+        /// </summary>
+        [JsonProperty("linked_from")]
+        public LinkedFrom LinkedFrom { get; set; }
     }
 }
