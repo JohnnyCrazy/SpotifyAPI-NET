@@ -1,1 +1,14 @@
-site_name: My Docs
+site_name: 'SpotifyAPI-NET'
+theme: ''
+theme_dir: 'mytheme'
+pages:
+- ['index.md', 'Home']
+- ['about.md', 'About']
+- ['SpotifyWebApi/index.md', 'SpotifyWebApi', 'About'] 
+- ['SpotifyLocalApi/index.md', 'SpotifyLocalApi', 'About'] 
+repo_url: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET'
+site_author: 'JohnnyCrazy'
+site_description: 'API Docs for SpotifyAPI-NET'
+extra_javascript: 
+- '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js'
+- 'highlight.js'
