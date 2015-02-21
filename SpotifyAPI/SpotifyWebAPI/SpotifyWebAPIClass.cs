@@ -345,8 +345,8 @@ namespace SpotifyAPI.SpotifyWebAPI
         {
             if (!UseAuth)
                 throw new Exception("UseAuth required for 'UploadData'");
-            webclient.Headers.Add("Authorization", TokenType + " " + AccessToken);
-            webclient.Headers.Add("Content-Type", "application/json");
+            webclient.Headers.Set("Authorization", TokenType + " " + AccessToken);
+            webclient.Headers.Set("Content-Type", "application/json");
             String response = "";
             try
             {
@@ -367,7 +367,9 @@ namespace SpotifyAPI.SpotifyWebAPI
         public String DownloadString(String url)
         {
             if (UseAuth)
-                webclient.Headers.Add("Authorization", TokenType + " " + AccessToken);
+                webclient.Headers.Set("Authorization", TokenType + " " + AccessToken);
+            else if (!UseAuth && webclient.Headers["Authorization"] != null)
+                webclient.Headers.Remove("Authorization");
             String response = "";
             try
             {
