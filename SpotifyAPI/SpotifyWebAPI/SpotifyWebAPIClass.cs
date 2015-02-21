@@ -84,12 +84,12 @@ namespace SpotifyAPI.SpotifyWebAPI
             JArray array = new JArray(ids.ToArray());
             return UploadData<ErrorResponse>("https://api.spotify.com/v1/me/tracks/", array.ToString(Formatting.None), "PUT");
         }
-        public Paging<FullTrack> GetSavedTracks(String market = "")
+        public Paging<SavedTrack> GetSavedTracks(String market = "")
         {
             if(market == "")
-                return DownloadData<Paging<FullTrack>>("https://api.spotify.com/v1/me/tracks");
+                return DownloadData<Paging<SavedTrack>>("https://api.spotify.com/v1/me/tracks");
             else
-                return DownloadData<Paging<FullTrack>>("https://api.spotify.com/v1/me/tracks?market=" + market);
+                return DownloadData<Paging<SavedTrack>>("https://api.spotify.com/v1/me/tracks?market=" + market);
         }
         public ErrorResponse RemoveSavedTracks(List<String> ids)
         {

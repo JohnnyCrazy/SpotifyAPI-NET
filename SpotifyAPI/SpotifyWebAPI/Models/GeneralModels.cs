@@ -113,4 +113,12 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         [JsonProperty("uri")]
         public String Uri { get; set; }
     }
+
+    public class SavedTrack
+    {
+        [JsonProperty("added_at")]
+        public DateTime AddedAt { get; set; }
+        [JsonProperty("track")]
+        public FullTrack Track { get; set; }
+    }
 }
