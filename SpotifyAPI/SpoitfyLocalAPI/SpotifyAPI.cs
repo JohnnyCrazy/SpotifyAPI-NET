@@ -11,11 +11,14 @@ namespace SpotifyAPI.SpotifyLocalAPI
         SpotifyMusicHandler mh;
         RemoteHandler rh;
         SpotifyEventHandler eh;
-        public SpotifyLocalAPIClass()
+        static bool betaMode;
+
+        public SpotifyLocalAPIClass(bool betaMode = false)
         {
             rh = RemoteHandler.GetInstance();
             mh = new SpotifyMusicHandler();
             eh = new SpotifyEventHandler(this, mh);
+            SpotifyLocalAPIClass.betaMode = betaMode;
         }
 
         /// <summary>
@@ -26,6 +29,7 @@ namespace SpotifyAPI.SpotifyLocalAPI
         {
             return rh.Init();
         }
+
         /// <summary>
         /// Returns the MusicHandler
         /// </summary>
@@ -34,6 +38,7 @@ namespace SpotifyAPI.SpotifyLocalAPI
         {
             return mh;
         }
+
         /// <summary>
         /// Returns the EventHanlder
         /// </summary>
@@ -42,42 +47,57 @@ namespace SpotifyAPI.SpotifyLocalAPI
         {
             return eh;
         }
+
         /// <summary>
         /// Checks if Spotify is running
         /// </summary>
         /// <returns>True, if it's running, false if not</returns>
         public static Boolean IsSpotifyRunning()
         {
-            if (Process.GetProcessesByName("spotify").Length < 1)
+            var procName = (betaMode) ? "spotifybeta" : "spotify";
+
+            if (Process.GetProcessesByName(procName).Length < 1)
                 return false;
+
             return true;
         }
+
         /// <summary>
         /// Checks if Spotify's WebHelper is running (Needed for API Calls)
         /// </summary>
         /// <returns>True, if it's running, false if not</returns>
         public static Boolean IsSpotifyWebHelperRunning()
         {
-            if (Process.GetProcessesByName("SpotifyWebHelper").Length < 1)
+            var procName = (betaMode) ? "spotifybetawebhelper" : "spotifywebhelper";
+
+            if (Process.GetProcessesByName(procName).Length < 1)
                 return false;
+
             return true;
         }
+
         /// <summary>
         /// Runs Spotify
         /// </summary>
         public void RunSpotify()
         {
-            if(!IsSpotifyRunning())
-                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Spotify\\spotify.exe");
+            var pathToExe = (betaMode) ? @"\spotifybeta\spotifybeta.exe" : @"\spotify\spotify.exe";
+
+            if (!IsSpotifyRunning())
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + pathToExe);
         }
+
         /// <summary>
         /// Runs Spotify's WebHelper
         /// </summary>
         public void RunSpotifyWebHelper()
         {
+            var pathToExe = (betaMode) ? @"\spotifybeta\spotifybetawebhelper.exe" : @"\spotify\data\spotifywebhelper.exe";
+
             if (!IsSpotifyWebHelperRunning())
-                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Spotify\\Data\\SpotifyWebHelper.exe");
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + pathToExe);
         }
+
         /// <summary>
         /// Checks for a valid SpotifyURL (Still not finished)
         /// </summary>
@@ -85,12 +105,15 @@ namespace SpotifyAPI.SpotifyLocalAPI
         /// <returns>True if the URI is valid, false if not</returns>
         public static Boolean IsValidSpotifyURI(String uri)
         {
-            String[] types = new String[] { "track","album","local","artist"};
+            String[] types = new String[] { "track", "album", "local", "artist" };
             String[] split = uri.Split(':');
+            
             if (split.Length < 3)
                 return false;
+            
             return split[0] == "spotify" && Array.IndexOf(types, split[1]) > -1 && split[2].Length == 22;
         }
+
         /// <summary>
         /// Updates and Fetches all current information about the current track etc.
         /// </summary>
@@ -98,6 +121,7 @@ namespace SpotifyAPI.SpotifyLocalAPI
         {
             if (!SpotifyLocalAPIClass.IsSpotifyWebHelperRunning() || !SpotifyLocalAPIClass.IsSpotifyRunning())
                 return;
+
             mh.Update(rh.Update());
         }
     }
