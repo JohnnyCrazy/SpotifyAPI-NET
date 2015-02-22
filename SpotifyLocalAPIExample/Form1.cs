@@ -23,7 +23,7 @@ namespace SpotifyAPI_Example
         public Form1()
         {
             InitializeComponent();
-            spotify = new SpotifyLocalAPIClass();
+            spotify = new SpotifyLocalAPIClass(true);
             if (!SpotifyLocalAPIClass.IsSpotifyRunning())
             {
                 spotify.RunSpotify();
