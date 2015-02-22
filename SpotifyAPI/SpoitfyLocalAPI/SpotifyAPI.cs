@@ -11,17 +11,13 @@ namespace SpotifyAPI.SpotifyLocalAPI
         SpotifyMusicHandler mh;
         RemoteHandler rh;
         SpotifyEventHandler eh;
-        static bool betaMode = false;
+        static bool betaMode;
 
-        public SpotifyLocalAPIClass()
+        public SpotifyLocalAPIClass(bool betaMode = false)
         {
             rh = RemoteHandler.GetInstance();
             mh = new SpotifyMusicHandler();
             eh = new SpotifyEventHandler(this, mh);
-        }
-
-        public SpotifyLocalAPIClass(bool betaMode) : this()
-        {
             SpotifyLocalAPIClass.betaMode = betaMode;
         }
 
