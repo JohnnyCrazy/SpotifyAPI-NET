@@ -1,4 +1,7 @@
 #!/bin/bash
+
+if [ "$TRAVIS_PULL_REQUEST" == "false" ]
+
 echo Starting push to gh-pages...
 mkdir deploy
 cd deploy
@@ -15,3 +18,5 @@ git commit -m "Automatic built mkdocs | Travis Build $TRAVIS_BUILD_NUMBER pushed
 git push -fq origin gh-pages > /dev/null
 
 echo -e "Done"
+
+fi
