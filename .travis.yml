@@ -4,7 +4,9 @@ python:
 # command to install dependencies
 install:
   - "pip install mkdocs"
-secure: "TrPdzgDDelezvEch5VmGkn0gu7E/4imfdae85qr7pPvk4jwdYtBI918+fgMkT8oowEfrd14M39dttpVrp8Fjns+QsWoy742F/N8bc+HiEDzKNnc2KJgA5AF5KysdDeQthDEn8egeOlzLjMY7L/JPj67Ene8fik1IdkpFpMwNnf8="
+env:
+    global:
+    - secure: "TrPdzgDDelezvEch5VmGkn0gu7E/4imfdae85qr7pPvk4jwdYtBI918+fgMkT8oowEfrd14M39dttpVrp8Fjns+QsWoy742F/N8bc+HiEDzKNnc2KJgA5AF5KysdDeQthDEn8egeOlzLjMY7L/JPj67Ene8fik1IdkpFpMwNnf8="
 # command to run tests
 before_script: "mkdocs build --clean" 
 script: 
