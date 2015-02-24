@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$TRAVIS_PULL_REQUEST" == "false" ]
+if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
 
 echo Starting push to gh-pages...
 mkdir deploy
