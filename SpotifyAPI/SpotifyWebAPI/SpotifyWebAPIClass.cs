@@ -161,13 +161,25 @@ namespace SpotifyAPI.SpotifyWebAPI
         {
             if (position == int.MaxValue)
                 return UploadData<ErrorResponse>("https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId + "/tracks", JsonConvert.SerializeObject(uris));
-            else
-            {
-                String tracks = string.Join(",", uris);
-                return UploadData<ErrorResponse>("https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId + "/tracks?position=" + position
-                    + "&ids=" + tracks
-                    , JsonConvert.SerializeObject(uris));
-            }
+            String tracks = string.Join(",", uris);
+            return UploadData<ErrorResponse>("https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId + "/tracks?position=" + position
+                                             + "&ids=" + tracks
+                , JsonConvert.SerializeObject(uris));
+        }
+
+        public Snapshot ReorderPlaylist(String userId, String playlistId, int rangeStart, int rangeLength,
+            int insertBefore, String snapshotId = "")
+        {
+            JObject ob = new JObject();
+            ob.Add("range_start", rangeStart);
+            ob.Add("range_length", rangeLength);
+            ob.Add("insert_before", insertBefore);
+            if(snapshotId != "")
+                ob.Add("snapshot_id", snapshotId);
+            return
+                UploadData<Snapshot>(
+                    "https://api.spotify.com/v1/users/" + userId + "/playlists/" + playlistId + "/tracks",
+                    ob.ToString(Formatting.None), "PUT");
         }
         public FeaturedPlaylists GetFeaturedPlaylists(String locale = "", String country = "", DateTime timestamp = default(DateTime), int limit = 20, int offset = 0)
         {

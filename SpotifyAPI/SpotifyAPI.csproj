@@ -83,6 +83,7 @@
     <Compile Include="SpotifyWebAPI\Models\SimpleAlbum.cs" />
     <Compile Include="SpotifyWebAPI\Models\SimpleArtist.cs" />
     <Compile Include="SpotifyWebAPI\Models\SimpleTrack.cs" />
+    <Compile Include="SpotifyWebAPI\Models\Snapshot.cs" />
     <Compile Include="SpotifyWebAPI\Models\Token.cs" />
     <Compile Include="SpotifyWebAPI\Models\SimplePlaylist.cs" />
     <Compile Include="SpotifyWebAPI\Models\Paging.cs" />
