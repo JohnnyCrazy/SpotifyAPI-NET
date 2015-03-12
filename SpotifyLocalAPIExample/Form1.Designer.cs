@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -39,6 +42,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tbContext = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -51,9 +55,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -72,12 +73,42 @@
             this.groupBox1.Controls.Add(this.currentName);
             this.groupBox1.Controls.Add(this.currentAlbum);
             this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 209);
+            this.groupBox1.Location = new System.Drawing.Point(12, 244);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(279, 313);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Current Track";
+            // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.Location = new System.Drawing.Point(50, 228);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(55, 13);
+            this.linkLabel3.TabIndex = 12;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "linkLabel3";
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Location = new System.Drawing.Point(50, 205);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(55, 13);
+            this.linkLabel2.TabIndex = 11;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "linkLabel2";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(50, 182);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(55, 13);
+            this.linkLabel1.TabIndex = 10;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "linkLabel1";
             // 
             // progressBar1
             // 
@@ -159,6 +190,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.tbContext);
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.label7);
@@ -174,10 +206,19 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Location = new System.Drawing.Point(12, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(338, 191);
+            this.groupBox2.Size = new System.Drawing.Size(338, 226);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Spotify";
+            // 
+            // tbContext
+            // 
+            this.tbContext.Location = new System.Drawing.Point(7, 165);
+            this.tbContext.Name = "tbContext";
+            this.tbContext.Size = new System.Drawing.Size(317, 20);
+            this.tbContext.TabIndex = 15;
+            this.tbContext.Text = "spotify:trackset:PREFEREDTITLE:1kICwqOzkICjv8qnQpr9Go,4myBMnNWZlgvVelYeTu55w,3JNc" +
+    "8Kvl4q1oSWH6084W2m,1YrnDTqvcnUKxAIeXyaEmU,1QFh8OH1e78dGd3VyJZCAC";
             // 
             // button5
             // 
@@ -193,10 +234,11 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 136);
+            this.textBox1.Location = new System.Drawing.Point(6, 137);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(237, 20);
             this.textBox1.TabIndex = 13;
+            this.textBox1.Text = "https://open.spotify.com/track/4myBMnNWZlgvVelYeTu55w";
             // 
             // checkBox1
             // 
@@ -211,7 +253,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(249, 162);
+            this.button4.Location = new System.Drawing.Point(249, 191);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 11;
@@ -221,7 +263,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(168, 162);
+            this.button3.Location = new System.Drawing.Point(168, 191);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 10;
@@ -231,7 +273,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(87, 162);
+            this.button2.Location = new System.Drawing.Point(87, 191);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 9;
@@ -241,7 +283,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(6, 162);
+            this.button1.Location = new System.Drawing.Point(6, 191);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -295,41 +337,11 @@
             this.pictureBox2.TabIndex = 12;
             this.pictureBox2.TabStop = false;
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(50, 182);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(55, 13);
-            this.linkLabel1.TabIndex = 10;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "linkLabel1";
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(50, 205);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(55, 13);
-            this.linkLabel2.TabIndex = 11;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "linkLabel2";
-            // 
-            // linkLabel3
-            // 
-            this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(50, 228);
-            this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(55, 13);
-            this.linkLabel3.TabIndex = 12;
-            this.linkLabel3.TabStop = true;
-            this.linkLabel3.Text = "linkLabel3";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 664);
+            this.ClientSize = new System.Drawing.Size(1002, 663);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -376,6 +388,7 @@
         private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.TextBox tbContext;
 
     }
 }
