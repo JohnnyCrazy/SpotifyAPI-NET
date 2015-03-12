@@ -57,9 +57,9 @@ namespace SpotifyAPI.SpotifyLocalAPI
         /// Plays a Spotify URI
         /// </summary>
         /// <param name="uri">The Spotify URI. Can be checked with <seealso cref="SpotifyLocalAPIClass.IsValidSpotifyURI"/></param>
-        public void PlayURL(String uri)
+        public void PlayURL(String uri, String context = "")
         {
-            rh.SendPlayRequest(uri);
+            rh.SendPlayRequest(uri, context);
         }
         /// <summary>
         /// Adds a Spotify URI to the Queue
