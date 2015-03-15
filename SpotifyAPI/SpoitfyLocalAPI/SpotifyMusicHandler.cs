@@ -54,12 +54,16 @@ namespace SpotifyAPI.SpotifyLocalAPI
             return sr.volume;
         }
         /// <summary>
-        /// Plays a Spotify URI
+        /// Plays a Spotify URI within an optional context.
         /// </summary>
         /// <param name="uri">The Spotify URI. Can be checked with <seealso cref="SpotifyLocalAPIClass.IsValidSpotifyURI"/></param>
-        public void PlayURL(String uri)
+        /// <param name="context">The context in which to play the specified <paramref name="uri"/>. </param>
+        /// <remarks>
+        /// Contexts are basically a queue in spotify. a song can be played within a context, meaning that hitting next / previous would lead to another song. Contexts are leveraged by widgets as described in the "Multiple tracks player" section of the following documentation page: https://developer.spotify.com/technologies/widgets/spotify-play-button/
+        /// </remarks>
+        public void PlayURL(String uri, String context = "")
         {
-            rh.SendPlayRequest(uri);
+            rh.SendPlayRequest(uri, context);
         }
         /// <summary>
         /// Adds a Spotify URI to the Queue

@@ -139,7 +139,7 @@ namespace SpotifyAPI_Example
         {
             //Not working yet
             //if (SpotifyAPI.IsValidSpotifyURI(textBox1.Text))
-            mh.PlayURL(textBox1.Text);
+            mh.PlayURL(textBox1.Text, tbContext.Text);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

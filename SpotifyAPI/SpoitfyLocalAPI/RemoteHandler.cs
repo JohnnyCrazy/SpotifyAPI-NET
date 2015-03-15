@@ -16,7 +16,7 @@ namespace SpotifyAPI.SpotifyLocalAPI
         public String oauthKey { get; private set; }
         public String cfidKey { get; private set; }
 
-        public String host = "127.0.0.1";
+        public String host = "SpotifyAPI.spotilocal.com";
 
         private class ExtendedWebClientInstance : ExtendedWebClient
         {
@@ -59,9 +59,10 @@ namespace SpotifyAPI.SpotifyLocalAPI
             await QueryAsync("remote/pause.json?pause=false", true, true, -1);
         }
 
-        internal async void SendPlayRequest(String url)
+        internal async void SendPlayRequest(String url, String context = "")
         {
-            await QueryAsync("remote/play.json?uri=" + url, true, true, -1);
+            // TODO: instead of having an empty context, one way to fix the bug with the playback time beyond the length of a song would be to provide a 1-song context, and it would be fixed.
+            await QueryAsync(string.Format("remote/play.json?uri={0}&context={1}", url, context), true, true, -1);
         }
 
         internal async void SendQueueRequest(String url)
@@ -174,7 +175,9 @@ namespace SpotifyAPI.SpotifyLocalAPI
                 parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
             }
 
-            string a = "http://" + host + ":4380/" + request + parameters;
+        
+
+            string a = "http://" + host + ":4380/" + request + parameters ;
             string response = "";
             try
             {
