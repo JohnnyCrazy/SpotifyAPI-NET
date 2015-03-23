@@ -51,6 +51,8 @@ namespace SpotifyAPI.SpotifyWebAPI.Models
         public PublicProfile AddedBy { get; set; }
         [JsonProperty("track")]
         public FullTrack Track { get; set; }
+        [JsonProperty("is_local")]
+        public Boolean IsLocal { get; set; }
     }
     public class CreatePlaylistArgs
     {
