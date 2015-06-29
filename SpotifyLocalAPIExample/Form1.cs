@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -137,9 +137,8 @@ namespace SpotifyAPI_Example
 
         private void button5_Click(object sender, EventArgs e)
         {
-            //Not working yet
-            //if (SpotifyAPI.IsValidSpotifyURI(textBox1.Text))
-            mh.PlayURL(textBox1.Text, tbContext.Text);
+            mh.Pause();
+            webBrowser1.Navigate(textBox1.Text);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -148,6 +147,11 @@ namespace SpotifyAPI_Example
                 mh.Mute();
             else
                 mh.UnMute();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
