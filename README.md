@@ -1,4 +1,4 @@
-SpotifyAPI-NET
+SpotifyAPI-NET [![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
 ===
 
 An API for the Spotify-Client and Spotify's Web API, written in .NET  
