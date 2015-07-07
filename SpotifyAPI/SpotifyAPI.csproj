@@ -20,6 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\SpotifyAPI.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,9 +33,9 @@
     <DocumentationFile>bin\Release\SpotifyAPI.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,55 +49,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SpoitfyLocalAPI\CFID.cs" />
-    <Compile Include="SpoitfyLocalAPI\Enum.cs" />
-    <Compile Include="SpoitfyLocalAPI\ExtendedWebClient.cs">
+    <Compile Include="Local\ExtendedWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SpoitfyLocalAPI\SpotifyEventHandler.cs" />
-    <Compile Include="SpoitfyLocalAPI\Events.cs" />
-    <Compile Include="SpoitfyLocalAPI\SpotifyMusicHandler.cs" />
-    <Compile Include="SpoitfyLocalAPI\RemoteHandler.cs" />
-    <Compile Include="SpoitfyLocalAPI\SpotifyAPI.cs" />
+    <Compile Include="Web\IClient.cs" />
+    <Compile Include="Local\Models\CFID.cs" />
+    <Compile Include="Local\Enums\AlbumArtSize.cs" />
+    <Compile Include="Local\Models\OpenGraphState.cs" />
+    <Compile Include="Local\Models\SpotifyResource.cs" />
+    <Compile Include="Local\Models\TrackResourceLocation.cs" />
+    <Compile Include="Local\LocalEvents.cs" />
+    <Compile Include="Local\RemoteHandler.cs" />
+    <Compile Include="Local\SpotifyLocalAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpoitfyLocalAPI\StatusResponse.cs" />
-    <Compile Include="SpoitfyLocalAPI\Track.cs" />
-    <Compile Include="SpotifyWebAPI\AlbumType.cs" />
-    <Compile Include="SpotifyWebAPI\AutorizationCodeAuth.cs" />
-    <Compile Include="SpotifyWebAPI\ClientCredentialsAuth.cs" />
-    <Compile Include="SpotifyWebAPI\FollowType.cs" />
-    <Compile Include="SpotifyWebAPI\ImplicitGrantAuth.cs" />
-    <Compile Include="SpotifyWebAPI\Models\ArrayResponse.cs" />
-    <Compile Include="SpotifyWebAPI\Models\BasicModel.cs" />
-    <Compile Include="SpotifyWebAPI\Models\Category.cs" />
-    <Compile Include="SpotifyWebAPI\Models\CategoryList.cs" />
-    <Compile Include="SpotifyWebAPI\Models\CategoryPlaylist.cs" />
-    <Compile Include="SpotifyWebAPI\Models\FeaturedPlaylists.cs" />
-    <Compile Include="SpotifyWebAPI\Models\FullAlbum.cs" />
-    <Compile Include="SpotifyWebAPI\Models\FullArtist.cs" />
-    <Compile Include="SpotifyWebAPI\Models\FullTrack.cs" />
-    <Compile Include="SpotifyWebAPI\Models\NewAlbumReleases.cs" />
-    <Compile Include="SpotifyWebAPI\Models\SearchItem.cs" />
-    <Compile Include="SpotifyWebAPI\Models\PrivateProfile.cs" />
-    <Compile Include="SpotifyWebAPI\Models\GeneralModels.cs" />
-    <Compile Include="SpotifyWebAPI\Models\FullPlaylist.cs" />
-    <Compile Include="SpotifyWebAPI\Models\PublicProfile.cs" />
-    <Compile Include="SpotifyWebAPI\Models\SimpleAlbum.cs" />
-    <Compile Include="SpotifyWebAPI\Models\SimpleArtist.cs" />
-    <Compile Include="SpotifyWebAPI\Models\SimpleTrack.cs" />
-    <Compile Include="SpotifyWebAPI\Models\Snapshot.cs" />
-    <Compile Include="SpotifyWebAPI\Models\Token.cs" />
-    <Compile Include="SpotifyWebAPI\Models\SimplePlaylist.cs" />
-    <Compile Include="SpotifyWebAPI\Models\Paging.cs" />
-    <Compile Include="SpotifyWebAPI\Scope.cs" />
-    <Compile Include="SpotifyWebAPI\SearchType.cs" />
-    <Compile Include="SpotifyWebAPI\SimpleHttpServer.cs" />
-    <Compile Include="SpotifyWebAPI\SpotifyWebAPIClass.cs" />
-    <Compile Include="SpotifyWebAPI\StringAttribute.cs" />
-    <Compile Include="SpotifyWebAPI\Util.cs" />
+    <Compile Include="Local\Models\StatusResponse.cs" />
+    <Compile Include="Local\Models\Track.cs" />
+    <Compile Include="Web\Enums\AlbumType.cs" />
+    <Compile Include="Web\Auth\AutorizationCodeAuth.cs" />
+    <Compile Include="Web\Auth\ClientCredentialsAuth.cs" />
+    <Compile Include="Web\Enums\FollowType.cs" />
+    <Compile Include="Web\Auth\ImplicitGrantAuth.cs" />
+    <Compile Include="Web\Models\ArrayResponse.cs" />
+    <Compile Include="Web\Models\BasicModel.cs" />
+    <Compile Include="Web\Models\Category.cs" />
+    <Compile Include="Web\Models\CategoryList.cs" />
+    <Compile Include="Web\Models\CategoryPlaylist.cs" />
+    <Compile Include="Web\Models\FeaturedPlaylists.cs" />
+    <Compile Include="Web\Models\FullAlbum.cs" />
+    <Compile Include="Web\Models\FullArtist.cs" />
+    <Compile Include="Web\Models\FullTrack.cs" />
+    <Compile Include="Web\Models\NewAlbumReleases.cs" />
+    <Compile Include="Web\Models\SearchItem.cs" />
+    <Compile Include="Web\Models\PrivateProfile.cs" />
+    <Compile Include="Web\Models\GeneralModels.cs" />
+    <Compile Include="Web\Models\FullPlaylist.cs" />
+    <Compile Include="Web\Models\PublicProfile.cs" />
+    <Compile Include="Web\Models\SimpleAlbum.cs" />
+    <Compile Include="Web\Models\SimpleArtist.cs" />
+    <Compile Include="Web\Models\SimpleTrack.cs" />
+    <Compile Include="Web\Models\Snapshot.cs" />
+    <Compile Include="Web\Models\Token.cs" />
+    <Compile Include="Web\Models\SimplePlaylist.cs" />
+    <Compile Include="Web\Models\Paging.cs" />
+    <Compile Include="Web\Enums\Scope.cs" />
+    <Compile Include="Web\Enums\SearchType.cs" />
+    <Compile Include="Web\SimpleHttpServer.cs" />
+    <Compile Include="Web\SpotifyWebAPI.cs" />
+    <Compile Include="Web\Util.cs" />
+    <Compile Include="Web\SpotifyWebClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
