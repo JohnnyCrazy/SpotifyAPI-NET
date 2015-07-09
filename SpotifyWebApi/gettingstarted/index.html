@@ -7,14 +7,14 @@
         
         <meta name="author" content="JohnnyCrazy">
         
-        <link rel="shortcut icon" href="../img/favicon.ico">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>SpotifyLocalApi - SpotifyAPI-NET</title>
+	<title>Getting started - SpotifyAPI-NET</title>
 
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/agate.min.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -40,7 +40,7 @@
             </button>
 
             <!-- Main title -->
-            <a class="navbar-brand" href="..">SpotifyAPI-NET</a>
+            <a class="navbar-brand" href="../..">SpotifyAPI-NET</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -50,33 +50,33 @@
             
             
                 <li >
-                    <a href="..">Home</a>
+                    <a href="../..">Home</a>
                 </li>
             
             
             
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebApi <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
-                        <li >
-                            <a href="../SpotifyWebApi/gettingstarted/">Getting started</a>
+                        <li class="active">
+                            <a href="./">Getting started</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebApi/examples/">Examples</a>
+                            <a href="../examples/">Examples</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebApi/auth/">Authentication</a>
+                            <a href="../auth/">Authentication</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebApi/albums/">- Albums</a>
+                            <a href="../albums/">- Albums</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebApi/artists/">- Artists</a>
+                            <a href="../artists/">- Artists</a>
                         </li>
                     
                     </ul>
@@ -84,12 +84,12 @@
             
             
             
-                <li class="dropdown active">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalApi <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
-                        <li class="active">
-                            <a href="./">SpotifyLocalApi</a>
+                        <li >
+                            <a href="../../SpotifyLocalApi/">SpotifyLocalApi</a>
                         </li>
                     
                     </ul>
@@ -102,12 +102,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../SpotifyWebApi/artists/">
+                    <a rel="next" href="../..">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li class="disabled">
-                    <a rel="prev" >
+                <li >
+                    <a rel="prev" href="../examples/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -130,22 +130,62 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#wip">WIP</a></li>
+        <li class="main active"><a href="#spotifywebapi">SpotifyWebAPI</a></li>
+        
+    
+        <li class="main "><a href="#getting-started">Getting started</a></li>
+        
+    
+        <li class="main "><a href="#properties">Properties</a></li>
+        
+            <li><a href="#useauth">UseAuth</a></li>
+        
+            <li><a href="#tokentype">TokenType</a></li>
+        
+            <li><a href="#accesstoken">AccessToken</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="wip">WIP</h1></div>
+<h1 id="spotifywebapi">SpotifyWebAPI</h1>
+<p>This API provides full access to the new SpotifyWebAPI introduced <a href="https://developer.spotify.com/web-api/">here</a>.<br />
+With it, you can search for Tracks/Albums/Artists and also get User-based information.<br />
+It's also possible to create new playlists and add tracks to it.</p>
+<hr />
+<h1 id="getting-started">Getting started</h1>
+<p>The API features all currently available features and also provides some examples to get things rolling!<br />
+Full-Method Reference:  </p>
+<ul>
+<li><a href="../test">Albums</a></li>
+</ul>
+<p><a href="../../SpotifyWebApi/examples">Examples</a></p>
+<hr />
+<h1 id="properties">Properties</h1>
+<h2 id="useauth">UseAuth</h2>
+<p>Wether auth should be used or not. User-stuff can only be fetched with auth.<br />
+<strong>NOTE:</strong> If you use auth, you need to provide both, <code>TokenType</code> and <code>AccessToken</code>  </p>
+<pre><code class="csharp">_spotify.UseAuth = false;
+</code></pre>
+
+<h2 id="tokentype">TokenType</h2>
+<p>The token-type. Normally "Bearer" or "Basic".  </p>
+<pre><code class="csharp">_spotify.TokenType = &quot;XXXXXXXXXXXXXXXX&quot;;
+</code></pre>
+
+<h2 id="accesstoken">AccessToken</h2>
+<p>The access-token received by your auth-type.  </p>
+<pre><code class="csharp">_spotify.AccessToken = &quot;XXXXXXXXXXXXXXXX&quot;;
+</code></pre></div>
         </div>
 
         
 
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/base.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/base.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-        <script src="../highlight.js"></script>
+        <script src="../../highlight.js"></script>
     </body>
 </html>

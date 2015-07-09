@@ -1,0 +1,139 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "SpotifyAPI-NET Documentation",
+            "title": "Home"
+        },
+        {
+            "location": "/#spotifyapi-net-documentation",
+            "text": "",
+            "title": "SpotifyAPI-NET Documentation"
+        },
+        {
+            "location": "/SpotifyWebApi/gettingstarted/",
+            "text": "SpotifyWebAPI\n\n\nThis API provides full access to the new SpotifyWebAPI introduced \nhere\n.\n\nWith it, you can search for Tracks/Albums/Artists and also get User-based information.\n\nIt's also possible to create new playlists and add tracks to it.\n\n\n\n\nGetting started\n\n\nThe API features all currently available features and also provides some examples to get things rolling!\n\nFull-Method Reference:  \n\n\n\n\nAlbums\n\n\n\n\nExamples\n\n\n\n\nProperties\n\n\nUseAuth\n\n\nWether auth should be used or not. User-stuff can only be fetched with auth.\n\n\nNOTE:\n If you use auth, you need to provide both, \nTokenType\n and \nAccessToken\n  \n\n\n_spotify.UseAuth = false;\n\n\n\n\nTokenType\n\n\nThe token-type. Normally \"Bearer\" or \"Basic\".  \n\n\n_spotify.TokenType = \nXXXXXXXXXXXXXXXX\n;\n\n\n\n\nAccessToken\n\n\nThe access-token received by your auth-type.  \n\n\n_spotify.AccessToken = \nXXXXXXXXXXXXXXXX\n;",
+            "title": "Getting started"
+        },
+        {
+            "location": "/SpotifyWebApi/gettingstarted/#spotifywebapi",
+            "text": "This API provides full access to the new SpotifyWebAPI introduced  here . \nWith it, you can search for Tracks/Albums/Artists and also get User-based information. \nIt's also possible to create new playlists and add tracks to it.",
+            "title": "SpotifyWebAPI"
+        },
+        {
+            "location": "/SpotifyWebApi/gettingstarted/#getting-started",
+            "text": "The API features all currently available features and also provides some examples to get things rolling! \nFull-Method Reference:     Albums   Examples",
+            "title": "Getting started"
+        },
+        {
+            "location": "/SpotifyWebApi/gettingstarted/#properties",
+            "text": "",
+            "title": "Properties"
+        },
+        {
+            "location": "/SpotifyWebApi/gettingstarted/#useauth",
+            "text": "Wether auth should be used or not. User-stuff can only be fetched with auth.  NOTE:  If you use auth, you need to provide both,  TokenType  and  AccessToken     _spotify.UseAuth = false;",
+            "title": "UseAuth"
+        },
+        {
+            "location": "/SpotifyWebApi/gettingstarted/#tokentype",
+            "text": "The token-type. Normally \"Bearer\" or \"Basic\".    _spotify.TokenType =  XXXXXXXXXXXXXXXX ;",
+            "title": "TokenType"
+        },
+        {
+            "location": "/SpotifyWebApi/gettingstarted/#accesstoken",
+            "text": "The access-token received by your auth-type.    _spotify.AccessToken =  XXXXXXXXXXXXXXXX ;",
+            "title": "AccessToken"
+        },
+        {
+            "location": "/SpotifyWebApi/examples/",
+            "text": "",
+            "title": "Examples"
+        },
+        {
+            "location": "/SpotifyWebApi/auth/",
+            "text": "Auth-Methods\n\n\nBefore you can use the Web API full functional, you need the user to authenticate your Application.\n\nIf you want to know more, you can read to the whole auth-process \nhere\n.\n\n\nBefore you start, you need to create a Application at Spotify: \nYour Applications\n\n\n\n\nAfter you created your Application, you will have following important values:  \n\n\n\n\nClient_Id\n This is your client_id, you don't have to hide it\n\n\nClient_Secret\n Never use this in one of your client-side apps!! Keep it secret!\n\n\nRedirect URIs\n Add \"http://localhost\", if you want full support for this API  \n\n\n\n\nNow you can start with the User-authentication, Spotify provides 3 ways:\n\n\n\n\n\n\nImplicitGrantAuth\n (\nRecommended\n, no server-side code needed)  \n\n\n\n\n\n\nAutorizationCodeAuth\n (Not Recommended, Server-side code needed, else it's unsecure)\n\n\n\n\n\n\nClientCredentialsAuth\n (Not Recommended, Server-side code needed, else it's unsecure)  \n\n\n\n\n\n\nNote:\n I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth. \nWhen using ImplicitGrantAuth, another user could abuse the \"localhost\" RedirectUri by creating a \"fake\"-app which uses your ClientId.\n\n\nOverview:\n\n\n\nAfter implementing one of the provided auth-methods, you can start doing requests with the token you get from one of the auth-methods\n\n\nImplicitGrantAuth\n\n\nThis way is \nrecommended\n and the only auth-process, which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.\nYou won't be able to refresh the token. If you want to use the internal Http server, please add \"http://localhost\" to your application redirects.\n\n\nMore info: \nhere\n\n\nstatic ImplicitGrantAuth auth;\nstatic void Main(string[] args)\n{\n    //Create the auth object\n    auth = new ImplicitGrantAuth()\n    {\n        //Your client Id\n        ClientId = \nXXXXXXXXXXXXXXXX\n,\n        //Set this to localhost if you want to use the built-in HTTP Server\n        RedirectUri = \nhttp://localhost\n,\n        //How many permissions we need?\n        Scope = Scope.USER_READ_PRIVATE,\n    };\n    //Start the internal http server\n    auth.StartHttpServer();\n    //When we got our response\n    auth.OnResponseReceivedEvent += auth_OnResponseReceivedEvent;\n    //Start\n    auth.DoAuth();\n}\n\nstatic void auth_OnResponseReceivedEvent(Token token, string state, string error)\n{\n    //stop the http server\n    auth.StopHttpServer();\n\n    var spotify = new SpotifyWebApiClass()\n    {\n        TokenType = token.TokenType,\n        AccessToken = token.AccessToken\n    };\n    //We can now make calls with the token object\n}\n\n\n\n\nAutorizationCodeAuth\n\n\nThis way is \nnot recommended\n and requires server-side code to run securely.\n\nWith this approach, you first get a code which you need to trade against the access-token.\n\nIn this exchange you need to provide your Client-Secret and because of that it's not recommended.\n\n(But you can e.g exchange to codes via a PHP Script)\n\nA good thing about this method: You can always refresh your token, without having the user to auth it again\n\n\nMore info: \nhere\n\n\nstatic AutorizationCodeAuth auth;\nstatic void Main(string[] args)\n{\n    //Create the auth object\n    auth = new AutorizationCodeAuth()\n    {\n        //Your client Id\n        ClientId = \nXXXXXXXXXXXXXXX\n,\n        //Set this to localhost if you want to use the built-in HTTP Server\n        RedirectUri = \nhttp://localhost\n,\n        //How many permissions we need?\n        Scope = Scope.USER_READ_PRIVATE,\n    };\n    //This will be called, if the user cancled/accept the auth-request\n    auth.OnResponseReceivedEvent += auth_OnResponseReceivedEvent;\n    //a local HTTP Server will be started (Needed for the response)\n    auth.StartHttpServer();\n    //This will open the spotify auth-page. The user can decline/accept the request\n    auth.DoAuth();\n\n    Thread.Sleep(60000);\n    auth.StopHttpServer();\n    Console.WriteLine(\nToo long, didnt respond, exiting now...\n);\n}\n\nprivate static void auth_OnResponseReceivedEvent(AutorizationCodeAuthResponse response)\n{\n    //Stop the HTTP Server, done.\n    auth.StopHttpServer();\n\n    //NEVER DO THIS! You would need to provide the ClientSecret.\n    //You would need to do it e.g via a PHP-Script.\n    Token token = auth.ExchangeAuthCode(response.Code, \nXXXXXXXXXXX\n);\n\n    var spotify = new SpotifyWebApiClass()\n    {\n        TokenType = token.TokenType,\n        AccessToken = token.AccessToken\n    };\n\n    //With the token object, you can now make API calls\n}\n\n\n\n\nClientCredentialsAuth\n\n\nThis way is \nnot recommended\n and requires server-side code to run securely.\n\nWith this approach, you make a POST Request with a base64 encoded string (consists of ClientId + ClientSecret). You will directly get the token (Without a local HTTP Server), but it will expire and can't be refreshed.\n\nIf you want to use it securely, you would need to do it all server-side.\n\n\nNOTE:\n You will only be able to query non-user-related information e.g search for a Track.\n\n\nMore info: \nhere\n\n\nstatic ClientCredentialsAuth auth;\nstatic void Main(string[] args)\n{\n    //Create the auth object\n    auth = new ClientCredentialsAuth()\n    {\n        //Your client Id\n        ClientId = \nXXXXXXXXXXXXXXX\n,\n        //Your client secret UNSECURE!!\n        ClientSecret = \nXXXXXXXXXXXX\n,\n        //How many permissions we need?\n        Scope = Scope.USER_READ_PRIVATE,\n    };\n    //With this token object, we now can make calls \n    Token token = auth.DoAuth();\n    var spotify = new SpotifyWebApiClass()\n    {\n        TokenType = token.TokenType,\n        AccessToken = token.AccessToken,\n        UseAuth = false\n    };\n}",
+            "title": "Authentication"
+        },
+        {
+            "location": "/SpotifyWebApi/auth/#auth-methods",
+            "text": "Before you can use the Web API full functional, you need the user to authenticate your Application. \nIf you want to know more, you can read to the whole auth-process  here .  Before you start, you need to create a Application at Spotify:  Your Applications   After you created your Application, you will have following important values:     Client_Id  This is your client_id, you don't have to hide it  Client_Secret  Never use this in one of your client-side apps!! Keep it secret!  Redirect URIs  Add \"http://localhost\", if you want full support for this API     Now you can start with the User-authentication, Spotify provides 3 ways:    ImplicitGrantAuth  ( Recommended , no server-side code needed)      AutorizationCodeAuth  (Not Recommended, Server-side code needed, else it's unsecure)    ClientCredentialsAuth  (Not Recommended, Server-side code needed, else it's unsecure)      Note:  I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth. \nWhen using ImplicitGrantAuth, another user could abuse the \"localhost\" RedirectUri by creating a \"fake\"-app which uses your ClientId.  Overview:  After implementing one of the provided auth-methods, you can start doing requests with the token you get from one of the auth-methods",
+            "title": "Auth-Methods"
+        },
+        {
+            "location": "/SpotifyWebApi/auth/#implicitgrantauth",
+            "text": "This way is  recommended  and the only auth-process, which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.\nYou won't be able to refresh the token. If you want to use the internal Http server, please add \"http://localhost\" to your application redirects.  More info:  here  static ImplicitGrantAuth auth;\nstatic void Main(string[] args)\n{\n    //Create the auth object\n    auth = new ImplicitGrantAuth()\n    {\n        //Your client Id\n        ClientId =  XXXXXXXXXXXXXXXX ,\n        //Set this to localhost if you want to use the built-in HTTP Server\n        RedirectUri =  http://localhost ,\n        //How many permissions we need?\n        Scope = Scope.USER_READ_PRIVATE,\n    };\n    //Start the internal http server\n    auth.StartHttpServer();\n    //When we got our response\n    auth.OnResponseReceivedEvent += auth_OnResponseReceivedEvent;\n    //Start\n    auth.DoAuth();\n}\n\nstatic void auth_OnResponseReceivedEvent(Token token, string state, string error)\n{\n    //stop the http server\n    auth.StopHttpServer();\n\n    var spotify = new SpotifyWebApiClass()\n    {\n        TokenType = token.TokenType,\n        AccessToken = token.AccessToken\n    };\n    //We can now make calls with the token object\n}",
+            "title": "ImplicitGrantAuth"
+        },
+        {
+            "location": "/SpotifyWebApi/auth/#autorizationcodeauth",
+            "text": "This way is  not recommended  and requires server-side code to run securely. \nWith this approach, you first get a code which you need to trade against the access-token. \nIn this exchange you need to provide your Client-Secret and because of that it's not recommended. \n(But you can e.g exchange to codes via a PHP Script) \nA good thing about this method: You can always refresh your token, without having the user to auth it again  More info:  here  static AutorizationCodeAuth auth;\nstatic void Main(string[] args)\n{\n    //Create the auth object\n    auth = new AutorizationCodeAuth()\n    {\n        //Your client Id\n        ClientId =  XXXXXXXXXXXXXXX ,\n        //Set this to localhost if you want to use the built-in HTTP Server\n        RedirectUri =  http://localhost ,\n        //How many permissions we need?\n        Scope = Scope.USER_READ_PRIVATE,\n    };\n    //This will be called, if the user cancled/accept the auth-request\n    auth.OnResponseReceivedEvent += auth_OnResponseReceivedEvent;\n    //a local HTTP Server will be started (Needed for the response)\n    auth.StartHttpServer();\n    //This will open the spotify auth-page. The user can decline/accept the request\n    auth.DoAuth();\n\n    Thread.Sleep(60000);\n    auth.StopHttpServer();\n    Console.WriteLine( Too long, didnt respond, exiting now... );\n}\n\nprivate static void auth_OnResponseReceivedEvent(AutorizationCodeAuthResponse response)\n{\n    //Stop the HTTP Server, done.\n    auth.StopHttpServer();\n\n    //NEVER DO THIS! You would need to provide the ClientSecret.\n    //You would need to do it e.g via a PHP-Script.\n    Token token = auth.ExchangeAuthCode(response.Code,  XXXXXXXXXXX );\n\n    var spotify = new SpotifyWebApiClass()\n    {\n        TokenType = token.TokenType,\n        AccessToken = token.AccessToken\n    };\n\n    //With the token object, you can now make API calls\n}",
+            "title": "AutorizationCodeAuth"
+        },
+        {
+            "location": "/SpotifyWebApi/auth/#clientcredentialsauth",
+            "text": "This way is  not recommended  and requires server-side code to run securely. \nWith this approach, you make a POST Request with a base64 encoded string (consists of ClientId + ClientSecret). You will directly get the token (Without a local HTTP Server), but it will expire and can't be refreshed. \nIf you want to use it securely, you would need to do it all server-side.  NOTE:  You will only be able to query non-user-related information e.g search for a Track.  More info:  here  static ClientCredentialsAuth auth;\nstatic void Main(string[] args)\n{\n    //Create the auth object\n    auth = new ClientCredentialsAuth()\n    {\n        //Your client Id\n        ClientId =  XXXXXXXXXXXXXXX ,\n        //Your client secret UNSECURE!!\n        ClientSecret =  XXXXXXXXXXXX ,\n        //How many permissions we need?\n        Scope = Scope.USER_READ_PRIVATE,\n    };\n    //With this token object, we now can make calls \n    Token token = auth.DoAuth();\n    var spotify = new SpotifyWebApiClass()\n    {\n        TokenType = token.TokenType,\n        AccessToken = token.AccessToken,\n        UseAuth = false\n    };\n}",
+            "title": "ClientCredentialsAuth"
+        },
+        {
+            "location": "/SpotifyWebApi/albums/",
+            "text": "GetAlbumTracks\n\n\n\n\nGet Spotify catalog information about an album's tracks. Optional parameters can be used to limit the number of tracks returned.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe Spotify ID for the album.\n\n\nEXAMPLE\n\n\n\n\n\n\nlimit\n\n\nThe maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.\n\n\nEXAMPLE\n\n\n\n\n\n\noffset\n\n\nThe index of the first track to return. Default: 0 (the first object).\n\n\nEXAMPLE\n\n\n\n\n\n\nmarket\n\n\nAn ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage\n  \n\n\n\n\n\n\n\nGetAlbum\n\n\n\n\nGet Spotify catalog information for a single album.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe Spotify ID for the album.\n\n\nEXAMPLE\n\n\n\n\n\n\nmarket\n\n\nAn ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage\n  \n\n\n\n\n\n\n\nGetSeveralAlbums\n\n\n\n\nGet Spotify catalog information for multiple albums identified by their Spotify IDs.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nids\n\n\nA list of the Spotify IDs for the albums. Maximum: 20 IDs.\n\n\nEXAMPLE\n\n\n\n\n\n\nmarket\n\n\nAn ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage",
+            "title": "- Albums"
+        },
+        {
+            "location": "/SpotifyWebApi/albums/#getalbumtracks",
+            "text": "Get Spotify catalog information about an album's tracks. Optional parameters can be used to limit the number of tracks returned.   Paramters        Name  Description  Example      id  The Spotify ID for the album.  EXAMPLE    limit  The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.  EXAMPLE    offset  The index of the first track to return. Default: 0 (the first object).  EXAMPLE    market  An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetAlbumTracks"
+        },
+        {
+            "location": "/SpotifyWebApi/albums/#getalbum",
+            "text": "Get Spotify catalog information for a single album.   Paramters        Name  Description  Example      id  The Spotify ID for the album.  EXAMPLE    market  An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetAlbum"
+        },
+        {
+            "location": "/SpotifyWebApi/albums/#getseveralalbums",
+            "text": "Get Spotify catalog information for multiple albums identified by their Spotify IDs.   Paramters        Name  Description  Example      ids  A list of the Spotify IDs for the albums. Maximum: 20 IDs.  EXAMPLE    market  An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetSeveralAlbums"
+        },
+        {
+            "location": "/SpotifyWebApi/artists/",
+            "text": "GetArtist\n\n\n\n\nGet Spotify catalog information for a single artist identified by their unique Spotify ID.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe Spotify ID for the artist.\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage\n  \n\n\n\n\n\n\n\nGetRelatedArtists\n\n\n\n\nGet Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe Spotify ID for the artist.\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage\n  \n\n\n\n\n\n\n\nGetArtistsTopTracks\n\n\n\n\nGet Spotify catalog information about an artist's top tracks by country.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe Spotify ID for the artist.\n\n\nEXAMPLE\n\n\n\n\n\n\ncountry\n\n\nThe country: an ISO 3166-1 alpha-2 country code.\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage\n  \n\n\n\n\n\n\n\nGetArtistsAlbums\n\n\n\n\nGet Spotify catalog information about an artist's albums. Optional parameters can be specified in the query string to filter and sort the response.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nid\n\n\nThe Spotify ID for the artist.\n\n\nEXAMPLE\n\n\n\n\n\n\ntype\n\n\nA list of keywords that will be used to filter the response. If not supplied, all album types will be returned\n\n\nEXAMPLE\n\n\n\n\n\n\nlimit\n\n\nThe maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.\n\n\nEXAMPLE\n\n\n\n\n\n\noffset\n\n\nThe index of the first album to return. Default: 0\n\n\nEXAMPLE\n\n\n\n\n\n\nmarket\n\n\nAn ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage\n  \n\n\n\n\n\n\n\nGetSeveralArtists\n\n\n\n\nGet Spotify catalog information for several artists based on their Spotify IDs.\n\n\n\n\nParamters\n  \n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nids\n\n\nA list of the Spotify IDs for the artists. Maximum: 50 IDs.\n\n\nEXAMPLE\n\n\n\n\n\n\n\n\nReturns a \nPublic User Model\n\n\nUsage",
+            "title": "- Artists"
+        },
+        {
+            "location": "/SpotifyWebApi/artists/#getartist",
+            "text": "Get Spotify catalog information for a single artist identified by their unique Spotify ID.   Paramters        Name  Description  Example      id  The Spotify ID for the artist.  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetArtist"
+        },
+        {
+            "location": "/SpotifyWebApi/artists/#getrelatedartists",
+            "text": "Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.   Paramters        Name  Description  Example      id  The Spotify ID for the artist.  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetRelatedArtists"
+        },
+        {
+            "location": "/SpotifyWebApi/artists/#getartiststoptracks",
+            "text": "Get Spotify catalog information about an artist's top tracks by country.   Paramters        Name  Description  Example      id  The Spotify ID for the artist.  EXAMPLE    country  The country: an ISO 3166-1 alpha-2 country code.  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetArtistsTopTracks"
+        },
+        {
+            "location": "/SpotifyWebApi/artists/#getartistsalbums",
+            "text": "Get Spotify catalog information about an artist's albums. Optional parameters can be specified in the query string to filter and sort the response.   Paramters        Name  Description  Example      id  The Spotify ID for the artist.  EXAMPLE    type  A list of keywords that will be used to filter the response. If not supplied, all album types will be returned  EXAMPLE    limit  The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.  EXAMPLE    offset  The index of the first album to return. Default: 0  EXAMPLE    market  An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetArtistsAlbums"
+        },
+        {
+            "location": "/SpotifyWebApi/artists/#getseveralartists",
+            "text": "Get Spotify catalog information for several artists based on their Spotify IDs.   Paramters        Name  Description  Example      ids  A list of the Spotify IDs for the artists. Maximum: 50 IDs.  EXAMPLE     Returns a  Public User Model  Usage",
+            "title": "GetSeveralArtists"
+        },
+        {
+            "location": "/SpotifyLocalApi/",
+            "text": "WIP",
+            "title": "SpotifyLocalApi"
+        },
+        {
+            "location": "/SpotifyLocalApi/#wip",
+            "text": "",
+            "title": "WIP"
+        }
+    ]
+}
