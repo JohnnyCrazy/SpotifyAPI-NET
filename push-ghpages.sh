@@ -14,7 +14,7 @@ cd gh-pages
 git rm -rf ./ 2> /dev/null
 cp -Rf ../../site/* ./
 git add -f .
-git commit -m "Automatic built mkdocs | Travis Build $TRAVIS_BUILD_NUMBER pushed"
+git commit -m "Built mkdocs | Travis Build $TRAVIS_BUILD_NUMBER"
 git push -fq origin gh-pages > /dev/null
 
 echo -e "Done"
