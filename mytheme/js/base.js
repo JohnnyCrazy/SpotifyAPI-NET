@@ -2,8 +2,8 @@
 /* Prettyify */
 $( document ).ready(function() {
     hljs.initHighlightingOnLoad();
+    $('table').addClass('table table-striped table-hover');
 });
-
 
 /* Scrollspy */
 var navHeight = $('.navbar').outerHeight(true) + 10
