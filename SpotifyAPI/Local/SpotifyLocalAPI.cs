@@ -202,6 +202,7 @@ namespace SpotifyAPI.Local
         /// Adds a Spotify URI to the Queue
         /// </summary>
         /// <param name="uri">The Spotify URI</param>
+        [Obsolete("This method doesn't work with the current spotify version.")]
         public void AddToQueue(String uri)
         {
             _rh.SendQueueRequest(uri);
