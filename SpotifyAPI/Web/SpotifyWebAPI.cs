@@ -37,29 +37,235 @@ namespace SpotifyAPI.Web
             WebClient.Dispose();
         }
 
-        #region User
+        #region Albums
 
         /// <summary>
-        ///     Get detailed profile information about the current user (including the current user’s username).
+        ///     Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
         /// </summary>
+        /// <param name="id">The Spotify ID for the album.</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first track to return. Default: 0 (the first object).</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
-        public PrivateProfile GetPrivateProfile()
+        public Paging<SimpleTrack> GetAlbumTracks(String id, int limit = 20, int offset = 0, String market = "")
+        {
+            limit = Math.Min(limit, 50);
+            StringBuilder builder = new StringBuilder(APIBase + "/albums/" + id + "/tracks");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (market != "")
+                builder.Append("&market=" + market);
+            return DownloadData<Paging<SimpleTrack>>(builder.ToString());
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information for a single album.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the album.</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        public FullAlbum GetAlbum(String id, String market = "")
+        {
+            if (market == "")
+                return DownloadData<FullAlbum>(APIBase + "/albums/" + id);
+            return DownloadData<FullAlbum>(APIBase + "/albums/" + id + "?market=" + market);
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information for multiple albums identified by their Spotify IDs.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs for the albums. Maximum: 20 IDs.</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        public SeveralAlbums GetSeveralAlbums(List<String> ids, String market = "")
+        {
+            if (market == "")
+                return DownloadData<SeveralAlbums>(APIBase + "/albums?ids=" + string.Join(",", ids.Take(20)));
+            return DownloadData<SeveralAlbums>(APIBase + "/albums?market=" + market + "&ids=" + string.Join(",", ids.Take(20)));
+        }
+
+        #endregion
+
+        #region Artists
+
+        /// <summary>
+        ///     Get Spotify catalog information for a single artist identified by their unique Spotify ID.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the artist.</param>
+        /// <returns></returns>
+        public FullArtist GetArtist(String id)
+        {
+            return DownloadData<FullArtist>(APIBase + "/artists/" + id);
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the
+        ///     Spotify community’s listening history.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the artist.</param>
+        /// <returns></returns>
+        public SeveralArtists GetRelatedArtists(String id)
+        {
+            return DownloadData<SeveralArtists>(APIBase + "/artists/" + id + "/related-artists");
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information about an artist’s top tracks by country.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the artist.</param>
+        /// <param name="country">The country: an ISO 3166-1 alpha-2 country code.</param>
+        /// <returns></returns>
+        public SeveralTracks GetArtistsTopTracks(String id, String country)
+        {
+            return DownloadData<SeveralTracks>(APIBase + "/artists/" + id + "/top-tracks?country=" + country);
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information about an artist’s albums. Optional parameters can be specified in the query string to filter and sort the response.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the artist.</param>
+        /// <param name="type">A list of keywords that will be used to filter the response. If not supplied, all album types will be returned</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first album to return. Default: 0</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market</param>
+        /// <returns></returns>
+        public Paging<SimpleAlbum> GetArtistsAlbums(String id, AlbumType type = AlbumType.All, int limit = 20, int offset = 0, String market = "")
+        {
+            limit = Math.Min(limit, 50);
+            StringBuilder builder = new StringBuilder(APIBase + "/artists/" + id + "/albums");
+            builder.Append("?type=" + type.GetStringAttribute(","));
+            builder.Append("&limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (market != "")
+                builder.Append("&market=" + market);
+            return DownloadData<Paging<SimpleAlbum>>(builder.ToString());
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information for several artists based on their Spotify IDs.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs for the artists. Maximum: 50 IDs.</param>
+        /// <returns></returns>
+        public SeveralArtists GetSeveralArtists(List<String> ids)
+        {
+            return DownloadData<SeveralArtists>(APIBase + "/artists?ids=" + string.Join(",", ids.Take(50)));
+        }
+
+        #endregion
+
+        #region Browse
+
+        /// <summary>
+        ///     Get a list of Spotify featured playlists (shown, for example, on a Spotify player’s “Browse” tab).
+        /// </summary>
+        /// <param name="locale">
+        ///     The desired language, consisting of a lowercase ISO 639 language code and an uppercase ISO 3166-1
+        ///     alpha-2 country code, joined by an underscore.
+        /// </param>
+        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code.</param>
+        /// <param name="timestamp">A timestamp in ISO 8601 format</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first item to return. Default: 0</param>
+        /// <returns></returns>
+        public FeaturedPlaylists GetFeaturedPlaylists(String locale = "", String country = "", DateTime timestamp = default(DateTime), int limit = 20, int offset = 0)
         {
             if (!UseAuth)
-                throw new InvalidOperationException("Auth is required for GetPrivateProfile");
-            return DownloadData<PrivateProfile>(APIBase + "/me");
+                throw new InvalidOperationException("Auth is required for GetFeaturedPlaylists");
+            limit = Math.Max(limit, 50);
+            StringBuilder builder = new StringBuilder(APIBase + "/browse/featured-playlists");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (locale != "")
+                builder.Append("&locale=" + locale);
+            if (country != "")
+                builder.Append("&country=" + country);
+            if (timestamp != default(DateTime))
+                builder.Append("&timestamp=" + timestamp.ToString("yyyy-MM-ddTHH:mm:ss"));
+            return DownloadData<FeaturedPlaylists>(builder.ToString());
         }
 
         /// <summary>
-        ///     Get public profile information about a Spotify user.
+        ///     Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
         /// </summary>
-        /// <param name="userId">The user's Spotify user ID.</param>
+        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code.</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first item to return. Default: 0</param>
         /// <returns></returns>
-        public PublicProfile GetPublicProfile(String userId)
+        public NewAlbumReleases GetNewAlbumReleases(String country = "", int limit = 20, int offset = 0)
         {
-            return DownloadData<PublicProfile>(APIBase + "/users/" + userId);
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for GetNewAlbumReleases");
+            limit = Math.Max(limit, 50);
+            StringBuilder builder = new StringBuilder(APIBase + "/browse/new-releases");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (country != "")
+                builder.Append("&country=" + country);
+            return DownloadData<NewAlbumReleases>(builder.ToString());
         }
+
+        /// <summary>
+        ///     Get a list of categories used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
+        /// </summary>
+        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code. Provide this parameter if you want to narrow the list of returned categories to those relevant to a particular country</param>
+        /// <param name="locale">The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</param>
+        /// <param name="limit">The maximum number of categories to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+        /// <param name="offset">The index of the first item to return. Default: 0 (the first object).</param>
+        /// <returns></returns>
+        public CategoryList GetCategories(String country = "", String locale = "", int limit = 20, int offset = 0)
+        {
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for GetCategories");
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder(APIBase + "/browse/categories");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (country != "")
+                builder.Append("&country=" + country);
+            if (locale != "")
+                builder.Append("&locale=" + locale);
+            return DownloadData<CategoryList>(builder.ToString());
+        }
+
+        /// <summary>
+        ///     Get a single category used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
+        /// </summary>
+        /// <param name="categoryId">The Spotify category ID for the category.</param>
+        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code. Provide this parameter to ensure that the category exists for a particular country.</param>
+        /// <param name="locale">The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</param>
+        /// <returns></returns>
+        public Category GetCategory(String categoryId, String country = "", String locale = "")
+        {
+            StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId);
+            if (country != "")
+                builder.Append("?country=" + country);
+            if (locale != "")
+                builder.Append((country == "" ? "?locale=" : "&locale=") + locale);
+            return DownloadData<Category>(builder.ToString());
+        }
+
+        /// <summary>
+        ///     Get a list of Spotify playlists tagged with a particular category.
+        /// </summary>
+        /// <param name="categoryId">The Spotify category ID for the category.</param>
+        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code.</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first item to return. Default: 0</param>
+        /// <returns></returns>
+        public CategoryPlaylist GetCategoryPlaylists(String categoryId, String country = "", int limit = 20, int offset = 0)
+        {
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId + "/playlists");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (country != "")
+                builder.Append("&country=" + country);
+            return DownloadData<CategoryPlaylist>(builder.ToString());
+        }
+
+        #endregion
+
+        #region Follow
 
         /// <summary>
         ///     Add the current user as a follower of one or more artists or other Spotify users.
@@ -86,7 +292,7 @@ namespace SpotifyAPI.Web
         /// <remarks>Needs Authorization</remarks>
         public ErrorResponse Follow(FollowType followType, String id)
         {
-            return Follow(followType, new List<string> {id});
+            return Follow(followType, new List<string> { id });
         }
 
         /// <summary>
@@ -114,7 +320,7 @@ namespace SpotifyAPI.Web
         /// <remarks>Needs Authorization</remarks>
         public ErrorResponse Unfollow(FollowType followType, String id)
         {
-            return Unfollow(followType, new List<string> {id});
+            return Unfollow(followType, new List<string> { id });
         }
 
         /// <summary>
@@ -130,8 +336,8 @@ namespace SpotifyAPI.Web
                 throw new InvalidOperationException("Auth is required for IsFollowing");
             JToken res = DownloadData<JToken>(APIBase + "/me/following/contains?type=" + followType.GetStringAttribute("") + "&ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
-            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
         }
 
         /// <summary>
@@ -143,12 +349,74 @@ namespace SpotifyAPI.Web
         /// <remarks>Needs Authorization</remarks>
         public ListResponse<Boolean> IsFollowing(FollowType followType, String id)
         {
-            return IsFollowing(followType, new List<string> {id});
+            return IsFollowing(followType, new List<string> { id });
+        }
+
+        /// <summary>
+        ///     Add the current user as a follower of a playlist.
+        /// </summary>
+        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
+        /// <param name="playlistId">
+        ///     The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private
+        ///     status, as long as you know its playlist ID.
+        /// </param>
+        /// <param name="showPublic">
+        ///     If true the playlist will be included in user's public playlists, if false it will remain
+        ///     private.
+        /// </param>
+        /// <returns></returns>
+        public ErrorResponse FollowPlaylist(String ownerId, String playlistId, bool showPublic = true)
+        {
+            JObject body = new JObject
+            {
+                {"public", showPublic}
+            };
+            return UploadData<ErrorResponse>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers", body.ToString(Formatting.None), "PUT");
+        }
+
+        /// <summary>
+        ///     Remove the current user as a follower of a playlist.
+        /// </summary>
+        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
+        /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
+        /// <returns></returns>
+        public ErrorResponse UnfollowPlaylist(String ownerId, String playlistId)
+        {
+            return UploadData<ErrorResponse>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers", "", "DELETE");
+        }
+
+        /// <summary>
+        ///     Check to see if one or more Spotify users are following a specified playlist.
+        /// </summary>
+        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
+        /// <param name="playlistId">The Spotify ID of the playlist.</param>
+        /// <param name="ids">A list of Spotify User IDs</param>
+        /// <returns></returns>
+        public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, List<String> ids)
+        {
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
+            JToken res = DownloadData<JToken>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers/contains?ids=" + string.Join(",", ids));
+            if (res is JArray)
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+        }
+
+        /// <summary>
+        ///     Check to see if one or more Spotify users are following a specified playlist.
+        /// </summary>
+        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
+        /// <param name="playlistId">The Spotify ID of the playlist.</param>
+        /// <param name="id">A Spotify User ID</param>
+        /// <returns></returns>
+        public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, String id)
+        {
+            return IsFollowingPlaylist(ownerId, playlistId, new List<string> { id });
         }
 
         #endregion
 
-        #region User-Library
+        #region Library
 
         /// <summary>
         ///     Save one or more tracks to the current user’s “Your Music” library.
@@ -170,7 +438,7 @@ namespace SpotifyAPI.Web
         /// <remarks>Needs Authorization</remarks>
         public ErrorResponse SaveTrack(String id)
         {
-            return SaveTracks(new List<string> {id});
+            return SaveTracks(new List<string> { id });
         }
 
         /// <summary>
@@ -218,13 +486,13 @@ namespace SpotifyAPI.Web
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
             JToken res = DownloadData<JToken>(APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
-            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
         }
 
         #endregion
 
-        #region Playlist
+        #region Playlists
 
         /// <summary>
         ///     Get a list of the playlists owned or followed by a Spotify user.
@@ -378,7 +646,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public ErrorResponse RemovePlaylistTrack(String userId, String playlistId, DeleteTrackUri uri)
         {
-            return RemovePlaylistTracks(userId, playlistId, new List<DeleteTrackUri> {uri});
+            return RemovePlaylistTracks(userId, playlistId, new List<DeleteTrackUri> { uri });
         }
 
         /// <summary>
@@ -410,7 +678,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public ErrorResponse AddPlaylistTrack(String userId, String playlistId, String uri, int? position = null)
         {
-            return AddPlaylistTracks(userId, playlistId, new List<string> {uri}, position);
+            return AddPlaylistTracks(userId, playlistId, new List<string> { uri }, position);
         }
 
         /// <summary>
@@ -437,120 +705,35 @@ namespace SpotifyAPI.Web
             return UploadData<Snapshot>(APIBase + "/users/" + userId + "/playlists/" + playlistId + "/tracks", body.ToString(Formatting.None), "PUT");
         }
 
+        #endregion
+
+        #region Profiles
+
         /// <summary>
-        ///     Get a list of Spotify featured playlists (shown, for example, on a Spotify player’s “Browse” tab).
+        ///     Get detailed profile information about the current user (including the current user’s username).
         /// </summary>
-        /// <param name="locale">
-        ///     The desired language, consisting of a lowercase ISO 639 language code and an uppercase ISO 3166-1
-        ///     alpha-2 country code, joined by an underscore.
-        /// </param>
-        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code.</param>
-        /// <param name="timestamp">A timestamp in ISO 8601 format</param>
-        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
-        /// <param name="offset">The index of the first item to return. Default: 0</param>
         /// <returns></returns>
-        public FeaturedPlaylists GetFeaturedPlaylists(String locale = "", String country = "", DateTime timestamp = default(DateTime), int limit = 20, int offset = 0)
+        /// <remarks>Needs Authorization</remarks>
+        public PrivateProfile GetPrivateProfile()
         {
             if (!UseAuth)
-                throw new InvalidOperationException("Auth is required for GetFeaturedPlaylists");
-            limit = Math.Max(limit, 50);
-            StringBuilder builder = new StringBuilder(APIBase + "/browse/featured-playlists");
-            builder.Append("?limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (locale != "")
-                builder.Append("&locale=" + locale);
-            if (country != "")
-                builder.Append("&country=" + country);
-            if (timestamp != default(DateTime))
-                builder.Append("&timestamp=" + timestamp.ToString("yyyy-MM-ddTHH:mm:ss"));
-            return DownloadData<FeaturedPlaylists>(builder.ToString());
+                throw new InvalidOperationException("Auth is required for GetPrivateProfile");
+            return DownloadData<PrivateProfile>(APIBase + "/me");
         }
 
         /// <summary>
-        ///     Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
+        ///     Get public profile information about a Spotify user.
         /// </summary>
-        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code.</param>
-        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
-        /// <param name="offset">The index of the first item to return. Default: 0</param>
+        /// <param name="userId">The user's Spotify user ID.</param>
         /// <returns></returns>
-        public NewAlbumReleases GetNewAlbumReleases(String country = "", int limit = 20, int offset = 0)
+        public PublicProfile GetPublicProfile(String userId)
         {
-            if (!UseAuth)
-                throw new InvalidOperationException("Auth is required for GetNewAlbumReleases");
-            limit = Math.Max(limit, 50);
-            StringBuilder builder = new StringBuilder(APIBase + "/browse/new-releases");
-            builder.Append("?limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (country != "")
-                builder.Append("&country=" + country);
-            return DownloadData<NewAlbumReleases>(builder.ToString());
-        }
-
-        /// <summary>
-        ///     Add the current user as a follower of a playlist.
-        /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
-        /// <param name="playlistId">
-        ///     The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private
-        ///     status, as long as you know its playlist ID.
-        /// </param>
-        /// <param name="showPublic">
-        ///     If true the playlist will be included in user's public playlists, if false it will remain
-        ///     private.
-        /// </param>
-        /// <returns></returns>
-        public ErrorResponse FollowPlaylist(String ownerId, String playlistId, bool showPublic = true)
-        {
-            JObject body = new JObject
-            {
-                {"public", showPublic}
-            };
-            return UploadData<ErrorResponse>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers", body.ToString(Formatting.None), "PUT");
-        }
-
-        /// <summary>
-        ///     Remove the current user as a follower of a playlist.
-        /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
-        /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
-        /// <returns></returns>
-        public ErrorResponse UnfollowPlaylist(String ownerId, String playlistId)
-        {
-            return UploadData<ErrorResponse>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers", "", "DELETE");
-        }
-
-        /// <summary>
-        ///     Check to see if one or more Spotify users are following a specified playlist.
-        /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
-        /// <param name="playlistId">The Spotify ID of the playlist.</param>
-        /// <param name="ids">A list of Spotify User IDs</param>
-        /// <returns></returns>
-        public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, List<String> ids)
-        {
-            if (!UseAuth)
-                throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
-            JToken res = DownloadData<JToken>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers/contains?ids=" + string.Join(",", ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
-            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
-        }
-
-        /// <summary>
-        ///     Check to see if one or more Spotify users are following a specified playlist.
-        /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
-        /// <param name="playlistId">The Spotify ID of the playlist.</param>
-        /// <param name="id">A Spotify User ID</param>
-        /// <returns></returns>
-        public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, String id)
-        {
-            return IsFollowingPlaylist(ownerId, playlistId, new List<string> {id});
+            return DownloadData<PublicProfile>(APIBase + "/users/" + userId);
         }
 
         #endregion
 
-        #region Search and Fetch
+        #region Search
 
         /// <summary>
         ///     Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.
@@ -574,6 +757,10 @@ namespace SpotifyAPI.Web
             return DownloadData<SearchItem>(builder.ToString());
         }
 
+        #endregion
+
+        #region Tracks
+
         /// <summary>
         ///     Get Spotify catalog information for multiple tracks based on their Spotify IDs.
         /// </summary>
@@ -588,29 +775,6 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Get Spotify catalog information for multiple albums identified by their Spotify IDs.
-        /// </summary>
-        /// <param name="ids">A list of the Spotify IDs for the albums. Maximum: 20 IDs.</param>
-        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
-        /// <returns></returns>
-        public SeveralAlbums GetSeveralAlbums(List<String> ids, String market = "")
-        {
-            if (market == "")
-                return DownloadData<SeveralAlbums>(APIBase + "/albums?ids=" + string.Join(",", ids.Take(20)));
-            return DownloadData<SeveralAlbums>(APIBase + "/albums?market=" + market + "&ids=" + string.Join(",", ids.Take(20)));
-        }
-
-        /// <summary>
-        ///     Get Spotify catalog information for several artists based on their Spotify IDs.
-        /// </summary>
-        /// <param name="ids">A list of the Spotify IDs for the artists. Maximum: 50 IDs.</param>
-        /// <returns></returns>
-        public SeveralArtists GetSeveralArtists(List<String> ids)
-        {
-            return DownloadData<SeveralArtists>(APIBase + "/artists?ids=" + string.Join(",", ids.Take(50)));
-        }
-
-        /// <summary>
         ///     Get Spotify catalog information for a single track identified by its unique Spotify ID.
         /// </summary>
         /// <param name="id">The Spotify ID for the track.</param>
@@ -621,154 +785,6 @@ namespace SpotifyAPI.Web
             if (market == "")
                 return DownloadData<FullTrack>(APIBase + "/tracks/" + id);
             return DownloadData<FullTrack>(APIBase + "/tracks/" + id + "?market=" + market);
-        }
-
-        /// <summary>
-        ///     Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the
-        ///     Spotify community’s listening history.
-        /// </summary>
-        /// <param name="id">The Spotify ID for the artist.</param>
-        /// <returns></returns>
-        public SeveralArtists GetRelatedArtists(String id)
-        {
-            return DownloadData<SeveralArtists>(APIBase + "/artists/" + id + "/related-artists");
-        }
-
-        /// <summary>
-        ///     Get Spotify catalog information about an artist’s top tracks by country.
-        /// </summary>
-        /// <param name="id">The Spotify ID for the artist.</param>
-        /// <param name="country">The country: an ISO 3166-1 alpha-2 country code.</param>
-        /// <returns></returns>
-        public SeveralTracks GetArtistsTopTracks(String id, String country)
-        {
-            return DownloadData<SeveralTracks>(APIBase + "/artists/" + id + "/top-tracks?country=" + country);
-        }
-
-        /// <summary>
-        ///     Get Spotify catalog information about an artist’s albums. Optional parameters can be specified in the query string to filter and sort the response.
-        /// </summary>
-        /// <param name="id">The Spotify ID for the artist.</param>
-        /// <param name="type">A list of keywords that will be used to filter the response. If not supplied, all album types will be returned</param>
-        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
-        /// <param name="offset">The index of the first album to return. Default: 0</param>
-        /// <param name="market">An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market</param>
-        /// <returns></returns>
-        public Paging<SimpleAlbum> GetArtistsAlbums(String id, AlbumType type = AlbumType.All, int limit = 20, int offset = 0, String market = "")
-        {
-            limit = Math.Min(limit, 50);
-            StringBuilder builder = new StringBuilder(APIBase + "/artists/" + id + "/albums");
-            builder.Append("?type=" + type.GetStringAttribute(","));
-            builder.Append("&limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (market != "")
-                builder.Append("&market=" + market);
-            return DownloadData<Paging<SimpleAlbum>>(builder.ToString());
-        }
-
-        /// <summary>
-        ///     Get Spotify catalog information for a single artist identified by their unique Spotify ID.
-        /// </summary>
-        /// <param name="id">The Spotify ID for the artist.</param>
-        /// <returns></returns>
-        public FullArtist GetArtist(String id)
-        {
-            return DownloadData<FullArtist>(APIBase + "/artists/" + id);
-        }
-
-        /// <summary>
-        ///     Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
-        /// </summary>
-        /// <param name="id">The Spotify ID for the album.</param>
-        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
-        /// <param name="offset">The index of the first track to return. Default: 0 (the first object).</param>
-        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
-        /// <returns></returns>
-        public Paging<SimpleTrack> GetAlbumTracks(String id, int limit = 20, int offset = 0, String market = "")
-        {
-            limit = Math.Min(limit, 50);
-            StringBuilder builder = new StringBuilder(APIBase + "/albums/" + id + "/tracks");
-            builder.Append("?limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (market != "")
-                builder.Append("&market=" + market);
-            return DownloadData<Paging<SimpleTrack>>(builder.ToString());
-        }
-
-        /// <summary>
-        ///     Get Spotify catalog information for a single album.
-        /// </summary>
-        /// <param name="id">The Spotify ID for the album.</param>
-        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
-        /// <returns></returns>
-        public FullAlbum GetAlbum(String id, String market = "")
-        {
-            if (market == "")
-                return DownloadData<FullAlbum>(APIBase + "/albums/" + id);
-            return DownloadData<FullAlbum>(APIBase + "/albums/" + id + "?market=" + market);
-        }
-
-        #endregion
-
-        #region Category
-
-        /// <summary>
-        ///     Get a list of categories used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
-        /// </summary>
-        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code. Provide this parameter if you want to narrow the list of returned categories to those relevant to a particular country</param>
-        /// <param name="locale">The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</param>
-        /// <param name="limit">The maximum number of categories to return. Default: 20. Minimum: 1. Maximum: 50. </param>
-        /// <param name="offset">The index of the first item to return. Default: 0 (the first object).</param>
-        /// <returns></returns>
-        public CategoryList GetCategories(String country = "", String locale = "", int limit = 20, int offset = 0)
-        {
-            if(!UseAuth)
-                throw new InvalidOperationException("Auth is required for GetCategories");
-            limit = Math.Min(50, limit);
-            StringBuilder builder = new StringBuilder(APIBase + "/browse/categories");
-            builder.Append("?limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (country != "")
-                builder.Append("&country=" + country);
-            if (locale != "")
-                builder.Append("&locale=" + locale);
-            return DownloadData<CategoryList>(builder.ToString());
-        }
-
-        /// <summary>
-        ///     Get a single category used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
-        /// </summary>
-        /// <param name="categoryId">The Spotify category ID for the category.</param>
-        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code. Provide this parameter to ensure that the category exists for a particular country.</param>
-        /// <param name="locale">The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</param>
-        /// <returns></returns>
-        public Category GetCategory(String categoryId, String country = "", String locale = "")
-        {
-            StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId);
-            if (country != "")
-                builder.Append("?country=" + country);
-            if (locale != "")
-                builder.Append((country == "" ? "?locale=" : "&locale=") + locale);
-            return DownloadData<Category>(builder.ToString());
-        }
-
-        /// <summary>
-        ///     Get a list of Spotify playlists tagged with a particular category.
-        /// </summary>
-        /// <param name="categoryId">The Spotify category ID for the category.</param>
-        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code.</param>
-        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
-        /// <param name="offset">The index of the first item to return. Default: 0</param>
-        /// <returns></returns>
-        public CategoryPlaylist GetCategoryPlaylists(String categoryId, String country = "", int limit = 20, int offset = 0)
-        {
-            limit = Math.Min(50, limit);
-            StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId + "/playlists");
-            builder.Append("?limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (country != "")
-                builder.Append("&country=" + country);
-            return DownloadData<CategoryPlaylist>(builder.ToString());
         }
 
         #endregion
