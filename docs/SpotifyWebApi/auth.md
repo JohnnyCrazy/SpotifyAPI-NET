@@ -20,7 +20,7 @@ Now you can start with the User-authentication, Spotify provides 3 ways:
 
 * [ClientCredentialsAuth](/SpotifyWebApi/#implicitgrantauth) (Not Recommended, Server-side code needed, else it's unsecure)  
 
-**Note:** I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth. 
+**Note:** I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth.
 When using ImplicitGrantAuth, another user could abuse the "localhost" RedirectUri by creating a "fake"-app which uses your ClientId.
 
 Overview:
@@ -35,7 +35,7 @@ You won't be able to refresh the token. If you want to use the internal Http ser
 
 More info: [here](https://developer.spotify.com/web-api/authorization-guide/#implicit_grant_flow)
 
-```csharp
+```
 static ImplicitGrantAuth auth;
 static void Main(string[] args)
 {
@@ -61,7 +61,7 @@ static void auth_OnResponseReceivedEvent(Token token, string state, string error
 {
     //stop the http server
     auth.StopHttpServer();
-    
+
     var spotify = new SpotifyWebApiClass()
     {
         TokenType = token.TokenType,
@@ -81,7 +81,7 @@ A good thing about this method: You can always refresh your token, without havin
 
 More info: [here](https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow)
 
-```csharp
+```
 static AutorizationCodeAuth auth;
 static void Main(string[] args)
 {
@@ -111,11 +111,11 @@ private static void auth_OnResponseReceivedEvent(AutorizationCodeAuthResponse re
 {
     //Stop the HTTP Server, done.
     auth.StopHttpServer();
-    
+
     //NEVER DO THIS! You would need to provide the ClientSecret.
     //You would need to do it e.g via a PHP-Script.
     Token token = auth.ExchangeAuthCode(response.Code, "XXXXXXXXXXX");
-    
+
     var spotify = new SpotifyWebApiClass()
     {
         TokenType = token.TokenType,
@@ -135,7 +135,7 @@ If you want to use it securely, you would need to do it all server-side.
 
 More info: [here](https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow)
 
-```csharp
+```
 static ClientCredentialsAuth auth;
 static void Main(string[] args)
 {
@@ -149,7 +149,7 @@ static void Main(string[] args)
         //How many permissions we need?
         Scope = Scope.USER_READ_PRIVATE,
     };
-    //With this token object, we now can make calls 
+    //With this token object, we now can make calls
     Token token = auth.DoAuth();
     var spotify = new SpotifyWebApiClass()
     {

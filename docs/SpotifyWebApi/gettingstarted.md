@@ -22,18 +22,18 @@ Full-Method Reference:
 ##UseAuth
 Wether auth should be used or not. User-stuff can only be fetched with auth.  
 **NOTE:** If you use auth, you need to provide both, `TokenType` and `AccessToken`  
-```csharp
+```
 _spotify.UseAuth = false;
 ```
 
-##TokenType 
+##TokenType
 The token-type. Normally "Bearer" or "Basic".  
-```csharp
+```
 _spotify.TokenType = "XXXXXXXXXXXXXXXX";
 ```
 
-##AccessToken 
+##AccessToken
 The access-token received by your auth-type.  
-```csharp
+```
 _spotify.AccessToken = "XXXXXXXXXXXXXXXX";
 ```

@@ -1,16 +1,19 @@
 ##GetArtist
+
 > Get Spotify catalog information for a single artist identified by their unique Spotify ID.
 
 **Paramters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
-|id| The Spotify ID for the artist. | EXAMPLE
+|id| The Spotify ID for the artist. | `"1KpCi9BOfviCVhmpI4G2sY"`
 
-Returns a [Public User Model](https://developer.spotify.com/web-api/object-model/#user-object-public)
+Returns a [FullArtist](https://developer.spotify.com/web-api/object-model/#artist-object-full)
 
 **Usage**  
-```csharp
+```cs
+FullArtist artist = _spotify.GetArtist("1KpCi9BOfviCVhmpI4G2sY");
+Console.WriteLine()
 ```
 
 ---
@@ -21,12 +24,14 @@ Returns a [Public User Model](https://developer.spotify.com/web-api/object-model
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
-|id| The Spotify ID for the artist. | EXAMPLE
+|id| The Spotify ID for the artist. | `"1KpCi9BOfviCVhmpI4G2sY"`
 
-Returns a [Public User Model](https://developer.spotify.com/web-api/object-model/#user-object-public)
+Returns a **SeveralArtists** object which contains the property `List<FullArtist> Artists` ([FullArtist](https://developer.spotify.com/web-api/object-model/#artist-object-full))
 
 **Usage**  
-```csharp
+```cs
+SeveralArtists artists = _spotify.GetRelatedArtists("1KpCi9BOfviCVhmpI4G2sY");
+Console.WriteLine(artists.Artists[0].Name);
 ```
 
 ---
@@ -37,13 +42,15 @@ Returns a [Public User Model](https://developer.spotify.com/web-api/object-model
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
-|id| The Spotify ID for the artist. | EXAMPLE
-|country| The country: an ISO 3166-1 alpha-2 country code. | EXAMPLE
+|id| The Spotify ID for the artist. | `"1KpCi9BOfviCVhmpI4G2sY"`
+|country| The country: an ISO 3166-1 alpha-2 country code. | `"DE"`
 
-Returns a [Public User Model](https://developer.spotify.com/web-api/object-model/#user-object-public)
+Returns a **SeveralTracks** object which contains the property `List<FullTrack> Tracks` ([FullTrack](https://developer.spotify.com/web-api/object-model/#track-object-full))
 
 **Usage**  
-```csharp
+```cs
+SeveralTracks tracks = _spotify.GetArtistsTopTracks("1KpCi9BOfviCVhmpI4G2sY", "DE");
+Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
 ```
 
 ---
@@ -54,16 +61,18 @@ Returns a [Public User Model](https://developer.spotify.com/web-api/object-model
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
-|id| The Spotify ID for the artist. | EXAMPLE
-|type| A list of keywords that will be used to filter the response. If not supplied, all album types will be returned | EXAMPLE
-|limit| The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. | EXAMPLE
-|offset| The index of the first album to return. Default: 0 | EXAMPLE
-|market| An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market | EXAMPLE
+|id| The Spotify ID for the artist. | `"1KpCi9BOfviCVhmpI4G2sY"`
+|[type]| A list of keywords that will be used to filter the response. If not supplied, all album types will be returned | `AlbumType.All`
+|[limit]| The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. | `20`
+|[offset]| The index of the first album to return. Default: 0 | `0`
+|[market]| An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market | `"DE"`
 
-Returns a [Public User Model](https://developer.spotify.com/web-api/object-model/#user-object-public)
+Returns a [SimpleAlbum](https://developer.spotify.com/web-api/object-model/#album-object-simplified) wrapped inside a [Paging-object](https://developer.spotify.com/web-api/object-model/#paging-object)
 
 **Usage**  
-```csharp
+```cs
+Paging<SimpleAlbum> albums = _spotify.GetArtistsAlbums("1KpCi9BOfviCVhmpI4G2sY", AlbumType.All);
+albums.Items.ForEach(album => Console.WriteLine(album.Name));
 ```
 
 ---
@@ -74,12 +83,14 @@ Returns a [Public User Model](https://developer.spotify.com/web-api/object-model
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
-|ids| A list of the Spotify IDs for the artists. Maximum: 50 IDs. | EXAMPLE
+|ids| A list of the Spotify IDs for the artists. Maximum: 50 IDs. | `new List<String>() { "1KpCi9BOfviCVhmpI4G2sY" } `
 
-Returns a [Public User Model](https://developer.spotify.com/web-api/object-model/#user-object-public)
+Returns a **SeveralArtists** object which contains the property `List<FullArtist> Artists` ([FullArtist](https://developer.spotify.com/web-api/object-model/#artist-object-full))
 
 **Usage**  
-```csharp
+```cs
+SeveralArtists artists = _spotify.GetSeveralArtists(new List<String>() {"1KpCi9BOfviCVhmpI4G2sY"});
+artists.Artists.ForEach(artist => Console.WriteLine(artist.Name));
 ```
 
 ---
