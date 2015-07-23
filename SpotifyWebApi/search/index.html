@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>- Artists - SpotifyAPI-NET</title>
+	<title>- Search - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -71,16 +71,16 @@
                             <a href="../auth/">Authentication</a>
                         </li>
                     
-                        <li >
-                            <a href="../search/">- Search</a>
+                        <li class="active">
+                            <a href="./">- Search</a>
                         </li>
                     
                         <li >
                             <a href="../albums/">- Albums</a>
                         </li>
                     
-                        <li class="active">
-                            <a href="./">- Artists</a>
+                        <li >
+                            <a href="../artists/">- Artists</a>
                         </li>
                     
                         <li >
@@ -122,12 +122,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../albums/">
+                    <a rel="next" href="../auth/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../browse/">
+                    <a rel="prev" href="../albums/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -150,30 +150,18 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#getartist">GetArtist</a></li>
-        
-    
-        <li class="main "><a href="#getrelatedartists">GetRelatedArtists</a></li>
-        
-    
-        <li class="main "><a href="#getartiststoptracks">GetArtistsTopTracks</a></li>
-        
-    
-        <li class="main "><a href="#getartistsalbums">GetArtistsAlbums</a></li>
-        
-    
-        <li class="main "><a href="#getseveralartists">GetSeveralArtists</a></li>
+        <li class="main active"><a href="#searchitems">SearchItems</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="getartist">GetArtist</h2>
+<h2 id="searchitems">SearchItems</h2>
 <blockquote>
-<p>Get Spotify catalog information for a single artist identified by their unique Spotify ID.</p>
+<p>Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Paramters</strong></p>
 <table>
 <thead>
 <tr>
@@ -184,103 +172,14 @@
 </thead>
 <tbody>
 <tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">FullArtist artist = _spotify.GetArtist(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
-Console.WriteLine()
-</code></pre>
-
-<hr />
-<h2 id="getrelatedartists">GetRelatedArtists</h2>
-<blockquote>
-<p>Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>SeveralArtists</strong> object which contains the property <code>List&lt;FullArtist&gt; Artists</code> (<a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">SeveralArtists artists = _spotify.GetRelatedArtists(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
-Console.WriteLine(artists.Artists[0].Name);
-</code></pre>
-
-<hr />
-<h2 id="getartiststoptracks">GetArtistsTopTracks</h2>
-<blockquote>
-<p>Get Spotify catalog information about an artist's top tracks by country.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+<td>q</td>
+<td>The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.</td>
+<td><code>"roadhouse+blues"</code></td>
 </tr>
 <tr>
-<td>country</td>
-<td>The country: an ISO 3166-1 alpha-2 country code.</td>
-<td><code>"DE"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>SeveralTracks</strong> object which contains the property <code>List&lt;FullTrack&gt; Tracks</code> (<a href="https://developer.spotify.com/web-api/object-model/#track-object-full">FullTrack</a>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">SeveralTracks tracks = _spotify.GetArtistsTopTracks(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;, &quot;DE&quot;);
-Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
-</code></pre>
-
-<hr />
-<h2 id="getartistsalbums">GetArtistsAlbums</h2>
-<blockquote>
-<p>Get Spotify catalog information about an artist's albums. Optional parameters can be specified in the query string to filter and sort the response.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-<tr>
-<td>[type]</td>
-<td>A list of keywords that will be used to filter the response. If not supplied, all album types will be returned</td>
-<td><code>AlbumType.All</code></td>
+<td>type</td>
+<td>A list of item types to search across.</td>
+<td><code>SearchType.Album</code></td>
 </tr>
 <tr>
 <td>[limit]</td>
@@ -289,48 +188,20 @@ Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
 </tr>
 <tr>
 <td>[offset]</td>
-<td>The index of the first album to return. Default: 0</td>
+<td>The index of the first result to return. Default: 0</td>
 <td><code>0</code></td>
 </tr>
 <tr>
 <td>[market]</td>
-<td>An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market</td>
-<td><code>"DE"</code></td>
+<td>An ISO 3166-1 alpha-2 country code or the string from_token.</td>
+<td><code>"de"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#album-object-simplified">SimpleAlbum</a> wrapped inside a <a href="https://developer.spotify.com/web-api/object-model/#paging-object">Paging-object</a></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">Paging&lt;SimpleAlbum&gt; albums = _spotify.GetArtistsAlbums(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;, AlbumType.All);
-albums.Items.ForEach(album =&gt; Console.WriteLine(album.Name));
-</code></pre>
-
-<hr />
-<h2 id="getseveralartists">GetSeveralArtists</h2>
-<blockquote>
-<p>Get Spotify catalog information for several artists based on their Spotify IDs.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ids</td>
-<td>A list of the Spotify IDs for the artists. Maximum: 50 IDs.</td>
-<td><code>new List&lt;String&gt;() { "1KpCi9BOfviCVhmpI4G2sY" }</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>SeveralArtists</strong> object which contains the property <code>List&lt;FullArtist&gt; Artists</code> (<a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">SeveralArtists artists = _spotify.GetSeveralArtists(new List&lt;String&gt;() {&quot;1KpCi9BOfviCVhmpI4G2sY&quot;});
-artists.Artists.ForEach(artist =&gt; Console.WriteLine(artist.Name));
+<p>Returns a <strong>SearchItem</strong> which contains the properties <code>Paging&lt;SimpleArtist&gt; Artists</code>,<code>Paging&lt;FullTrack&gt; Tracks</code>, <code>Paging&lt;SimpleAlbum&gt; Albums</code>. They are filled based on your search-type.</p>
+<p><strong>Usage</strong></p>
+<pre><code class="cs">SearchItem item = _spotify.SearchItems(&quot;roadhouse+blues&quot;, SearchType.Album);
+Console.WriteLine(item.Albums.Total); //How many results are there in total? NOTE: item.Tracks = item.Artists = null
 </code></pre>
 
 <hr /></div>

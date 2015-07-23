@@ -4,7 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2015-07-09</lastmod>
+     <lastmod>2015-07-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,31 +13,61 @@
         
     <url>
      <loc>None/SpotifyWebApi/gettingstarted/</loc>
-     <lastmod>2015-07-09</lastmod>
+     <lastmod>2015-07-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/SpotifyWebApi/examples/</loc>
-     <lastmod>2015-07-09</lastmod>
+     <lastmod>2015-07-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/SpotifyWebApi/auth/</loc>
-     <lastmod>2015-07-09</lastmod>
+     <lastmod>2015-07-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/SpotifyWebApi/search/</loc>
+     <lastmod>2015-07-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/SpotifyWebApi/albums/</loc>
-     <lastmod>2015-07-09</lastmod>
+     <lastmod>2015-07-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/SpotifyWebApi/artists/</loc>
-     <lastmod>2015-07-09</lastmod>
+     <lastmod>2015-07-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/SpotifyWebApi/browse/</loc>
+     <lastmod>2015-07-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/SpotifyWebApi/follow/</loc>
+     <lastmod>2015-07-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/SpotifyWebApi/library/</loc>
+     <lastmod>2015-07-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/SpotifyWebApi/playlists/</loc>
+     <lastmod>2015-07-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -47,7 +77,7 @@
         
     <url>
      <loc>None/SpotifyLocalApi/</loc>
-     <lastmod>2015-07-09</lastmod>
+     <lastmod>2015-07-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

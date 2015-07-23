@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>- Artists - SpotifyAPI-NET</title>
+	<title>- Browse - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -79,12 +79,12 @@
                             <a href="../albums/">- Albums</a>
                         </li>
                     
-                        <li class="active">
-                            <a href="./">- Artists</a>
+                        <li >
+                            <a href="../artists/">- Artists</a>
                         </li>
                     
-                        <li >
-                            <a href="../browse/">- Browse</a>
+                        <li class="active">
+                            <a href="./">- Browse</a>
                         </li>
                     
                         <li >
@@ -122,12 +122,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../albums/">
+                    <a rel="next" href="../artists/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../browse/">
+                    <a rel="prev" href="../follow/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -150,28 +150,29 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#getartist">GetArtist</a></li>
+        <li class="main active"><a href="#getfeaturedplaylists">GetFeaturedPlaylists</a></li>
         
     
-        <li class="main "><a href="#getrelatedartists">GetRelatedArtists</a></li>
+        <li class="main "><a href="#getnewalbumreleases">GetNewAlbumReleases</a></li>
         
     
-        <li class="main "><a href="#getartiststoptracks">GetArtistsTopTracks</a></li>
+        <li class="main "><a href="#getcategories">GetCategories</a></li>
         
     
-        <li class="main "><a href="#getartistsalbums">GetArtistsAlbums</a></li>
+        <li class="main "><a href="#getcategory">GetCategory</a></li>
         
     
-        <li class="main "><a href="#getseveralartists">GetSeveralArtists</a></li>
+        <li class="main "><a href="#getcategoryplaylists">GetCategoryPlaylists</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="getartist">GetArtist</h2>
+<h2 id="getfeaturedplaylists">GetFeaturedPlaylists</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
 <blockquote>
-<p>Get Spotify catalog information for a single artist identified by their unique Spotify ID.</p>
+<p>Get a list of Spotify featured playlists (shown, for example, on a Spotify player’s “Browse” tab).</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -184,103 +185,19 @@
 </thead>
 <tbody>
 <tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">FullArtist artist = _spotify.GetArtist(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
-Console.WriteLine()
-</code></pre>
-
-<hr />
-<h2 id="getrelatedartists">GetRelatedArtists</h2>
-<blockquote>
-<p>Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>SeveralArtists</strong> object which contains the property <code>List&lt;FullArtist&gt; Artists</code> (<a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">SeveralArtists artists = _spotify.GetRelatedArtists(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
-Console.WriteLine(artists.Artists[0].Name);
-</code></pre>
-
-<hr />
-<h2 id="getartiststoptracks">GetArtistsTopTracks</h2>
-<blockquote>
-<p>Get Spotify catalog information about an artist's top tracks by country.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+<td>[locale]</td>
+<td>The desired language, consisting of a lowercase ISO 639 language code and an uppercase ISO 3166-1 alpha-2 country code, joined by an underscore.</td>
+<td><code>"de_DE" //Germany</code></td>
 </tr>
 <tr>
-<td>country</td>
-<td>The country: an ISO 3166-1 alpha-2 country code.</td>
+<td>[country]</td>
+<td>A country: an ISO 3166-1 alpha-2 country code.</td>
 <td><code>"DE"</code></td>
 </tr>
-</tbody>
-</table>
-<p>Returns a <strong>SeveralTracks</strong> object which contains the property <code>List&lt;FullTrack&gt; Tracks</code> (<a href="https://developer.spotify.com/web-api/object-model/#track-object-full">FullTrack</a>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">SeveralTracks tracks = _spotify.GetArtistsTopTracks(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;, &quot;DE&quot;);
-Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
-</code></pre>
-
-<hr />
-<h2 id="getartistsalbums">GetArtistsAlbums</h2>
-<blockquote>
-<p>Get Spotify catalog information about an artist's albums. Optional parameters can be specified in the query string to filter and sort the response.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
 <tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>The Spotify ID for the artist.</td>
-<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-<tr>
-<td>[type]</td>
-<td>A list of keywords that will be used to filter the response. If not supplied, all album types will be returned</td>
-<td><code>AlbumType.All</code></td>
+<td>[timestamp]</td>
+<td>A timestamp in ISO 8601 format</td>
+<td><code>DateTime.Now</code></td>
 </tr>
 <tr>
 <td>[limit]</td>
@@ -289,26 +206,23 @@ Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
 </tr>
 <tr>
 <td>[offset]</td>
-<td>The index of the first album to return. Default: 0</td>
+<td>The index of the first item to return. Default: 0</td>
 <td><code>0</code></td>
-</tr>
-<tr>
-<td>[market]</td>
-<td>An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market</td>
-<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#album-object-simplified">SimpleAlbum</a> wrapped inside a <a href="https://developer.spotify.com/web-api/object-model/#paging-object">Paging-object</a></p>
+<p>Returns a <strong>FeaturedPlaylists</strong> object, which has 2 properties. <code>String Message</code> and <code>Paging&lt;SimplePlaylist&gt; Playlists</code></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">Paging&lt;SimpleAlbum&gt; albums = _spotify.GetArtistsAlbums(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;, AlbumType.All);
-albums.Items.ForEach(album =&gt; Console.WriteLine(album.Name));
+<pre><code class="cs">FeaturedPlaylists playlists = _spotify.GetFeaturedPlaylists();
+Console.WriteLine(playlists.Message);
+playlists.Playlists.Items.ForEach(playlist =&gt; Console.WriteLine(playlist.Name));
 </code></pre>
 
 <hr />
-<h2 id="getseveralartists">GetSeveralArtists</h2>
+<h2 id="getnewalbumreleases">GetNewAlbumReleases</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
 <blockquote>
-<p>Get Spotify catalog information for several artists based on their Spotify IDs.</p>
+<p>Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -321,16 +235,153 @@ albums.Items.ForEach(album =&gt; Console.WriteLine(album.Name));
 </thead>
 <tbody>
 <tr>
-<td>ids</td>
-<td>A list of the Spotify IDs for the artists. Maximum: 50 IDs.</td>
-<td><code>new List&lt;String&gt;() { "1KpCi9BOfviCVhmpI4G2sY" }</code></td>
+<td>[country]</td>
+<td>A country: an ISO 3166-1 alpha-2 country code.</td>
+<td><code>"DE"</code></td>
+</tr>
+<tr>
+<td>[limit]</td>
+<td>The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</td>
+<td><code>20</code></td>
+</tr>
+<tr>
+<td>[offset]</td>
+<td>The index of the first item to return. Default: 0</td>
+<td><code>0</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>SeveralArtists</strong> object which contains the property <code>List&lt;FullArtist&gt; Artists</code> (<a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a>)</p>
+<p>Returns a <strong>NewAlbumReleases</strong> object, which has the property <code>Paging&lt;SimpleAlbum&gt; Albums</code>.</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">SeveralArtists artists = _spotify.GetSeveralArtists(new List&lt;String&gt;() {&quot;1KpCi9BOfviCVhmpI4G2sY&quot;});
-artists.Artists.ForEach(artist =&gt; Console.WriteLine(artist.Name));
+<pre><code class="cs">NewAlbumReleases newAlbums = _spotify.GetNewAlbumReleases();
+newAlbums.Albums.Items.ForEach(album =&gt; Console.WriteLine(album.Name));
+</code></pre>
+
+<hr />
+<h2 id="getcategories">GetCategories</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Get a list of categories used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[country]</td>
+<td>A country: an ISO 3166-1 alpha-2 country code. Provide this parameter if you want to narrow the list of returned categories to those relevant to a particular country</td>
+<td><code>"DE"</code></td>
+</tr>
+<tr>
+<td>[locale]</td>
+<td>The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</td>
+<td><code>"de_DE"</code></td>
+</tr>
+<tr>
+<td>[limit]</td>
+<td>The maximum number of categories to return. Default: 20. Minimum: 1. Maximum: 50.</td>
+<td><code>20</code></td>
+</tr>
+<tr>
+<td>[offset]</td>
+<td>The index of the first item to return. Default: 0 (the first object).</td>
+<td><code>0</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>CategoryList</strong> object, which has the property <code>Paging&lt;Category&gt; Categories</code>.</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">CategoryList categoryList = _spotify.GetCategories();
+categoryList.Categories.Items.ForEach(category =&gt; Console.WriteLine(category.Name));
+</code></pre>
+
+<hr />
+<h2 id="getcategory">GetCategory</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Get a single category used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>categoryId</td>
+<td>The Spotify category ID for the category.</td>
+<td><code>"party"</code></td>
+</tr>
+<tr>
+<td>[country]</td>
+<td>A country: an ISO 3166-1 alpha-2 country code. Provide this parameter to ensure that the category exists for a particular country.</td>
+<td><code>"DE"</code></td>
+</tr>
+<tr>
+<td>[locale]</td>
+<td>The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</td>
+<td><code>"de_DE"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#category-object">Category</a></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">Category cat = _spotify.GetCategory(&quot;party&quot;);
+Console.WriteLine(cat.Name);
+</code></pre>
+
+<hr />
+<h2 id="getcategoryplaylists">GetCategoryPlaylists</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Get a list of Spotify playlists tagged with a particular category.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>categoryId</td>
+<td>The Spotify category ID for the category.</td>
+<td><code>"party"</code></td>
+</tr>
+<tr>
+<td>[country]</td>
+<td>A country: an ISO 3166-1 alpha-2 country code.</td>
+<td><code>"DE"</code></td>
+</tr>
+<tr>
+<td>[limit]</td>
+<td>The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</td>
+<td><code>20</code></td>
+</tr>
+<tr>
+<td>[offset]</td>
+<td>The index of the first item to return. Default: 0</td>
+<td><code>0</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>CategoryPlaylist</strong> object, which has the property <code>Paging&lt;SimplePlaylist&gt; Playlists</code></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">CategoryPlaylist playlists = _spotify.GetCategoryPlaylists(&quot;party&quot;);
+playlists.Playlists.Items.ForEach(playlist =&gt; Console.WriteLine(playlist.Name));
 </code></pre>
 
 <hr /></div>

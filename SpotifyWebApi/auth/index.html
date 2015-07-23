@@ -72,11 +72,31 @@
                         </li>
                     
                         <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
+                        <li >
                             <a href="../albums/">- Albums</a>
                         </li>
                     
                         <li >
                             <a href="../artists/">- Artists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../browse/">- Browse</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../follow/">- Follow</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../library/">- Library</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../playlists/">- Playlists</a>
                         </li>
                     
                     </ul>
@@ -107,7 +127,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../albums/">
+                    <a rel="prev" href="../search/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -166,7 +186,7 @@ If you want to know more, you can read to the whole auth-process <a href="https:
 <p><a href="../../SpotifyWebApi/#implicitgrantauth">ClientCredentialsAuth</a> (Not Recommended, Server-side code needed, else it's unsecure)  </p>
 </li>
 </ul>
-<p><strong>Note:</strong> I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth. 
+<p><strong>Note:</strong> I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth.
 When using ImplicitGrantAuth, another user could abuse the "localhost" RedirectUri by creating a "fake"-app which uses your ClientId.</p>
 <p>Overview:
 <img alt="Overview" src="http://i.imgur.com/uf3ahTl.png" /></p>
@@ -175,7 +195,7 @@ When using ImplicitGrantAuth, another user could abuse the "localhost" RedirectU
 <p>This way is <strong>recommended</strong> and the only auth-process, which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.
 You won't be able to refresh the token. If you want to use the internal Http server, please add "http://localhost" to your application redirects.</p>
 <p>More info: <a href="https://developer.spotify.com/web-api/authorization-guide/#implicit_grant_flow">here</a></p>
-<pre><code class="csharp">static ImplicitGrantAuth auth;
+<pre><code>static ImplicitGrantAuth auth;
 static void Main(string[] args)
 {
     //Create the auth object
@@ -217,7 +237,7 @@ In this exchange you need to provide your Client-Secret and because of that it's
 (But you can e.g exchange to codes via a PHP Script)<br />
 A good thing about this method: You can always refresh your token, without having the user to auth it again</p>
 <p>More info: <a href="https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow">here</a></p>
-<pre><code class="csharp">static AutorizationCodeAuth auth;
+<pre><code>static AutorizationCodeAuth auth;
 static void Main(string[] args)
 {
     //Create the auth object
@@ -267,7 +287,7 @@ With this approach, you make a POST Request with a base64 encoded string (consis
 If you want to use it securely, you would need to do it all server-side.<br />
 <strong>NOTE:</strong> You will only be able to query non-user-related information e.g search for a Track.</p>
 <p>More info: <a href="https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow">here</a></p>
-<pre><code class="csharp">static ClientCredentialsAuth auth;
+<pre><code>static ClientCredentialsAuth auth;
 static void Main(string[] args)
 {
     //Create the auth object
@@ -280,7 +300,7 @@ static void Main(string[] args)
         //How many permissions we need?
         Scope = Scope.USER_READ_PRIVATE,
     };
-    //With this token object, we now can make calls 
+    //With this token object, we now can make calls
     Token token = auth.DoAuth();
     var spotify = new SpotifyWebApiClass()
     {

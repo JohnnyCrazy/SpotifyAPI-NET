@@ -72,11 +72,31 @@
                         </li>
                     
                         <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
+                        <li >
                             <a href="../albums/">- Albums</a>
                         </li>
                     
                         <li >
                             <a href="../artists/">- Artists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../browse/">- Browse</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../follow/">- Follow</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../library/">- Library</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../playlists/">- Playlists</a>
                         </li>
                     
                     </ul>
@@ -166,17 +186,17 @@ Full-Method Reference:  </p>
 <h2 id="useauth">UseAuth</h2>
 <p>Wether auth should be used or not. User-stuff can only be fetched with auth.<br />
 <strong>NOTE:</strong> If you use auth, you need to provide both, <code>TokenType</code> and <code>AccessToken</code>  </p>
-<pre><code class="csharp">_spotify.UseAuth = false;
+<pre><code>_spotify.UseAuth = false;
 </code></pre>
 
 <h2 id="tokentype">TokenType</h2>
 <p>The token-type. Normally "Bearer" or "Basic".  </p>
-<pre><code class="csharp">_spotify.TokenType = &quot;XXXXXXXXXXXXXXXX&quot;;
+<pre><code>_spotify.TokenType = &quot;XXXXXXXXXXXXXXXX&quot;;
 </code></pre>
 
 <h2 id="accesstoken">AccessToken</h2>
 <p>The access-token received by your auth-type.  </p>
-<pre><code class="csharp">_spotify.AccessToken = &quot;XXXXXXXXXXXXXXXX&quot;;
+<pre><code>_spotify.AccessToken = &quot;XXXXXXXXXXXXXXXX&quot;;
 </code></pre></div>
         </div>
 

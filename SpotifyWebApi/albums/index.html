@@ -71,12 +71,32 @@
                             <a href="../auth/">Authentication</a>
                         </li>
                     
+                        <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
                         <li class="active">
                             <a href="./">- Albums</a>
                         </li>
                     
                         <li >
                             <a href="../artists/">- Artists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../browse/">- Browse</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../follow/">- Follow</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../library/">- Library</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../playlists/">- Playlists</a>
                         </li>
                     
                     </ul>
@@ -102,7 +122,7 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../auth/">
+                    <a rel="next" href="../search/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
@@ -160,28 +180,31 @@
 <tr>
 <td>id</td>
 <td>The Spotify ID for the album.</td>
-<td>EXAMPLE</td>
+<td><code>"5O7V8l4SeXTymVp3IesT9C"</code></td>
 </tr>
 <tr>
-<td>limit</td>
+<td>[limit]</td>
 <td>The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</td>
-<td>EXAMPLE</td>
+<td><code>20</code></td>
 </tr>
 <tr>
-<td>offset</td>
+<td>[offset]</td>
 <td>The index of the first track to return. Default: 0 (the first object).</td>
-<td>EXAMPLE</td>
+<td><code>0</code></td>
 </tr>
 <tr>
-<td>market</td>
+<td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td>EXAMPLE</td>
+<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#track-object-simplified">SimpleTrack</a> wrapped inside a <a href="https://developer.spotify.com/web-api/object-model/#paging-object">Paging-object</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="csharp"></code></pre>
+<pre><code class="cs">Paging&lt;SimpleTrack&gt; tracks = _spotify.GetAlbumTracks(&quot;5O7V8l4SeXTymVp3IesT9C&quot;);
+tracks.Items.ForEach(item =&gt; Console.WriteLine(item.Name)); //Display all fetched Track-Names (max 20)
+Console.WriteLine(tracks.Total.ToString()) //Display total album track count
+</code></pre>
 
 <hr />
 <h2 id="getalbum">GetAlbum</h2>
@@ -201,18 +224,20 @@
 <tr>
 <td>id</td>
 <td>The Spotify ID for the album.</td>
-<td>EXAMPLE</td>
+<td><code>5O7V8l4SeXTymVp3IesT9C</code></td>
 </tr>
 <tr>
-<td>market</td>
+<td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td>EXAMPLE</td>
+<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#album-object-full">FullAlbum</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="csharp"></code></pre>
+<pre><code class="cs">FullAlbum album = _spotify.GetAlbum(&quot;5O7V8l4SeXTymVp3IesT9C&quot;);
+Console.WriteLine(album.Name + &quot;| Popularity: &quot; + album.Popularity); //Display name and Popularity
+</code></pre>
 
 <hr />
 <h2 id="getseveralalbums">GetSeveralAlbums</h2>
@@ -232,18 +257,20 @@
 <tr>
 <td>ids</td>
 <td>A list of the Spotify IDs for the albums. Maximum: 20 IDs.</td>
-<td>EXAMPLE</td>
+<td><code>new List&lt;String&gt;() { "5O7V8l4SeXTymVp3IesT9C" }</code></td>
 </tr>
 <tr>
-<td>market</td>
+<td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td>EXAMPLE</td>
+<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>SeveralAlbums</strong> which Property "Albums" contains a list of <a href="https://developer.spotify.com/web-api/object-model/#album-object-full">FullAlbum</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="csharp"></code></pre>
+<pre><code class="cs">SeveralAlbums albums = _spotify.GetSeveralAlbums(new List&lt;String&gt;() { &quot;5O7V8l4SeXTymVp3IesT9C&quot; });
+Console.WriteLine(albums.Albums[0].Name);
+</code></pre>
 
 <hr /></div>
         </div>
