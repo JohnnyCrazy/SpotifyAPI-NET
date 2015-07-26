@@ -14,11 +14,11 @@ After you created your Application, you will have following important values:
 
 Now you can start with the User-authentication, Spotify provides 3 ways:
 
-* [ImplicitGrantAuth](/SpotifyWebApi/#implicitgrantauth) (**Recommended**, no server-side code needed)  
+* [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth) (**Recommended**, no server-side code needed)  
 
-* [AutorizationCodeAuth](/SpotifyWebApi/#implicitgrantauth) (Not Recommended, Server-side code needed, else it's unsecure)
+* [AutorizationCodeAuth](/SpotifyWebAPI/auth#autorizationcodeauth) (Not Recommended, Server-side code needed, else it's unsecure)
 
-* [ClientCredentialsAuth](/SpotifyWebApi/#implicitgrantauth) (Not Recommended, Server-side code needed, else it's unsecure)  
+* [ClientCredentialsAuth](/SpotifyWebAPI/auth#clientcredentialsauth) (Not Recommended, Server-side code needed, else it's unsecure)  
 
 **Note:** I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth.
 When using ImplicitGrantAuth, another user could abuse the "localhost" RedirectUri by creating a "fake"-app which uses your ClientId.
