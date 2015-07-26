@@ -14,7 +14,7 @@ pages:
 - ['SpotifyWebAPI/profiles.md', 'SpotifyWebAPI', '- Profiles']
 - ['SpotifyWebAPI/search.md', 'SpotifyWebAPI', '- Search']
 - ['SpotifyWebAPI/tracks.md', 'SpotifyWebAPI', '- Tracks']
-- ['SpotifyLocalApi/index.md', 'SpotifyLocalApi', 'SpotifyLocalApi']
+- ['SpotifyLocalAPI/index.md', 'SpotifyLocalAPI', 'SpotifyLocalAPI']
 repo_url: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET'
 site_author: 'JohnnyCrazy'
 site_description: 'API Docs for SpotifyAPI-NET'
