@@ -159,3 +159,5 @@ static void Main(string[] args)
     };
 }
 ```
+
+#Scopes

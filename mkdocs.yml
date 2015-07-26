@@ -2,16 +2,18 @@ site_name: 'SpotifyAPI-NET'
 theme_dir: 'mytheme'
 pages:
 - ['index.md', 'Home']
-- ['SpotifyWebApi/gettingstarted.md', 'SpotifyWebApi', 'Getting started']
-- ['SpotifyWebApi/examples.md', 'SpotifyWebApi', 'Examples']
-- ['SpotifyWebApi/auth.md', 'SpotifyWebApi', 'Authentication']
-- ['SpotifyWebApi/search.md', 'SpotifyWebApi', '- Search']
-- ['SpotifyWebApi/albums.md', 'SpotifyWebApi', '- Albums']
-- ['SpotifyWebApi/artists.md', 'SpotifyWebApi', '- Artists']
-- ['SpotifyWebApi/browse.md', 'SpotifyWebApi', '- Browse']
-- ['SpotifyWebApi/follow.md', 'SpotifyWebApi', '- Follow']
-- ['SpotifyWebApi/library.md', 'SpotifyWebApi', '- Library']
-- ['SpotifyWebApi/playlists.md', 'SpotifyWebApi', '- Playlists']
+- ['SpotifyWebAPI/gettingstarted.md', 'SpotifyWebAPI', 'Getting started']
+- ['SpotifyWebAPI/examples.md', 'SpotifyWebAPI', 'Examples']
+- ['SpotifyWebAPI/auth.md', 'SpotifyWebAPI', 'Authentication']
+- ['SpotifyWebAPI/albums.md', 'SpotifyWebAPI', '- Albums']
+- ['SpotifyWebAPI/artists.md', 'SpotifyWebAPI', '- Artists']
+- ['SpotifyWebAPI/browse.md', 'SpotifyWebAPI', '- Browse']
+- ['SpotifyWebAPI/follow.md', 'SpotifyWebAPI', '- Follow']
+- ['SpotifyWebAPI/library.md', 'SpotifyWebAPI', '- Library']
+- ['SpotifyWebAPI/playlists.md', 'SpotifyWebAPI', '- Playlists']
+- ['SpotifyWebAPI/profiles.md', 'SpotifyWebAPI', '- Profiles']
+- ['SpotifyWebAPI/search.md', 'SpotifyWebAPI', '- Search']
+- ['SpotifyWebAPI/tracks.md', 'SpotifyWebAPI', '- Tracks']
 - ['SpotifyLocalApi/index.md', 'SpotifyLocalApi', 'SpotifyLocalApi']
 repo_url: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET'
 site_author: 'JohnnyCrazy'
