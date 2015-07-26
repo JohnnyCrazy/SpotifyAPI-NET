@@ -12,3 +12,4 @@ before_script: "mkdocs build --clean"
 script: 
 - "chmod ugo+x ./push-ghpages.sh"
 - "./push-ghpages.sh"
+sudo: false
