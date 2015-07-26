@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>- Library - SpotifyAPI-NET</title>
+	<title>- Albums - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -56,7 +56,7 @@
             
             
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -71,12 +71,8 @@
                             <a href="../auth/">Authentication</a>
                         </li>
                     
-                        <li >
-                            <a href="../search/">- Search</a>
-                        </li>
-                    
-                        <li >
-                            <a href="../albums/">- Albums</a>
+                        <li class="active">
+                            <a href="./">- Albums</a>
                         </li>
                     
                         <li >
@@ -91,12 +87,24 @@
                             <a href="../follow/">- Follow</a>
                         </li>
                     
-                        <li class="active">
-                            <a href="./">- Library</a>
+                        <li >
+                            <a href="../library/">- Library</a>
                         </li>
                     
                         <li >
                             <a href="../playlists/">- Playlists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../profiles/">- Profiles</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../tracks/">- Tracks</a>
                         </li>
                     
                     </ul>
@@ -105,11 +113,11 @@
             
             
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
-                            <a href="../../SpotifyLocalApi/">SpotifyLocalApi</a>
+                            <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
                         </li>
                     
                     </ul>
@@ -122,12 +130,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../follow/">
+                    <a rel="next" href="../auth/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../playlists/">
+                    <a rel="prev" href="../artists/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -150,59 +158,22 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#savetracks">SaveTracks</a></li>
+        <li class="main active"><a href="#getalbumtracks">GetAlbumTracks</a></li>
         
     
-        <li class="main "><a href="#savetrack">SaveTrack</a></li>
+        <li class="main "><a href="#getalbum">GetAlbum</a></li>
         
     
-        <li class="main "><a href="#getsavedtracks">GetSavedTracks</a></li>
-        
-    
-        <li class="main "><a href="#removesavedtracks">RemoveSavedTracks</a></li>
-        
-    
-        <li class="main "><a href="#checksavedtracks">CheckSavedTracks</a></li>
+        <li class="main "><a href="#getseveralalbums">GetSeveralAlbums</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="savetracks">SaveTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<h2 id="getalbumtracks">GetAlbumTracks</h2>
 <blockquote>
-<p>Save one or more tracks to the current user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ids</td>
-<td>A list of the Spotify IDs</td>
-<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.SaveTracks(new List&lt;string&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
-</code></pre>
-
-<hr />
-<h2 id="savetrack">SaveTrack</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Save one track to the current user’s “Your Music” library.</p>
+<p>Get Spotify catalog information about an album's tracks. Optional parameters can be used to limit the number of tracks returned.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -216,62 +187,70 @@ if(!response.HasError())
 <tbody>
 <tr>
 <td>id</td>
-<td>A Spotify ID</td>
-<td><code>"3Hvu1pq89D4R0lyPBoujSv"</code></td>
+<td>The Spotify ID for the album.</td>
+<td><code>"5O7V8l4SeXTymVp3IesT9C"</code></td>
 </tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.SaveTrack(&quot;3Hvu1pq89D4R0lyPBoujSv&quot;);
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
-</code></pre>
-
-<hr />
-<h2 id="getsavedtracks">GetSavedTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Get a list of the songs saved in the current Spotify user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td>[limit]</td>
-<td>The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</td>
+<td>The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</td>
 <td><code>20</code></td>
 </tr>
 <tr>
 <td>[offset]</td>
-<td>The index of the first object to return. Default: 0 (i.e., the first object)</td>
+<td>The index of the first track to return. Default: 0 (the first object).</td>
 <td><code>0</code></td>
 </tr>
 <tr>
 <td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td><code>DE</code></td>
+<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>Paging<SavedTrack></strong>, <strong>SavedTrack</strong> contains 2 properties, <code>DateTime AddedAt</code> and <code>FullTrack Track</code></p>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#track-object-simplified">SimpleTrack</a> wrapped inside a <a href="https://developer.spotify.com/web-api/object-model/#paging-object">Paging-object</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">Paging&lt;SavedTrack&gt; savedTracks = _spotify.GetSavedTracks();
-savedTracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
+<pre><code class="cs">Paging&lt;SimpleTrack&gt; tracks = _spotify.GetAlbumTracks(&quot;5O7V8l4SeXTymVp3IesT9C&quot;);
+tracks.Items.ForEach(item =&gt; Console.WriteLine(item.Name)); //Display all fetched Track-Names (max 20)
+Console.WriteLine(tracks.Total.ToString()) //Display total album track count
 </code></pre>
 
 <hr />
-<h2 id="removesavedtracks">RemoveSavedTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<h2 id="getalbum">GetAlbum</h2>
 <blockquote>
-<p>Remove one or more tracks from the current user’s “Your Music” library.</p>
+<p>Get Spotify catalog information for a single album.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The Spotify ID for the album.</td>
+<td><code>5O7V8l4SeXTymVp3IesT9C</code></td>
+</tr>
+<tr>
+<td>[market]</td>
+<td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
+<td><code>"DE"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#album-object-full">FullAlbum</a></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">FullAlbum album = _spotify.GetAlbum(&quot;5O7V8l4SeXTymVp3IesT9C&quot;);
+Console.WriteLine(album.Name + &quot;| Popularity: &quot; + album.Popularity); //Display name and Popularity
+</code></pre>
+
+<hr />
+<h2 id="getseveralalbums">GetSeveralAlbums</h2>
+<blockquote>
+<p>Get Spotify catalog information for multiple albums identified by their Spotify IDs.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -285,46 +264,20 @@ savedTracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
 <tbody>
 <tr>
 <td>ids</td>
-<td>A list of the Spotify IDs.</td>
-<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
+<td>A list of the Spotify IDs for the albums. Maximum: 20 IDs.</td>
+<td><code>new List&lt;String&gt;() { "5O7V8l4SeXTymVp3IesT9C" }</code></td>
+</tr>
+<tr>
+<td>[market]</td>
+<td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
+<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
+<p>Returns a <strong>SeveralAlbums</strong> which Property "Albums" contains a list of <a href="https://developer.spotify.com/web-api/object-model/#album-object-full">FullAlbum</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.RemoveSavedTracks(new List&lt;string&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
-</code></pre>
-
-<hr />
-<h2 id="checksavedtracks">CheckSavedTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ids</td>
-<td>A list of the Spotify IDs.</td>
-<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ListResponse<bool></strong> which contains a property, <code>List&lt;bool&gt; List</code></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ListResponse&lt;bool&gt; tracksSaved = _spotify.CheckSavedTracks(new List&lt;String&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
-if(tracksSaved.List[0])
-    Console.WriteLine(&quot;The track is in your library!&quot;);
+<pre><code class="cs">SeveralAlbums albums = _spotify.GetSeveralAlbums(new List&lt;String&gt;() { &quot;5O7V8l4SeXTymVp3IesT9C&quot; });
+Console.WriteLine(albums.Albums[0].Name);
 </code></pre>
 
 <hr /></div>

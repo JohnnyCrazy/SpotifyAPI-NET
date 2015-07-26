@@ -56,7 +56,7 @@
             
             
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -69,10 +69,6 @@
                     
                         <li >
                             <a href="../auth/">Authentication</a>
-                        </li>
-                    
-                        <li >
-                            <a href="../search/">- Search</a>
                         </li>
                     
                         <li >
@@ -99,17 +95,29 @@
                             <a href="./">- Playlists</a>
                         </li>
                     
+                        <li >
+                            <a href="../profiles/">- Profiles</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../tracks/">- Tracks</a>
+                        </li>
+                    
                     </ul>
                 </li>
             
             
             
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
-                            <a href="../../SpotifyLocalApi/">SpotifyLocalApi</a>
+                            <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
                         </li>
                     
                     </ul>
@@ -127,7 +135,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../../SpotifyLocalApi/">
+                    <a rel="prev" href="../profiles/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -205,23 +213,25 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
-<td>limit</td>
+<td>[limit]</td>
 <td>The maximum number of playlists to return. Default: 20. Minimum: 1. Maximum: 50.</td>
-<td>EXAMPLE</td>
+<td><code>20</code></td>
 </tr>
 <tr>
-<td>offset</td>
+<td>[offset]</td>
 <td>The index of the first playlist to return. Default: 0 (the first object)</td>
-<td>EXAMPLE</td>
+<td><code>0</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#playlist-object-simplified">SimplePlaylist</a> wrapped inside a <a href="https://developer.spotify.com/web-api/object-model/#paging-object">Paging Object</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">Paging&lt;SimplePlaylist&gt; userPlaylists = _spotify.GetUserPlaylists(&quot;1122095781&quot;);
+userPlaylists.Items.ForEach(playlist =&gt; playlist.Owner.DisplayName) //Who is the owner of the playlist?
+</code></pre>
 
 <hr />
 <h2 id="getplaylist">GetPlaylist</h2>
@@ -242,28 +252,30 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
-<td>fields</td>
-<td>Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are                returned.</td>
-<td>EXAMPLE</td>
+<td>[fields]</td>
+<td>Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are returned.</td>
+<td><code>"description,uri"</code></td>
 </tr>
 <tr>
-<td>market</td>
+<td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td>EXAMPLE</td>
+<td>"DE"</td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#track-object-full">FullTrack</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">FullPlaylist playlist = _spotify.GetPlaylist(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;);
+playlist.Tracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
+</code></pre>
 
 <hr />
 <h2 id="getplaylisttracks">GetPlaylistTracks</h2>
@@ -284,38 +296,40 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
-<td>fields</td>
-<td>Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are                returned.</td>
-<td>EXAMPLE</td>
+<td>[fields]</td>
+<td>Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are returned.</td>
+<td><code>"description,uri"</code></td>
 </tr>
 <tr>
-<td>limit</td>
+<td>[limit]</td>
 <td>The maximum number of tracks to return. Default: 100. Minimum: 1. Maximum: 100.</td>
-<td>EXAMPLE</td>
+<td><code>100</code></td>
 </tr>
 <tr>
-<td>offset</td>
+<td>[offset]</td>
 <td>The index of the first object to return. Default: 0 (i.e., the first object)</td>
-<td>EXAMPLE</td>
+<td><code>0</code></td>
 </tr>
 <tr>
-<td>market</td>
+<td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td>EXAMPLE</td>
+<td><code>DE</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#playlist-object-simplified">PlaylistTrack</a> wrapped inside a <a href="https://developer.spotify.com/web-api/object-model/#paging-object">Paging Object</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">Paging&lt;PlaylistTrack&gt; playlist = _spotify.GetPlaylistTracks(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;);
+playlist.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
+</code></pre>
 
 <hr />
 <h2 id="createplaylist">CreatePlaylist</h2>
@@ -336,23 +350,26 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistName</td>
-<td>The name for the new playlist, for example "Your Coolest Playlist". This name does not need                to be unique.</td>
-<td>EXAMPLE</td>
+<td>The name for the new playlist, for example "Your Coolest Playlist". This name does not need to be unique.</td>
+<td><code>"This is my new Playlist"</code></td>
 </tr>
 <tr>
-<td>isPublic</td>
-<td>default true. If true the playlist will be public, if false it will be private. To be able to                create private playlists, the user must have granted the playlist-modify-private scope.</td>
-<td>EXAMPLE</td>
+<td>[isPublic]</td>
+<td>default true. If true the playlist will be public, if false it will be private. To be able to create private playlists, the user must have granted the playlist-modify-private scope.</td>
+<td><code>true</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#playlist-object-full">FullPlaylist</a></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">FullPlaylist playlist = _spotify.CreatePlaylist(&quot;1122095781&quot;, &quot;This is my new Playlist&quot;);
+if(!playlist.HasError())
+    Console.WriteLine(&quot;Playlist-URI: &quot; + playlist.Uri);
+</code></pre>
 
 <hr />
 <h2 id="updateplaylist">UpdatePlaylist</h2>
@@ -373,34 +390,37 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
-<td>newName</td>
+<td>[newName]</td>
 <td>The new name for the playlist, for example "My New Playlist Title".</td>
-<td>EXAMPLE</td>
+<td><code>"New Playlistname"</code></td>
 </tr>
 <tr>
-<td>newPublic</td>
+<td>[newPublic]</td>
 <td>If true the playlist will be public, if false it will be private.</td>
 <td>EXAMPLE</td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">ErrorResponse response = _spotify.UpdatePlaylist(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, &quot;New Name&quot;, true);
+if(!response.HasError())
+    Console.WriteLine(&quot;success&quot;);
+</code></pre>
 
 <hr />
 <h2 id="replaceplaylisttracks">ReplacePlaylistTracks</h2>
 <p><span class="label label-warning">AUTH REQUIRED</span></p>
 <blockquote>
-<p>Replace all the tracks in a playlist, overwriting its existing tracks. This powerful request can be useful for                replacing tracks, re-ordering existing tracks, or clearing the playlist.</p>
+<p>Replace all the tracks in a playlist, overwriting its existing tracks. This powerful request can be useful for replacing tracks, re-ordering existing tracks, or clearing the playlist.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -415,23 +435,26 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
 <td>uris</td>
 <td>A list of Spotify track URIs to set. A maximum of 100 tracks can be set in one request.</td>
-<td>EXAMPLE</td>
+<td><code>new List&lt;string&gt; { "1ri6UZpjPLmTCswIXZ6Uq1" }</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">ErrorResponse response = _spotify.ReplacePlaylistTracks(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, new List&lt;string&gt; { &quot;1ri6UZpjPLmTCswIXZ6Uq1&quot; });
+if(!response.HasError())
+    Console.WriteLine(&quot;success&quot;);
+</code></pre>
 
 <hr />
 <h2 id="removeplaylisttracks">RemovePlaylistTracks</h2>
@@ -452,23 +475,35 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
 <td>uris</td>
-<td>array of objects containing Spotify URI strings (and their position in the playlist). A maximum of                100 objects can be sent at once.</td>
-<td>EXAMPLE</td>
+<td>array of objects containing Spotify URI strings (and their position in the playlist). A maximum of 100 objects can be sent at once.</td>
+<td><code>(example below)</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">//Remove multiple tracks
+ErrorResponse playlist = _spotify.RemovePlaylistTracks(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, new List&lt;DeleteTrackUri&gt;()
+{
+    new DeleteTrackUri(&quot;1ri6UZpjPLmTCswIXZ6Uq1&quot;),
+    new DeleteTrackUri(&quot;47xtGU3vht7mXLHqnbaau5&quot;)
+});
+//Remove multiple tracks at their specified positions
+ErrorResponse playlist = _spotify.RemovePlaylistTracks(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, new List&lt;DeleteTrackUri&gt;()
+{
+    new DeleteTrackUri(&quot;1ri6UZpjPLmTCswIXZ6Uq1&quot;, 2),
+    new DeleteTrackUri(&quot;47xtGU3vht7mXLHqnbaau5&quot;, 0, 50)
+});
+</code></pre>
 
 <hr />
 <h2 id="removeplaylisttrack">RemovePlaylistTrack</h2>
@@ -489,23 +524,27 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
 <td>uri</td>
 <td>Spotify URI</td>
-<td>EXAMPLE</td>
+<td><code>new DeleteTrackUri("1ri6UZpjPLmTCswIXZ6Uq1")</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">//Remove all tracks with the specified URI
+ErrorResponse response = _spotify.RemovePlaylistTrack(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, new DeleteTrackUri(&quot;1ri6UZpjPLmTCswIXZ6Uq1&quot;));
+//Remove all tracks with the specified URI and the specified positions
+ErrorResponse response = _spotify.RemovePlaylistTrack(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, new DeleteTrackUri(&quot;1ri6UZpjPLmTCswIXZ6Uq1&quot;, 0, 10, 20));
+</code></pre>
 
 <hr />
 <h2 id="addplaylisttracks">AddPlaylistTracks</h2>
@@ -526,28 +565,31 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
 <td>uris</td>
 <td>A list of Spotify track URIs to add</td>
-<td>EXAMPLE</td>
+<td><code>new List&lt;string&gt; { "1ri6UZpjPLmTCswIXZ6Uq1" }</code></td>
 </tr>
 <tr>
-<td>position</td>
+<td>[position]</td>
 <td>The position to insert the tracks, a zero-based index</td>
-<td>EXAMPLE</td>
+<td><code>10</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">ErrorResponse response = _spotify.AddPlaylistTracks(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, new List&lt;string&gt; { &quot;1ri6UZpjPLmTCswIXZ6Uq1&quot; });
+if(!response.HasError())
+    Console.WriteLine(&quot;Success&quot;);
+</code></pre>
 
 <hr />
 <h2 id="addplaylisttrack">AddPlaylistTrack</h2>
@@ -568,34 +610,38 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
 <td>uri</td>
 <td>A Spotify Track URI</td>
-<td>EXAMPLE</td>
+<td><code>"1ri6UZpjPLmTCswIXZ6Uq1"</code></td>
 </tr>
 <tr>
 <td>position</td>
 <td>The position to insert the tracks, a zero-based index</td>
-<td>EXAMPLE</td>
+<td><code>10</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">ErrorResponse response = _spotify.AddPlaylistTrack(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, &quot;1ri6UZpjPLmTCswIXZ6Uq1&quot;);
+if(!response.HasError())
+    Console.WriteLine(&quot;Success&quot;);
+</code></pre>
 
 <hr />
 <h2 id="reorderplaylist">ReorderPlaylist</h2>
 <p><span class="label label-warning">AUTH REQUIRED</span></p>
 <blockquote>
-<p>Reorder a track or a group of tracks in a playlist.</p>
+<p>Reorder a track or a group of tracks in a playlist.
+More Info: <a href="https://developer.spotify.com/web-api/reorder-playlists-tracks/">Reorder-Playlist</a></p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -610,38 +656,40 @@
 <tr>
 <td>userId</td>
 <td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
+<td><code>"1122095781"</code></td>
 </tr>
 <tr>
 <td>playlistId</td>
 <td>The Spotify ID for the playlist.</td>
-<td>EXAMPLE</td>
+<td><code>"1TtEejT1y4D1WmcOnLfha2"</code></td>
 </tr>
 <tr>
 <td>rangeStart</td>
 <td>The position of the first track to be reordered.</td>
-<td>EXAMPLE</td>
+<td><code>2</code></td>
 </tr>
 <tr>
 <td>insertBefore</td>
 <td>The position where the tracks should be inserted.</td>
-<td>EXAMPLE</td>
+<td><code>0</code></td>
 </tr>
 <tr>
-<td>rangeLength</td>
+<td>[rangeLength]</td>
 <td>The amount of tracks to be reordered. Defaults to 1 if not set.</td>
-<td>EXAMPLE</td>
+<td><code>2</code></td>
 </tr>
 <tr>
-<td>snapshotId</td>
+<td>[snapshotId]</td>
 <td>The playlist's snapshot ID against which you want to make the changes.</td>
-<td>EXAMPLE</td>
+<td>``</td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">Public User Model</a></p>
+<p>Returns a <strong>Snapshot</strong>-Object which contains the property <code>String SnapshotId</code></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+<pre><code class="cs">Snapshot snapshot = _spotify.ReorderPlaylist(&quot;1122095781&quot;, &quot;1TtEejT1y4D1WmcOnLfha2&quot;, 2, 0, 2);
+Console.WriteLine(&quot;New SnapshotId: &quot; + snapshot.SnapshotId);
+</code></pre>
 
 <hr /></div>
         </div>

@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>- Follow - SpotifyAPI-NET</title>
+	<title>- Library - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -56,7 +56,7 @@
             
             
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -72,10 +72,6 @@
                         </li>
                     
                         <li >
-                            <a href="../search/">- Search</a>
-                        </li>
-                    
-                        <li >
                             <a href="../albums/">- Albums</a>
                         </li>
                     
@@ -87,16 +83,28 @@
                             <a href="../browse/">- Browse</a>
                         </li>
                     
-                        <li class="active">
-                            <a href="./">- Follow</a>
+                        <li >
+                            <a href="../follow/">- Follow</a>
                         </li>
                     
-                        <li >
-                            <a href="../library/">- Library</a>
+                        <li class="active">
+                            <a href="./">- Library</a>
                         </li>
                     
                         <li >
                             <a href="../playlists/">- Playlists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../profiles/">- Profiles</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../tracks/">- Tracks</a>
                         </li>
                     
                     </ul>
@@ -105,11 +113,11 @@
             
             
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
-                            <a href="../../SpotifyLocalApi/">SpotifyLocalApi</a>
+                            <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
                         </li>
                     
                     </ul>
@@ -122,12 +130,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../browse/">
+                    <a rel="next" href="../follow/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../library/">
+                    <a rel="prev" href="../playlists/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -150,32 +158,29 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#follow">Follow</a></li>
+        <li class="main active"><a href="#savetracks">SaveTracks</a></li>
         
     
-        <li class="main "><a href="#unfollow">Unfollow</a></li>
+        <li class="main "><a href="#savetrack">SaveTrack</a></li>
         
     
-        <li class="main "><a href="#isfollowing">IsFollowing</a></li>
+        <li class="main "><a href="#getsavedtracks">GetSavedTracks</a></li>
         
     
-        <li class="main "><a href="#followplaylist">FollowPlaylist</a></li>
+        <li class="main "><a href="#removesavedtracks">RemoveSavedTracks</a></li>
         
     
-        <li class="main "><a href="#unfollowplaylist">UnfollowPlaylist</a></li>
-        
-    
-        <li class="main "><a href="#isfollowingplaylist">IsFollowingPlaylist</a></li>
+        <li class="main "><a href="#checksavedtracks">CheckSavedTracks</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="follow">Follow</h2>
+<h2 id="savetracks">SaveTracks</h2>
 <p><span class="label label-warning">AUTH REQUIRED</span></p>
 <blockquote>
-<p>Add the current user as a follower of one or more artists or other Spotify users.</p>
+<p>Save one or more tracks to the current user’s “Your Music” library.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -188,139 +193,24 @@
 </thead>
 <tbody>
 <tr>
-<td>followType</td>
-<td>The ID type: either artist or user.</td>
-<td><code>FollowType.Artist</code></td>
-</tr>
-<tr>
-<td>ids or id</td>
-<td>A list of the artist or the user Spotify IDs or just a Spotify ID</td>
-<td><code>new List&lt;String&gt; { "1KpCi9BOfviCVhmpI4G2sY" }</code> or <code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+<td>ids</td>
+<td>A list of the Spotify IDs</td>
+<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
 </tr>
 </tbody>
 </table>
 <p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.Follow(FollowType.Artist, &quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
-//or if it's a User
-ErrorResponse response = _spotify.Follow(FollowType.User, &quot;1122095781&quot;);
-</code></pre>
-
-<hr />
-<h2 id="unfollow">Unfollow</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Remove the current user as a follower of one or more artists or other Spotify users.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>followType</td>
-<td>The ID type: either artist or user.</td>
-<td><code>FollowType.Artist</code></td>
-</tr>
-<tr>
-<td>ids or id</td>
-<td>A list of the artist or the user Spotify IDs or just a Spotify ID</td>
-<td><code>new List&lt;String&gt; { "1KpCi9BOfviCVhmpI4G2sY" }</code> or <code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.Unfollow(FollowType.Artist, &quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
-//or if it's a User
-ErrorResponse response = _spotify.Unfollow(FollowType.User, &quot;1122095781&quot;);
-</code></pre>
-
-<hr />
-<h2 id="isfollowing">IsFollowing</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Check to see if the current user is following one or more artists or other Spotify users.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>followType</td>
-<td>The ID type: either artist or user.</td>
-<td><code>FollowType.Artist</code></td>
-</tr>
-<tr>
-<td>ids or id</td>
-<td>A list of the artist or the user Spotify IDs or just a Spotify ID</td>
-<td><code>new List&lt;String&gt; { "1KpCi9BOfviCVhmpI4G2sY" }</code> or <code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ListResponse<Boolean></strong> which contains the property <code>List&lt;Boolean&gt; List</code></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">//Are you one of my Followers? :P
-ListResponse&lt;Boolean&gt; response = _spotify.IsFollowing(FollowType.User, &quot;1122095781&quot;);
-Console.WriteLine(response.List[0] ? &quot;Yis!&quot; : &quot;No :(&quot;);
-</code></pre>
-
-<hr />
-<h2 id="followplaylist">FollowPlaylist</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Add the current user as a follower of a playlist.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ownerId</td>
-<td>The Spotify user ID of the person who owns the playlist.</td>
-<td><code>"maxloermans"</code></td>
-</tr>
-<tr>
-<td>playlistId</td>
-<td>The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private status, as long as you know its playlist ID.</td>
-<td><code>"3SIp2VAsKI03mReF0dFBmI"</code></td>
-</tr>
-<tr>
-<td>[showPublic]</td>
-<td>If true the playlist will be included in user's public playlists, if false it will remain  private.</td>
-<td><code>true</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.FollowPlaylist(&quot;maxloermans&quot;, &quot;3SIp2VAsKI03mReF0dFBmI&quot;);
+<pre><code class="cs">ErrorResponse response = _spotify.SaveTracks(new List&lt;string&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
 if(!response.HasError())
     Console.WriteLine(&quot;success&quot;);
 </code></pre>
 
 <hr />
-<h2 id="unfollowplaylist">UnfollowPlaylist</h2>
+<h2 id="savetrack">SaveTrack</h2>
 <p><span class="label label-warning">AUTH REQUIRED</span></p>
 <blockquote>
-<p>Remove the current user as a follower of a playlist.</p>
+<p>Save one track to the current user’s “Your Music” library.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -333,29 +223,24 @@ if(!response.HasError())
 </thead>
 <tbody>
 <tr>
-<td>ownerId</td>
-<td>The Spotify user ID of the person who owns the playlist.</td>
-<td><code>"maxloermans"</code></td>
-</tr>
-<tr>
-<td>playlistId</td>
-<td>The Spotify ID of the playlist that is to be no longer followed.</td>
-<td><code>"3SIp2VAsKI03mReF0dFBmI"</code></td>
+<td>id</td>
+<td>A Spotify ID</td>
+<td><code>"3Hvu1pq89D4R0lyPBoujSv"</code></td>
 </tr>
 </tbody>
 </table>
 <p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.UnfollowPlaylist(&quot;maxloermans&quot;, &quot;3SIp2VAsKI03mReF0dFBmI&quot;);
+<pre><code class="cs">ErrorResponse response = _spotify.SaveTrack(&quot;3Hvu1pq89D4R0lyPBoujSv&quot;);
 if(!response.HasError())
     Console.WriteLine(&quot;success&quot;);
 </code></pre>
 
 <hr />
-<h2 id="isfollowingplaylist">IsFollowingPlaylist</h2>
+<h2 id="getsavedtracks">GetSavedTracks</h2>
 <p><span class="label label-warning">AUTH REQUIRED</span></p>
 <blockquote>
-<p>Check to see if one or more Spotify users are following a specified playlist.</p>
+<p>Get a list of the songs saved in the current Spotify user’s “Your Music” library.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -368,27 +253,86 @@ if(!response.HasError())
 </thead>
 <tbody>
 <tr>
-<td>ownerId</td>
-<td>The Spotify user ID of the person who owns the playlist.</td>
-<td><code>"maxloermans"</code></td>
+<td>[limit]</td>
+<td>The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</td>
+<td><code>20</code></td>
 </tr>
 <tr>
-<td>playlistId</td>
-<td>The Spotify ID of the playlist.</td>
-<td><code>"3SIp2VAsKI03mReF0dFBmI"</code></td>
+<td>[offset]</td>
+<td>The index of the first object to return. Default: 0 (i.e., the first object)</td>
+<td><code>0</code></td>
 </tr>
 <tr>
-<td>ids or id</td>
-<td>A list of the artist or the user Spotify IDs or just a Spotify ID</td>
-<td><code>new List&lt;String&gt; { "1KpCi9BOfviCVhmpI4G2sY" }</code> or <code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+<td>[market]</td>
+<td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
+<td><code>DE</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>ListResponse<Boolean></strong> which contains the property <code>List&lt;Boolean&gt; List</code></p>
+<p>Returns a <strong>Paging<SavedTrack></strong>, <strong>SavedTrack</strong> contains 2 properties, <code>DateTime AddedAt</code> and <code>FullTrack Track</code></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">//Am I following the playlist?
-ListResponse&lt;Boolean&gt; response = _spotify.IsFollowing(&quot;maxloermans&quot;, &quot;3SIp2VAsKI03mReF0dFBmI&quot;, &quot;1122095781&quot;);
-Console.WriteLine(response.List[0] ? &quot;Yis!&quot; : &quot;No :(&quot;);
+<pre><code class="cs">Paging&lt;SavedTrack&gt; savedTracks = _spotify.GetSavedTracks();
+savedTracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
+</code></pre>
+
+<hr />
+<h2 id="removesavedtracks">RemoveSavedTracks</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Remove one or more tracks from the current user’s “Your Music” library.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ids</td>
+<td>A list of the Spotify IDs.</td>
+<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse response = _spotify.RemoveSavedTracks(new List&lt;string&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
+if(!response.HasError())
+    Console.WriteLine(&quot;success&quot;);
+</code></pre>
+
+<hr />
+<h2 id="checksavedtracks">CheckSavedTracks</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ids</td>
+<td>A list of the Spotify IDs.</td>
+<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>ListResponse<bool></strong> which contains a property, <code>List&lt;bool&gt; List</code></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ListResponse&lt;bool&gt; tracksSaved = _spotify.CheckSavedTracks(new List&lt;String&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
+if(tracksSaved.List[0])
+    Console.WriteLine(&quot;The track is in your library!&quot;);
 </code></pre>
 
 <hr /></div>

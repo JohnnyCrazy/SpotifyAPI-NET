@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Getting started - SpotifyAPI-NET</title>
+	<title>- Profiles - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -56,11 +56,11 @@
             
             
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
-                        <li class="active">
-                            <a href="./">Getting started</a>
+                        <li >
+                            <a href="../gettingstarted/">Getting started</a>
                         </li>
                     
                         <li >
@@ -69,10 +69,6 @@
                     
                         <li >
                             <a href="../auth/">Authentication</a>
-                        </li>
-                    
-                        <li >
-                            <a href="../search/">- Search</a>
                         </li>
                     
                         <li >
@@ -99,17 +95,29 @@
                             <a href="../playlists/">- Playlists</a>
                         </li>
                     
+                        <li class="active">
+                            <a href="./">- Profiles</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../tracks/">- Tracks</a>
+                        </li>
+                    
                     </ul>
                 </li>
             
             
             
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalApi <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
-                            <a href="../../SpotifyLocalApi/">SpotifyLocalApi</a>
+                            <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
                         </li>
                     
                     </ul>
@@ -122,12 +130,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../..">
+                    <a rel="next" href="../playlists/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../examples/">
+                    <a rel="prev" href="../search/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -150,54 +158,65 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#spotifywebapi">SpotifyWebAPI</a></li>
+        <li class="main active"><a href="#getprivateprofile">GetPrivateProfile</a></li>
         
     
-        <li class="main "><a href="#getting-started">Getting started</a></li>
-        
-    
-        <li class="main "><a href="#properties">Properties</a></li>
-        
-            <li><a href="#useauth">UseAuth</a></li>
-        
-            <li><a href="#tokentype">TokenType</a></li>
-        
-            <li><a href="#accesstoken">AccessToken</a></li>
+        <li class="main "><a href="#getpublicprofile">GetPublicProfile</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="spotifywebapi">SpotifyWebAPI</h1>
-<p>This API provides full access to the new SpotifyWebAPI introduced <a href="https://developer.spotify.com/web-api/">here</a>.<br />
-With it, you can search for Tracks/Albums/Artists and also get User-based information.<br />
-It's also possible to create new playlists and add tracks to it.</p>
-<hr />
-<h1 id="getting-started">Getting started</h1>
-<p>The API features all currently available features and also provides some examples to get things rolling!<br />
-Full-Method Reference:  </p>
-<ul>
-<li><a href="../test">Albums</a></li>
-</ul>
-<p><a href="../../SpotifyWebApi/examples">Examples</a></p>
-<hr />
-<h1 id="properties">Properties</h1>
-<h2 id="useauth">UseAuth</h2>
-<p>Wether auth should be used or not. User-stuff can only be fetched with auth.<br />
-<strong>NOTE:</strong> If you use auth, you need to provide both, <code>TokenType</code> and <code>AccessToken</code>  </p>
-<pre><code>_spotify.UseAuth = false;
+<h2 id="getprivateprofile">GetPrivateProfile</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Get detailed profile information about the current user (including the current user’s username).</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-private">PrivateProfile</a></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">PrivateUser user = _spotify.GetPrivateProfile();
+Console.WriteLine(user.DisplayName);
 </code></pre>
 
-<h2 id="tokentype">TokenType</h2>
-<p>The token-type. Normally "Bearer" or "Basic".  </p>
-<pre><code>_spotify.TokenType = &quot;XXXXXXXXXXXXXXXX&quot;;
-</code></pre>
+<hr />
+<h2 id="getpublicprofile">GetPublicProfile</h2>
+<blockquote>
+<p>Get public profile information about a Spotify user.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>userId</td>
+<td>The user's Spotify user ID.</td>
+<td>EXAMPLE</td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">PublicProfile</a></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs"></code></pre>
 
-<h2 id="accesstoken">AccessToken</h2>
-<p>The access-token received by your auth-type.  </p>
-<pre><code>_spotify.AccessToken = &quot;XXXXXXXXXXXXXXXX&quot;;
-</code></pre></div>
+<hr /></div>
         </div>
 
         
