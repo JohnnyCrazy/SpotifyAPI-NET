@@ -37,10 +37,37 @@ namespace SpotifyAPI.Web
             WebClient.Dispose();
         }
 
+        #region Search
+
+        /// <summary>
+        ///     Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.
+        /// </summary>
+        /// <param name="q">The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.</param>
+        /// <param name="type">A list of item types to search across.</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first result to return. Default: 0</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code or the string from_token.</param>
+        /// <returns></returns>
+        public SearchItem SearchItems(String q, SearchType type, int limit = 20, int offset = 0, String market = "")
+        {
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder(APIBase + "/search");
+            builder.Append("?q=" + q);
+            builder.Append("&type=" + type.GetStringAttribute(","));
+            builder.Append("&limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (market != "")
+                builder.Append("&market=" + market);
+            return DownloadData<SearchItem>(builder.ToString());
+        }
+
+        #endregion
+
         #region Albums
 
         /// <summary>
-        ///     Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
+        ///     Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of
+        ///     tracks returned.
         /// </summary>
         /// <param name="id">The Spotify ID for the album.</param>
         /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
@@ -121,13 +148,20 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Get Spotify catalog information about an artist’s albums. Optional parameters can be specified in the query string to filter and sort the response.
+        ///     Get Spotify catalog information about an artist’s albums. Optional parameters can be specified in the query string
+        ///     to filter and sort the response.
         /// </summary>
         /// <param name="id">The Spotify ID for the artist.</param>
-        /// <param name="type">A list of keywords that will be used to filter the response. If not supplied, all album types will be returned</param>
+        /// <param name="type">
+        ///     A list of keywords that will be used to filter the response. If not supplied, all album types will
+        ///     be returned
+        /// </param>
         /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">The index of the first album to return. Default: 0</param>
-        /// <param name="market">An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market</param>
+        /// <param name="market">
+        ///     An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular
+        ///     geographical market
+        /// </param>
         /// <returns></returns>
         public Paging<SimpleAlbum> GetArtistsAlbums(String id, AlbumType type = AlbumType.All, int limit = 20, int offset = 0, String market = "")
         {
@@ -166,7 +200,7 @@ namespace SpotifyAPI.Web
         /// <param name="timestamp">A timestamp in ISO 8601 format</param>
         /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">The index of the first item to return. Default: 0</param>
-        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public FeaturedPlaylists GetFeaturedPlaylists(String locale = "", String country = "", DateTime timestamp = default(DateTime), int limit = 20, int offset = 0)
         {
             if (!UseAuth)
@@ -191,6 +225,7 @@ namespace SpotifyAPI.Web
         /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">The index of the first item to return. Default: 0</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public NewAlbumReleases GetNewAlbumReleases(String country = "", int limit = 20, int offset = 0)
         {
             if (!UseAuth)
@@ -207,11 +242,18 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Get a list of categories used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
         /// </summary>
-        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code. Provide this parameter if you want to narrow the list of returned categories to those relevant to a particular country</param>
-        /// <param name="locale">The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</param>
+        /// <param name="country">
+        ///     A country: an ISO 3166-1 alpha-2 country code. Provide this parameter if you want to narrow the
+        ///     list of returned categories to those relevant to a particular country
+        /// </param>
+        /// <param name="locale">
+        ///     The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country
+        ///     code, joined by an underscore
+        /// </param>
         /// <param name="limit">The maximum number of categories to return. Default: 20. Minimum: 1. Maximum: 50. </param>
         /// <param name="offset">The index of the first item to return. Default: 0 (the first object).</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public CategoryList GetCategories(String country = "", String locale = "", int limit = 20, int offset = 0)
         {
             if (!UseAuth)
@@ -231,9 +273,16 @@ namespace SpotifyAPI.Web
         ///     Get a single category used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
         /// </summary>
         /// <param name="categoryId">The Spotify category ID for the category.</param>
-        /// <param name="country">A country: an ISO 3166-1 alpha-2 country code. Provide this parameter to ensure that the category exists for a particular country.</param>
-        /// <param name="locale">The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country code, joined by an underscore</param>
+        /// <param name="country">
+        ///     A country: an ISO 3166-1 alpha-2 country code. Provide this parameter to ensure that the category
+        ///     exists for a particular country.
+        /// </param>
+        /// <param name="locale">
+        ///     The desired language, consisting of an ISO 639 language code and an ISO 3166-1 alpha-2 country
+        ///     code, joined by an underscore
+        /// </param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public Category GetCategory(String categoryId, String country = "", String locale = "")
         {
             StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId);
@@ -252,6 +301,7 @@ namespace SpotifyAPI.Web
         /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">The index of the first item to return. Default: 0</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public CategoryPlaylist GetCategoryPlaylists(String categoryId, String country = "", int limit = 20, int offset = 0)
         {
             limit = Math.Min(50, limit);
@@ -268,12 +318,32 @@ namespace SpotifyAPI.Web
         #region Follow
 
         /// <summary>
+        ///     Get the current user’s followed artists.
+        /// </summary>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+        /// <param name="after">The last artist ID retrieved from the previous request.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public FollowedArtists GetFollowedArtists(int limit = 20, String after = "")
+        {
+            if(!UseAuth)
+                throw new InvalidOperationException("Auth is required for GetFollowedArtists");
+            limit = Math.Max(limit, 50);
+            const FollowType followType = FollowType.Artist; //currently only artist is supported.
+            StringBuilder builder = new StringBuilder(APIBase + "/me/following?type=" + followType.GetStringAttribute(""));
+            builder.Append("&limit=" + limit);
+            if (after != "")
+                builder.Append("&after=" + after);
+            return DownloadData<FollowedArtists>(builder.ToString());
+        }
+
+        /// <summary>
         ///     Add the current user as a follower of one or more artists or other Spotify users.
         /// </summary>
         /// <param name="followType">The ID type: either artist or user.</param>
         /// <param name="ids">A list of the artist or the user Spotify IDs</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse Follow(FollowType followType, List<String> ids)
         {
             JObject ob = new JObject
@@ -289,10 +359,10 @@ namespace SpotifyAPI.Web
         /// <param name="followType">The ID type: either artist or user.</param>
         /// <param name="id">Artists or the Users Spotify ID</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse Follow(FollowType followType, String id)
         {
-            return Follow(followType, new List<string> { id });
+            return Follow(followType, new List<string> {id});
         }
 
         /// <summary>
@@ -301,7 +371,7 @@ namespace SpotifyAPI.Web
         /// <param name="followType">The ID type: either artist or user.</param>
         /// <param name="ids">A list of the artist or the user Spotify IDs</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse Unfollow(FollowType followType, List<String> ids)
         {
             JObject ob = new JObject
@@ -317,10 +387,10 @@ namespace SpotifyAPI.Web
         /// <param name="followType">The ID type: either artist or user.</param>
         /// <param name="id">Artists or the Users Spotify ID</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse Unfollow(FollowType followType, String id)
         {
-            return Unfollow(followType, new List<string> { id });
+            return Unfollow(followType, new List<string> {id});
         }
 
         /// <summary>
@@ -329,15 +399,15 @@ namespace SpotifyAPI.Web
         /// <param name="followType">The ID type: either artist or user.</param>
         /// <param name="ids">A list of the artist or the user Spotify IDs to check</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ListResponse<Boolean> IsFollowing(FollowType followType, List<String> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
             JToken res = DownloadData<JToken>(APIBase + "/me/following/contains?type=" + followType.GetStringAttribute("") + "&ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
+            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
         }
 
         /// <summary>
@@ -346,10 +416,10 @@ namespace SpotifyAPI.Web
         /// <param name="followType">The ID type: either artist or user.</param>
         /// <param name="id">Artists or the Users Spotify ID</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ListResponse<Boolean> IsFollowing(FollowType followType, String id)
         {
-            return IsFollowing(followType, new List<string> { id });
+            return IsFollowing(followType, new List<string> {id});
         }
 
         /// <summary>
@@ -365,6 +435,7 @@ namespace SpotifyAPI.Web
         ///     private.
         /// </param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse FollowPlaylist(String ownerId, String playlistId, bool showPublic = true)
         {
             JObject body = new JObject
@@ -380,6 +451,7 @@ namespace SpotifyAPI.Web
         /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse UnfollowPlaylist(String ownerId, String playlistId)
         {
             return UploadData<ErrorResponse>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers", "", "DELETE");
@@ -392,14 +464,15 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID of the playlist.</param>
         /// <param name="ids">A list of Spotify User IDs</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, List<String> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
             JToken res = DownloadData<JToken>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers/contains?ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
+            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
         }
 
         /// <summary>
@@ -409,9 +482,10 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID of the playlist.</param>
         /// <param name="id">A Spotify User ID</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, String id)
         {
-            return IsFollowingPlaylist(ownerId, playlistId, new List<string> { id });
+            return IsFollowingPlaylist(ownerId, playlistId, new List<string> {id});
         }
 
         #endregion
@@ -423,7 +497,7 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="ids">A list of the Spotify IDs</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse SaveTracks(List<String> ids)
         {
             JArray array = new JArray(ids);
@@ -435,10 +509,10 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="id">A Spotify ID</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse SaveTrack(String id)
         {
-            return SaveTracks(new List<string> { id });
+            return SaveTracks(new List<string> {id});
         }
 
         /// <summary>
@@ -448,7 +522,7 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first object to return. Default: 0 (i.e., the first object)</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public Paging<SavedTrack> GetSavedTracks(int limit = 20, int offset = 0, String market = "")
         {
             if (!UseAuth)
@@ -467,7 +541,7 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse RemoveSavedTracks(List<String> ids)
         {
             JArray array = new JArray(ids);
@@ -479,15 +553,15 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public ListResponse<Boolean> CheckSavedTracks(List<String> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
             JToken res = DownloadData<JToken>(APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
+            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
         }
 
         #endregion
@@ -501,7 +575,7 @@ namespace SpotifyAPI.Web
         /// <param name="limit">The maximum number of playlists to return. Default: 20. Minimum: 1. Maximum: 50. </param>
         /// <param name="offset">The index of the first playlist to return. Default: 0 (the first object)</param>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public Paging<SimplePlaylist> GetUserPlaylists(String userId, int limit = 20, int offset = 0)
         {
             if (!UseAuth)
@@ -524,6 +598,7 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public FullPlaylist GetPlaylist(String userId, String playlistId, String fields = "", String market = "")
         {
             if (!UseAuth)
@@ -548,6 +623,7 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first object to return. Default: 0 (i.e., the first object)</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public Paging<PlaylistTrack> GetPlaylistTracks(String userId, String playlistId, String fields = "", int limit = 100, int offset = 0, String market = "")
         {
             if (!UseAuth)
@@ -570,9 +646,12 @@ namespace SpotifyAPI.Web
         ///     The name for the new playlist, for example "Your Coolest Playlist". This name does not need
         ///     to be unique.
         /// </param>
-        /// <param name="isPublic">default true. If true the playlist will be public, if false it will be private.</param>
+        /// <param name="isPublic">
+        ///     default true. If true the playlist will be public, if false it will be private. To be able to
+        ///     create private playlists, the user must have granted the playlist-modify-private scope.
+        /// </param>
         /// <returns></returns>
-        /// <remarks>To be able to create private playlists, the user must have granted the playlist-modify-private scope.</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public FullPlaylist CreatePlaylist(String userId, String playlistName, Boolean isPublic = true)
         {
             JObject body = new JObject
@@ -591,6 +670,7 @@ namespace SpotifyAPI.Web
         /// <param name="newName">The new name for the playlist, for example "My New Playlist Title".</param>
         /// <param name="newPublic">If true the playlist will be public, if false it will be private.</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse UpdatePlaylist(String userId, String playlistId, String newName = null, Boolean? newPublic = null)
         {
             JObject body = new JObject();
@@ -609,6 +689,7 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
         /// <param name="uris">A list of Spotify track URIs to set. A maximum of 100 tracks can be set in one request.</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse ReplacePlaylistTracks(String userId, String playlistId, List<String> uris)
         {
             JObject body = new JObject
@@ -628,6 +709,7 @@ namespace SpotifyAPI.Web
         ///     100 objects can be sent at once.
         /// </param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse RemovePlaylistTracks(String userId, String playlistId, List<DeleteTrackUri> uris)
         {
             JObject body = new JObject
@@ -644,9 +726,10 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
         /// <param name="uri">Spotify URI</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse RemovePlaylistTrack(String userId, String playlistId, DeleteTrackUri uri)
         {
-            return RemovePlaylistTracks(userId, playlistId, new List<DeleteTrackUri> { uri });
+            return RemovePlaylistTracks(userId, playlistId, new List<DeleteTrackUri> {uri});
         }
 
         /// <summary>
@@ -657,6 +740,7 @@ namespace SpotifyAPI.Web
         /// <param name="uris">A list of Spotify track URIs to add</param>
         /// <param name="position">The position to insert the tracks, a zero-based index</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse AddPlaylistTracks(String userId, String playlistId, List<String> uris, int? position = null)
         {
             JObject body = new JObject
@@ -676,9 +760,10 @@ namespace SpotifyAPI.Web
         /// <param name="uri">A Spotify Track URI</param>
         /// <param name="position">The position to insert the tracks, a zero-based index</param>
         /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse AddPlaylistTrack(String userId, String playlistId, String uri, int? position = null)
         {
-            return AddPlaylistTracks(userId, playlistId, new List<string> { uri }, position);
+            return AddPlaylistTracks(userId, playlistId, new List<string> {uri}, position);
         }
 
         /// <summary>
@@ -691,7 +776,7 @@ namespace SpotifyAPI.Web
         /// <param name="rangeLength">The amount of tracks to be reordered. Defaults to 1 if not set.</param>
         /// <param name="snapshotId">The playlist's snapshot ID against which you want to make the changes.</param>
         /// <returns></returns>
-        /// <remarks>https://developer.spotify.com/web-api/reorder-playlists-tracks/</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public Snapshot ReorderPlaylist(String userId, String playlistId, int rangeStart, int insertBefore, int rangeLength = 1, String snapshotId = "")
         {
             JObject body = new JObject
@@ -713,7 +798,7 @@ namespace SpotifyAPI.Web
         ///     Get detailed profile information about the current user (including the current user’s username).
         /// </summary>
         /// <returns></returns>
-        /// <remarks>Needs Authorization</remarks>
+        /// <remarks>AUTH NEEDED</remarks>
         public PrivateProfile GetPrivateProfile()
         {
             if (!UseAuth)
@@ -729,32 +814,6 @@ namespace SpotifyAPI.Web
         public PublicProfile GetPublicProfile(String userId)
         {
             return DownloadData<PublicProfile>(APIBase + "/users/" + userId);
-        }
-
-        #endregion
-
-        #region Search
-
-        /// <summary>
-        ///     Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.
-        /// </summary>
-        /// <param name="q">The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.</param>
-        /// <param name="type">A list of item types to search across.</param>
-        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
-        /// <param name="offset">The index of the first result to return. Default: 0</param>
-        /// <param name="market">An ISO 3166-1 alpha-2 country code or the string from_token.</param>
-        /// <returns></returns>
-        public SearchItem SearchItems(String q, SearchType type, int limit = 20, int offset = 0, String market = "")
-        {
-            limit = Math.Min(50, limit);
-            StringBuilder builder = new StringBuilder(APIBase + "/search");
-            builder.Append("?q=" + q);
-            builder.Append("&type=" + type.GetStringAttribute(","));
-            builder.Append("&limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (market != "")
-                builder.Append("&market=" + market);
-            return DownloadData<SearchItem>(builder.ToString());
         }
 
         #endregion
