@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Package</id>
+    <version>1.0.0</version>
+    <authors>Johnny</authors>
+    <owners>Johnny</owners>
+    <licenseUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/</projectUrl>
+    <iconUrl></iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An API for the Spotify-Client and Spotify's Web API, written in .NET</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2015 Jonas Dellinger</copyright>
+    <tags>spotify api music .net c# spotify-client</tags>
+  </metadata>
+</package>
