@@ -2,22 +2,29 @@ SpotifyAPI-NET [![Build status](https://ci.appveyor.com/api/projects/status/mxpj
 ===
 
 An API for the Spotify-Client and Spotify's Web API, written in .NET  
-Look at the example provided in the Repo
 
-Following 3 files will be needed for all features:
-+ SpotifyAPI.dll
-+ Newtonsoft.Json.dll (Will be merged into SpotifyAPI.dll in the official Releases using ILMerge)
-+ nircmd.dll (Used to Mute & UnMute Spotify)  
+**Spotify's Web API** ([link](https://developer.spotify.com/web-api/))
+> Based on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.
+> The API also provides access to user-related data such as playlists and music saved in a “Your Music” library, subject to user’s authorization.
 
-Please look at the [wiki](https://github.com/JohnnyCrazy/SpotifyAPI-NET/wiki) for more information, it provides examples and a documentation.
+**Spotify's *unofficial* Local API**
+> Do you ever wanted to control your local Spotify Client with some sort of API? Now you can! This API gives you full control over your spotify client.
+> You can get infos about the currently playing song, get its Album-Art, skip/pause and much more. It also features multiple Event-Interfaces.
 
-###Installation  
+###Docs and Usage
+
+More Information, Installation-Instructions, Examples and API-Reference can be found at [github.io/SpotifyAPI-Net/](http://johnnycrazy.github.io/SpotifyAPI-NET/)
+
+###NuGet  
 You can add the API to your project via [nuget-package](https://www.nuget.org/packages/SpotifyAPI-NET/):  
 ```
 Install-Package SpotifyAPI-NET
+//or
+Install-Package SpotifyAPI-Net -pre
 ```
 
 ###Example
 
-Screenshot of the SpotifyLocal-Example:
-![alt text](http://i.imgur.com/R9Xsma0.png "Example Screen")
+| SpotifyLocalAPI Example   | SpotifyWebAPI Example     |
+| :------------- | :------------- |
+| ![WebExample](http://i.imgur.com/Vo0lMk8.png) | ![LocalExample](http://i.imgur.com/E8Ba7Qm.png) |
