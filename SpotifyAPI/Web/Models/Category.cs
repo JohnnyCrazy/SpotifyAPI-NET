@@ -8,10 +8,13 @@ namespace SpotifyAPI.Web.Models
     {
         [JsonProperty("href")]
         public String Href { get; set; }
+
         [JsonProperty("icons")]
         public List<Image> Icons { get; set; }
+
         [JsonProperty("id")]
         public String Id { get; set; }
+
         [JsonProperty("name")]
         public String Name { get; set; }
     }

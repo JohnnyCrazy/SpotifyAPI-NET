@@ -7,6 +7,7 @@ namespace SpotifyAPI.Web.Models
     {
         [JsonProperty("message")]
         public String Message { get; set; }
+
         [JsonProperty("playlists")]
         public Paging<SimplePlaylist> Playlists { get; set; }
     }
