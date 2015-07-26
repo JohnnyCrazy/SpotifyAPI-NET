@@ -72,17 +72,17 @@ namespace SpotifyAPI.Web.Models
             return (Positions.Count > 0);
         }
     }
-    public class SeveralTracks
+    public class SeveralTracks : BasicModel
     {
         [JsonProperty("tracks")]
         public List<FullTrack> Tracks { get; set; }
     }
-    public class SeveralArtists
+    public class SeveralArtists : BasicModel
     {
         [JsonProperty("artists")]
         public List<FullArtist> Artists { get; set; }
     }
-    public class SeveralAlbums
+    public class SeveralAlbums : BasicModel
     {
         [JsonProperty("albums")]
         public List<FullAlbum> Albums { get; set; }
@@ -115,5 +115,11 @@ namespace SpotifyAPI.Web.Models
         public DateTime AddedAt { get; set; }
         [JsonProperty("track")]
         public FullTrack Track { get; set; }
+    }
+
+    public class Cursor
+    {
+        [JsonProperty("after")]
+        public String After { get; set; }
     }
 }

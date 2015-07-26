@@ -77,7 +77,9 @@
     <Compile Include="Web\Models\Category.cs" />
     <Compile Include="Web\Models\CategoryList.cs" />
     <Compile Include="Web\Models\CategoryPlaylist.cs" />
+    <Compile Include="Web\Models\CursorPaging.cs" />
     <Compile Include="Web\Models\FeaturedPlaylists.cs" />
+    <Compile Include="Web\Models\FollowedArtists.cs" />
     <Compile Include="Web\Models\FullAlbum.cs" />
     <Compile Include="Web\Models\FullArtist.cs" />
     <Compile Include="Web\Models\FullTrack.cs" />
