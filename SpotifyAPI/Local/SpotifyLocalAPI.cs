@@ -247,8 +247,8 @@ namespace SpotifyAPI.Local
         /// </summary>
         public static void RunSpotify()
         {
-            if (!IsSpotifyRunning())
-                Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\spotify\spotify.exe"));
+            if (!IsSpotifyRunning()) 
+                Process.Start(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\spotify\spotify.exe"));
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace SpotifyAPI.Local
         public static void RunSpotifyWebHelper()
         {
             if (!IsSpotifyWebHelperRunning())
-                Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\spotify\data\spotifywebhelper.exe"));
+                Process.Start(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\spotify\data\spotifywebhelper.exe"));
         }
     }
 }
