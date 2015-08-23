@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Timers;
 using SpotifyAPI.Local.Models;
 
@@ -162,17 +163,17 @@ namespace SpotifyAPI.Local
         /// <summary>
         /// Pause function
         /// </summary>
-        public void Pause()
+        public async Task Pause()
         {
-            _rh.SendPauseRequest();
+            await _rh.SendPauseRequest();
         }
 
         /// <summary>
         /// Play function
         /// </summary>
-        public void Play()
+        public async Task Play()
         {
-            _rh.SendPlayRequest();
+            await _rh.SendPlayRequest();
         }
 
         /// <summary>
@@ -193,9 +194,9 @@ namespace SpotifyAPI.Local
         /// <remarks>
         /// Contexts are basically a queue in spotify. a song can be played within a context, meaning that hitting next / previous would lead to another song. Contexts are leveraged by widgets as described in the "Multiple tracks player" section of the following documentation page: https://developer.spotify.com/technologies/widgets/spotify-play-button/
         /// </remarks>
-        public void PlayURL(String uri, String context = "")
+        public async Task PlayURL(String uri, String context = "")
         {
-            _rh.SendPlayRequest(uri, context);
+            await _rh.SendPlayRequest(uri, context);
         }
 
         /// <summary>
@@ -203,9 +204,9 @@ namespace SpotifyAPI.Local
         /// </summary>
         /// <param name="uri">The Spotify URI</param>
         [Obsolete("This method doesn't work with the current spotify version.")]
-        public void AddToQueue(String uri)
+        public async Task AddToQueue(String uri)
         {
-            _rh.SendQueueRequest(uri);
+            await _rh.SendQueueRequest(uri);
         }
 
         /// <summary>
