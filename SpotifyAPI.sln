@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI", "SpotifyAPI\SpotifyAPI.csproj", "{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}"
 EndProject
@@ -16,27 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{414F83
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SpotifyAPI.MvcExample", "http://localhost:35361", "{0617D7D0-C799-4C42-94AA-C133A0CAF6A0}"
-	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.1"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_35361"
-		Debug.AspNetCompiler.PhysicalPath = "SpotifyAPI.MvcExample\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_35361\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_35361"
-		Release.AspNetCompiler.PhysicalPath = "SpotifyAPI.MvcExample\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_35361\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "SpotifyAPI.MvcExample\"
-		DefaultWebSiteLanguage = "Visual C#"
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyMVC.Example", "SpotifyMVC.Example\SpotifyMVC.Example.csproj", "{6C694B48-4792-42E2-8654-AD6B629B7380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,10 +36,10 @@ Global
 		{C8968A03-497E-4BAB-B492-5651AE7E0C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8968A03-497E-4BAB-B492-5651AE7E0C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8968A03-497E-4BAB-B492-5651AE7E0C06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0617D7D0-C799-4C42-94AA-C133A0CAF6A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0617D7D0-C799-4C42-94AA-C133A0CAF6A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0617D7D0-C799-4C42-94AA-C133A0CAF6A0}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{0617D7D0-C799-4C42-94AA-C133A0CAF6A0}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{6C694B48-4792-42E2-8654-AD6B629B7380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C694B48-4792-42E2-8654-AD6B629B7380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C694B48-4792-42E2-8654-AD6B629B7380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C694B48-4792-42E2-8654-AD6B629B7380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
