@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SpotifyAPI.Example")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HEAVEN KILLERS RELEASE GROUP")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SpotifyAPI.Example")]
-[assembly: AssemblyCopyright("Copyright © HEAVEN KILLERS RELEASE GROUP 2015")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

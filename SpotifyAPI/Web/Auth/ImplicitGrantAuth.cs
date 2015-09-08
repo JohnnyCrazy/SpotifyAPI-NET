@@ -44,9 +44,9 @@ namespace SpotifyAPI.Web.Auth
         /// <summary>
         ///     Start the internal HTTP-Server
         /// </summary>
-        public void StartHttpServer()
+        public void StartHttpServer(int port = 80)
         {
-            _httpServer = new SimpleHttpServer(80, AuthType.Implicit);
+            _httpServer = new SimpleHttpServer(port, AuthType.Implicit);
             _httpServer.OnAuth += HttpServerOnOnAuth;
 
             _httpThread = new Thread(_httpServer.Listen);

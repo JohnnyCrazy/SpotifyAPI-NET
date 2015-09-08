@@ -29,7 +29,7 @@ namespace SpotifyAPI.Example
             _savedTracks = new List<FullTrack>();
             _auth = new ImplicitGrantAuth
             {
-                RedirectUri = "http://localhost",
+                RedirectUri = "http://localhost:8000",
                 ClientId = "26d287105e31491889f3cd293d85bfea",
                 Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibrarayRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate,
                 State = "XSS"
@@ -130,7 +130,7 @@ namespace SpotifyAPI.Example
 
         private void authButton_Click(object sender, EventArgs e)
         {
-            _auth.StartHttpServer();
+            _auth.StartHttpServer(8000);
             _auth.DoAuth();
         }
     }
