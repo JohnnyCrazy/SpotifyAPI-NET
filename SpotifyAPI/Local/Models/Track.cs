@@ -28,7 +28,7 @@ namespace SpotifyAPI.Local.Models
         /// <returns>A String, which is the URL to the Albumart</returns>
         public String GetAlbumArtUrl(AlbumArtSize size)
         {
-            if (AlbumResource.Uri == null || AlbumResource.Uri.Contains("local"))
+            if (AlbumResource.Uri == null || TrackType.Contains("local"))
                 return "";
 
             int albumsize = 0;
