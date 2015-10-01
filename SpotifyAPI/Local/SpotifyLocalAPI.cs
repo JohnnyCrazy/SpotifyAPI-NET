@@ -95,33 +95,33 @@ namespace SpotifyAPI.Local
             }
             if (newStatusResponse.Track != null && _eventStatusResponse.Track != null)
             {
-                if (newStatusResponse.Track.TrackResource.Name != _eventStatusResponse.Track.TrackResource.Name && OnTrackChange != null)
+                if (newStatusResponse.Track.TrackResource?.Name != _eventStatusResponse.Track.TrackResource?.Name)
                 {
-                    OnTrackChange(new TrackChangeEventArgs()
+                    OnTrackChange?.Invoke(new TrackChangeEventArgs()
                     {
                         OldTrack = _eventStatusResponse.Track,
                         NewTrack = newStatusResponse.Track
                     });
                 }
             }
-            if (newStatusResponse.Playing != _eventStatusResponse.Playing && OnPlayStateChange != null)
+            if (newStatusResponse.Playing != _eventStatusResponse.Playing)
             {
-                OnPlayStateChange(new PlayStateEventArgs()
+                OnPlayStateChange?.Invoke(new PlayStateEventArgs()
                 {
                     Playing = newStatusResponse.Playing
                 });
             }
-            if (newStatusResponse.Volume != _eventStatusResponse.Volume && OnVolumeChange != null)
+            if (newStatusResponse.Volume != _eventStatusResponse.Volume)
             {
-                OnVolumeChange(new VolumeChangeEventArgs()
+                OnVolumeChange?.Invoke(new VolumeChangeEventArgs()
                 {
                     OldVolume = _eventStatusResponse.Volume,
                     NewVolume = newStatusResponse.Volume
                 });
             }
-            if (newStatusResponse.PlayingPosition != _eventStatusResponse.PlayingPosition && OnTrackTimeChange != null)
+            if (newStatusResponse.PlayingPosition != _eventStatusResponse.PlayingPosition)
             {
-                OnTrackTimeChange(new TrackTimeChangeEventArgs()
+                OnTrackTimeChange?.Invoke(new TrackTimeChangeEventArgs()
                 {
                     TrackTime = newStatusResponse.PlayingPosition
                 });

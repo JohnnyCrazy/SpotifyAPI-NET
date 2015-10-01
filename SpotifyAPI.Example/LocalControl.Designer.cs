@@ -60,6 +60,7 @@
             this.artistLinkLabel = new System.Windows.Forms.LinkLabel();
             this.titleLinkLabel = new System.Windows.Forms.LinkLabel();
             this.smallAlbumPicture = new System.Windows.Forms.PictureBox();
+            this.advertLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bigAlbumPicture)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -307,6 +308,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.advertLabel);
             this.groupBox2.Controls.Add(this.timeLabel);
             this.groupBox2.Controls.Add(this.timeProgressBar);
             this.groupBox2.Controls.Add(this.label5);
@@ -418,6 +420,14 @@
             this.smallAlbumPicture.TabIndex = 5;
             this.smallAlbumPicture.TabStop = false;
             // 
+            // advertLabel
+            // 
+            this.advertLabel.AutoSize = true;
+            this.advertLabel.Location = new System.Drawing.Point(6, 67);
+            this.advertLabel.Name = "advertLabel";
+            this.advertLabel.Size = new System.Drawing.Size(0, 17);
+            this.advertLabel.TabIndex = 31;
+            // 
             // LocalControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -472,5 +482,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label repeatShuffleLabel;
+        private System.Windows.Forms.Label advertLabel;
     }
 }

@@ -78,6 +78,12 @@ namespace SpotifyAPI.Example
         {
             _currentTrack = track;
 
+            advertLabel.Text = track.IsAd() ? "ADVERT" : "";
+            timeProgressBar.Maximum = track.Length;
+
+            if (track.IsAd())
+                return; //Don't process further, maybe null values
+
             titleLinkLabel.Text = track.TrackResource.Name;
             titleLinkLabel.Tag = track.TrackResource.Uri;
 
@@ -86,8 +92,6 @@ namespace SpotifyAPI.Example
 
             albumLinkLabel.Text = track.AlbumResource.Name;
             albumLinkLabel.Tag = track.AlbumResource.Uri;
-
-            timeProgressBar.Maximum = track.Length;
 
             bigAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size640);
             smallAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size160);

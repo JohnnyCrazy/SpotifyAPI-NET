@@ -22,6 +22,15 @@ namespace SpotifyAPI.Local.Models
         public string TrackType { get; set; }
 
         /// <summary>
+        /// Checks if the track is an advert
+        /// </summary>
+        /// <returns>true if the track is an advert, fals otherwise</returns>
+        public bool IsAd()
+        {
+            return TrackType == "ad";
+        }
+
+        /// <summary>
         /// Returns a URL to the album cover in the provided size
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
