@@ -224,9 +224,10 @@ namespace SpotifyAPI.Web
                     Thread.Sleep(1);
                 }
             }
-            catch (Exception)
+            catch (SocketException e)
             {
-                // ignored
+                if (e.ErrorCode != 10004) //Ignore 10004, which is thrown when the thread gets terminated
+                    throw;
             }
         }
 
