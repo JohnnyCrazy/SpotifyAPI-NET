@@ -116,6 +116,4 @@ namespace SpotifyAPI.Local.Models
             }
         }
     }
-
-
 }
