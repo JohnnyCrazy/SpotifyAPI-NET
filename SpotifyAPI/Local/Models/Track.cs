@@ -24,10 +24,14 @@ namespace SpotifyAPI.Local.Models
         /// <summary>
         /// Checks if the track is an advert
         /// </summary>
-        /// <returns>true if the track is an advert, fals otherwise</returns>
+        /// <returns>true if the track is an advert, false otherwise</returns>
         public bool IsAd()
         {
-            return TrackType == "ad";
+            if (TrackType == "ad")
+                return true;
+            if (Length == 0)
+                return true;
+            return false;
         }
 
         /// <summary>
@@ -37,7 +41,7 @@ namespace SpotifyAPI.Local.Models
         /// <returns>A String, which is the URL to the Albumart</returns>
         public String GetAlbumArtUrl(AlbumArtSize size)
         {
-            if (AlbumResource.Uri == null || AlbumResource.Uri.Contains("local") || AlbumResource.Uri.Contains("spotify:album:0000000000000000000000"))
+            if (AlbumResource.Uri == null || !AlbumResource.Uri.Contains("spotify:album:") || AlbumResource.Uri.Contains("spotify:album:0000000000000000000000"))
                 return "";
 
             int albumsize = 0;
@@ -54,7 +58,7 @@ namespace SpotifyAPI.Local.Models
                     break;
             }
             String raw;
-            using(WebClient wc = new WebClient())
+            using (WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
                 raw = wc.DownloadString("http://open.spotify.com/album/" + AlbumResource.Uri.Split(new[] { ":" }, StringSplitOptions.None)[2]);
@@ -98,7 +102,7 @@ namespace SpotifyAPI.Local.Models
         /// <returns>A Bitmap, which is the albumart</returns>
         public Bitmap GetAlbumArt(AlbumArtSize size)
         {
-            using(WebClient wc = new WebClient())
+            using (WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
                 String url = GetAlbumArtUrl(size);
@@ -112,6 +116,4 @@ namespace SpotifyAPI.Local.Models
             }
         }
     }
-    
-    
 }
