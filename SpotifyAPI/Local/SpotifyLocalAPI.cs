@@ -144,6 +144,9 @@ namespace SpotifyAPI.Local
             return _rh.GetNewStatus();
         }
 
+        /// <summary>
+        /// Mutes Spotify (Requires nircmd.dll)
+        /// </summary>
         public void Mute()
         {
             if (File.Exists("nircmd.dll"))
