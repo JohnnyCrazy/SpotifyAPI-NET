@@ -9,7 +9,7 @@ namespace SpotifyAPI.Web.Auth
 {
     public class ImplicitGrantAuth
     {
-        public delegate void OnResponseReceived(Token token, String error);
+        public delegate void OnResponseReceived(Token token, String state);
 
         private SimpleHttpServer _httpServer;
         private Thread _httpThread;
