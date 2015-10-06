@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Timers;
 using SpotifyAPI.Local.Models;
 
@@ -74,15 +75,15 @@ namespace SpotifyAPI.Local
             _eventTimer.Elapsed += ElapsedTick;
         }
 
-        private void ElapsedTick(object sender, ElapsedEventArgs e)
+        private async void ElapsedTick(object sender, ElapsedEventArgs e)
         {
             if (_eventStatusResponse == null)
             {
-                _eventStatusResponse = GetStatus();
+                _eventStatusResponse = await GetStatus();
                 _eventTimer.Start();
                 return;
             }
-            StatusResponse newStatusResponse = GetStatus();
+            StatusResponse newStatusResponse = await GetStatus();
             if (newStatusResponse == null)
             {
                 _eventTimer.Start();
@@ -139,9 +140,9 @@ namespace SpotifyAPI.Local
             return _rh.Init();
         }
 
-        public StatusResponse GetStatus()
-        {
-            return _rh.GetNewStatus();
+        public async Task<StatusResponse> GetStatus()
+        {            
+            return await _rh.GetNewStatus();
         }
 
         /// <summary>
