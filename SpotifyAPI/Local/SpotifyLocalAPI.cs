@@ -140,8 +140,12 @@ namespace SpotifyAPI.Local
             return _rh.Init();
         }
 
+        /// <summary>
+        /// Gets the Spotify status
+        /// </summary>
+        /// <returns></returns>
         public async Task<StatusResponse> GetStatus()
-        {            
+        {
             return await _rh.GetNewStatus();
         }
 
