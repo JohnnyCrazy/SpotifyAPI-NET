@@ -43,9 +43,9 @@ namespace SpotifyAPI.Local
             await QueryAsync("remote/play.json?uri=" + url + "?action=queue", true, true, -1);
         }
 
-        internal async Task<StatusResponse> GetNewStatus()
+        internal StatusResponse GetNewStatus()
         {
-            String response = await QueryAsync("remote/status.json", true, true, -1);
+            String response = Query("remote/status.json", true, true, -1);
             if (response == "")
             {
                 return null;

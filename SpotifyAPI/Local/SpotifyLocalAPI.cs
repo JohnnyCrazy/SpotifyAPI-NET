@@ -75,15 +75,15 @@ namespace SpotifyAPI.Local
             _eventTimer.Elapsed += ElapsedTick;
         }
 
-        private async void ElapsedTick(object sender, ElapsedEventArgs e)
+        private void ElapsedTick(object sender, ElapsedEventArgs e)
         {
             if (_eventStatusResponse == null)
             {
-                _eventStatusResponse = await GetStatus();
+                _eventStatusResponse = GetStatus();
                 _eventTimer.Start();
                 return;
             }
-            StatusResponse newStatusResponse = await GetStatus();
+            StatusResponse newStatusResponse = GetStatus();
             if (newStatusResponse == null)
             {
                 _eventTimer.Start();
@@ -140,13 +140,9 @@ namespace SpotifyAPI.Local
             return _rh.Init();
         }
 
-        /// <summary>
-        /// Gets the Spotify status
-        /// </summary>
-        /// <returns></returns>
-        public async Task<StatusResponse> GetStatus()
+        public StatusResponse GetStatus()
         {
-            return await _rh.GetNewStatus();
+            return _rh.GetNewStatus();
         }
 
         /// <summary>
