@@ -75,6 +75,7 @@ namespace SpotifyAPI.Local.Models
             }
             return "";
         }
+
         /// <summary>
         /// Returns a Bitmap of the album cover in the provided size asynchronous
         /// </summary>
@@ -95,6 +96,24 @@ namespace SpotifyAPI.Local.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Returns a byte[] of the the album cover in the provided size asynchronous
+        /// </summary>
+        /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <returns>A byte[], which is the albumart in binary data</returns>
+        public async Task<byte[]> GetAlbumArtAsByteArrayAsync(AlbumArtSize size)
+        {
+            using (WebClient wc = new WebClient())
+            {
+                wc.Proxy = null;
+                String url = GetAlbumArtUrl(size);
+                if (url == "")
+                    return null;
+                return await wc.DownloadDataTaskAsync(url);
+            }
+        }
+
         /// <summary>
         /// Returns a Bitmap of the album cover in the provided size
         /// </summary>
@@ -113,6 +132,23 @@ namespace SpotifyAPI.Local.Models
                 {
                     return (Bitmap)Image.FromStream(ms);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Returns a byte[] of the album cover in the provided size
+        /// </summary>
+        /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <returns>A byte[], which is the albumart in binary data</returns>
+        public byte[] GetAlbumArtAsByteArray(AlbumArtSize size)
+        {
+            using (WebClient wc = new WebClient())
+            {
+                wc.Proxy = null;
+                String url = GetAlbumArtUrl(size);
+                if (url == "")
+                    return null;
+                return wc.DownloadData(url);
             }
         }
     }
