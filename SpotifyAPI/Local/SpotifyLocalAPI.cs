@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Timers;
 using SpotifyAPI.Local.Models;
 
@@ -144,6 +145,9 @@ namespace SpotifyAPI.Local
             return _rh.GetNewStatus();
         }
 
+        /// <summary>
+        /// Mutes Spotify (Requires nircmd.dll)
+        /// </summary>
         public void Mute()
         {
             if (File.Exists("nircmd.dll"))

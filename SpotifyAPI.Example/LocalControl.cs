@@ -58,9 +58,9 @@ namespace SpotifyAPI.Example
             }
         }
 
-        public void UpdateInfos()
+        public async void UpdateInfos()
         {
-            StatusResponse status = _spotify.GetStatus();
+            StatusResponse status = await _spotify.GetStatus();
             if (status == null)
                 return;
 
