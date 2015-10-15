@@ -139,11 +139,18 @@ namespace SpotifyAPI.Local
             return _rh.Init();
         }
 
+        /// <summary>
+        /// Update and returns the new StatusResponse from the Spotify-Player
+        /// </summary>
+        /// <returns>An up-to-date StatusResponse</returns>
         public StatusResponse GetStatus()
         {
             return _rh.GetNewStatus();
         }
 
+        /// <summary>
+        /// Mutes Spotify (Requires nircmd.dll)
+        /// </summary>
         public void Mute()
         {
             if (File.Exists("nircmd.dll"))
