@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SpotifyAPI.Local.Models;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using SpotifyAPI.Local.Models;
 
 namespace SpotifyAPI.Local
 {
@@ -145,7 +145,7 @@ namespace SpotifyAPI.Local
                 parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
             }
 
-            string address = "http://" + Host + ":4380/" + request + parameters ;
+            string address = "http://" + Host + ":4380/" + request + parameters;
             string response = "";
             try
             {

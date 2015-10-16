@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace SpotifyAPI.Local.Models
 {
@@ -7,8 +7,10 @@ namespace SpotifyAPI.Local.Models
     {
         [JsonProperty("name")]
         public String Name { get; set; }
+
         [JsonProperty("uri")]
         public String Uri { get; set; }
+
         [JsonProperty("location")]
         public TrackResourceLocation Location { get; set; }
     }

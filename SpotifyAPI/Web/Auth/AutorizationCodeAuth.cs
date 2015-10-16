@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SpotifyAPI.Web.Enums;
+using SpotifyAPI.Web.Models;
+using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
-using Newtonsoft.Json;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web.Auth
 {
@@ -51,7 +51,7 @@ namespace SpotifyAPI.Web.Auth
                     "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + clientSecret)));
                 NameValueCollection col = new NameValueCollection
                 {
-                    {"grant_type", "refresh_token"}, 
+                    {"grant_type", "refresh_token"},
                     {"refresh_token", refreshToken}
                 };
 

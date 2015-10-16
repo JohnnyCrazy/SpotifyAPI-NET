@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SpotifyAPI.Web.Enums;
+using SpotifyAPI.Web.Models;
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web.Auth
 {
@@ -18,6 +18,7 @@ namespace SpotifyAPI.Web.Auth
         public String State { get; set; }
         public Scope Scope { get; set; }
         public Boolean ShowDialog { get; set; }
+
         public event OnResponseReceived OnResponseReceivedEvent;
 
         /// <summary>

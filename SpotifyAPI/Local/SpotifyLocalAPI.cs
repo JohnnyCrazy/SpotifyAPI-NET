@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SpotifyAPI.Local.Models;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Timers;
-using SpotifyAPI.Local.Models;
 
 namespace SpotifyAPI.Local
 {
@@ -12,10 +12,12 @@ namespace SpotifyAPI.Local
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+
         [DllImport("nircmd.dll", CharSet = CharSet.Auto)]
         private static extern bool DoNirCmd(String nirCmdStr);
 
         private bool _listenForEvents;
+
         public bool ListenForEvents
         {
             get
@@ -30,6 +32,7 @@ namespace SpotifyAPI.Local
         }
 
         private ISynchronizeInvoke _synchronizingObject;
+
         public ISynchronizeInvoke SynchronizingObject
         {
             get
@@ -43,22 +46,29 @@ namespace SpotifyAPI.Local
             }
         }
 
-        const byte VkMediaNextTrack = 0xb0;
-        const byte VkMediaPrevTrack = 0xb1;
-        const int KeyeventfExtendedkey = 0x1;
-        const int KeyeventfKeyup = 0x2;
+        private const byte VkMediaNextTrack = 0xb0;
+        private const byte VkMediaPrevTrack = 0xb1;
+        private const int KeyeventfExtendedkey = 0x1;
+        private const int KeyeventfKeyup = 0x2;
 
-        readonly RemoteHandler _rh;
+        private readonly RemoteHandler _rh;
         private readonly Timer _eventTimer;
         private StatusResponse _eventStatusResponse;
 
         public delegate void TrackChangeEventHandler(TrackChangeEventArgs e);
+
         public delegate void PlayStateEventHandler(PlayStateEventArgs e);
+
         public delegate void VolumeChangeEventHandler(VolumeChangeEventArgs e);
+
         public delegate void TrackTimeChangeEventHandler(TrackTimeChangeEventArgs e);
+
         public event TrackChangeEventHandler OnTrackChange;
+
         public event PlayStateEventHandler OnPlayStateChange;
+
         public event VolumeChangeEventHandler OnVolumeChange;
+
         public event TrackTimeChangeEventHandler OnTrackTimeChange;
 
         public SpotifyLocalAPI()

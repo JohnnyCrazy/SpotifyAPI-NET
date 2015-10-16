@@ -8,7 +8,7 @@ using System.Threading;
 using System.Web;
 
 // offered to the public domain for any use with no restriction
-// and also with no warranty of any kind, please enjoy. - David Jeske. 
+// and also with no warranty of any kind, please enjoy. - David Jeske.
 
 // simple HTTP explanation
 // http://www.jmarshall.com/easy/http/
@@ -17,7 +17,7 @@ namespace SpotifyAPI.Web
 {
     public class HttpProcessor
     {
-        private const int MaxPostSize = 10*1024*1024; // 10MB
+        private const int MaxPostSize = 10 * 1024 * 1024; // 10MB
         private const int BufSize = 4096;
         private readonly TcpClient _socket;
         private readonly HttpServer _srv;
@@ -85,7 +85,7 @@ namespace SpotifyAPI.Web
             }
             OutputStream.Flush();
             _inputStream = null;
-            OutputStream = null;           
+            OutputStream = null;
             _socket.Close();
         }
 
@@ -137,9 +137,9 @@ namespace SpotifyAPI.Web
         {
             // this post data processing just reads everything into a memory stream.
             // this is fine for smallish things, but for large stuff we should really
-            // hand an input stream to the request processor. However, the input stream 
-            // we hand him needs to let him see the "end of the stream" at this content 
-            // length, because otherwise he won't know when he's seen it all! 
+            // hand an input stream to the request processor. However, the input stream
+            // we hand him needs to let him see the "end of the stream" at this content
+            // length, because otherwise he won't know when he's seen it all!
 
             MemoryStream ms = new MemoryStream();
             if (HttpHeaders.ContainsKey("Content-Length"))
@@ -147,7 +147,7 @@ namespace SpotifyAPI.Web
                 var contentLen = Convert.ToInt32(HttpHeaders["Content-Length"]);
                 if (contentLen > MaxPostSize)
                 {
-                    throw new Exception(String.Format("POST Content-Length({0}) too big for this simple server",  contentLen));
+                    throw new Exception(String.Format("POST Content-Length({0}) too big for this simple server", contentLen));
                 }
                 byte[] buf = new byte[BufSize];
                 int toRead = contentLen;
@@ -230,6 +230,7 @@ namespace SpotifyAPI.Web
         }
 
         public abstract void HandleGetRequest(HttpProcessor p);
+
         public abstract void HandlePostRequest(HttpProcessor p, StreamReader inputData);
     }
 
@@ -237,6 +238,7 @@ namespace SpotifyAPI.Web
     {
         //Code can be an AccessToken or an Exchange Code
         public String Code { get; set; }
+
         public String TokenType { get; set; }
         public String State { get; set; }
         public String Error { get; set; }
@@ -262,7 +264,6 @@ namespace SpotifyAPI.Web
             if (p.HttpUrl == "/favicon.ico")
                 return;
 
-
             Thread t;
             if (_type == AuthType.Authorization)
             {
@@ -274,7 +275,7 @@ namespace SpotifyAPI.Web
                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
                     t = new Thread(o =>
                     {
-                        if(OnAuth != null)
+                        if (OnAuth != null)
                             OnAuth(new AuthEventArgs()
                             {
                                 State = col.Get(1),
@@ -287,7 +288,7 @@ namespace SpotifyAPI.Web
                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth successful!</h1><script>window.close();</script></body></html>");
                     t = new Thread(o =>
                     {
-                        if(OnAuth != null)
+                        if (OnAuth != null)
                             OnAuth(new AuthEventArgs()
                             {
                                 Code = col.Get(0),

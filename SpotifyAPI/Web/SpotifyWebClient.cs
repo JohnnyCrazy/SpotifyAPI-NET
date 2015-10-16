@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web
 {
@@ -46,7 +46,7 @@ namespace SpotifyAPI.Web
             return response;
         }
 
-        public byte[] DownloadRaw(string url) 
+        public byte[] DownloadRaw(string url)
         {
             return _webClient.DownloadData(url);
         }
@@ -93,7 +93,7 @@ namespace SpotifyAPI.Web
 
         public void RemoveHeader(string header)
         {
-            if(_webClient.Headers[header] != null)
+            if (_webClient.Headers[header] != null)
                 _webClient.Headers.Remove(header);
         }
 

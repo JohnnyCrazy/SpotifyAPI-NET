@@ -1,5 +1,5 @@
-﻿using System;
-using SpotifyAPI.Local.Models;
+﻿using SpotifyAPI.Local.Models;
+using System;
 
 namespace SpotifyAPI.Local
 {
@@ -11,6 +11,7 @@ namespace SpotifyAPI.Local
         public Track OldTrack { get; set; }
         public Track NewTrack { get; set; }
     }
+
     /// <summary>
     /// Event gets triggered, when the Playin-state is changed (e.g Play --> Pause)
     /// </summary>
@@ -18,6 +19,7 @@ namespace SpotifyAPI.Local
     {
         public Boolean Playing { get; set; }
     }
+
     /// <summary>
     /// Event gets triggered, when the volume changes
     /// </summary>
@@ -26,6 +28,7 @@ namespace SpotifyAPI.Local
         public double OldVolume { get; set; }
         public double NewVolume { get; set; }
     }
+
     /// <summary>
     /// Event gets triggered, when the tracktime changes
     /// </summary>

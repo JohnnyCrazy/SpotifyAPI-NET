@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace SpotifyAPI.Web
 {
@@ -62,7 +62,7 @@ namespace SpotifyAPI.Web
             return DownloadData<SearchItem>(builder.ToString());
         }
 
-        #endregion
+        #endregion Search
 
         #region Albums
 
@@ -112,7 +112,7 @@ namespace SpotifyAPI.Web
             return DownloadData<SeveralAlbums>(APIBase + "/albums?market=" + market + "&ids=" + string.Join(",", ids.Take(20)));
         }
 
-        #endregion
+        #endregion Albums
 
         #region Artists
 
@@ -186,7 +186,7 @@ namespace SpotifyAPI.Web
             return DownloadData<SeveralArtists>(APIBase + "/artists?ids=" + string.Join(",", ids.Take(50)));
         }
 
-        #endregion
+        #endregion Artists
 
         #region Browse
 
@@ -314,7 +314,7 @@ namespace SpotifyAPI.Web
             return DownloadData<CategoryPlaylist>(builder.ToString());
         }
 
-        #endregion
+        #endregion Browse
 
         #region Follow
 
@@ -327,7 +327,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public FollowedArtists GetFollowedArtists(int limit = 20, String after = "")
         {
-            if(!UseAuth)
+            if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetFollowedArtists");
             limit = Math.Max(limit, 50);
             const FollowType followType = FollowType.Artist; //currently only artist is supported.
@@ -363,7 +363,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse Follow(FollowType followType, String id)
         {
-            return Follow(followType, new List<string> {id});
+            return Follow(followType, new List<string> { id });
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse Unfollow(FollowType followType, String id)
         {
-            return Unfollow(followType, new List<string> {id});
+            return Unfollow(followType, new List<string> { id });
         }
 
         /// <summary>
@@ -407,8 +407,8 @@ namespace SpotifyAPI.Web
                 throw new InvalidOperationException("Auth is required for IsFollowing");
             JToken res = DownloadData<JToken>(APIBase + "/me/following/contains?type=" + followType.GetStringAttribute("") + "&ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
-            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ListResponse<Boolean> IsFollowing(FollowType followType, String id)
         {
-            return IsFollowing(followType, new List<string> {id});
+            return IsFollowing(followType, new List<string> { id });
         }
 
         /// <summary>
@@ -472,8 +472,8 @@ namespace SpotifyAPI.Web
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
             JToken res = DownloadData<JToken>(APIBase + "/users/" + ownerId + "/playlists/" + playlistId + "/followers/contains?ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
-            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
         }
 
         /// <summary>
@@ -486,10 +486,10 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ListResponse<Boolean> IsFollowingPlaylist(String ownerId, String playlistId, String id)
         {
-            return IsFollowingPlaylist(ownerId, playlistId, new List<string> {id});
+            return IsFollowingPlaylist(ownerId, playlistId, new List<string> { id });
         }
 
-        #endregion
+        #endregion Follow
 
         #region Library
 
@@ -513,7 +513,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse SaveTrack(String id)
         {
-            return SaveTracks(new List<string> {id});
+            return SaveTracks(new List<string> { id });
         }
 
         /// <summary>
@@ -561,11 +561,11 @@ namespace SpotifyAPI.Web
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
             JToken res = DownloadData<JToken>(APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids));
             if (res is JArray)
-                return new ListResponse<Boolean> {List = res.ToObject<List<Boolean>>(), Error = null};
-            return new ListResponse<Boolean> {List = null, Error = res["error"].ToObject<Error>()};
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
         }
 
-        #endregion
+        #endregion Library
 
         #region Playlists
 
@@ -730,7 +730,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse RemovePlaylistTrack(String userId, String playlistId, DeleteTrackUri uri)
         {
-            return RemovePlaylistTracks(userId, playlistId, new List<DeleteTrackUri> {uri});
+            return RemovePlaylistTracks(userId, playlistId, new List<DeleteTrackUri> { uri });
         }
 
         /// <summary>
@@ -764,7 +764,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse AddPlaylistTrack(String userId, String playlistId, String uri, int? position = null)
         {
-            return AddPlaylistTracks(userId, playlistId, new List<string> {uri}, position);
+            return AddPlaylistTracks(userId, playlistId, new List<string> { uri }, position);
         }
 
         /// <summary>
@@ -791,7 +791,7 @@ namespace SpotifyAPI.Web
             return UploadData<Snapshot>(APIBase + "/users/" + userId + "/playlists/" + playlistId + "/tracks", body.ToString(Formatting.None), "PUT");
         }
 
-        #endregion
+        #endregion Playlists
 
         #region Profiles
 
@@ -817,7 +817,7 @@ namespace SpotifyAPI.Web
             return DownloadData<PublicProfile>(APIBase + "/users/" + userId);
         }
 
-        #endregion
+        #endregion Profiles
 
         #region Tracks
 
@@ -847,7 +847,7 @@ namespace SpotifyAPI.Web
             return DownloadData<FullTrack>(APIBase + "/tracks/" + id + "?market=" + market);
         }
 
-        #endregion
+        #endregion Tracks
 
         #region Util
 
@@ -869,6 +869,6 @@ namespace SpotifyAPI.Web
             return WebClient.DownloadJson<T>(url);
         }
 
-        #endregion
+        #endregion Util
     }
 }
