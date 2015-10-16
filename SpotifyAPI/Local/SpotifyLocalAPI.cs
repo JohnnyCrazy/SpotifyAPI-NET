@@ -254,7 +254,7 @@ namespace SpotifyAPI.Local
         /// </summary>
         public static void RunSpotify()
         {
-            if (!IsSpotifyRunning()) 
+            if (!IsSpotifyRunning() && File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotify.exe")))
                 Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotify.exe"));
         }
 
@@ -263,8 +263,14 @@ namespace SpotifyAPI.Local
         /// </summary>
         public static void RunSpotifyWebHelper()
         {
-            if (!IsSpotifyWebHelperRunning())
+            if (!IsSpotifyWebHelperRunning() && File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\data\spotifywebhelper.exe")))
+            {
                 Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\data\spotifywebhelper.exe"));
+            }
+            else if (!IsSpotifyWebHelperRunning() && File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotifywebhelper.exe")))
+            {
+                Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotifywebhelper.exe"));
+            }
         }
     }
 }
