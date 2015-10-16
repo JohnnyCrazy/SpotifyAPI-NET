@@ -125,7 +125,7 @@ namespace SpotifyAPI.Local.Models
             {
                 wc.Proxy = null;
                 String url = GetAlbumArtUrl(size);
-                if (url == "")
+                if (String.IsNullOrEmpty(url))
                     return null;
                 var data = wc.DownloadData(url);
                 using (MemoryStream ms = new MemoryStream(data))
@@ -146,7 +146,7 @@ namespace SpotifyAPI.Local.Models
             {
                 wc.Proxy = null;
                 String url = GetAlbumArtUrl(size);
-                if (url == "")
+                if (String.IsNullOrEmpty(url))
                     return null;
                 return wc.DownloadData(url);
             }

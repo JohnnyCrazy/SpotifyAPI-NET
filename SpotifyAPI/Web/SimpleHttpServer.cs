@@ -79,15 +79,13 @@ namespace SpotifyAPI.Web
                     HandlePostRequest();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine("Exception: " + e);
                 WriteFailure();
             }
             OutputStream.Flush();
-            // bs.Flush(); // flush any remaining output
             _inputStream = null;
-            OutputStream = null; // bs = null;            
+            OutputStream = null;           
             _socket.Close();
         }
 
@@ -97,7 +95,7 @@ namespace SpotifyAPI.Web
             string[] tokens = request.Split(' ');
             if (tokens.Length < 2)
             {
-                throw new Exception("invalid http request line");
+                throw new Exception("Invalid HTTP request line");
             }
             HttpMethod = tokens[0].ToUpper();
             HttpUrl = tokens[1];
@@ -108,7 +106,7 @@ namespace SpotifyAPI.Web
             String line;
             while ((line = StreamReadLine(_inputStream)) != null)
             {
-                if (line.Equals(""))
+                if (String.IsNullOrEmpty(line))
                 {
                     return;
                 }
@@ -116,7 +114,7 @@ namespace SpotifyAPI.Web
                 int separator = line.IndexOf(':');
                 if (separator == -1)
                 {
-                    throw new Exception("invalid http header line: " + line);
+                    throw new Exception("Invalid HTTP header line: " + line);
                 }
                 String name = line.Substring(0, separator);
                 int pos = separator + 1;
@@ -149,9 +147,7 @@ namespace SpotifyAPI.Web
                 var contentLen = Convert.ToInt32(HttpHeaders["Content-Length"]);
                 if (contentLen > MaxPostSize)
                 {
-                    throw new Exception(
-                        String.Format("POST Content-Length({0}) too big for this simple server",
-                            contentLen));
+                    throw new Exception(String.Format("POST Content-Length({0}) too big for this simple server",  contentLen));
                 }
                 byte[] buf = new byte[BufSize];
                 int toRead = contentLen;
@@ -164,7 +160,7 @@ namespace SpotifyAPI.Web
                         {
                             break;
                         }
-                        throw new Exception("client disconnected during post");
+                        throw new Exception("Client disconnected during post");
                     }
                     toRead -= numread;
                     ms.Write(buf, 0, numread);
@@ -207,6 +203,8 @@ namespace SpotifyAPI.Web
         {
             IsActive = false;
             _listener.Stop();
+            Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public void Listen()
@@ -276,7 +274,6 @@ namespace SpotifyAPI.Web
                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
                     t = new Thread(o =>
                     {
-                        //_funcOne(null, col.Get(1), col.Get(0));
                         if(OnAuth != null)
                             OnAuth(new AuthEventArgs()
                             {

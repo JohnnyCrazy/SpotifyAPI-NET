@@ -9,7 +9,7 @@ using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web
 {
-    public class SpotifyWebAPI : IDisposable
+    public sealed class SpotifyWebAPI : IDisposable
     {
         public const String APIBase = "https://api.spotify.com/v1";
 
@@ -35,6 +35,7 @@ namespace SpotifyAPI.Web
         public void Dispose()
         {
             WebClient.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         #region Search
@@ -56,7 +57,7 @@ namespace SpotifyAPI.Web
             builder.Append("&type=" + type.GetStringAttribute(","));
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (market != "")
+            if (!String.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return DownloadData<SearchItem>(builder.ToString());
         }
@@ -80,7 +81,7 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder(APIBase + "/albums/" + id + "/tracks");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (market != "")
+            if (!String.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return DownloadData<Paging<SimpleTrack>>(builder.ToString());
         }
@@ -93,7 +94,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public FullAlbum GetAlbum(String id, String market = "")
         {
-            if (market == "")
+            if (String.IsNullOrEmpty(market))
                 return DownloadData<FullAlbum>(APIBase + "/albums/" + id);
             return DownloadData<FullAlbum>(APIBase + "/albums/" + id + "?market=" + market);
         }
@@ -106,7 +107,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SeveralAlbums GetSeveralAlbums(List<String> ids, String market = "")
         {
-            if (market == "")
+            if (String.IsNullOrEmpty(market))
                 return DownloadData<SeveralAlbums>(APIBase + "/albums?ids=" + string.Join(",", ids.Take(20)));
             return DownloadData<SeveralAlbums>(APIBase + "/albums?market=" + market + "&ids=" + string.Join(",", ids.Take(20)));
         }
@@ -170,7 +171,7 @@ namespace SpotifyAPI.Web
             builder.Append("?type=" + type.GetStringAttribute(","));
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (market != "")
+            if (!String.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return DownloadData<Paging<SimpleAlbum>>(builder.ToString());
         }
@@ -209,9 +210,9 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder(APIBase + "/browse/featured-playlists");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (locale != "")
+            if (!String.IsNullOrEmpty(locale))
                 builder.Append("&locale=" + locale);
-            if (country != "")
+            if (!String.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
             if (timestamp != default(DateTime))
                 builder.Append("&timestamp=" + timestamp.ToString("yyyy-MM-ddTHH:mm:ss"));
@@ -234,7 +235,7 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder(APIBase + "/browse/new-releases");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (country != "")
+            if (!String.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
             return DownloadData<NewAlbumReleases>(builder.ToString());
         }
@@ -262,9 +263,9 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder(APIBase + "/browse/categories");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (country != "")
+            if (!String.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
-            if (locale != "")
+            if (!String.IsNullOrEmpty(locale))
                 builder.Append("&locale=" + locale);
             return DownloadData<CategoryList>(builder.ToString());
         }
@@ -286,9 +287,9 @@ namespace SpotifyAPI.Web
         public Category GetCategory(String categoryId, String country = "", String locale = "")
         {
             StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId);
-            if (country != "")
+            if (!String.IsNullOrEmpty(country))
                 builder.Append("?country=" + country);
-            if (locale != "")
+            if (!String.IsNullOrEmpty(locale))
                 builder.Append((country == "" ? "?locale=" : "&locale=") + locale);
             return DownloadData<Category>(builder.ToString());
         }
@@ -308,7 +309,7 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId + "/playlists");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (country != "")
+            if (!String.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
             return DownloadData<CategoryPlaylist>(builder.ToString());
         }
@@ -332,7 +333,7 @@ namespace SpotifyAPI.Web
             const FollowType followType = FollowType.Artist; //currently only artist is supported.
             StringBuilder builder = new StringBuilder(APIBase + "/me/following?type=" + followType.GetStringAttribute(""));
             builder.Append("&limit=" + limit);
-            if (after != "")
+            if (!String.IsNullOrEmpty(after))
                 builder.Append("&after=" + after);
             return DownloadData<FollowedArtists>(builder.ToString());
         }
@@ -531,7 +532,7 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder(APIBase + "/me/tracks");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (market != "")
+            if (!String.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return DownloadData<Paging<SavedTrack>>(builder.ToString());
         }
@@ -605,7 +606,7 @@ namespace SpotifyAPI.Web
                 throw new InvalidOperationException("Auth is required for GetPlaylist");
             StringBuilder builder = new StringBuilder(APIBase + "/users/" + userId + "/playlists/" + playlistId);
             builder.Append("?fields=" + fields);
-            if (market != "")
+            if (!String.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return DownloadData<FullPlaylist>(builder.ToString());
         }
@@ -633,7 +634,7 @@ namespace SpotifyAPI.Web
             builder.Append("?fields=" + fields);
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (market != "")
+            if (!String.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return DownloadData<Paging<PlaylistTrack>>(builder.ToString());
         }
@@ -785,7 +786,7 @@ namespace SpotifyAPI.Web
                 {"range_length", rangeLength},
                 {"insert_before", insertBefore}
             };
-            if (snapshotId != "")
+            if (!String.IsNullOrEmpty(snapshotId))
                 body.Add("snapshot_id", snapshotId);
             return UploadData<Snapshot>(APIBase + "/users/" + userId + "/playlists/" + playlistId + "/tracks", body.ToString(Formatting.None), "PUT");
         }
@@ -828,7 +829,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SeveralTracks GetSeveralTracks(List<String> ids, String market = "")
         {
-            if (market == "")
+            if (String.IsNullOrEmpty(market))
                 return DownloadData<SeveralTracks>(APIBase + "/tracks?ids=" + string.Join(",", ids.Take(50)));
             return DownloadData<SeveralTracks>(APIBase + "/tracks?market=" + market + "&ids=" + string.Join(",", ids.Take(50)));
         }
@@ -841,7 +842,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public FullTrack GetTrack(String id, String market = "")
         {
-            if (market == "")
+            if (String.IsNullOrEmpty(market))
                 return DownloadData<FullTrack>(APIBase + "/tracks/" + id);
             return DownloadData<FullTrack>(APIBase + "/tracks/" + id + "?market=" + market);
         }

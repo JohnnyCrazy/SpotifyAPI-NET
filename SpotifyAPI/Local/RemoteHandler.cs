@@ -19,7 +19,7 @@ namespace SpotifyAPI.Local
         {
             OauthKey = GetOAuthKey();
             CfidKey = GetCfid();
-            return CfidKey != "";
+            return !String.IsNullOrEmpty(CfidKey);
         }
 
         internal async void SendPauseRequest()
@@ -46,7 +46,7 @@ namespace SpotifyAPI.Local
         internal StatusResponse GetNewStatus()
         {
             String response = Query("remote/status.json", true, true, -1);
-            if (response == "")
+            if (String.IsNullOrEmpty(response))
             {
                 return null;
             }
@@ -77,7 +77,7 @@ namespace SpotifyAPI.Local
             if (cfidList == null)
                 return "";
             if (cfidList.Count != 1)
-                throw new Exception("CFID couldn't be loaded");
+                throw new Exception("CFID could not be loaded");
             return cfidList[0].Error == null ? cfidList[0].Token : "";
         }
 
@@ -114,9 +114,9 @@ namespace SpotifyAPI.Local
                         response = "[ " + wc.DownloadString(address) + " ]";
                 }
             }
-            catch (Exception)
+            catch
             {
-                return "";
+                return String.Empty;
             }
 
             return response;
@@ -155,9 +155,9 @@ namespace SpotifyAPI.Local
                         response = "[ " + await wc.DownloadStringTaskAsync(new Uri(address)) + " ]";
                 }
             }
-            catch (Exception)
+            catch
             {
-                return "";
+                return String.Empty;
             }
 
             return response;

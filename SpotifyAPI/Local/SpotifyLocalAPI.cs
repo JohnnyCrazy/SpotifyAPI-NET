@@ -12,7 +12,7 @@ namespace SpotifyAPI.Local
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
-        [DllImport("nircmd.dll")]
+        [DllImport("nircmd.dll", CharSet = CharSet.Auto)]
         private static extern bool DoNirCmd(String nirCmdStr);
 
         private bool _listenForEvents;
