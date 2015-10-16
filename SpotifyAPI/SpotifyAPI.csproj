@@ -24,7 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\SpotifyAPI.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <CodeAnalysisRuleSet>..\..\..\My Data\Dokumente\Visual Studio 2015\Projects\BackupAudioRecorder\AudioRecordTest\MAXRULES.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
