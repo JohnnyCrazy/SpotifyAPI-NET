@@ -183,7 +183,7 @@ namespace SpotifyAPI.Local
         }
 
         /// <summary>
-        /// Checks whether Spotify is muted in the Volume Mixer control
+        /// Checks whether Spotify is muted in the Volume Mixer control (required Windows 7 or newer)
         /// </summary>
         /// <returns>Null if an error occured, otherwise the muted state</returns>
         public bool? IsSpotifyMuted()
