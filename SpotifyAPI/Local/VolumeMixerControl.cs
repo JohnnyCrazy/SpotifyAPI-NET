@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpotifyAPI.Local
 {
@@ -125,7 +121,6 @@ namespace SpotifyAPI.Local
             return volumeControl;
         }
 
-
         [ComImport]
         [Guid("BCDE0395-E52F-467C-8E3D-C4579291692E")]
         private class MMDeviceEnumerator
@@ -162,13 +157,13 @@ namespace SpotifyAPI.Local
         {
             [PreserveSig]
             int Activate(ref Guid iid, int dwClsCtx, IntPtr pActivationParams, [MarshalAs(UnmanagedType.IUnknown)] out object ppInterface);
-
         }
 
         [Guid("77AA99A0-1BD6-484F-8BC7-2C654C9A9B6F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private interface IAudioSessionManager2
         {
             int NotImpl1();
+
             int NotImpl2();
 
             [PreserveSig]
