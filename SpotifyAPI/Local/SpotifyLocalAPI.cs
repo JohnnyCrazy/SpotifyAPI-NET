@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Timers;
@@ -12,9 +13,6 @@ namespace SpotifyAPI.Local
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
-
-        [DllImport("nircmd.dll", CharSet = CharSet.Auto)]
-        private static extern bool DoNirCmd(String nirCmdStr);
 
         private bool _listenForEvents;
 
@@ -159,21 +157,72 @@ namespace SpotifyAPI.Local
         }
 
         /// <summary>
-        /// Mutes Spotify (Requires nircmd.dll)
+        /// Mutes Spotify (Requires Windows 7 or newer)
         /// </summary>
         public void Mute()
         {
-            if (File.Exists("nircmd.dll"))
-                DoNirCmd("muteappvolume spotify.exe 1");
+            //Windows < Windows Vista Check
+            Contract.Requires(Environment.OSVersion.Version.Major >= 6);
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                Contract.Requires(Environment.OSVersion.Version.Minor != 0);
+            VolumeMixerControl.MuteSpotify(true);
         }
 
         /// <summary>
-        /// Unmutes Spotify (Requires nircmd.dll)
+        /// Unmutes Spotify (Requires Windows 7 or newer)
         /// </summary>
         public void UnMute()
         {
-            if (File.Exists("nircmd.dll"))
-                DoNirCmd("muteappvolume spotify.exe 0");
+            //Windows < Windows Vista Check
+            Contract.Requires(Environment.OSVersion.Version.Major >= 6);
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                Contract.Requires(Environment.OSVersion.Version.Minor != 0);
+            VolumeMixerControl.MuteSpotify(false);
+        }
+
+        /// <summary>
+        /// Checks whether Spotify is muted in the Volume Mixer control
+        /// </summary>
+        /// <returns>Null if an error occured, otherwise the muted state</returns>
+        public bool? IsSpotifyMuted()
+        {
+            //Windows < Windows Vista Check
+            Contract.Requires(Environment.OSVersion.Version.Major >= 6);
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                Contract.Requires(Environment.OSVersion.Version.Minor != 0);
+            return VolumeMixerControl.IsSpotifyMuted();
+        }
+
+        /// <summary>
+        ///  Sets the Volume Mixer volume (requires Windows 7 or newer)
+        /// </summary>
+        /// <param name="volume">A Value between 0 and 100</param>
+        public void SetSpotifyVolume(float volume = 100)
+        {
+            Contract.Requires(0 <= volume && volume <= 100);
+            //Windows < Windows Vista Check
+            Contract.Requires(Environment.OSVersion.Version.Major >= 6);
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                Contract.Requires(Environment.OSVersion.Version.Minor != 0);
+            VolumeMixerControl.SetSpotifyVolume(volume);
+        }
+
+        /// <summary>
+        /// Return the Volume Mixer volume of Spotify (requires Windows 7 or newer)
+        /// </summary>
+        /// <returns>Null if an error occured, otherwise a float between 0 and 100</returns>
+        public float? GetSpotifyVolume()
+        {
+            //Windows < Windows Vista Check
+            Contract.Requires(Environment.OSVersion.Version.Major >= 6);
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                Contract.Requires(Environment.OSVersion.Version.Minor != 0);
+            return VolumeMixerControl.GetSpotifyVolume();
         }
 
         /// <summary>
