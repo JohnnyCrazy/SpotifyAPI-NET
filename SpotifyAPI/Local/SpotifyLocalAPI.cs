@@ -199,7 +199,7 @@ namespace SpotifyAPI.Local
         /// <summary>
         ///  Sets the Volume Mixer volume (requires Windows 7 or newer)
         /// </summary>
-        /// <param name="volume">A Value between 0 and 100</param>
+        /// <param name="volume">A value between 0 and 100</param>
         public void SetSpotifyVolume(float volume = 100)
         {
             Contract.Requires(0 <= volume && volume <= 100);

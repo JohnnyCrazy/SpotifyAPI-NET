@@ -203,7 +203,6 @@ namespace SpotifyAPI.Web
         {
             IsActive = false;
             _listener.Stop();
-            Dispose();
             GC.SuppressFinalize(this);
         }
 
