@@ -8,17 +8,20 @@ namespace SpotifyAPI.Local
     {
         private const String SPOTIFY_PROCESS_NAME = "spotify";
 
-        internal static float? GetSpotifyVolume()
+        internal static float GetSpotifyVolume()
         {
             Process[] p = Process.GetProcessesByName(SPOTIFY_PROCESS_NAME);
             if (p.Length == 0)
-                return null;
+                throw new Exception("Spotify process is not running or was not found!");
 
             int pid = p[0].Id;
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
-                return null;
+            {
+                Marshal.ReleaseComObject(volume);
+                throw new COMException("Volume object creation failed");
+            }
 
             float level;
             volume.GetMasterVolume(out level);
@@ -26,17 +29,20 @@ namespace SpotifyAPI.Local
             return level * 100;
         }
 
-        internal static bool? IsSpotifyMuted()
+        internal static bool IsSpotifyMuted()
         {
             Process[] p = Process.GetProcessesByName(SPOTIFY_PROCESS_NAME);
             if (p.Length == 0)
-                return null;
+                throw new Exception("Spotify process is not running or was not found!");
 
             int pid = p[0].Id;
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
-                return null;
+            {
+                Marshal.ReleaseComObject(volume);
+                throw new COMException("Volume object creation failed");
+            }
 
             bool mute;
             volume.GetMute(out mute);
@@ -48,13 +54,16 @@ namespace SpotifyAPI.Local
         {
             Process[] p = Process.GetProcessesByName(SPOTIFY_PROCESS_NAME);
             if (p.Length == 0)
-                return;
+                throw new Exception("Spotify process is not running or was not found!");
 
             int pid = p[0].Id;
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
-                return;
+            {
+                Marshal.ReleaseComObject(volume);
+                throw new COMException("Volume object creation failed");
+            }
 
             Guid guid = Guid.Empty;
             volume.SetMasterVolume(level / 100, ref guid);
@@ -65,13 +74,16 @@ namespace SpotifyAPI.Local
         {
             Process[] p = Process.GetProcessesByName(SPOTIFY_PROCESS_NAME);
             if (p.Length == 0)
-                return;
+                throw new Exception("Spotify process is not running or was not found!");
 
             int pid = p[0].Id;
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
-                return;
+            {
+                Marshal.ReleaseComObject(volume);
+                throw new COMException("Volume object creation failed");
+            }
 
             Guid guid = Guid.Empty;
             volume.SetMute(mute, ref guid);
@@ -125,6 +137,7 @@ namespace SpotifyAPI.Local
         [Guid("BCDE0395-E52F-467C-8E3D-C4579291692E")]
         private class MMDeviceEnumerator
         {
+
         }
 
         private enum EDataFlow

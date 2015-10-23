@@ -1,14 +1,13 @@
-﻿using System;
+﻿using SpotifyAPI.Web;
+using SpotifyAPI.Web.Auth;
+using SpotifyAPI.Web.Enums;
+using SpotifyAPI.Web.Models;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
-using SpotifyAPI.Web;
-using SpotifyAPI.Web.Auth;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 using Image = System.Drawing.Image;
 
 namespace SpotifyAPI.Example
@@ -21,7 +20,7 @@ namespace SpotifyAPI.Example
         private PrivateProfile _profile;
         private List<FullTrack> _savedTracks;
         private List<SimplePlaylist> _playlists;
- 
+
         public WebControl()
         {
             InitializeComponent();
@@ -37,7 +36,7 @@ namespace SpotifyAPI.Example
             _auth.OnResponseReceivedEvent += _auth_OnResponseReceivedEvent;
         }
 
-        void _auth_OnResponseReceivedEvent(Token token, string state)
+        private void _auth_OnResponseReceivedEvent(Token token, string state)
         {
             _auth.StopHttpServer();
 
@@ -77,7 +76,7 @@ namespace SpotifyAPI.Example
             _savedTracks.ForEach(track => savedTracksListView.Items.Add(new ListViewItem()
             {
                 Text = track.Name,
-                SubItems = {string.Join(",", track.Artists.Select(source => source.Name)), track.Album.Name}
+                SubItems = { string.Join(",", track.Artists.Select(source => source.Name)), track.Album.Name }
             }));
 
             _playlists = GetPlaylists();

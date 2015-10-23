@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SpotifyAPI.Local;
+using SpotifyAPI.Local.Enums;
+using SpotifyAPI.Local.Models;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Forms;
-using SpotifyAPI.Local;
-using SpotifyAPI.Local.Enums;
-using SpotifyAPI.Local.Models;
 
 namespace SpotifyAPI.Example
 {
@@ -102,23 +102,23 @@ namespace SpotifyAPI.Example
             isPlayingLabel.Text = playing.ToString();
         }
 
-        void _spotify_OnVolumeChange(VolumeChangeEventArgs e)
+        private void _spotify_OnVolumeChange(VolumeChangeEventArgs e)
         {
-            volumeLabel.Text = (e.NewVolume*100).ToString(CultureInfo.InvariantCulture);
+            volumeLabel.Text = (e.NewVolume * 100).ToString(CultureInfo.InvariantCulture);
         }
 
-        void _spotify_OnTrackTimeChange(TrackTimeChangeEventArgs e)
+        private void _spotify_OnTrackTimeChange(TrackTimeChangeEventArgs e)
         {
             timeLabel.Text = FormatTime(e.TrackTime) + "/" + FormatTime(_currentTrack.Length);
-            timeProgressBar.Value = (int) e.TrackTime;
+            timeProgressBar.Value = (int)e.TrackTime;
         }
 
-        void _spotify_OnTrackChange(TrackChangeEventArgs e)
+        private void _spotify_OnTrackChange(TrackChangeEventArgs e)
         {
             UpdateTrack(e.NewTrack);
         }
 
-        void _spotify_OnPlayStateChange(PlayStateEventArgs e)
+        private void _spotify_OnPlayStateChange(PlayStateEventArgs e)
         {
             UpdatePlayingStatus(e.Playing);
         }
