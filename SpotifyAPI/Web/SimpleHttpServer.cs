@@ -147,7 +147,7 @@ namespace SpotifyAPI.Web
                 var contentLen = Convert.ToInt32(HttpHeaders["Content-Length"]);
                 if (contentLen > MaxPostSize)
                 {
-                    throw new Exception(String.Format("POST Content-Length({0}) too big for this simple server", contentLen));
+                    throw new Exception($"POST Content-Length({contentLen}) too big for this simple server");
                 }
                 byte[] buf = new byte[BufSize];
                 int toRead = contentLen;
@@ -274,12 +274,11 @@ namespace SpotifyAPI.Web
                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
                     t = new Thread(o =>
                     {
-                        if (OnAuth != null)
-                            OnAuth(new AuthEventArgs()
-                            {
-                                State = col.Get(1),
-                                Error = col.Get(0),
-                            });
+                        OnAuth?.Invoke(new AuthEventArgs()
+                        {
+                            State = col.Get(1),
+                            Error = col.Get(0),
+                        });
                     });
                 }
                 else
@@ -287,12 +286,11 @@ namespace SpotifyAPI.Web
                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth successful!</h1><script>window.close();</script></body></html>");
                     t = new Thread(o =>
                     {
-                        if (OnAuth != null)
-                            OnAuth(new AuthEventArgs()
-                            {
-                                Code = col.Get(0),
-                                State = col.Get(1)
-                            });
+                        OnAuth?.Invoke(new AuthEventArgs()
+                        {
+                            Code = col.Get(0),
+                            State = col.Get(1)
+                        });
                     });
                 }
             }
@@ -318,12 +316,11 @@ namespace SpotifyAPI.Web
                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
                     t = new Thread(o =>
                     {
-                        if (OnAuth != null)
-                            OnAuth(new AuthEventArgs()
-                            {
-                                Error = col.Get(0),
-                                State = col.Get(1)
-                            });
+                        OnAuth?.Invoke(new AuthEventArgs()
+                        {
+                            Error = col.Get(0),
+                            State = col.Get(1)
+                        });
                     });
                 }
                 else
@@ -331,14 +328,13 @@ namespace SpotifyAPI.Web
                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth successful!</h1><script>window.close();</script></body></html>");
                     t = new Thread(o =>
                     {
-                        if (OnAuth != null)
-                            OnAuth(new AuthEventArgs()
-                            {
-                                Code = col.Get(0),
-                                TokenType = col.Get(1),
-                                ExpiresIn = Convert.ToInt32(col.Get(2)),
-                                State = col.Get(3)
-                            });
+                        OnAuth?.Invoke(new AuthEventArgs()
+                        {
+                            Code = col.Get(0),
+                            TokenType = col.Get(1),
+                            ExpiresIn = Convert.ToInt32(col.Get(2)),
+                            State = col.Get(3)
+                        });
                     });
                 }
             }

@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Timers;
@@ -216,7 +215,7 @@ namespace SpotifyAPI.Local
                 if (Environment.OSVersion.Version.Minor == 0)
                     throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             if (volume < 0 || volume > 100)
-                throw new ArgumentOutOfRangeException("Volume parameter has to be a value between 0 and 100");
+                throw new ArgumentOutOfRangeException(nameof(volume));
             VolumeMixerControl.SetSpotifyVolume(volume);
         }
 

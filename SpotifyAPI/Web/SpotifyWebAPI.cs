@@ -35,7 +35,7 @@ namespace SpotifyAPI.Web
         public void Dispose()
         {
             WebClient.Dispose();
-            GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this); //TODO
         }
 
         #region Search

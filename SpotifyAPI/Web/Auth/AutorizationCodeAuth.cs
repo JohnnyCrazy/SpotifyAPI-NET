@@ -98,13 +98,12 @@ namespace SpotifyAPI.Web.Auth
 
         private void HttpServerOnOnAuth(AuthEventArgs e)
         {
-            if (OnResponseReceivedEvent != null)
-                OnResponseReceivedEvent(new AutorizationCodeAuthResponse()
-                {
-                    Code = e.Code,
-                    State = e.State,
-                    Error = e.Error
-                });
+            OnResponseReceivedEvent?.Invoke(new AutorizationCodeAuthResponse()
+            {
+                Code = e.Code,
+                State = e.State,
+                Error = e.Error
+            });
         }
 
         /// <summary>

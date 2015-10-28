@@ -42,12 +42,12 @@ namespace SpotifyAPI.Example
 
             if (state != "XSS")
             {
-                MessageBox.Show("Wrong state received.", "SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Wrong state received.", @"SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (token.Error != null)
             {
-                MessageBox.Show("Error: " + token.Error, "SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {token.Error}", @"SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

@@ -33,26 +33,26 @@ namespace SpotifyAPI.Example
         {
             if (!SpotifyLocalAPI.IsSpotifyRunning())
             {
-                MessageBox.Show("Spotify isn't running!");
+                MessageBox.Show(@"Spotify isn't running!");
                 return;
             }
             if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
             {
-                MessageBox.Show("SpotifyWebHelper isn't running!");
+                MessageBox.Show(@"SpotifyWebHelper isn't running!");
                 return;
             }
 
             bool successful = _spotify.Connect();
             if (successful)
             {
-                connectBtn.Text = "Connection to Spotify successful";
+                connectBtn.Text = @"Connection to Spotify successful";
                 connectBtn.Enabled = false;
                 UpdateInfos();
                 _spotify.ListenForEvents = true;
             }
             else
             {
-                DialogResult res = MessageBox.Show("Couldn't connect to the spotify client. Retry?", "Spotify", MessageBoxButtons.YesNo);
+                DialogResult res = MessageBox.Show(@"Couldn't connect to the spotify client. Retry?", @"Spotify", MessageBoxButtons.YesNo);
                 if (res == DialogResult.Yes)
                     Connect();
             }
@@ -109,7 +109,7 @@ namespace SpotifyAPI.Example
 
         private void _spotify_OnTrackTimeChange(TrackTimeChangeEventArgs e)
         {
-            timeLabel.Text = FormatTime(e.TrackTime) + "/" + FormatTime(_currentTrack.Length);
+            timeLabel.Text = $"{FormatTime(e.TrackTime)}/{FormatTime(_currentTrack.Length)}";
             timeProgressBar.Value = (int)e.TrackTime;
         }
 
