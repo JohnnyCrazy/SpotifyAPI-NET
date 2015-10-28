@@ -24,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\SpotifyAPI.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,6 +56,7 @@
     <Compile Include="Local\ExtendedWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Local\VolumeMixerControl.cs" />
     <Compile Include="Web\IClient.cs" />
     <Compile Include="Local\Models\CFID.cs" />
     <Compile Include="Local\Enums\AlbumArtSize.cs" />

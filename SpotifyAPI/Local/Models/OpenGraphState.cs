@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace SpotifyAPI.Local.Models
 {
@@ -7,6 +7,7 @@ namespace SpotifyAPI.Local.Models
     {
         [JsonProperty("private_session")]
         public Boolean PrivateSession { get; set; }
+
         [JsonProperty("posting_disabled")]
         public Boolean PostingDisabled { get; set; }
     }

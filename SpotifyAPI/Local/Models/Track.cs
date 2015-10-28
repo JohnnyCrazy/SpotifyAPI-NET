@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SpotifyAPI.Local.Enums;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using SpotifyAPI.Local.Enums;
 
 namespace SpotifyAPI.Local.Models
 {
@@ -12,12 +12,16 @@ namespace SpotifyAPI.Local.Models
     {
         [JsonProperty("track_resource")]
         public SpotifyResource TrackResource { get; set; }
+
         [JsonProperty("artist_resource")]
         public SpotifyResource ArtistResource { get; set; }
+
         [JsonProperty("album_resource")]
         public SpotifyResource AlbumResource { get; set; }
+
         [JsonProperty("length")]
         public int Length { get; set; }
+
         [JsonProperty("track_type")]
         public string TrackType { get; set; }
 
@@ -50,9 +54,11 @@ namespace SpotifyAPI.Local.Models
                 case AlbumArtSize.Size160:
                     albumsize = 160;
                     break;
+
                 case AlbumArtSize.Size320:
                     albumsize = 320;
                     break;
+
                 case AlbumArtSize.Size640:
                     albumsize = 640;
                     break;
@@ -125,7 +131,7 @@ namespace SpotifyAPI.Local.Models
             {
                 wc.Proxy = null;
                 String url = GetAlbumArtUrl(size);
-                if (url == "")
+                if (String.IsNullOrEmpty(url))
                     return null;
                 var data = wc.DownloadData(url);
                 using (MemoryStream ms = new MemoryStream(data))
@@ -146,7 +152,7 @@ namespace SpotifyAPI.Local.Models
             {
                 wc.Proxy = null;
                 String url = GetAlbumArtUrl(size);
-                if (url == "")
+                if (String.IsNullOrEmpty(url))
                     return null;
                 return wc.DownloadData(url);
             }

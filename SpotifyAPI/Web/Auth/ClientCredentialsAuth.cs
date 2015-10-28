@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SpotifyAPI.Web.Enums;
+using SpotifyAPI.Web.Models;
+using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
-using Newtonsoft.Json;
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web.Auth
 {

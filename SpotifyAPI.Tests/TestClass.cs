@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Moq;
+﻿using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace SpotifyAPI.Tests
 {

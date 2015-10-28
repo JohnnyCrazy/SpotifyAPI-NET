@@ -5,7 +5,7 @@ namespace SpotifyAPI.Local.Models
     /// <summary>
     /// JSON Response, used internaly
     /// </summary>
-    class Cfid
+    internal class Cfid
     {
         public Error Error { get; set; }
         public String Token { get; set; }
@@ -17,7 +17,7 @@ namespace SpotifyAPI.Local.Models
     /// <summary>
     /// JSON Response, used internaly
     /// </summary>
-    class Error
+    internal class Error
     {
         public String Type { get; set; }
         public String Message { get; set; }

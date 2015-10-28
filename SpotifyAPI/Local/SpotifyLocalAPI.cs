@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SpotifyAPI.Local.Models;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Timers;
-using SpotifyAPI.Local.Models;
 
 namespace SpotifyAPI.Local
 {
@@ -12,10 +13,9 @@ namespace SpotifyAPI.Local
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
-        [DllImport("nircmd.dll")]
-        private static extern bool DoNirCmd(String nirCmdStr);
 
         private bool _listenForEvents;
+
         public bool ListenForEvents
         {
             get
@@ -30,6 +30,7 @@ namespace SpotifyAPI.Local
         }
 
         private ISynchronizeInvoke _synchronizingObject;
+
         public ISynchronizeInvoke SynchronizingObject
         {
             get
@@ -43,22 +44,29 @@ namespace SpotifyAPI.Local
             }
         }
 
-        const byte VkMediaNextTrack = 0xb0;
-        const byte VkMediaPrevTrack = 0xb1;
-        const int KeyeventfExtendedkey = 0x1;
-        const int KeyeventfKeyup = 0x2;
+        private const byte VkMediaNextTrack = 0xb0;
+        private const byte VkMediaPrevTrack = 0xb1;
+        private const int KeyeventfExtendedkey = 0x1;
+        private const int KeyeventfKeyup = 0x2;
 
-        readonly RemoteHandler _rh;
+        private readonly RemoteHandler _rh;
         private readonly Timer _eventTimer;
         private StatusResponse _eventStatusResponse;
 
         public delegate void TrackChangeEventHandler(TrackChangeEventArgs e);
+
         public delegate void PlayStateEventHandler(PlayStateEventArgs e);
+
         public delegate void VolumeChangeEventHandler(VolumeChangeEventArgs e);
+
         public delegate void TrackTimeChangeEventHandler(TrackTimeChangeEventArgs e);
+
         public event TrackChangeEventHandler OnTrackChange;
+
         public event PlayStateEventHandler OnPlayStateChange;
+
         public event VolumeChangeEventHandler OnVolumeChange;
+
         public event TrackTimeChangeEventHandler OnTrackTimeChange;
 
         public SpotifyLocalAPI()
@@ -149,21 +157,83 @@ namespace SpotifyAPI.Local
         }
 
         /// <summary>
-        /// Mutes Spotify (Requires nircmd.dll)
+        /// Mutes Spotify (Requires Windows 7 or newer)
         /// </summary>
         public void Mute()
         {
-            if (File.Exists("nircmd.dll"))
-                DoNirCmd("muteappvolume spotify.exe 1");
+            //Windows < Windows Vista Check
+            if (Environment.OSVersion.Version.Major < 6)
+                throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                if(Environment.OSVersion.Version.Minor == 0)
+                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            VolumeMixerControl.MuteSpotify(true);
         }
 
         /// <summary>
-        /// Unmutes Spotify (Requires nircmd.dll)
+        /// Unmutes Spotify (Requires Windows 7 or newer)
         /// </summary>
         public void UnMute()
         {
-            if (File.Exists("nircmd.dll"))
-                DoNirCmd("muteappvolume spotify.exe 0");
+            //Windows < Windows Vista Check
+            if (Environment.OSVersion.Version.Major < 6)
+                throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                if (Environment.OSVersion.Version.Minor == 0)
+                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            VolumeMixerControl.MuteSpotify(false);
+        }
+
+        /// <summary>
+        /// Checks whether Spotify is muted in the Volume Mixer control (required Windows 7 or newer)
+        /// </summary>
+        /// <returns>Null if an error occured, otherwise the muted state</returns>
+        public bool IsSpotifyMuted()
+        {
+            //Windows < Windows Vista Check
+            if (Environment.OSVersion.Version.Major < 6)
+                throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                if (Environment.OSVersion.Version.Minor == 0)
+                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            return VolumeMixerControl.IsSpotifyMuted();
+        }
+
+        /// <summary>
+        ///  Sets the Volume Mixer volume (requires Windows 7 or newer)
+        /// </summary>
+        /// <param name="volume">A value between 0 and 100</param>
+        public void SetSpotifyVolume(float volume = 100)
+        {
+            //Windows < Windows Vista Check
+            if (Environment.OSVersion.Version.Major < 6)
+                throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                if (Environment.OSVersion.Version.Minor == 0)
+                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            if (volume < 0 || volume > 100)
+                throw new ArgumentOutOfRangeException("Volume parameter has to be a value between 0 and 100");
+            VolumeMixerControl.SetSpotifyVolume(volume);
+        }
+
+        /// <summary>
+        /// Return the Volume Mixer volume of Spotify (requires Windows 7 or newer)
+        /// </summary>
+        /// <returns>Null if an error occured, otherwise a float between 0 and 100</returns>
+        public float GetSpotifyVolume()
+        {
+            //Windows < Windows Vista Check
+            if (Environment.OSVersion.Version.Major < 6)
+                throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            //Windows Vista Check
+            if (Environment.OSVersion.Version.Major == 6)
+                if (Environment.OSVersion.Version.Minor == 0)
+                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
+            return VolumeMixerControl.GetSpotifyVolume();
         }
 
         /// <summary>
@@ -254,7 +324,7 @@ namespace SpotifyAPI.Local
         /// </summary>
         public static void RunSpotify()
         {
-            if (!IsSpotifyRunning()) 
+            if (!IsSpotifyRunning() && File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotify.exe")))
                 Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotify.exe"));
         }
 
@@ -263,8 +333,14 @@ namespace SpotifyAPI.Local
         /// </summary>
         public static void RunSpotifyWebHelper()
         {
-            if (!IsSpotifyWebHelperRunning())
+            if (!IsSpotifyWebHelperRunning() && File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\data\spotifywebhelper.exe")))
+            {
                 Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\data\spotifywebhelper.exe"));
+            }
+            else if (!IsSpotifyWebHelperRunning() && File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotifywebhelper.exe")))
+            {
+                Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotifywebhelper.exe"));
+            }
         }
     }
 }

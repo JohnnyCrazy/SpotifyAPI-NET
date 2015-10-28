@@ -24,9 +24,10 @@ namespace SpotifyAPI.Web
         }
     }
 
-    public class StringAttribute : Attribute
+    public sealed class StringAttribute : Attribute
     {
         public String Text { get; set; }
+
         public StringAttribute(String text)
         {
             Text = text;
