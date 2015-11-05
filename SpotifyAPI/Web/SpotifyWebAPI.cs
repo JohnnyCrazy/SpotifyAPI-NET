@@ -6,15 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
     public sealed class SpotifyWebAPI : IDisposable
     {
-        public const String APIBase = "https://api.spotify.com/v1";
+        [Obsolete("This Property will be removed soon. Please use SpotifyWebBuilder.APIBase")]
+        public const String APIBase = SpotifyWebBuilder.APIBase;
+
+        private readonly SpotifyWebBuilder _builder;
 
         public SpotifyWebAPI()
         {
+            _builder = new SpotifyWebBuilder();
             UseAuth = true;
             WebClient = new SpotifyWebClient
             {
@@ -51,15 +56,21 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SearchItem SearchItems(String q, SearchType type, int limit = 20, int offset = 0, String market = "")
         {
-            limit = Math.Min(50, limit);
-            StringBuilder builder = new StringBuilder(APIBase + "/search");
-            builder.Append("?q=" + q);
-            builder.Append("&type=" + type.GetStringAttribute(","));
-            builder.Append("&limit=" + limit);
-            builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(market))
-                builder.Append("&market=" + market);
-            return DownloadData<SearchItem>(builder.ToString());
+            return DownloadData<SearchItem>(_builder.SearchItems(q, type, limit, offset, market));
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string asynchronously.
+        /// </summary>
+        /// <param name="q">The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.</param>
+        /// <param name="type">A list of item types to search across.</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first result to return. Default: 0</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code or the string from_token.</param>
+        /// <returns></returns>
+        public Task<SearchItem> SearchItemsAsync(String q, SearchType type, int limit = 20, int offset = 0, String market = "")
+        {
+            return DownloadDataAsync<SearchItem>(_builder.SearchItems(q, type, limit, offset, market));
         }
 
         #endregion Search
@@ -860,6 +871,15 @@ namespace SpotifyAPI.Web
             return WebClient.UploadJson<T>(url, uploadData, method);
         }
 
+        public Task<T> UploadDataAsync<T>(String url, String uploadData, String method = "POST")
+        {
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for all Upload-Actions");
+            WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
+            WebClient.SetHeader("Content-Type", "application/json");
+            return WebClient.UploadJsonAsync<T>(url, uploadData, method);
+        }
+
         public T DownloadData<T>(String url)
         {
             if (UseAuth)
@@ -867,6 +887,15 @@ namespace SpotifyAPI.Web
             else
                 WebClient.RemoveHeader("Authorization");
             return WebClient.DownloadJson<T>(url);
+        }
+
+        public Task<T> DownloadDataAsync<T>(String url)
+        {
+            if (UseAuth)
+                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
+            else
+                WebClient.RemoveHeader("Authorization");
+            return WebClient.DownloadJsonAsync<T>(url);
         }
 
         #endregion Util
