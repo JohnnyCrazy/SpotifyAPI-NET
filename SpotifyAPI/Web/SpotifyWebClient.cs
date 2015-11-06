@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
@@ -46,14 +47,42 @@ namespace SpotifyAPI.Web
             return response;
         }
 
+        public async Task<string> DownloadAsync(string url)
+        {
+            String response;
+            try
+            {
+                response = _encoding.GetString(await DownloadRawAsync(url));
+            }
+            catch (WebException e)
+            {
+                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
+                {
+                    response = reader.ReadToEnd();
+                }
+            }
+            return response;
+        }
+
         public byte[] DownloadRaw(string url)
         {
             return _webClient.DownloadData(url);
         }
 
+        public async Task<byte[]> DownloadRawAsync(string url)
+        {
+            return await _webClient.DownloadDataTaskAsync(url);
+        }
+
         public T DownloadJson<T>(string url)
         {
             String response = Download(url);
+            return JsonConvert.DeserializeObject<T>(response, JsonSettings);
+        }
+
+        public async Task<T> DownloadJsonAsync<T>(string url)
+        {
+            String response = await DownloadAsync(url);
             return JsonConvert.DeserializeObject<T>(response, JsonSettings);
         }
 
@@ -75,14 +104,43 @@ namespace SpotifyAPI.Web
             return response;
         }
 
+        public async Task<string> UploadAsync(string url, string body, string method)
+        {
+            String response;
+            try
+            {
+                byte[] data = await UploadRawAsync(url, body, method);
+                response = _encoding.GetString(data);
+            }
+            catch (WebException e)
+            {
+                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
+                {
+                    response = reader.ReadToEnd();
+                }
+            }
+            return response;
+        }
+
         public byte[] UploadRaw(string url, string body, string method)
         {
             return _webClient.UploadData(url, method, _encoding.GetBytes(body));
         }
 
+        public async Task<byte[]> UploadRawAsync(string url, string body, string method)
+        {
+            return await _webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body));
+        }
+
         public T UploadJson<T>(string url, string body, string method)
         {
             String response = Upload(url, body, method);
+            return JsonConvert.DeserializeObject<T>(response, JsonSettings);
+        }
+
+        public async Task<T> UploadJsonAsync<T>(string url, string body, string method)
+        {
+            String response = await UploadAsync(url, body, method);
             return JsonConvert.DeserializeObject<T>(response, JsonSettings);
         }
 

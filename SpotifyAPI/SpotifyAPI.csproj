@@ -102,6 +102,7 @@
     <Compile Include="Web\Enums\SearchType.cs" />
     <Compile Include="Web\SimpleHttpServer.cs" />
     <Compile Include="Web\SpotifyWebAPI.cs" />
+    <Compile Include="Web\SpotifyWebBuilder.cs" />
     <Compile Include="Web\Util.cs" />
     <Compile Include="Web\SpotifyWebClient.cs" />
   </ItemGroup>
