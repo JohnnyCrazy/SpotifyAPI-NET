@@ -824,7 +824,7 @@ namespace SpotifyAPI.Web
         public Task<ErrorResponse> SaveTracksAsync(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None)), "PUT") ?? Task.FromResult(new ErrorResponse());
+            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "PUT") ?? Task.FromResult(new ErrorResponse()));
         }
 
         /// <summary>
