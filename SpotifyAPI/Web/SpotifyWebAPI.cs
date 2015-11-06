@@ -5,7 +5,6 @@ using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
@@ -1256,7 +1255,6 @@ namespace SpotifyAPI.Web
                 {"uris", JArray.FromObject(uris.Take(100))}
             };
             return UploadData<ErrorResponse>(_builder.AddPlaylistTracks(userId, playlistId, uris, position), body.ToString(Formatting.None)) ?? new ErrorResponse();
-
         }
 
         /// <summary>
@@ -1275,7 +1273,6 @@ namespace SpotifyAPI.Web
                 {"uris", JArray.FromObject(uris.Take(100))}
             };
             return UploadDataAsync<ErrorResponse>(_builder.AddPlaylistTracks(userId, playlistId, uris, position), body.ToString(Formatting.None)) ?? new ErrorResponse();
-
         }
 
         /// <summary>
