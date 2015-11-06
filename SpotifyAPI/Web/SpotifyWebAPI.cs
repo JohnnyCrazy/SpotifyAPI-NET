@@ -812,7 +812,7 @@ namespace SpotifyAPI.Web
         public ErrorResponse SaveTracks(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadData<ErrorResponse>(SpotifyWebBuilder.APIBase + "/me/tracks/", array.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
+            return UploadData<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "PUT") ?? new ErrorResponse());
         }
 
         /// <summary>
@@ -824,7 +824,7 @@ namespace SpotifyAPI.Web
         public Task<ErrorResponse> SaveTracksAsync(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadDataAsync<ErrorResponse>(SpotifyWebBuilder.APIBase + "/me/tracks/", array.ToString(Formatting.None), "PUT") ?? Task.FromResult(new ErrorResponse());
+            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None)), "PUT") ?? Task.FromResult(new ErrorResponse());
         }
 
         /// <summary>
@@ -888,7 +888,7 @@ namespace SpotifyAPI.Web
         public ErrorResponse RemoveSavedTracks(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadData<ErrorResponse>(SpotifyWebBuilder.APIBase + "/me/tracks/", array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
+            return UploadData<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace SpotifyAPI.Web
         public Task<ErrorResponse> RemoveSavedTracksAsync(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadDataAsync<ErrorResponse>(SpotifyWebBuilder.APIBase + "/me/tracks/", array.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
+            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
         }
 
         /// <summary>
