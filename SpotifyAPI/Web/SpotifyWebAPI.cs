@@ -526,7 +526,7 @@ namespace SpotifyAPI.Web
             };
             return
                 UploadDataAsync<ErrorResponse>(_builder.Follow(followType, ids),
-                    ob.ToString(Formatting.None), "PUT") ?? Task.FromResult(new ErrorResponse());
+                    ob.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace SpotifyAPI.Web
             {
                 {"ids", new JArray(ids)}
             };
-            return UploadDataAsync<ErrorResponse>(_builder.Unfollow(followType, ids), ob.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
+            return UploadDataAsync<ErrorResponse>(_builder.Unfollow(followType, ids), ob.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -824,7 +824,7 @@ namespace SpotifyAPI.Web
         public Task<ErrorResponse> SaveTracksAsync(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadDataAsync<ErrorResponse>(_builder.SaveTracks(array.ToString(Formatting.None), "PUT") ?? Task.FromResult(new ErrorResponse()));
+            return UploadDataAsync<ErrorResponse>(_builder.SaveTracks(array.ToString(Formatting.None), "PUT") ?? new ErrorResponse());
         }
 
         /// <summary>
@@ -888,7 +888,7 @@ namespace SpotifyAPI.Web
         public ErrorResponse RemoveSavedTracks(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadData<ErrorResponse>(_builder.RemoveSavedTracks(array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
+            return UploadData<ErrorResponse>(_builder.RemoveSavedTracks(array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse());
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace SpotifyAPI.Web
         public Task<ErrorResponse> RemoveSavedTracksAsync(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadDataAsync<ErrorResponse>(_builder.RemoveSavedTracks(array.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
+            return UploadDataAsync<ErrorResponse>(_builder.RemoveSavedTracks(array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse());
         }
 
         /// <summary>
