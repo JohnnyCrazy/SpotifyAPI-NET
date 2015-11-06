@@ -113,8 +113,6 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public FullAlbum GetAlbum(String id, String market = "")
         {
-            if (String.IsNullOrEmpty(market))
-                return DownloadData<FullAlbum>(_builder.SearchItems(id));
             return DownloadData<FullAlbum>(_builder.SearchItems(id, market));
         }
 
@@ -126,8 +124,6 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<FullAlbum> GetAlbumAsync(String id, String market = "")
         {
-            if (String.IsNullOrEmpty(market))
-                return DownloadDataAsync<FullAlbum>(_builder.SearchItems(id));
             return DownloadDataAsync<FullAlbum>(_builder.SearchItems(id, market));
         }
 
@@ -139,8 +135,6 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SeveralAlbums GetSeveralAlbums(List<String> ids, String market = "")
         {
-            if (String.IsNullOrEmpty(market))
-                return DownloadData<SeveralAlbums>(_builder.SearchItems(ids));
             return DownloadData<SeveralAlbums>(_builder.SearchItems(ids, market));
         }
 
@@ -152,8 +146,6 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<SeveralAlbums> GetSeveralAlbumsAsync(List<String> ids, String market = "")
         {
-            if (String.IsNullOrEmpty(market))
-                return DownloadDataAsync<SeveralAlbums>(_builder.SearchItems(ids));
             return DownloadDataAsync<SeveralAlbums>(_builder.SearchItems(ids, market));
         }
 
