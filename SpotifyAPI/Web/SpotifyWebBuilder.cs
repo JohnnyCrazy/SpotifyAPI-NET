@@ -391,10 +391,9 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Save one or more tracks to the current user’s “Your Music” library.
         /// </summary>
-        /// <param name="ids">A list of the Spotify IDs</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string SaveTracks(List<String> ids)
+        public string SaveTracks()
         {
             return APIBase + "/me/tracks/";
         }
@@ -421,10 +420,9 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Remove one or more tracks from the current user’s “Your Music” library.
         /// </summary>
-        /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string RemoveSavedTracks(List<String> ids)
+        public string RemoveSavedTracks()
         {
             return APIBase + "/me/tracks/";
         }
@@ -532,11 +530,9 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
-        /// <param name="newName">The new name for the playlist, for example "My New Playlist Title".</param>
-        /// <param name="newPublic">If true the playlist will be public, if false it will be private.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string UpdatePlaylist(String userId, String playlistId, String newName = null, Boolean? newPublic = null)
+        public string UpdatePlaylist(String userId, String playlistId)
         {
             return $"{APIBase}/users/{userId}/playlists/{playlistId}";
         }
@@ -547,10 +543,9 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
-        /// <param name="uris">A list of Spotify track URIs to set. A maximum of 100 tracks can be set in one request.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string ReplacePlaylistTracks(String userId, String playlistId, List<String> uris)
+        public string ReplacePlaylistTracks(String userId, String playlistId)
         {
             return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
         }
@@ -592,15 +587,11 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
-        /// <param name="rangeStart">The position of the first track to be reordered.</param>
-        /// <param name="insertBefore">The position where the tracks should be inserted. </param>
-        /// <param name="rangeLength">The amount of tracks to be reordered. Defaults to 1 if not set.</param>
-        /// <param name="snapshotId">The playlist's snapshot ID against which you want to make the changes.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string ReorderPlaylist(String userId, String playlistId, int rangeStart, int insertBefore, int rangeLength = 1, String snapshotId = "")
+        public string ReorderPlaylist(String userId, String playlistId)
         {
-            return APIBase + "/users/" + userId + "/playlists/" + playlistId + "/tracks";
+            return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
         }
 
         #endregion Playlists
