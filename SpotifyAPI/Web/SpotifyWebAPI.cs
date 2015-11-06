@@ -638,6 +638,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
             JToken res = DownloadDataAsync<JToken>(_builder.IsFollowing(followType, ids));
+# Compilebreaker
             if (res is JArray) //todo expression is always false
                 return Task.FromResult(new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null });
             return Task.FromResult(new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() });
@@ -768,6 +769,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
             JToken res = DownloadDataAsync<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
+# Compilebreaker
             if (res is JArray) //todo expression is always false
                 return Task.FromResult(new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null });
             return Task.FromResult(new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() });
@@ -930,6 +932,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
             JToken res = DownloadDataAsync<JToken>(_builder.CheckSavedTracks(ids));
+# Compilebreaker
             if (res is JArray) //todo expression is always false
                 return Task.FromResult(new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null });
             return Task.FromResult(new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() });
