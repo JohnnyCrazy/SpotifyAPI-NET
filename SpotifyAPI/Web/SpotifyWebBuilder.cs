@@ -180,7 +180,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string GetFeaturedPlaylists(String locale = "", String country = "", DateTime timestamp = default(DateTime), int limit = 20, int offset = 0)
         {
-            limit = Math.Max(limit, 50);
+            limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/browse/featured-playlists");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
@@ -203,7 +203,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string GetNewAlbumReleases(String country = "", int limit = 20, int offset = 0)
         {
-            limit = Math.Max(limit, 50);
+            limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/browse/new-releases");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
@@ -297,7 +297,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string GetFollowedArtists(int limit = 20, String after = "")
         {
-            limit = Math.Max(limit, 50);
+            limit = Math.Min(limit, 50);
             const FollowType followType = FollowType.Artist; //currently only artist is supported.
             StringBuilder builder = new StringBuilder(APIBase + "/me/following?type=" + followType.GetStringAttribute(""));
             builder.Append("&limit=" + limit);
@@ -496,7 +496,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string GetPlaylistTracks(String userId, String playlistId, String fields = "", int limit = 100, int offset = 0, String market = "")
         {
-            limit = Math.Max(limit, 100);
+            limit = Math.Min(limit, 100);
             StringBuilder builder = new StringBuilder(APIBase + "/users/" + userId + "/playlists/" + playlistId + "/tracks");
             builder.Append("?fields=" + fields);
             builder.Append("&limit=" + limit);
