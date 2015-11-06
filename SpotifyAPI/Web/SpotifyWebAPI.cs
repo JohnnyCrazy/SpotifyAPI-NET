@@ -88,7 +88,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Paging<SimpleTrack> GetAlbumTracks(String id, int limit = 20, int offset = 0, String market = "")
         {
-            return DownloadData<Paging<SimpleTrack>>(_builder.SearchItems(id, limit, offset, market));
+            return DownloadData<Paging<SimpleTrack>>(_builder.GetAlbumTracks(id, limit, offset, market));
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<Paging<SimpleTrack>> GetAlbumTracksAsync(String id, int limit = 20, int offset = 0, String market = "")
         {
-            return DownloadDataAsync<Paging<SimpleTrack>>(_builder.SearchItems(id, limit, offset, market));
+            return DownloadDataAsync<Paging<SimpleTrack>>(_builder.GetAlbumTracks(id, limit, offset, market));
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public FullAlbum GetAlbum(String id, String market = "")
         {
-            return DownloadData<FullAlbum>(_builder.SearchItems(id, market));
+            return DownloadData<FullAlbum>(_builder.GetAlbum(id, market));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<FullAlbum> GetAlbumAsync(String id, String market = "")
         {
-            return DownloadDataAsync<FullAlbum>(_builder.SearchItems(id, market));
+            return DownloadDataAsync<FullAlbum>(_builder.GetAlbum(id, market));
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SeveralAlbums GetSeveralAlbums(List<String> ids, String market = "")
         {
-            return DownloadData<SeveralAlbums>(_builder.SearchItems(ids, market));
+            return DownloadData<SeveralAlbums>(_builder.GetSeveralAlbums(ids, market));
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<SeveralAlbums> GetSeveralAlbumsAsync(List<String> ids, String market = "")
         {
-            return DownloadDataAsync<SeveralAlbums>(_builder.SearchItems(ids, market));
+            return DownloadDataAsync<SeveralAlbums>(_builder.GetSeveralAlbums(ids, market));
         }
 
         #endregion Albums
@@ -160,7 +160,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public FullArtist GetArtist(String id)
         {
-            return DownloadData<FullArtist>(_builder.SearchItems(id));
+            return DownloadData<FullArtist>(_builder.GetArtist(id));
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<FullArtist> GetArtistAsync(String id)
         {
-            return DownloadDataAsync<FullArtist>(_builder.SearchItems(id));
+            return DownloadDataAsync<FullArtist>(_builder.GetArtist(id));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SeveralArtists GetRelatedArtists(String id)
         {
-            return DownloadData<SeveralArtists>(_builder.SearchItems(id));
+            return DownloadData<SeveralArtists>(_builder.GetRelatedArtists(id));
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<SeveralArtists> GetRelatedArtistsAsync(String id)
         {
-            return DownloadDataAsync<SeveralArtists>(_builder.SearchItems(id));
+            return DownloadDataAsync<SeveralArtists>(_builder.GetRelatedArtists(id));
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SeveralTracks GetArtistsTopTracks(String id, String country)
         {
-            return DownloadData<SeveralTracks>(_builder.SearchItems(id, country));
+            return DownloadData<SeveralTracks>(_builder.GetArtistsTopTracks(id, country));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<SeveralTracks> GetArtistsTopTracksAsync(String id, String country)
         {
-            return DownloadDataAsync<SeveralTracks>(_builder.SearchItems(id, country));
+            return DownloadDataAsync<SeveralTracks>(_builder.GetArtistsTopTracks(id, country));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Paging<SimpleAlbum> GetArtistsAlbums(String id, AlbumType type = AlbumType.All, int limit = 20, int offset = 0, String market = "")
         {
-            return DownloadData<Paging<SimpleAlbum>>(_builder.SearchItems(id, type, limit, offset, market));
+            return DownloadData<Paging<SimpleAlbum>>(_builder.GetArtistsAlbums(id, type, limit, offset, market));
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<Paging<SimpleAlbum>> GetArtistsAlbumsAsync(String id, AlbumType type = AlbumType.All, int limit = 20, int offset = 0, String market = "")
         {
-            return DownloadDataAsync<Paging<SimpleAlbum>>(_builder.SearchItems(id, type, limit, offset, market));
+            return DownloadDataAsync<Paging<SimpleAlbum>>(_builder.GetArtistsAlbums(id, type, limit, offset, market));
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public SeveralArtists GetSeveralArtists(List<String> ids)
         {
-            return DownloadData<SeveralArtists>(_builder.SearchItems(ids));
+            return DownloadData<SeveralArtists>(_builder.GetSeveralArtists(ids));
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<SeveralArtists> GetSeveralArtistsAsync(List<String> ids)
         {
-            return DownloadDataAsync<SeveralArtists>(_builder.SearchItems(ids));
+            return DownloadDataAsync<SeveralArtists>(_builder.GetSeveralArtists(ids));
         }
 
         #endregion Artists
@@ -299,7 +299,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetFeaturedPlaylists");
-            return DownloadData<FeaturedPlaylists>(_builder.SearchItems(locale, country, timestamp, limit, offset));
+            return DownloadData<FeaturedPlaylists>(_builder.GetFeaturedPlaylists(locale, country, timestamp, limit, offset));
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetFeaturedPlaylists");
-            return DownloadDataAsync<FeaturedPlaylists>(_builder.SearchItems(locale, country, timestamp, limit, offset));
+            return DownloadDataAsync<FeaturedPlaylists>(_builder.GetFeaturedPlaylists(locale, country, timestamp, limit, offset));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetNewAlbumReleases");
-            return DownloadData<NewAlbumReleases>(_builder.SearchItems(country, limit, offset));
+            return DownloadData<NewAlbumReleases>(_builder.GetNewAlbumReleases(country, limit, offset));
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetNewAlbumReleases");
-            return DownloadDataAsync<NewAlbumReleases>(_builder.SearchItems(country, limit, offset));
+            return DownloadDataAsync<NewAlbumReleases>(_builder.GetNewAlbumReleases(country, limit, offset));
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetCategories");
-            return DownloadData<CategoryList>(_builder.SearchItems(country, locale, limit, offset));
+            return DownloadData<CategoryList>(_builder.GetCategories(country, locale, limit, offset));
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetCategories");
-            return DownloadDataAsync<CategoryList>(_builder.SearchItems(country, locale, limit, offset));
+            return DownloadDataAsync<CategoryList>(_builder.GetCategories(country, locale, limit, offset));
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public Category GetCategory(String categoryId, String country = "", String locale = "")
         {
-            return DownloadData<Category>(_builder.SearchItems(categoryId, country, locale));
+            return DownloadData<Category>(_builder.GetCategory(categoryId, country, locale));
         }
 
         /// <summary>
@@ -430,7 +430,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public Task<Category> GetCategoryAsync(String categoryId, String country = "", String locale = "")
         {
-            return DownloadDataAsync<Category>(_builder.SearchItems(categoryId, country, locale));
+            return DownloadDataAsync<Category>(_builder.GetCategory(categoryId, country, locale));
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public CategoryPlaylist GetCategoryPlaylists(String categoryId, String country = "", int limit = 20, int offset = 0)
         {
-            return DownloadData<CategoryPlaylist>(_builder.SearchItems(categoryId, country, limit, offset));
+            return DownloadData<CategoryPlaylist>(_builder.GetCategoryPlaylists(categoryId, country, limit, offset));
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public Task<CategoryPlaylist> GetCategoryPlaylistsAsync(String categoryId, String country = "", int limit = 20, int offset = 0)
         {
-            return DownloadDataAsync<CategoryPlaylist>(_builder.SearchItems(categoryId, country, limit, offset));
+            return DownloadDataAsync<CategoryPlaylist>(_builder.GetCategoryPlaylists(categoryId, country, limit, offset));
         }
 
         #endregion Browse
@@ -477,7 +477,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetFollowedArtists");
-            return DownloadData<FollowedArtists>(_builder.SearchItems(followType, limit, after));
+            return DownloadData<FollowedArtists>(_builder.GetFollowedArtists(followType, limit, after));
         }
 
         /// <summary>
@@ -492,7 +492,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetFollowedArtists");
-            return DownloadDataAsync<FollowedArtists>(_builder.SearchItems(followType, limit, after));
+            return DownloadDataAsync<FollowedArtists>(_builder.GetFollowedArtists(followType, limit, after));
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace SpotifyAPI.Web
             {
                 {"ids", new JArray(ids)}
             };
-            return UploadData<ErrorResponse>(_builder.SearchItems(followType, ids), ob.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
+            return UploadData<ErrorResponse>(_builder.Follow(followType, ids), ob.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace SpotifyAPI.Web
                 {"ids", new JArray(ids)}
             };
             return
-                UploadDataAsync<ErrorResponse>(_builder.SearchItems(followType, ids),
+                UploadDataAsync<ErrorResponse>(_builder.Follow(followType, ids),
                     ob.ToString(Formatting.None), "PUT") ?? Task.FromResult(new ErrorResponse());
         }
 
@@ -566,7 +566,7 @@ namespace SpotifyAPI.Web
             {
                 {"ids", new JArray(ids)}
             };
-            return UploadData<ErrorResponse>(_builder.SearchItems(followType, ids), ob.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
+            return UploadData<ErrorResponse>(_builder.Unfollow(followType, ids), ob.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace SpotifyAPI.Web
             {
                 {"ids", new JArray(ids)}
             };
-            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(followType, ids), ob.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
+            return UploadDataAsync<ErrorResponse>(_builder.Unfollow(followType, ids), ob.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
         }
 
         /// <summary>
@@ -620,7 +620,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
-            JToken res = DownloadData<JToken>(_builder.SearchItems(followType, ids));
+            JToken res = DownloadData<JToken>(_builder.IsFollowing(followType, ids));
             if (res is JArray)
                 return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
             return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
@@ -637,7 +637,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
-            JToken res = DownloadDataAsync<JToken>(_builder.SearchItems(followType, ids));
+            JToken res = DownloadDataAsync<JToken>(_builder.IsFollowing(followType, ids));
             if (res is JArray) //todo expression is always false
                 return Task.FromResult(new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null });
             return Task.FromResult(new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() });
@@ -687,7 +687,7 @@ namespace SpotifyAPI.Web
             {
                 {"public", showPublic}
             };
-            return UploadData<ErrorResponse>(_builder.SearchItems(ownerId, playlistId, showPublic), body.ToString(Formatting.None), "PUT");
+            return UploadData<ErrorResponse>(_builder.FollowPlaylist(ownerId, playlistId, showPublic), body.ToString(Formatting.None), "PUT");
         }
 
         /// <summary>
@@ -710,7 +710,7 @@ namespace SpotifyAPI.Web
             {
                 {"public", showPublic}
             };
-            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(ownerId, playlistId, showPublic), body.ToString(Formatting.None), "PUT");
+            return UploadDataAsync<ErrorResponse>(_builder.FollowPlaylist(ownerId, playlistId, showPublic), body.ToString(Formatting.None), "PUT");
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse UnfollowPlaylist(String ownerId, String playlistId)
         {
-            return UploadData<ErrorResponse>(_builder.SearchItems(ownerId, playlistId), "", "DELETE");
+            return UploadData<ErrorResponse>(_builder.UnfollowPlaylist(ownerId, playlistId), "", "DELETE");
         }
 
         /// <summary>
@@ -734,7 +734,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public Task<ErrorResponse> UnfollowPlaylistAsync(String ownerId, String playlistId)
         {
-            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(ownerId, playlistId), "", "DELETE");
+            return UploadDataAsync<ErrorResponse>(_builder.UnfollowPlaylist(ownerId, playlistId), "", "DELETE");
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
-            JToken res = DownloadData<JToken>(_builder.SearchItems(ownerId, playlistId, ids));
+            JToken res = DownloadData<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
             if (res is JArray)
                 return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
             return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
@@ -767,7 +767,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
-            JToken res = DownloadDataAsync<JToken>(_builder.SearchItems(ownerId, playlistId, ids));
+            JToken res = DownloadDataAsync<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
             if (res is JArray) //todo expression is always false
                 return Task.FromResult(new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null });
             return Task.FromResult(new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() });
@@ -812,7 +812,7 @@ namespace SpotifyAPI.Web
         public ErrorResponse SaveTracks(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadData<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "PUT") ?? new ErrorResponse());
+            return UploadData<ErrorResponse>(_builder.SaveTracks(array.ToString(Formatting.None), "PUT") ?? new ErrorResponse());
         }
 
         /// <summary>
@@ -824,7 +824,7 @@ namespace SpotifyAPI.Web
         public Task<ErrorResponse> SaveTracksAsync(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "PUT") ?? Task.FromResult(new ErrorResponse()));
+            return UploadDataAsync<ErrorResponse>(_builder.SaveTracks(array.ToString(Formatting.None), "PUT") ?? Task.FromResult(new ErrorResponse()));
         }
 
         /// <summary>
@@ -861,7 +861,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetSavedTracks");
-            return DownloadData<Paging<SavedTrack>>(_builder.SearchItems(limit, offset, market));
+            return DownloadData<Paging<SavedTrack>>(_builder.GetSavedTracks(limit, offset, market));
         }
 
         /// <summary>
@@ -876,7 +876,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetSavedTracks");
-            return DownloadDataAsync<Paging<SavedTrack>>(_builder.SearchItems(limit, offset, market));
+            return DownloadDataAsync<Paging<SavedTrack>>(_builder.GetSavedTracks(limit, offset, market));
         }
 
         /// <summary>
@@ -888,7 +888,7 @@ namespace SpotifyAPI.Web
         public ErrorResponse RemoveSavedTracks(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadData<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
+            return UploadData<ErrorResponse>(_builder.RemoveSavedTracks(array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace SpotifyAPI.Web
         public Task<ErrorResponse> RemoveSavedTracksAsync(List<String> ids)
         {
             JArray array = new JArray(ids);
-            return UploadDataAsync<ErrorResponse>(_builder.SearchItems(array.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
+            return UploadDataAsync<ErrorResponse>(_builder.RemoveSavedTracks(array.ToString(Formatting.None), "DELETE") ?? Task.FromResult(new ErrorResponse());
         }
 
         /// <summary>
@@ -913,7 +913,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            JToken res = DownloadData<JToken>(APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids));
+            JToken res = DownloadData<JToken>(_builder.CheckSavedTracks(ids));
             if (res is JArray)
                 return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
             return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
@@ -929,7 +929,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            JToken res = DownloadDataAsync<JToken>(SpotifyWebBuilder.APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids));
+            JToken res = DownloadDataAsync<JToken>(_builder.CheckSavedTracks(ids));
             if (res is JArray) //todo expression is always false
                 return Task.FromResult(new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null });
             return Task.FromResult(new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() });
