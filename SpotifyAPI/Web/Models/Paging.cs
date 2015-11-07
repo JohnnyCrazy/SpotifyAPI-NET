@@ -26,5 +26,15 @@ namespace SpotifyAPI.Web.Models
 
         [JsonProperty("total")]
         public int Total { get; set; }
+
+        public bool HasNextPage()
+        {
+            return Next != null;
+        }
+
+        public bool HasPreviousPage()
+        {
+            return Next != null;
+        }
     }
 }

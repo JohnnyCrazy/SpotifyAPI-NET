@@ -40,7 +40,7 @@ namespace SpotifyAPI.Web
         public void Dispose()
         {
             WebClient.Dispose();
-            GC.SuppressFinalize(this); //TODO
+            GC.SuppressFinalize(this);
         }
 
         #region Search
@@ -1450,14 +1450,32 @@ namespace SpotifyAPI.Web
 
         #region Util
 
-        public Paging<T> Next<T>(Paging<T> paging)
+        public Paging<T> GetNextPage<T>(Paging<T> paging)
         {
+            if (!paging.HasNextPage())
+                throw new InvalidOperationException("This Paging-Object has no Next-Page");
             return DownloadData<Paging<T>>(paging.Next);
         }
 
-        public Paging<T> Previous<T>(Paging<T> paging)
+        public async Task<Paging<T>> GetNextPageAsync<T>(Paging<T> paging)
         {
+            if (!paging.HasNextPage())
+                throw new InvalidOperationException("This Paging-Object has no Next-Page");
+            return await DownloadDataAsync<Paging<T>>(paging.Next);
+        }
+
+        public Paging<T> GetPreviousPage<T>(Paging<T> paging)
+        {
+            if (!paging.HasPreviousPage())
+                throw new InvalidOperationException("This Paging-Object has no Previous-Page");
             return DownloadData<Paging<T>>(paging.Previous);
+        }
+
+        public async Task<Paging<T>> GetPreviousPageAsync<T>(Paging<T> paging)
+        {
+            if (!paging.HasPreviousPage())
+                throw new InvalidOperationException("This Paging-Object has no Previous-Page");
+            return await DownloadDataAsync<Paging<T>>(paging.Previous);
         }
 
         public T UploadData<T>(String url, String uploadData, String method = "POST")
