@@ -170,7 +170,7 @@
             <div class="col-md-9" role="main">
 
 <h2 id="paging-methods">Paging-Methods</h2>
-<p>The <code>SpotifyWebAPI</code> features two paging-helper Methods, <code>GetNextPage()</code> and <code>GetPreviousPage()</code>.
+<p>The <code>SpotifyWebAPI</code> features two paging-helper Methods, <code>GetNextPage(Paging&lt;T&gt; page)</code> and <code>GetPreviousPage(Paging&lt;T&gt; page)</code>.
 Both are an easy way to receive the next/previous page of a Paging-Object.</p>
 <p>Sample:</p>
 <pre><code class="csharp">var playlistTracks = _spotify.GetPlaylistTracks(&quot;1122095781&quot;, &quot;4EcNf2l8rXInbJOf3tQdgU&quot;, &quot;&quot;, 50);

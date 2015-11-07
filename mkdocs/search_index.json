@@ -347,12 +347,12 @@
         },
         {
             "location": "/SpotifyWebAPI/util/",
-            "text": "Paging-Methods\n\n\nThe \nSpotifyWebAPI\n features two paging-helper Methods, \nGetNextPage()\n and \nGetPreviousPage()\n.\nBoth are an easy way to receive the next/previous page of a Paging-Object.\n\n\nSample:\n\n\nvar playlistTracks = _spotify.GetPlaylistTracks(\n1122095781\n, \n4EcNf2l8rXInbJOf3tQdgU\n, \n, 50);\nwhile (true)\n{\n    Console.WriteLine(playlistTracks.Items.Count);\n    if (!playlistTracks.HasNextPage())\n        break;\n    playlistTracks = _spotify.GetNextPage(playlistTracks);\n}",
+            "text": "Paging-Methods\n\n\nThe \nSpotifyWebAPI\n features two paging-helper Methods, \nGetNextPage(Paging\nT\n page)\n and \nGetPreviousPage(Paging\nT\n page)\n.\nBoth are an easy way to receive the next/previous page of a Paging-Object.\n\n\nSample:\n\n\nvar playlistTracks = _spotify.GetPlaylistTracks(\n1122095781\n, \n4EcNf2l8rXInbJOf3tQdgU\n, \n, 50);\nwhile (true)\n{\n    Console.WriteLine(playlistTracks.Items.Count);\n    if (!playlistTracks.HasNextPage())\n        break;\n    playlistTracks = _spotify.GetNextPage(playlistTracks);\n}",
             "title": "- Util"
         },
         {
             "location": "/SpotifyWebAPI/util/#paging-methods",
-            "text": "The  SpotifyWebAPI  features two paging-helper Methods,  GetNextPage()  and  GetPreviousPage() .\nBoth are an easy way to receive the next/previous page of a Paging-Object.  Sample:  var playlistTracks = _spotify.GetPlaylistTracks( 1122095781 ,  4EcNf2l8rXInbJOf3tQdgU ,  , 50);\nwhile (true)\n{\n    Console.WriteLine(playlistTracks.Items.Count);\n    if (!playlistTracks.HasNextPage())\n        break;\n    playlistTracks = _spotify.GetNextPage(playlistTracks);\n}",
+            "text": "The  SpotifyWebAPI  features two paging-helper Methods,  GetNextPage(Paging T  page)  and  GetPreviousPage(Paging T  page) .\nBoth are an easy way to receive the next/previous page of a Paging-Object.  Sample:  var playlistTracks = _spotify.GetPlaylistTracks( 1122095781 ,  4EcNf2l8rXInbJOf3tQdgU ,  , 50);\nwhile (true)\n{\n    Console.WriteLine(playlistTracks.Items.Count);\n    if (!playlistTracks.HasNextPage())\n        break;\n    playlistTracks = _spotify.GetNextPage(playlistTracks);\n}",
             "title": "Paging-Methods"
         },
         {
