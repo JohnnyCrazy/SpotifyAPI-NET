@@ -107,6 +107,10 @@
                             <a href="../tracks/">- Tracks</a>
                         </li>
                     
+                        <li >
+                            <a href="../util/">- Util</a>
+                        </li>
+                    
                     </ul>
                 </li>
             
@@ -168,6 +172,8 @@
         
             <li><a href="#error-handling">Error-Handling</a></li>
         
+            <li><a href="#asynchronous">Asynchronous</a></li>
+        
             <li><a href="#api-reference">API-Reference</a></li>
         
     
@@ -220,6 +226,16 @@ if (profile.HasError())
 {
     Console.WriteLine(&quot;Error Status: &quot; + profile.Error.Status);
     Console.WriteLine(&quot;Error Msg: &quot; + profile.Error.Message);
+}
+</code></pre>
+
+<h2 id="asynchronous">Asynchronous</h2>
+<p>Every API-Call now has an asynchronous method. Just append <code>Async</code> to the Method-Name.<br />
+Example:</p>
+<pre><code class="cs">public async void Test()
+{
+    var profile = await _spotify.GetPrivateProfileAsync();
+    Console.WriteLine(profile.DisplayName);
 }
 </code></pre>
 
@@ -291,6 +307,10 @@ if (profile.HasError())
 <ul>
 <li><a href="../../SpotifyWebAPI/tracks#getseveraltracks">GetSeveralTracks</a></li>
 <li><a href="../../SpotifyWebAPI/tracks#gettrack">GetTrack</a></li>
+</ul>
+<h3 id="util">Util</h3>
+<ul>
+<li><a href="../../SpotifyWebAPI/util">Utility-Functions</a></li>
 </ul></div>
         </div>
 

@@ -7,14 +7,14 @@
         
         <meta name="author" content="JohnnyCrazy">
         
-        <link rel="shortcut icon" href="../img/favicon.ico">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>SpotifyLocalAPI - SpotifyAPI-NET</title>
+	<title>- Util - SpotifyAPI-NET</title>
 
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/agate.min.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -40,7 +40,7 @@
             </button>
 
             <!-- Main title -->
-            <a class="navbar-brand" href="..">SpotifyAPI-NET</a>
+            <a class="navbar-brand" href="../..">SpotifyAPI-NET</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -50,65 +50,65 @@
             
             
                 <li >
-                    <a href="..">Home</a>
+                    <a href="../..">Home</a>
                 </li>
             
             
             
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
-                            <a href="../SpotifyWebAPI/gettingstarted/">Getting started</a>
+                            <a href="../gettingstarted/">Getting started</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/examples/">Examples</a>
+                            <a href="../examples/">Examples</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/auth/">Authentication</a>
+                            <a href="../auth/">Authentication</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/albums/">- Albums</a>
+                            <a href="../albums/">- Albums</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/artists/">- Artists</a>
+                            <a href="../artists/">- Artists</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/browse/">- Browse</a>
+                            <a href="../browse/">- Browse</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/follow/">- Follow</a>
+                            <a href="../follow/">- Follow</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/library/">- Library</a>
+                            <a href="../library/">- Library</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/playlists/">- Playlists</a>
+                            <a href="../playlists/">- Playlists</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/profiles/">- Profiles</a>
+                            <a href="../profiles/">- Profiles</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/search/">- Search</a>
+                            <a href="../search/">- Search</a>
                         </li>
                     
                         <li >
-                            <a href="../SpotifyWebAPI/tracks/">- Tracks</a>
+                            <a href="../tracks/">- Tracks</a>
                         </li>
                     
-                        <li >
-                            <a href="../SpotifyWebAPI/util/">- Util</a>
+                        <li class="active">
+                            <a href="./">- Util</a>
                         </li>
                     
                     </ul>
@@ -116,12 +116,12 @@
             
             
             
-                <li class="dropdown active">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalAPI <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
-                        <li class="active">
-                            <a href="./">SpotifyLocalAPI</a>
+                        <li >
+                            <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
                         </li>
                     
                     </ul>
@@ -134,12 +134,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../SpotifyWebAPI/util/">
+                    <a rel="next" href="../tracks/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li class="disabled">
-                    <a rel="prev" >
+                <li >
+                    <a rel="prev" href="../../SpotifyLocalAPI/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -162,22 +162,34 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#wip">WIP</a></li>
+        <li class="main active"><a href="#paging-methods">Paging-Methods</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="wip">WIP</h1></div>
+<h2 id="paging-methods">Paging-Methods</h2>
+<p>The <code>SpotifyWebAPI</code> features two paging-helper Methods, <code>GetNextPage()</code> and <code>GetPreviousPage()</code>.
+Both are an easy way to receive the next/previous page of a Paging-Object.</p>
+<p>Sample:</p>
+<pre><code class="csharp">var playlistTracks = _spotify.GetPlaylistTracks(&quot;1122095781&quot;, &quot;4EcNf2l8rXInbJOf3tQdgU&quot;, &quot;&quot;, 50);
+while (true)
+{
+    Console.WriteLine(playlistTracks.Items.Count);
+    if (!playlistTracks.HasNextPage())
+        break;
+    playlistTracks = _spotify.GetNextPage(playlistTracks);
+}
+</code></pre></div>
         </div>
 
         
 
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/base.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/base.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-        <script src="../highlight.js"></script>
+        <script src="../../highlight.js"></script>
     </body>
 </html>
