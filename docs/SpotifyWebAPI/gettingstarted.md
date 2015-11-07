@@ -59,6 +59,17 @@ if (profile.HasError())
 }
 ```
 
+##Asynchronous
+Every API-Call now has an asynchronous method. Just append `Async` to the Method-Name.  
+Example:
+```cs
+public async void Test()
+{
+    var profile = await _spotify.GetPrivateProfileAsync();
+    Console.WriteLine(profile.DisplayName);
+}
+```
+
 ---
 
 ##API-Reference
@@ -120,3 +131,6 @@ if (profile.HasError())
 ###Tracks
 * [GetSeveralTracks](/SpotifyWebAPI/tracks#getseveraltracks)
 * [GetTrack](/SpotifyWebAPI/tracks#gettrack)
+
+###Util
+* [Utility-Functions](/SpotifyWebAPI/util)
