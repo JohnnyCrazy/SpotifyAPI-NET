@@ -71,7 +71,13 @@ namespace SpotifyAPI.Web
 
         public async Task<byte[]> DownloadRawAsync(string url)
         {
-            return await _webClient.DownloadDataTaskAsync(url);
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Proxy = null;
+                webClient.Encoding = _encoding;
+                webClient.Headers = _webClient.Headers;
+                return await _webClient.DownloadDataTaskAsync(url);
+            }
         }
 
         public T DownloadJson<T>(string url)
@@ -129,7 +135,13 @@ namespace SpotifyAPI.Web
 
         public async Task<byte[]> UploadRawAsync(string url, string body, string method)
         {
-            return await _webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body));
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Proxy = null;
+                webClient.Encoding = _encoding;
+                webClient.Headers = _webClient.Headers;
+                return await _webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body));
+            }
         }
 
         public T UploadJson<T>(string url, string body, string method)
