@@ -22,23 +22,23 @@ namespace SpotifyAPI.Local
             return !String.IsNullOrEmpty(CfidKey);
         }
 
-        internal async void SendPauseRequest()
+        internal async Task SendPauseRequest()
         {
             await QueryAsync("remote/pause.json?pause=true", true, true, -1);
         }
 
-        internal async void SendPlayRequest()
+        internal async Task SendPlayRequest()
         {
             await QueryAsync("remote/pause.json?pause=false", true, true, -1);
         }
 
-        internal async void SendPlayRequest(String url, String context = "")
+        internal async Task SendPlayRequest(String url, String context = "")
         {
             // TODO: instead of having an empty context, one way to fix the bug with the playback time beyond the length of a song would be to provide a 1-song context, and it would be fixed.
             await QueryAsync($"remote/play.json?uri={url}&context={context}", true, true, -1);
         }
 
-        internal async void SendQueueRequest(String url)
+        internal async Task SendQueueRequest(String url)
         {
             await QueryAsync("remote/play.json?uri=" + url + "?action=queue", true, true, -1);
         }
