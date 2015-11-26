@@ -62,7 +62,6 @@ namespace SpotifyAPI.Local
             String raw;
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 raw = wc.DownloadString("http://open.spotify.com/token");
             }
             Dictionary<String, object> dic = JsonConvert.DeserializeObject<Dictionary<String, object>>(raw);

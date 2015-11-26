@@ -10,7 +10,6 @@ namespace SpotifyAPI.Local
         public ExtendedWebClient()
         {
             Timeout = 2000;
-            Proxy = null;
             Headers.Add("Origin", "https://embed.spotify.com");
             Headers.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
         }
