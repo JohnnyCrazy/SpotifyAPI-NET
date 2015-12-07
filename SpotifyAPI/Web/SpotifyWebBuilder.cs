@@ -144,7 +144,7 @@ namespace SpotifyAPI.Web
         {
             limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/artists/" + id + "/albums");
-            builder.Append("?type=" + type.GetStringAttribute(","));
+            builder.Append("?album_type=" + type.GetStringAttribute(","));
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
             if (!String.IsNullOrEmpty(market))
