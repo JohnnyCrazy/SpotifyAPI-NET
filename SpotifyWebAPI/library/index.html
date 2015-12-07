@@ -177,6 +177,21 @@
         <li class="main "><a href="#checksavedtracks">CheckSavedTracks</a></li>
         
     
+        <li class="main "><a href="#savealbums">SaveAlbums</a></li>
+        
+    
+        <li class="main "><a href="#savealbum">SaveAlbum</a></li>
+        
+    
+        <li class="main "><a href="#getsavedalbums">GetSavedAlbums</a></li>
+        
+    
+        <li class="main "><a href="#removesavedalbums">RemoveSavedAlbums</a></li>
+        
+    
+        <li class="main "><a href="#checksavedalbums">CheckSavedAlbums</a></li>
+        
+    
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
@@ -337,6 +352,165 @@ if(!response.HasError())
 <pre><code class="cs">ListResponse&lt;bool&gt; tracksSaved = _spotify.CheckSavedTracks(new List&lt;String&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
 if(tracksSaved.List[0])
     Console.WriteLine(&quot;The track is in your library!&quot;);
+</code></pre>
+
+<hr />
+<h2 id="savealbums">SaveAlbums</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Save one or more albums to the current user’s “Your Music” library.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ids</td>
+<td>A list of the Spotify IDs</td>
+<td><code>new List&lt;String&gt; { "1cq06d0kTUnFmJHixz1RaF" }</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse response = _spotify.SaveAlbums(new List&lt;string&gt; { &quot;1cq06d0kTUnFmJHixz1RaF&quot; });
+if(!response.HasError())
+    Console.WriteLine(&quot;success&quot;);
+</code></pre>
+
+<hr />
+<h2 id="savealbum">SaveAlbum</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Save one album to the current user’s “Your Music” library.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>A Spotify ID</td>
+<td><code>"1cq06d0kTUnFmJHixz1RaF"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse response = _spotify.SaveAlbum(&quot;1cq06d0kTUnFmJHixz1RaF&quot;);
+if(!response.HasError())
+    Console.WriteLine(&quot;success&quot;);
+</code></pre>
+
+<hr />
+<h2 id="getsavedalbums">GetSavedAlbums</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Get a list of the albums saved in the current Spotify user’s “Your Music” library.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[limit]</td>
+<td>The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</td>
+<td><code>20</code></td>
+</tr>
+<tr>
+<td>[offset]</td>
+<td>The index of the first object to return. Default: 0 (i.e., the first object)</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td>[market]</td>
+<td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
+<td><code>DE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <code>Paging&lt;SavedAlbum&gt;</code>, <strong>SavedAlbum</strong> contains 2 properties, <code>DateTime AddedAt</code> and <code>FullAlbum Album</code></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">Paging&lt;SavedAlbum&gt; savedAlbums = _spotify.GetSavedAlbums();
+savedAlbums.Items.ForEach(album =&gt; Console.WriteLine(album.Album.Name));
+</code></pre>
+
+<hr />
+<h2 id="removesavedalbums">RemoveSavedAlbums</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Remove one or more albums from the current user’s “Your Music” library.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ids</td>
+<td>A list of the Spotify IDs.</td>
+<td><code>new List&lt;String&gt; { "1cq06d0kTUnFmJHixz1RaF" }</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse response = _spotify.RemoveSavedAlbums(new List&lt;string&gt; { &quot;1cq06d0kTUnFmJHixz1RaF&quot; });
+if(!response.HasError())
+    Console.WriteLine(&quot;success&quot;);
+</code></pre>
+
+<hr />
+<h2 id="checksavedalbums">CheckSavedAlbums</h2>
+<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<blockquote>
+<p>Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ids</td>
+<td>A list of the Spotify IDs.</td>
+<td><code>new List&lt;String&gt; { "1cq06d0kTUnFmJHixz1RaF" }</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>ListResponse<bool></strong> which contains a property, <code>List&lt;bool&gt; List</code></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ListResponse&lt;bool&gt; albumsSaved = _spotify.CheckSavedAlbums(new List&lt;String&gt; { &quot;1cq06d0kTUnFmJHixz1RaF&quot; });
+if(albumsSaved.List[0])
+    Console.WriteLine(&quot;The album is in your library!&quot;);
 </code></pre>
 
 <hr /></div>
