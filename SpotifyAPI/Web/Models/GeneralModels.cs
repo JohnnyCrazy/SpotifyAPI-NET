@@ -142,6 +142,15 @@ namespace SpotifyAPI.Web.Models
         public FullTrack Track { get; set; }
     }
 
+    public class SavedAlbum
+    {
+        [JsonProperty("added_at")]
+        public DateTime AddedAt { get; set; }
+
+        [JsonProperty("album")]
+        public SavedAlbum Album { get; set; }
+    }
+
     public class Cursor
     {
         [JsonProperty("after")]

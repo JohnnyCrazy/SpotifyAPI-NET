@@ -989,11 +989,11 @@ namespace SpotifyAPI.Web
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public Paging<SavedTrack> GetSavedAlbums(int limit = 20, int offset = 0, String market = "")
+        public Paging<SavedAlbum> GetSavedAlbums(int limit = 20, int offset = 0, String market = "")
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetSavedAlbums");
-            return DownloadData<Paging<SavedTrack>>(_builder.GetSavedAlbums(limit, offset, market));
+            return DownloadData<Paging<SavedAlbum>>(_builder.GetSavedAlbums(limit, offset, market));
         }
 
         /// <summary>
@@ -1004,11 +1004,11 @@ namespace SpotifyAPI.Web
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<Paging<SavedTrack>> GetSavedAlbumsAsync(int limit = 20, int offset = 0, String market = "")
+        public async Task<Paging<SavedAlbum>> GetSavedAlbumsAsync(int limit = 20, int offset = 0, String market = "")
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for GetSavedAlbumsAsync");
-            return await DownloadDataAsync<Paging<SavedTrack>>(_builder.GetSavedAlbums(limit, offset, market));
+            return await DownloadDataAsync<Paging<SavedAlbum>>(_builder.GetSavedAlbums(limit, offset, market));
         }
 
         /// <summary>
