@@ -20,7 +20,7 @@ namespace SpotifyAPI.Web
 
             List<String> list = new List<String>();
             attributes.ToList().ForEach(element => list.Add(element.Text));
-            return string.Join(" ", list);
+            return string.Join(separator, list);
         }
     }
 
