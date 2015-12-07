@@ -935,6 +935,138 @@ namespace SpotifyAPI.Web
             return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
         }
 
+        /// <summary>
+        ///     Save one or more albums to the current user’s “Your Music” library.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public ErrorResponse SaveAlbums(List<String> ids)
+        {
+            JArray array = new JArray(ids);
+            return UploadData<ErrorResponse>(_builder.SaveAlbums(), array.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
+        }
+
+        /// <summary>
+        ///     Save one or more albums to the current user’s “Your Music” library asynchronously.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<ErrorResponse> SaveAlbumsAsync(List<String> ids)
+        {
+            JArray array = new JArray(ids);
+            return await UploadDataAsync<ErrorResponse>(_builder.SaveAlbums(), array.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
+        }
+
+        /// <summary>
+        ///     Save one album to the current user’s “Your Music” library.
+        /// </summary>
+        /// <param name="id">A Spotify ID</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public ErrorResponse SaveAlbum(String id)
+        {
+            return SaveAlbums(new List<string> { id });
+        }
+
+        /// <summary>
+        ///     Save one album to the current user’s “Your Music” library asynchronously.
+        /// </summary>
+        /// <param name="id">A Spotify ID</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<ErrorResponse> SaveAlbumAsync(String id)
+        {
+            return await SaveAlbumsAsync(new List<string> { id });
+        }
+
+        /// <summary>
+        ///     Get a list of the albums saved in the current Spotify user’s “Your Music” library.
+        /// </summary>
+        /// <param name="limit">The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first object to return. Default: 0 (i.e., the first object)</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public Paging<SavedTrack> GetSavedAlbums(int limit = 20, int offset = 0, String market = "")
+        {
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for GetSavedAlbums");
+            return DownloadData<Paging<SavedTrack>>(_builder.GetSavedAlbums(limit, offset, market));
+        }
+
+        /// <summary>
+        ///     Get a list of the albums saved in the current Spotify user’s “Your Music” library asynchronously.
+        /// </summary>
+        /// <param name="limit">The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first object to return. Default: 0 (i.e., the first object)</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<Paging<SavedTrack>> GetSavedAlbumsAsync(int limit = 20, int offset = 0, String market = "")
+        {
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for GetSavedAlbumsAsync");
+            return await DownloadDataAsync<Paging<SavedTrack>>(_builder.GetSavedAlbums(limit, offset, market));
+        }
+
+        /// <summary>
+        ///     Remove one or more albums from the current user’s “Your Music” library.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public ErrorResponse RemoveSavedAlbums(List<String> ids)
+        {
+            JArray array = new JArray(ids);
+            return UploadData<ErrorResponse>(_builder.RemoveSavedAlbums(), array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
+        }
+
+        /// <summary>
+        ///     Remove one or more albums from the current user’s “Your Music” library asynchronously.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<ErrorResponse> RemoveSavedAlbumsAsync(List<String> ids)
+        {
+            JArray array = new JArray(ids);
+            return await UploadDataAsync<ErrorResponse>(_builder.RemoveSavedAlbums(), array.ToString(Formatting.None), "DELETE") ?? new ErrorResponse();
+        }
+
+        /// <summary>
+        ///     Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public ListResponse<Boolean> CheckSavedAlbums(List<String> ids)
+        {
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for CheckSavedTracks");
+            JToken res = DownloadData<JToken>(_builder.CheckSavedAlbums(ids));
+            if (res is JArray)
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+        }
+
+        /// <summary>
+        ///     Check if one or more albums is already saved in the current Spotify user’s “Your Music” library asynchronously.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<ListResponse<Boolean>> CheckSavedAlbumsAsync(List<String> ids)
+        {
+            if (!UseAuth)
+                throw new InvalidOperationException("Auth is required for CheckSavedAlbumsAsync");
+            JToken res = await DownloadDataAsync<JToken>(_builder.CheckSavedAlbums(ids));
+            if (res is JArray)
+                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
+            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+        }
+
         #endregion Library
 
         #region Playlists

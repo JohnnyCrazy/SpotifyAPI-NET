@@ -438,6 +438,56 @@ namespace SpotifyAPI.Web
             return APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids);
         }
 
+        /// <summary>
+        ///     Save one or more albums to the current user’s "Your Music" library.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string SaveAlbums()
+        {
+            return $"{APIBase}/me/albums";
+        }
+
+        /// <summary>
+        ///     Get a list of the albums saved in the current Spotify user’s "Your Music" library.
+        /// </summary>
+        /// <param name="limit">The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first object to return. Default: 0 (i.e., the first object)</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string GetSavedAlbums(int limit = 20, int offset = 0, string market = "")
+        {
+            limit = Math.Min(limit, 50);
+            StringBuilder builder = new StringBuilder(APIBase + "/me/albums");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offset);
+            if (!string.IsNullOrEmpty(market))
+                builder.Append("&market=" + market);
+            return builder.ToString();
+        }
+
+        /// <summary>
+        ///     Remove one or more albums from the current user’s "Your Music" library.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string RemoveSavedAlbums()
+        {
+            return APIBase + "/me/albums/";
+        }
+
+        /// <summary>
+        ///     Check if one or more albums is already saved in the current Spotify user’s "Your Music" library.
+        /// </summary>
+        /// <param name="ids">A list of the Spotify IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string CheckSavedAlbums(List<String> ids)
+        {
+            return APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids);
+        }
+
         #endregion Library
 
         #region Playlists
