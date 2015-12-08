@@ -111,6 +111,7 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         public void StopHttpServer()
         {
+            _httpServer.Dispose();
             _httpServer = null;
         }
 
