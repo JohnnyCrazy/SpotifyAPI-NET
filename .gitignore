@@ -109,4 +109,4 @@ UpgradeLog*.XML
 
 # NuGet
 /packages/
-.nupkg
+*.nupkg
