@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace SpotifyAPI.Local
 {
-    internal class VolumeMixerControl
+    internal static class VolumeMixerControl
     {
         private const String SpotifyProcessName = "spotify";
 
         internal static float GetSpotifyVolume()
         {
-            Process[] p = Process.GetProcessesByName(SpotifyProcessName);
-            if (p.Length == 0)
-                throw new Exception("Spotify process is not running or was not found!");
-
-            int pid = p[0].Id;
+            int pid = GetSpotifyPid();
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
@@ -30,11 +27,7 @@ namespace SpotifyAPI.Local
 
         internal static bool IsSpotifyMuted()
         {
-            Process[] p = Process.GetProcessesByName(SpotifyProcessName);
-            if (p.Length == 0)
-                throw new Exception("Spotify process is not running or was not found!");
-
-            int pid = p[0].Id;
+            int pid = GetSpotifyPid();
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
@@ -50,11 +43,7 @@ namespace SpotifyAPI.Local
 
         internal static void SetSpotifyVolume(float level)
         {
-            Process[] p = Process.GetProcessesByName(SpotifyProcessName);
-            if (p.Length == 0)
-                throw new Exception("Spotify process is not running or was not found!");
-
-            int pid = p[0].Id;
+            int pid = GetSpotifyPid();
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
@@ -69,11 +58,7 @@ namespace SpotifyAPI.Local
 
         internal static void MuteSpotify(bool mute)
         {
-            Process[] p = Process.GetProcessesByName(SpotifyProcessName);
-            if (p.Length == 0)
-                throw new Exception("Spotify process is not running or was not found!");
-
-            int pid = p[0].Id;
+            int pid = GetSpotifyPid();
 
             ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
@@ -84,6 +69,20 @@ namespace SpotifyAPI.Local
             Guid guid = Guid.Empty;
             volume.SetMute(mute, ref guid);
             Marshal.ReleaseComObject(volume);
+        }
+
+        private static int GetSpotifyPid()
+        {
+            Process[] processes = Process.GetProcessesByName(SpotifyProcessName);
+            if (processes.Length == 0)
+                throw new Exception("Spotify process is not running or was not found!");
+
+            Process mainProc = processes.FirstOrDefault(o => o.MainWindowHandle != IntPtr.Zero);
+
+            if(mainProc == null)
+                throw new Exception("Spotify main-process is not running or was not found!");
+
+            return mainProc.Id;
         }
 
         private static ISimpleAudioVolume GetVolumeObject(int pid)
