@@ -148,7 +148,7 @@ namespace SpotifyAPI.Web.Models
         public DateTime AddedAt { get; set; }
 
         [JsonProperty("album")]
-        public SavedAlbum Album { get; set; }
+        public FullAlbum Album { get; set; }
     }
 
     public class Cursor
