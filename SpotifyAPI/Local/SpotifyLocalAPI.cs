@@ -52,21 +52,13 @@ namespace SpotifyAPI.Local
         private readonly Timer _eventTimer;
         private StatusResponse _eventStatusResponse;
 
-        public delegate void TrackChangeEventHandler(TrackChangeEventArgs e);
+        public event EventHandler<TrackChangeEventArgs> OnTrackChange;
 
-        public delegate void PlayStateEventHandler(PlayStateEventArgs e);
+        public event EventHandler<PlayStateEventArgs> OnPlayStateChange;
 
-        public delegate void VolumeChangeEventHandler(VolumeChangeEventArgs e);
+        public event EventHandler<VolumeChangeEventArgs> OnVolumeChange;
 
-        public delegate void TrackTimeChangeEventHandler(TrackTimeChangeEventArgs e);
-
-        public event TrackChangeEventHandler OnTrackChange;
-
-        public event PlayStateEventHandler OnPlayStateChange;
-
-        public event VolumeChangeEventHandler OnVolumeChange;
-
-        public event TrackTimeChangeEventHandler OnTrackTimeChange;
+        public event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
         public SpotifyLocalAPI()
         {
@@ -104,7 +96,7 @@ namespace SpotifyAPI.Local
             {
                 if (newStatusResponse.Track.TrackResource?.Name != _eventStatusResponse.Track.TrackResource?.Name)
                 {
-                    OnTrackChange?.Invoke(new TrackChangeEventArgs()
+                    OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
                         OldTrack = _eventStatusResponse.Track,
                         NewTrack = newStatusResponse.Track
@@ -113,14 +105,14 @@ namespace SpotifyAPI.Local
             }
             if (newStatusResponse.Playing != _eventStatusResponse.Playing)
             {
-                OnPlayStateChange?.Invoke(new PlayStateEventArgs()
+                OnPlayStateChange?.Invoke(this, new PlayStateEventArgs()
                 {
                     Playing = newStatusResponse.Playing
                 });
             }
             if (newStatusResponse.Volume != _eventStatusResponse.Volume)
             {
-                OnVolumeChange?.Invoke(new VolumeChangeEventArgs()
+                OnVolumeChange?.Invoke(this, new VolumeChangeEventArgs()
                 {
                     OldVolume = _eventStatusResponse.Volume,
                     NewVolume = newStatusResponse.Volume
@@ -128,7 +120,7 @@ namespace SpotifyAPI.Local
             }
             if (newStatusResponse.PlayingPosition != _eventStatusResponse.PlayingPosition)
             {
-                OnTrackTimeChange?.Invoke(new TrackTimeChangeEventArgs()
+                OnTrackTimeChange?.Invoke(this, new TrackTimeChangeEventArgs()
                 {
                     TrackTime = newStatusResponse.PlayingPosition
                 });
