@@ -1,4 +1,4 @@
-SpotifyAPI-NET [![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)[![Nuget](https://img.shields.io/nuget/v/SpotifyAPI-NET.svg)](https://www.nuget.org/packages/SpotifyAPI-NET/)
+SpotifyAPI-NET [![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)[![Nuget](https://badge.fury.io/nu/SpotifyAPI-NET.svg)](https://www.nuget.org/packages/SpotifyAPI-NET/)
 ===
 
 An API for the Spotify-Client and Spotify's Web API, written in .NET  
