@@ -12,6 +12,8 @@ namespace SpotifyAPI.Tests
     [TestFixture]
     public class TestClass
     {
+        private static readonly string FixtureDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../fixtures/");
+
         private Mock<IClient> _mock;
         private SpotifyWebAPI _spotify;
 
@@ -28,7 +30,7 @@ namespace SpotifyAPI.Tests
 
         private static T GetFixture<T>(string file)
         {
-            return JsonConvert.DeserializeObject<T>(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../fixtures/", file)));
+            return JsonConvert.DeserializeObject<T>(File.ReadAllText(Path.Combine(FixtureDir, file)));
         }
 
         private static bool ContainsValues(string str, params string[] values)
