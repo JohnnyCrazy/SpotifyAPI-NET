@@ -14,7 +14,10 @@ namespace SpotifyAPI.Web.Enums
         [String("track")]
         Track = 4,
 
-        [String("track,album,artist")]
-        All = 8
+        [String("playlist")]
+        Playlist = 8,
+
+        [String("track,album,artist,playlist")]
+        All = 16
     }
 }
