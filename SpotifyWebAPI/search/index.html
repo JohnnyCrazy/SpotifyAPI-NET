@@ -210,9 +210,9 @@
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>SearchItem</strong> which contains the properties <code>Paging&lt;SimpleArtist&gt; Artists</code>,<code>Paging&lt;FullTrack&gt; Tracks</code>, <code>Paging&lt;SimpleAlbum&gt; Albums</code>. They are filled based on your search-type.</p>
+<p>Returns a <strong>SearchItem</strong> which contains the properties <code>Paging&lt;FullArtist&gt; Artists</code>,<code>Paging&lt;FullTrack&gt; Tracks</code>, <code>Paging&lt;SimpleAlbum&gt; Albums</code>, <code>Paging&lt;SimplePlaylist&gt; Playlists</code>. They are filled based on your search-type.</p>
 <p><strong>Usage</strong></p>
-<pre><code class="cs">SearchItem item = _spotify.SearchItems(&quot;roadhouse+blues&quot;, SearchType.Album);
+<pre><code class="cs">SearchItem item = _spotify.SearchItems(&quot;roadhouse+blues&quot;, SearchType.Album | SearchType.Playlist);
 Console.WriteLine(item.Albums.Total); //How many results are there in total? NOTE: item.Tracks = item.Artists = null
 </code></pre>
 

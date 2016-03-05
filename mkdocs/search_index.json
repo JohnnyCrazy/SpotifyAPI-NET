@@ -62,8 +62,58 @@
         },
         {
             "location": "/SpotifyWebAPI/gettingstarted/#api-reference",
-            "text": "Albums   GetAlbumTracks  GetAlbum  GetSeveralAlbums   Artists   GetArtist  GetRelatedArtists  GetArtistsTopTracks  GetArtistsAlbums  GetSeveralArtists   Browse   GetFeaturedPlaylists  GetNewAlbumReleases  GetCategories  GetCategory  GetCategoryPlaylists   Follow   Follow  Unfollow  IsFollowing  FollowPlaylist  UnfollowPlaylist  IsFollowingPlaylist   Library   SaveTracks  SaveTrack  GetSavedTracks  RemoveSavedTracks  CheckSavedTracks  SaveAlbums  SaveAlbum  GetSavedAlbums  RemoveSavedAlbums  CheckSavedAlbums   Playlists   GetUserPlaylists  GetPlaylist  GetPlaylistTracks  CreatePlaylist  UpdatePlaylist  ReplacePlaylistTracks  RemovePlaylistTracks  RemovePlaylistTrack  AddPlaylistTracks  AddPlaylistTrack  ReorderPlaylist   Profiles   GetPublicProfile  GetPrivateProfile   Search   SearchItems   Tracks   GetSeveralTracks  GetTrack   Util   Utility-Functions",
+            "text": "",
             "title": "API-Reference"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#albums",
+            "text": "GetAlbumTracks  GetAlbum  GetSeveralAlbums",
+            "title": "Albums"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#artists",
+            "text": "GetArtist  GetRelatedArtists  GetArtistsTopTracks  GetArtistsAlbums  GetSeveralArtists",
+            "title": "Artists"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#browse",
+            "text": "GetFeaturedPlaylists  GetNewAlbumReleases  GetCategories  GetCategory  GetCategoryPlaylists",
+            "title": "Browse"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#follow",
+            "text": "Follow  Unfollow  IsFollowing  FollowPlaylist  UnfollowPlaylist  IsFollowingPlaylist",
+            "title": "Follow"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#library",
+            "text": "SaveTracks  SaveTrack  GetSavedTracks  RemoveSavedTracks  CheckSavedTracks  SaveAlbums  SaveAlbum  GetSavedAlbums  RemoveSavedAlbums  CheckSavedAlbums",
+            "title": "Library"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#playlists",
+            "text": "GetUserPlaylists  GetPlaylist  GetPlaylistTracks  CreatePlaylist  UpdatePlaylist  ReplacePlaylistTracks  RemovePlaylistTracks  RemovePlaylistTrack  AddPlaylistTracks  AddPlaylistTrack  ReorderPlaylist",
+            "title": "Playlists"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#profiles",
+            "text": "GetPublicProfile  GetPrivateProfile",
+            "title": "Profiles"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#search",
+            "text": "SearchItems",
+            "title": "Search"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#tracks",
+            "text": "GetSeveralTracks  GetTrack",
+            "title": "Tracks"
+        },
+        {
+            "location": "/SpotifyWebAPI/gettingstarted/#util",
+            "text": "Utility-Functions",
+            "title": "Util"
         },
         {
             "location": "/SpotifyWebAPI/examples/",
@@ -347,12 +397,12 @@
         },
         {
             "location": "/SpotifyWebAPI/search/",
-            "text": "SearchItems\n\n\n\n\nGet Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.\n\n\n\n\nParamters\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nq\n\n\nThe search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.\n\n\n\"roadhouse+blues\"\n\n\n\n\n\n\ntype\n\n\nA list of item types to search across.\n\n\nSearchType.Album\n\n\n\n\n\n\n[limit]\n\n\nThe maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.\n\n\n20\n\n\n\n\n\n\n[offset]\n\n\nThe index of the first result to return. Default: 0\n\n\n0\n\n\n\n\n\n\n[market]\n\n\nAn ISO 3166-1 alpha-2 country code or the string from_token.\n\n\n\"de\"\n\n\n\n\n\n\n\n\nReturns a \nSearchItem\n which contains the properties \nPaging\nSimpleArtist\n Artists\n,\nPaging\nFullTrack\n Tracks\n, \nPaging\nSimpleAlbum\n Albums\n. They are filled based on your search-type.\n\n\nUsage\n\n\nSearchItem item = _spotify.SearchItems(\nroadhouse+blues\n, SearchType.Album);\nConsole.WriteLine(item.Albums.Total); //How many results are there in total? NOTE: item.Tracks = item.Artists = null",
+            "text": "SearchItems\n\n\n\n\nGet Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.\n\n\n\n\nParamters\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\nExample\n\n\n\n\n\n\n\n\n\n\nq\n\n\nThe search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.\n\n\n\"roadhouse+blues\"\n\n\n\n\n\n\ntype\n\n\nA list of item types to search across.\n\n\nSearchType.Album\n\n\n\n\n\n\n[limit]\n\n\nThe maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.\n\n\n20\n\n\n\n\n\n\n[offset]\n\n\nThe index of the first result to return. Default: 0\n\n\n0\n\n\n\n\n\n\n[market]\n\n\nAn ISO 3166-1 alpha-2 country code or the string from_token.\n\n\n\"de\"\n\n\n\n\n\n\n\n\nReturns a \nSearchItem\n which contains the properties \nPaging\nFullArtist\n Artists\n,\nPaging\nFullTrack\n Tracks\n, \nPaging\nSimpleAlbum\n Albums\n, \nPaging\nSimplePlaylist\n Playlists\n. They are filled based on your search-type.\n\n\nUsage\n\n\nSearchItem item = _spotify.SearchItems(\nroadhouse+blues\n, SearchType.Album | SearchType.Playlist);\nConsole.WriteLine(item.Albums.Total); //How many results are there in total? NOTE: item.Tracks = item.Artists = null",
             "title": "- Search"
         },
         {
             "location": "/SpotifyWebAPI/search/#searchitems",
-            "text": "Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.   Paramters     Name  Description  Example      q  The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.  \"roadhouse+blues\"    type  A list of item types to search across.  SearchType.Album    [limit]  The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.  20    [offset]  The index of the first result to return. Default: 0  0    [market]  An ISO 3166-1 alpha-2 country code or the string from_token.  \"de\"     Returns a  SearchItem  which contains the properties  Paging SimpleArtist  Artists , Paging FullTrack  Tracks ,  Paging SimpleAlbum  Albums . They are filled based on your search-type.  Usage  SearchItem item = _spotify.SearchItems( roadhouse+blues , SearchType.Album);\nConsole.WriteLine(item.Albums.Total); //How many results are there in total? NOTE: item.Tracks = item.Artists = null",
+            "text": "Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.   Paramters     Name  Description  Example      q  The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues.  \"roadhouse+blues\"    type  A list of item types to search across.  SearchType.Album    [limit]  The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.  20    [offset]  The index of the first result to return. Default: 0  0    [market]  An ISO 3166-1 alpha-2 country code or the string from_token.  \"de\"     Returns a  SearchItem  which contains the properties  Paging FullArtist  Artists , Paging FullTrack  Tracks ,  Paging SimpleAlbum  Albums ,  Paging SimplePlaylist  Playlists . They are filled based on your search-type.  Usage  SearchItem item = _spotify.SearchItems( roadhouse+blues , SearchType.Album | SearchType.Playlist);\nConsole.WriteLine(item.Albums.Total); //How many results are there in total? NOTE: item.Tracks = item.Artists = null",
             "title": "SearchItems"
         },
         {
