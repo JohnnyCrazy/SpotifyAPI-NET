@@ -28,7 +28,7 @@ namespace SpotifyAPI.Tests
 
         private static T GetFixture<T>(string file)
         {
-            return JsonConvert.DeserializeObject<T>(File.ReadAllText(Path.Combine("../../fixtures/", file)));
+            return JsonConvert.DeserializeObject<T>(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../fixtures/", file)));
         }
 
         private static bool ContainsValues(string str, params string[] values)
@@ -37,11 +37,11 @@ namespace SpotifyAPI.Tests
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void ShouldGetPrivateProfile_WithoutAuth()
         {
             _spotify.UseAuth = false;
-            _spotify.GetPrivateProfile();
+
+            Assert.Throws<InvalidOperationException>(() => _spotify.GetPrivateProfile());
         }
 
         [Test]
