@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "SpotifyAPI-NET Documentation\n\n\nAbout\n\n\nThis Library, written in C#/.NET, combines two independent SpotifyAPIs into one.\n\n\nSpotify's Web API\n (\nlink\n)\n\n\n\n\nBased on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.\nThe API also provides access to user-related data such as playlists and music saved in a \u201cYour Music\u201d library, subject to user\u2019s authorization.\n\n\n\n\nSpotify's \nunofficial\n Local API\n\n\n\n\nDo you ever wanted to control your local Spotify Client with some sort of API? Now you can! This API gives you full control over your spotify client.\nYou can get infos about the currently playing song, get its Album-Art, skip/pause and much more. It also features multiple Event-Interfaces.\n\n\n\n\nBoth combined can be used for any kind of application.\n\n\n\n\nInstalling\n\n\n\n\nVia NuGet Package:\n\n\n\n\nInstall-Package SpotifyAPI-NET\n//or\nInstall-Package SpotifyAPI-NET -pre\n\n\n\n\n\n\nDownload the latest binaries on the \nGitHub Release Page\n and add it to your Project\n\n\nClone the Repo and build the project on your local machine.\n\n\n\n\n\n\nProjects\n\n\n--",
+            "text": "SpotifyAPI-NET Documentation\n\n\nAbout\n\n\nThis Library, written in C#/.NET, combines two independent SpotifyAPIs into one.\n\n\nSpotify's Web API\n (\nlink\n)\n\n\n\n\nBased on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.\nThe API also provides access to user-related data such as playlists and music saved in a \u201cYour Music\u201d library, subject to user\u2019s authorization.\n\n\n\n\nSpotify's \nunofficial\n Local API\n\n\n\n\nDo you ever wanted to control your local Spotify Client with some sort of API? Now you can! This API gives you full control over your spotify client.\nYou can get infos about the currently playing song, get its Album-Art, skip/pause and much more. It also features multiple Event-Interfaces.\n\n\n\n\nBoth combined can be used for any kind of application.\n\n\n\n\nInstalling\n\n\n\n\nVia NuGet Package:\n\n\n\n\nInstall-Package SpotifyAPI-NET\n//or\nInstall-Package SpotifyAPI-NET -pre\n\n\n\n\n\n\nDownload the latest binaries on the \nGitHub Release Page\n and add it to your Project\n\n\nClone the Repo and build the project on your local machine.\n\n\n\n\n\n\nProjects\n\n\nSpofy\n by \n@eltoncezar\n\n\n A Spotify mini player and notifier for Windows",
             "title": "Home"
         },
         {
@@ -22,8 +22,18 @@
         },
         {
             "location": "/#projects",
-            "text": "--",
+            "text": "",
             "title": "Projects"
+        },
+        {
+            "location": "/#spofy-by-eltoncezar",
+            "text": "",
+            "title": "Spofy by @eltoncezar"
+        },
+        {
+            "location": "/#a-spotify-mini-player-and-notifier-for-windows",
+            "text": "",
+            "title": "&gt; A Spotify mini player and notifier for Windows"
         },
         {
             "location": "/SpotifyWebAPI/gettingstarted/",
