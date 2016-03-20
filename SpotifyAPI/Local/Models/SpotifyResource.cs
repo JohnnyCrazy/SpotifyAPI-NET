@@ -13,5 +13,10 @@ namespace SpotifyAPI.Local.Models
 
         [JsonProperty("location")]
         public TrackResourceLocation Location { get; set; }
+
+        public SpotifyUri ParseUri()
+        {
+            return new SpotifyUri(this.Uri);
+        }
     }
 }

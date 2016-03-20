@@ -157,10 +157,5 @@ namespace SpotifyAPI.Local.Models
                 return wc.DownloadData(url);
             }
         }
-
-        public string GetId()
-        {
-            return this.TrackResource.Uri.Substring(14);
-        }
     }
 }
