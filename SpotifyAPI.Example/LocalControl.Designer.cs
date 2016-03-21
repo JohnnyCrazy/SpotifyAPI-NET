@@ -50,7 +50,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.connectBtn = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.trackInfoBox = new System.Windows.Forms.GroupBox();
+            this.advertLabel = new System.Windows.Forms.Label();
             this.timeLabel = new System.Windows.Forms.Label();
             this.timeProgressBar = new System.Windows.Forms.ProgressBar();
             this.label5 = new System.Windows.Forms.Label();
@@ -60,10 +61,9 @@
             this.artistLinkLabel = new System.Windows.Forms.LinkLabel();
             this.titleLinkLabel = new System.Windows.Forms.LinkLabel();
             this.smallAlbumPicture = new System.Windows.Forms.PictureBox();
-            this.advertLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bigAlbumPicture)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.trackInfoBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.smallAlbumPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -306,25 +306,33 @@
             this.connectBtn.UseVisualStyleBackColor = true;
             this.connectBtn.Click += new System.EventHandler(this.connectBtn_Click);
             // 
-            // groupBox2
+            // trackInfoBox
             // 
-            this.groupBox2.Controls.Add(this.advertLabel);
-            this.groupBox2.Controls.Add(this.timeLabel);
-            this.groupBox2.Controls.Add(this.timeProgressBar);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.albumLinkLabel);
-            this.groupBox2.Controls.Add(this.artistLinkLabel);
-            this.groupBox2.Controls.Add(this.titleLinkLabel);
-            this.groupBox2.Controls.Add(this.smallAlbumPicture);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(3, 349);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(318, 304);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Track Info";
+            this.trackInfoBox.Controls.Add(this.advertLabel);
+            this.trackInfoBox.Controls.Add(this.timeLabel);
+            this.trackInfoBox.Controls.Add(this.timeProgressBar);
+            this.trackInfoBox.Controls.Add(this.label5);
+            this.trackInfoBox.Controls.Add(this.label4);
+            this.trackInfoBox.Controls.Add(this.label3);
+            this.trackInfoBox.Controls.Add(this.albumLinkLabel);
+            this.trackInfoBox.Controls.Add(this.artistLinkLabel);
+            this.trackInfoBox.Controls.Add(this.titleLinkLabel);
+            this.trackInfoBox.Controls.Add(this.smallAlbumPicture);
+            this.trackInfoBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackInfoBox.Location = new System.Drawing.Point(3, 349);
+            this.trackInfoBox.Name = "trackInfoBox";
+            this.trackInfoBox.Size = new System.Drawing.Size(318, 304);
+            this.trackInfoBox.TabIndex = 4;
+            this.trackInfoBox.TabStop = false;
+            this.trackInfoBox.Text = "Track Info";
+            // 
+            // advertLabel
+            // 
+            this.advertLabel.AutoSize = true;
+            this.advertLabel.Location = new System.Drawing.Point(6, 67);
+            this.advertLabel.Name = "advertLabel";
+            this.advertLabel.Size = new System.Drawing.Size(0, 17);
+            this.advertLabel.TabIndex = 31;
             // 
             // timeLabel
             // 
@@ -420,19 +428,11 @@
             this.smallAlbumPicture.TabIndex = 5;
             this.smallAlbumPicture.TabStop = false;
             // 
-            // advertLabel
-            // 
-            this.advertLabel.AutoSize = true;
-            this.advertLabel.Location = new System.Drawing.Point(6, 67);
-            this.advertLabel.Name = "advertLabel";
-            this.advertLabel.Size = new System.Drawing.Size(0, 17);
-            this.advertLabel.TabIndex = 31;
-            // 
             // LocalControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.trackInfoBox);
             this.Controls.Add(this.connectBtn);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bigAlbumPicture);
@@ -441,8 +441,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bigAlbumPicture)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.trackInfoBox.ResumeLayout(false);
+            this.trackInfoBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.smallAlbumPicture)).EndInit();
             this.ResumeLayout(false);
 
@@ -453,7 +453,7 @@
         private System.Windows.Forms.PictureBox bigAlbumPicture;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button connectBtn;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox trackInfoBox;
         private System.Windows.Forms.PictureBox smallAlbumPicture;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;

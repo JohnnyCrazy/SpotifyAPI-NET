@@ -16,7 +16,7 @@ namespace SpotifyAPI.Local.Models
 
         public SpotifyUri ParseUri()
         {
-            return new SpotifyUri(this.Uri);
+            return SpotifyUri.Parse(Uri);
         }
     }
 }

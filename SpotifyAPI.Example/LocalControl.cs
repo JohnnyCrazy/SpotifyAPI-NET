@@ -93,6 +93,10 @@ namespace SpotifyAPI.Example
             albumLinkLabel.Text = track.AlbumResource.Name;
             albumLinkLabel.Tag = track.AlbumResource.Uri;
 
+            SpotifyUri uri = track.TrackResource.ParseUri();
+
+            trackInfoBox.Text = $"Track Info - {uri.Id}";
+
             bigAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size640);
             smallAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size160);
         }
