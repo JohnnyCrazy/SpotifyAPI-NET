@@ -12,12 +12,19 @@ namespace SpotifyAPI.Local.Models
         public string Type { get; internal set; }
         public string Id { get; internal set; }
 
-        public SpotifyUri(string Uri)
+        public SpotifyUri(string uri)
         {
-            string[] props = Uri.Split(':');
-            this.Base = props[0];
-            this.Type = props[1];
-            this.Id = props[2];
+            if (String.IsNullOrEmpty(uri))
+                throw new ArgumentNullException("Uri");
+
+            string[] props = uri.Split(':');
+
+            if (props.Length != 3)
+                throw new ArgumentException("Unexpected Uri");
+
+            Base = props[0];
+            Type = props[1];
+            Id = props[2];
         }
     }
 }
