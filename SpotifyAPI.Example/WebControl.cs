@@ -30,7 +30,7 @@ namespace SpotifyAPI.Example
             {
                 RedirectUri = "http://localhost:8000",
                 ClientId = "26d287105e31491889f3cd293d85bfea",
-                Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibrarayRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate,
+                Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate,
                 State = "XSS"
             };
             _auth.OnResponseReceivedEvent += _auth_OnResponseReceivedEvent;

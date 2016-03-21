@@ -27,7 +27,7 @@ namespace SpotifyAPI.Web.Enums
         UserReadEmail = 64,
 
         [String("user-library-read")]
-        UserLibrarayRead = 128,
+        UserLibraryRead = 128,
 
         [String("user-library-modify")]
         UserLibraryModify = 256,
