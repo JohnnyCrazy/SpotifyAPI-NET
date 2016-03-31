@@ -1578,6 +1578,50 @@ namespace SpotifyAPI.Web
             return await DownloadDataAsync<FullTrack>(_builder.GetTrack(id, market));
         }
 
+        /// <summary>
+        ///     Get audio feature information for a single track identified by its unique Spotify ID.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the track.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public AudioFeatures GetAudioFeatures(string id)
+        {
+            return DownloadData<AudioFeatures>(_builder.GetAudioFeatures(id));
+        }
+
+        /// <summary>
+        ///     Get audio feature information for a single track identified by its unique Spotify ID asynchronously.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the track.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<AudioFeatures> GetAudioFeaturesAsync(string id)
+        {
+            return await DownloadDataAsync<AudioFeatures>(_builder.GetAudioFeatures(id));
+        }
+
+        /// <summary>
+        ///     Get audio features for multiple tracks based on their Spotify IDs.
+        /// </summary>
+        /// <param name="ids">A list of Spotify Track-IDs. Maximum: 100 IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public SeveralAudioFeatures GetSeveralAudioFeatures(List<string> ids)
+        {
+            return DownloadData<SeveralAudioFeatures>(_builder.GetSeveralAudioFeatures(ids));
+        }
+
+        /// <summary>
+        ///     Get audio features for multiple tracks based on their Spotify IDs asynchronously.
+        /// </summary>
+        /// <param name="ids">A list of Spotify Track-IDs. Maximum: 100 IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<SeveralAudioFeatures> GetSeveralAudioFeaturesAsync(List<string> ids)
+        {
+            return await DownloadDataAsync<SeveralAudioFeatures>(_builder.GetSeveralAudioFeatures(ids));
+        }
+
         #endregion Tracks
 
         #region Util

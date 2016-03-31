@@ -76,6 +76,7 @@
     <Compile Include="Web\Enums\FollowType.cs" />
     <Compile Include="Web\Auth\ImplicitGrantAuth.cs" />
     <Compile Include="Web\Models\ArrayResponse.cs" />
+    <Compile Include="Web\Models\AudioFeatures.cs" />
     <Compile Include="Web\Models\BasicModel.cs" />
     <Compile Include="Web\Models\Category.cs" />
     <Compile Include="Web\Models\CategoryList.cs" />
@@ -92,6 +93,10 @@
     <Compile Include="Web\Models\GeneralModels.cs" />
     <Compile Include="Web\Models\FullPlaylist.cs" />
     <Compile Include="Web\Models\PublicProfile.cs" />
+    <Compile Include="Web\Models\SeveralAlbums.cs" />
+    <Compile Include="Web\Models\SeveralArtists.cs" />
+    <Compile Include="Web\Models\SeveralAudioFeatures.cs" />
+    <Compile Include="Web\Models\SeveralTracks.cs" />
     <Compile Include="Web\Models\SimpleAlbum.cs" />
     <Compile Include="Web\Models\SimpleArtist.cs" />
     <Compile Include="Web\Models\SimpleTrack.cs" />

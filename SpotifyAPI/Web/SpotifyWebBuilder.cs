@@ -698,6 +698,28 @@ namespace SpotifyAPI.Web
             return $"{APIBase}/tracks/{id}?market={market}";
         }
 
+        /// <summary>
+        ///     Get audio feature information for a single track identified by its unique Spotify ID.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the track.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string GetAudioFeatures(string id)
+        {
+            return $"{APIBase}/audio-features/{id}";
+        }
+
+        /// <summary>
+        ///     Get audio features for multiple tracks based on their Spotify IDs.
+        /// </summary>
+        /// <param name="ids">A list of Spotify Track-IDs. Maximum: 100 IDs.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string GetSeveralAudioFeatures(List<string> ids)
+        {
+            return $"{APIBase}/audio-features?ids={string.Join(",", ids.Take(100))}";
+        }
+
         #endregion Tracks
     }
 }

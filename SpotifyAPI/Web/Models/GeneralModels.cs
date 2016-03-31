@@ -88,24 +88,6 @@ namespace SpotifyAPI.Web.Models
         }
     }
 
-    public class SeveralTracks : BasicModel
-    {
-        [JsonProperty("tracks")]
-        public List<FullTrack> Tracks { get; set; }
-    }
-
-    public class SeveralArtists : BasicModel
-    {
-        [JsonProperty("artists")]
-        public List<FullArtist> Artists { get; set; }
-    }
-
-    public class SeveralAlbums : BasicModel
-    {
-        [JsonProperty("albums")]
-        public List<FullAlbum> Albums { get; set; }
-    }
-
     public class Copyright
     {
         [JsonProperty("text")]
