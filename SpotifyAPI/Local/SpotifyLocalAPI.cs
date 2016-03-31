@@ -261,7 +261,7 @@ namespace SpotifyAPI.Local
         /// <remarks>
         /// Contexts are basically a queue in spotify. a song can be played within a context, meaning that hitting next / previous would lead to another song. Contexts are leveraged by widgets as described in the "Multiple tracks player" section of the following documentation page: https://developer.spotify.com/technologies/widgets/spotify-play-button/
         /// </remarks>
-        public void PlayURL(String uri, String context = "")
+        public void PlayURL(string uri, string context = "")
         {
             _rh.SendPlayRequest(uri, context);
         }
@@ -271,7 +271,7 @@ namespace SpotifyAPI.Local
         /// </summary>
         /// <param name="uri">The Spotify URI</param>
         [Obsolete("This method doesn't work with the current spotify version.")]
-        public void AddToQueue(String uri)
+        public void AddToQueue(string uri)
         {
             _rh.SendQueueRequest(uri);
         }

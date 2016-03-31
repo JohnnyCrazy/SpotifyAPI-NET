@@ -12,8 +12,8 @@ namespace SpotifyAPI.Web.Auth
     public class ClientCredentialsAuth
     {
         public Scope Scope { get; set; }
-        public String ClientId { get; set; }
-        public String ClientSecret { get; set; }
+        public string ClientId { get; set; }
+        public string ClientSecret { get; set; }
 
         /// <summary>
         ///     Starts the auth process and

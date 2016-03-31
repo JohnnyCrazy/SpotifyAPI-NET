@@ -21,7 +21,7 @@ namespace SpotifyAPI.Local.Models
 
         public static SpotifyUri Parse(string uri)
         {
-            if (String.IsNullOrEmpty(uri))
+            if (string.IsNullOrEmpty(uri))
                 throw new ArgumentNullException("Uri");
 
             string[] props = uri.Split(':');

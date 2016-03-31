@@ -23,9 +23,9 @@ namespace SpotifyAPI.Web
         private readonly HttpServer _srv;
         private Stream _inputStream;
         public Hashtable HttpHeaders = new Hashtable();
-        public String HttpMethod;
-        public String HttpProtocolVersionstring;
-        public String HttpUrl;
+        public string HttpMethod;
+        public string HttpProtocolVersionstring;
+        public string HttpUrl;
         public StreamWriter OutputStream;
 
         public HttpProcessor(TcpClient s, HttpServer srv)
@@ -91,7 +91,7 @@ namespace SpotifyAPI.Web
 
         public void ParseRequest()
         {
-            String request = StreamReadLine(_inputStream);
+            string request = StreamReadLine(_inputStream);
             string[] tokens = request.Split(' ');
             if (tokens.Length < 2)
             {
@@ -103,10 +103,10 @@ namespace SpotifyAPI.Web
 
         public void ReadHeaders()
         {
-            String line;
+            string line;
             while ((line = StreamReadLine(_inputStream)) != null)
             {
-                if (String.IsNullOrEmpty(line))
+                if (string.IsNullOrEmpty(line))
                 {
                     return;
                 }
@@ -116,7 +116,7 @@ namespace SpotifyAPI.Web
                 {
                     throw new Exception("Invalid HTTP header line: " + line);
                 }
-                String name = line.Substring(0, separator);
+                string name = line.Substring(0, separator);
                 int pos = separator + 1;
                 while ((pos < line.Length) && (line[pos] == ' '))
                 {
@@ -236,11 +236,11 @@ namespace SpotifyAPI.Web
     public class AuthEventArgs
     {
         //Code can be an AccessToken or an Exchange Code
-        public String Code { get; set; }
+        public string Code { get; set; }
 
-        public String TokenType { get; set; }
-        public String State { get; set; }
-        public String Error { get; set; }
+        public string TokenType { get; set; }
+        public string State { get; set; }
+        public string Error { get; set; }
         public int ExpiresIn { get; set; }
     }
 
@@ -266,7 +266,7 @@ namespace SpotifyAPI.Web
             Thread t;
             if (_type == AuthType.Authorization)
             {
-                String url = p.HttpUrl;
+                string url = p.HttpUrl;
                 url = url.Substring(2, url.Length - 2);
                 NameValueCollection col = HttpUtility.ParseQueryString(url);
                 if (col.Keys.Get(0) != "code")
@@ -308,7 +308,7 @@ namespace SpotifyAPI.Web
                                              "<h1>Spotify Auth successful!<br>Please copy the URL and paste it into the application</h1></body></html>");
                     return;
                 }
-                String url = p.HttpUrl;
+                string url = p.HttpUrl;
                 url = url.Substring(2, url.Length - 2);
                 NameValueCollection col = HttpUtility.ParseQueryString(url);
                 if (col.Keys.Get(0) != "access_token")

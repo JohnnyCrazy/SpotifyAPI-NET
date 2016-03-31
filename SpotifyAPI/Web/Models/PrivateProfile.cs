@@ -7,16 +7,16 @@ namespace SpotifyAPI.Web.Models
     public class PrivateProfile : BasicModel
     {
         [JsonProperty("birthdate")]
-        public String Birthdate { get; set; }
+        public string Birthdate { get; set; }
 
         [JsonProperty("country")]
-        public String Country { get; set; }
+        public string Country { get; set; }
 
         [JsonProperty("display_name")]
-        public String DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         [JsonProperty("email")]
-        public String Email { get; set; }
+        public string Email { get; set; }
 
         [JsonProperty("external_urls")]
         public Dictionary<string, string> ExternalUrls { get; set; }
@@ -25,21 +25,21 @@ namespace SpotifyAPI.Web.Models
         public Followers Followers { get; set; }
 
         [JsonProperty("href")]
-        public String Href { get; set; }
+        public string Href { get; set; }
 
         [JsonProperty("id")]
-        public String Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("images")]
         public List<Image> Images { get; set; }
 
         [JsonProperty("product")]
-        public String Product { get; set; }
+        public string Product { get; set; }
 
         [JsonProperty("type")]
-        public String Type { get; set; }
+        public string Type { get; set; }
 
         [JsonProperty("uri")]
-        public String Uri { get; set; }
+        public string Uri { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace SpotifyAPI.Local.Models
     public class TrackResourceLocation
     {
         [JsonProperty("og")]
-        public String Og { get; set; }
+        public string Og { get; set; }
     }
 }

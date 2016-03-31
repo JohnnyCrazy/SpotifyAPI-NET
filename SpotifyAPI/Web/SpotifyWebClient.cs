@@ -32,7 +32,7 @@ namespace SpotifyAPI.Web
 
         public string Download(string url)
         {
-            String response;
+            string response;
             try
             {
                 response = _encoding.GetString(DownloadRaw(url));
@@ -49,7 +49,7 @@ namespace SpotifyAPI.Web
 
         public async Task<string> DownloadAsync(string url)
         {
-            String response;
+            string response;
             try
             {
                 response = _encoding.GetString(await DownloadRawAsync(url));
@@ -82,19 +82,19 @@ namespace SpotifyAPI.Web
 
         public T DownloadJson<T>(string url)
         {
-            String response = Download(url);
+            string response = Download(url);
             return JsonConvert.DeserializeObject<T>(response, JsonSettings);
         }
 
         public async Task<T> DownloadJsonAsync<T>(string url)
         {
-            String response = await DownloadAsync(url);
+            string response = await DownloadAsync(url);
             return JsonConvert.DeserializeObject<T>(response, JsonSettings);
         }
 
         public string Upload(string url, string body, string method)
         {
-            String response;
+            string response;
             try
             {
                 byte[] data = UploadRaw(url, body, method);
@@ -112,7 +112,7 @@ namespace SpotifyAPI.Web
 
         public async Task<string> UploadAsync(string url, string body, string method)
         {
-            String response;
+            string response;
             try
             {
                 byte[] data = await UploadRawAsync(url, body, method);
@@ -146,13 +146,13 @@ namespace SpotifyAPI.Web
 
         public T UploadJson<T>(string url, string body, string method)
         {
-            String response = Upload(url, body, method);
+            string response = Upload(url, body, method);
             return JsonConvert.DeserializeObject<T>(response, JsonSettings);
         }
 
         public async Task<T> UploadJsonAsync<T>(string url, string body, string method)
         {
-            String response = await UploadAsync(url, body, method);
+            string response = await UploadAsync(url, body, method);
             return JsonConvert.DeserializeObject<T>(response, JsonSettings);
         }
 

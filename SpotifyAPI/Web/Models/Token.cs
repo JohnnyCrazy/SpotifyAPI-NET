@@ -11,22 +11,22 @@ namespace SpotifyAPI.Web.Models
         }
 
         [JsonProperty("access_token")]
-        public String AccessToken { get; set; }
+        public string AccessToken { get; set; }
 
         [JsonProperty("token_type")]
-        public String TokenType { get; set; }
+        public string TokenType { get; set; }
 
         [JsonProperty("expires_in")]
         public int ExpiresIn { get; set; }
 
         [JsonProperty("refresh_token")]
-        public String RefreshToken { get; set; }
+        public string RefreshToken { get; set; }
 
         [JsonProperty("error")]
-        public String Error { get; set; }
+        public string Error { get; set; }
 
         [JsonProperty("error_description")]
-        public String ErrorDescription { get; set; }
+        public string ErrorDescription { get; set; }
 
         public DateTime CreateDate { get; set; }
 

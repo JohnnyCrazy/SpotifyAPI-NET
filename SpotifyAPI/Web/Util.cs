@@ -7,7 +7,7 @@ namespace SpotifyAPI.Web
 {
     public static class Util
     {
-        public static string GetStringAttribute<T>(this T en, String separator) where T : struct, IConvertible
+        public static string GetStringAttribute<T>(this T en, string separator) where T : struct, IConvertible
         {
             Enum e = (Enum)(object)en;
             IEnumerable<StringAttribute> attributes =
@@ -18,7 +18,7 @@ namespace SpotifyAPI.Web
             .Select(f => f.GetCustomAttributes(typeof(StringAttribute), false)[0])
             .Cast<StringAttribute>();
 
-            List<String> list = new List<String>();
+            List<string> list = new List<string>();
             attributes.ToList().ForEach(element => list.Add(element.Text));
             return string.Join(separator, list);
         }
@@ -26,9 +26,9 @@ namespace SpotifyAPI.Web
 
     public sealed class StringAttribute : Attribute
     {
-        public String Text { get; set; }
+        public string Text { get; set; }
 
-        public StringAttribute(String text)
+        public StringAttribute(string text)
         {
             Text = text;
         }

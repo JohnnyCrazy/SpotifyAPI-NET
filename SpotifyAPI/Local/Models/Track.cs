@@ -43,7 +43,7 @@ namespace SpotifyAPI.Local.Models
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
         /// <returns>A String, which is the URL to the Albumart</returns>
-        public String GetAlbumArtUrl(AlbumArtSize size)
+        public string GetAlbumArtUrl(AlbumArtSize size)
         {
             if (AlbumResource.Uri == null || !AlbumResource.Uri.Contains("spotify:album:") || AlbumResource.Uri.Contains("spotify:album:0000000000000000000000"))
                 return "";
@@ -63,7 +63,7 @@ namespace SpotifyAPI.Local.Models
                     albumsize = 640;
                     break;
             }
-            String raw;
+            string raw;
             using (WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
@@ -92,7 +92,7 @@ namespace SpotifyAPI.Local.Models
             using (WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
-                String url = GetAlbumArtUrl(size);
+                string url = GetAlbumArtUrl(size);
                 if (url == "")
                     return null;
                 var data = await wc.DownloadDataTaskAsync(url);
@@ -113,7 +113,7 @@ namespace SpotifyAPI.Local.Models
             using (WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
-                String url = GetAlbumArtUrl(size);
+                string url = GetAlbumArtUrl(size);
                 if (url == "")
                     return null;
                 return await wc.DownloadDataTaskAsync(url);
@@ -130,8 +130,8 @@ namespace SpotifyAPI.Local.Models
             using (WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
-                String url = GetAlbumArtUrl(size);
-                if (String.IsNullOrEmpty(url))
+                string url = GetAlbumArtUrl(size);
+                if (string.IsNullOrEmpty(url))
                     return null;
                 var data = wc.DownloadData(url);
                 using (MemoryStream ms = new MemoryStream(data))
@@ -151,8 +151,8 @@ namespace SpotifyAPI.Local.Models
             using (WebClient wc = new WebClient())
             {
                 wc.Proxy = null;
-                String url = GetAlbumArtUrl(size);
-                if (String.IsNullOrEmpty(url))
+                string url = GetAlbumArtUrl(size);
+                if (string.IsNullOrEmpty(url))
                     return null;
                 return wc.DownloadData(url);
             }

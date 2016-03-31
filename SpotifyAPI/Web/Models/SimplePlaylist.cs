@@ -13,16 +13,16 @@ namespace SpotifyAPI.Web.Models
         public Dictionary<string, string> ExternalUrls { get; set; }
 
         [JsonProperty("href")]
-        public String Href { get; set; }
+        public string Href { get; set; }
 
         [JsonProperty("id")]
-        public String Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("images")]
         public List<Image> Images { get; set; }
 
         [JsonProperty("name")]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty("owner")]
         public PublicProfile Owner { get; set; }
@@ -31,15 +31,15 @@ namespace SpotifyAPI.Web.Models
         public Boolean Public { get; set; }
 
         [JsonProperty("snapshot_id")]
-        public String SnapshotId { get; set; }
+        public string SnapshotId { get; set; }
 
         [JsonProperty("tracks")]
         public PlaylistTrackCollection Tracks { get; set; }
 
         [JsonProperty("type")]
-        public String Type { get; set; }
+        public string Type { get; set; }
 
         [JsonProperty("uri")]
-        public String Uri { get; set; }
+        public string Uri { get; set; }
     }
 }

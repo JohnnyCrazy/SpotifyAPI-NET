@@ -8,7 +8,7 @@ namespace SpotifyAPI.Web.Models
     public class Image
     {
         [JsonProperty("url")]
-        public String Url { get; set; }
+        public string Url { get; set; }
 
         [JsonProperty("width")]
         public int Width { get; set; }
@@ -27,13 +27,13 @@ namespace SpotifyAPI.Web.Models
         public int Status { get; set; }
 
         [JsonProperty("message")]
-        public String Message { get; set; }
+        public string Message { get; set; }
     }
 
     public class PlaylistTrackCollection
     {
         [JsonProperty("href")]
-        public String Href { get; set; }
+        public string Href { get; set; }
 
         [JsonProperty("total")]
         public int Total { get; set; }
@@ -42,7 +42,7 @@ namespace SpotifyAPI.Web.Models
     public class Followers
     {
         [JsonProperty("href")]
-        public String Href { get; set; }
+        public string Href { get; set; }
 
         [JsonProperty("total")]
         public int Total { get; set; }
@@ -70,14 +70,14 @@ namespace SpotifyAPI.Web.Models
         /// </summary>
         /// <param name="uri">An Spotify-URI</param>
         /// <param name="positions">Optional positions</param>
-        public DeleteTrackUri(String uri, params int[] positions)
+        public DeleteTrackUri(string uri, params int[] positions)
         {
             Positions = positions.ToList();
             Uri = uri;
         }
 
         [JsonProperty("uri")]
-        public String Uri { get; set; }
+        public string Uri { get; set; }
 
         [JsonProperty("positions")]
         public List<int> Positions { get; set; }
@@ -91,28 +91,28 @@ namespace SpotifyAPI.Web.Models
     public class Copyright
     {
         [JsonProperty("text")]
-        public String Text { get; set; }
+        public string Text { get; set; }
 
         [JsonProperty("type")]
-        public String Type { get; set; }
+        public string Type { get; set; }
     }
 
     public class LinkedFrom
     {
         [JsonProperty("external_urls")]
-        public Dictionary<String, String> ExternalUrls { get; set; }
+        public Dictionary<string, string> ExternalUrls { get; set; }
 
         [JsonProperty("href")]
-        public String Href { get; set; }
+        public string Href { get; set; }
 
         [JsonProperty("id")]
-        public String Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("type")]
-        public String Type { get; set; }
+        public string Type { get; set; }
 
         [JsonProperty("uri")]
-        public String Uri { get; set; }
+        public string Uri { get; set; }
     }
 
     public class SavedTrack
@@ -136,6 +136,6 @@ namespace SpotifyAPI.Web.Models
     public class Cursor
     {
         [JsonProperty("after")]
-        public String After { get; set; }
+        public string After { get; set; }
     }
 }

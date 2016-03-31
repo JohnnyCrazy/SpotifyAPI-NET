@@ -17,9 +17,9 @@ namespace SpotifyAPI.Web.Auth
 
         private SimpleHttpServer _httpServer;
         private Thread _httpThread;
-        public String ClientId { get; set; }
-        public String RedirectUri { get; set; }
-        public String State { get; set; }
+        public string ClientId { get; set; }
+        public string RedirectUri { get; set; }
+        public string State { get; set; }
         public Scope Scope { get; set; }
         public Boolean ShowDialog { get; set; }
 
@@ -33,7 +33,7 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         public void DoAuth()
         {
-            String uri = GetUri();
+            string uri = GetUri();
             Process.Start(uri);
         }
 
@@ -55,7 +55,7 @@ namespace SpotifyAPI.Web.Auth
                     {"refresh_token", refreshToken}
                 };
 
-                String response;
+                string response;
                 try
                 {
                     byte[] data = wc.UploadValues("https://accounts.spotify.com/api/token", "POST", col);
@@ -72,7 +72,7 @@ namespace SpotifyAPI.Web.Auth
             }
         }
 
-        private String GetUri()
+        private string GetUri()
         {
             StringBuilder builder = new StringBuilder("https://accounts.spotify.com/authorize/?");
             builder.Append("client_id=" + ClientId);
@@ -121,7 +121,7 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="code">The gathered code from the response</param>
         /// <param name="clientSecret">Your Client-Secret, don't provide it if this is running on a client!</param>
         /// <returns></returns>
-        public Token ExchangeAuthCode(String code, String clientSecret)
+        public Token ExchangeAuthCode(string code, string clientSecret)
         {
             using (WebClient wc = new WebClient())
             {
@@ -136,7 +136,7 @@ namespace SpotifyAPI.Web.Auth
                     {"client_secret", clientSecret}
                 };
 
-                String response;
+                string response;
                 try
                 {
                     byte[] data = wc.UploadValues("https://accounts.spotify.com/api/token", "POST", col);
@@ -156,8 +156,8 @@ namespace SpotifyAPI.Web.Auth
 
     public struct AutorizationCodeAuthResponse
     {
-        public String Code { get; set; }
-        public String State { get; set; }
-        public String Error { get; set; }
+        public string Code { get; set; }
+        public string State { get; set; }
+        public string Error { get; set; }
     }
 }

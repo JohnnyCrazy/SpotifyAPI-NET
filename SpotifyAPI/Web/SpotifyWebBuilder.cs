@@ -25,7 +25,7 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first result to return. Default: 0</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code or the string from_token.</param>
         /// <returns></returns>
-        public string SearchItems(String q, SearchType type, int limit = 20, int offset = 0, String market = "")
+        public string SearchItems(string q, SearchType type, int limit = 20, int offset = 0, string market = "")
         {
             limit = Math.Min(50, limit);
             StringBuilder builder = new StringBuilder(APIBase + "/search");
@@ -33,7 +33,7 @@ namespace SpotifyAPI.Web
             builder.Append("&type=" + type.GetStringAttribute(","));
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(market))
+            if (!string.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return builder.ToString();
         }
@@ -51,13 +51,13 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first track to return. Default: 0 (the first object).</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
-        public string GetAlbumTracks(String id, int limit = 20, int offset = 0, String market = "")
+        public string GetAlbumTracks(string id, int limit = 20, int offset = 0, string market = "")
         {
             limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/albums/" + id + "/tracks");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(market))
+            if (!string.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return builder.ToString();
         }
@@ -68,9 +68,9 @@ namespace SpotifyAPI.Web
         /// <param name="id">The Spotify ID for the album.</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
-        public string GetAlbum(String id, String market = "")
+        public string GetAlbum(string id, string market = "")
         {
-            if (String.IsNullOrEmpty(market))
+            if (string.IsNullOrEmpty(market))
                 return $"{APIBase}/albums/{id}";
             return $"{APIBase}/albums/{id}?market={market}";
         }
@@ -81,9 +81,9 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs for the albums. Maximum: 20 IDs.</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
-        public string GetSeveralAlbums(List<String> ids, String market = "")
+        public string GetSeveralAlbums(List<string> ids, string market = "")
         {
-            if (String.IsNullOrEmpty(market))
+            if (string.IsNullOrEmpty(market))
                 return $"{APIBase}/albums?ids={string.Join(",", ids.Take(20))}";
             return $"{APIBase}/albums?market={market}&ids={string.Join(",", ids.Take(20))}";
         }
@@ -97,7 +97,7 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="id">The Spotify ID for the artist.</param>
         /// <returns></returns>
-        public string GetArtist(String id)
+        public string GetArtist(string id)
         {
             return $"{APIBase}/artists/{id}";
         }
@@ -108,7 +108,7 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="id">The Spotify ID for the artist.</param>
         /// <returns></returns>
-        public string GetRelatedArtists(String id)
+        public string GetRelatedArtists(string id)
         {
             return $"{APIBase}/artists/{id}/related-artists";
         }
@@ -119,7 +119,7 @@ namespace SpotifyAPI.Web
         /// <param name="id">The Spotify ID for the artist.</param>
         /// <param name="country">The country: an ISO 3166-1 alpha-2 country code.</param>
         /// <returns></returns>
-        public string GetArtistsTopTracks(String id, String country)
+        public string GetArtistsTopTracks(string id, string country)
         {
             return $"{APIBase}/artists/{id}/top-tracks?country={country}";
         }
@@ -140,14 +140,14 @@ namespace SpotifyAPI.Web
         ///     geographical market
         /// </param>
         /// <returns></returns>
-        public string GetArtistsAlbums(String id, AlbumType type = AlbumType.All, int limit = 20, int offset = 0, String market = "")
+        public string GetArtistsAlbums(string id, AlbumType type = AlbumType.All, int limit = 20, int offset = 0, string market = "")
         {
             limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/artists/" + id + "/albums");
             builder.Append("?album_type=" + type.GetStringAttribute(","));
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(market))
+            if (!string.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return builder.ToString();
         }
@@ -157,7 +157,7 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="ids">A list of the Spotify IDs for the artists. Maximum: 50 IDs.</param>
         /// <returns></returns>
-        public string GetSeveralArtists(List<String> ids)
+        public string GetSeveralArtists(List<string> ids)
         {
             return $"{APIBase}/artists?ids={string.Join(",", ids.Take(50))}";
         }
@@ -178,15 +178,15 @@ namespace SpotifyAPI.Web
         /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
         /// <param name="offset">The index of the first item to return. Default: 0</param>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetFeaturedPlaylists(String locale = "", String country = "", DateTime timestamp = default(DateTime), int limit = 20, int offset = 0)
+        public string GetFeaturedPlaylists(string locale = "", string country = "", DateTime timestamp = default(DateTime), int limit = 20, int offset = 0)
         {
             limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/browse/featured-playlists");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(locale))
+            if (!string.IsNullOrEmpty(locale))
                 builder.Append("&locale=" + locale);
-            if (!String.IsNullOrEmpty(country))
+            if (!string.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
             if (timestamp != default(DateTime))
                 builder.Append("&timestamp=" + timestamp.ToString("yyyy-MM-ddTHH:mm:ss"));
@@ -201,13 +201,13 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first item to return. Default: 0</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetNewAlbumReleases(String country = "", int limit = 20, int offset = 0)
+        public string GetNewAlbumReleases(string country = "", int limit = 20, int offset = 0)
         {
             limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/browse/new-releases");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(country))
+            if (!string.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
             return builder.ToString();
         }
@@ -227,15 +227,15 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first item to return. Default: 0 (the first object).</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetCategories(String country = "", String locale = "", int limit = 20, int offset = 0)
+        public string GetCategories(string country = "", string locale = "", int limit = 20, int offset = 0)
         {
             limit = Math.Min(50, limit);
             StringBuilder builder = new StringBuilder(APIBase + "/browse/categories");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(country))
+            if (!string.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
-            if (!String.IsNullOrEmpty(locale))
+            if (!string.IsNullOrEmpty(locale))
                 builder.Append("&locale=" + locale);
             return builder.ToString();
         }
@@ -254,12 +254,12 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetCategory(String categoryId, String country = "", String locale = "")
+        public string GetCategory(string categoryId, string country = "", string locale = "")
         {
             StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId);
-            if (!String.IsNullOrEmpty(country))
+            if (!string.IsNullOrEmpty(country))
                 builder.Append("?country=" + country);
-            if (!String.IsNullOrEmpty(locale))
+            if (!string.IsNullOrEmpty(locale))
                 builder.Append((country == "" ? "?locale=" : "&locale=") + locale);
             return builder.ToString();
         }
@@ -273,13 +273,13 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first item to return. Default: 0</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetCategoryPlaylists(String categoryId, String country = "", int limit = 20, int offset = 0)
+        public string GetCategoryPlaylists(string categoryId, string country = "", int limit = 20, int offset = 0)
         {
             limit = Math.Min(50, limit);
             StringBuilder builder = new StringBuilder(APIBase + "/browse/categories/" + categoryId + "/playlists");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(country))
+            if (!string.IsNullOrEmpty(country))
                 builder.Append("&country=" + country);
             return builder.ToString();
         }
@@ -295,13 +295,13 @@ namespace SpotifyAPI.Web
         /// <param name="after">The last artist ID retrieved from the previous request.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetFollowedArtists(int limit = 20, String after = "")
+        public string GetFollowedArtists(int limit = 20, string after = "")
         {
             limit = Math.Min(limit, 50);
             const FollowType followType = FollowType.Artist; //currently only artist is supported.
             StringBuilder builder = new StringBuilder(APIBase + "/me/following?type=" + followType.GetStringAttribute(""));
             builder.Append("&limit=" + limit);
-            if (!String.IsNullOrEmpty(after))
+            if (!string.IsNullOrEmpty(after))
                 builder.Append("&after=" + after);
             return builder.ToString();
         }
@@ -335,7 +335,7 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the artist or the user Spotify IDs to check</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string IsFollowing(FollowType followType, List<String> ids)
+        public string IsFollowing(FollowType followType, List<string> ids)
         {
             return $"{APIBase}/me/following/contains?type={followType.GetStringAttribute("")}&ids={string.Join(",", ids)}";
         }
@@ -354,7 +354,7 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string FollowPlaylist(String ownerId, String playlistId, bool showPublic = true)
+        public string FollowPlaylist(string ownerId, string playlistId, bool showPublic = true)
         {
             return $"{APIBase}/users/{ownerId}/playlists/{playlistId}/followers";
         }
@@ -366,7 +366,7 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string UnfollowPlaylist(String ownerId, String playlistId)
+        public string UnfollowPlaylist(string ownerId, string playlistId)
         {
             return $"{APIBase}/users/{ownerId}/playlists/{playlistId}/followers";
         }
@@ -379,7 +379,7 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of Spotify User IDs</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string IsFollowingPlaylist(String ownerId, String playlistId, List<String> ids)
+        public string IsFollowingPlaylist(string ownerId, string playlistId, List<string> ids)
         {
             return $"{APIBase}/users/{ownerId}/playlists/{playlistId}/followers/contains?ids={string.Join(",", ids)}";
         }
@@ -406,13 +406,13 @@ namespace SpotifyAPI.Web
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetSavedTracks(int limit = 20, int offset = 0, String market = "")
+        public string GetSavedTracks(int limit = 20, int offset = 0, string market = "")
         {
             limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/me/tracks");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(market))
+            if (!string.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return builder.ToString();
         }
@@ -433,7 +433,7 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string CheckSavedTracks(List<String> ids)
+        public string CheckSavedTracks(List<string> ids)
         {
             return APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids);
         }
@@ -483,7 +483,7 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string CheckSavedAlbums(List<String> ids)
+        public string CheckSavedAlbums(List<string> ids)
         {
             return APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids);
         }
@@ -500,7 +500,7 @@ namespace SpotifyAPI.Web
         /// <param name="offset">The index of the first playlist to return. Default: 0 (the first object)</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetUserPlaylists(String userId, int limit = 20, int offset = 0)
+        public string GetUserPlaylists(string userId, int limit = 20, int offset = 0)
         {
             limit = Math.Min(limit, 50);
             StringBuilder builder = new StringBuilder(APIBase + "/users/" + userId + "/playlists");
@@ -521,11 +521,11 @@ namespace SpotifyAPI.Web
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetPlaylist(String userId, String playlistId, String fields = "", String market = "")
+        public string GetPlaylist(string userId, string playlistId, string fields = "", string market = "")
         {
             StringBuilder builder = new StringBuilder(APIBase + "/users/" + userId + "/playlists/" + playlistId);
             builder.Append("?fields=" + fields);
-            if (!String.IsNullOrEmpty(market))
+            if (!string.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return builder.ToString();
         }
@@ -544,14 +544,14 @@ namespace SpotifyAPI.Web
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string GetPlaylistTracks(String userId, String playlistId, String fields = "", int limit = 100, int offset = 0, String market = "")
+        public string GetPlaylistTracks(string userId, string playlistId, string fields = "", int limit = 100, int offset = 0, string market = "")
         {
             limit = Math.Min(limit, 100);
             StringBuilder builder = new StringBuilder(APIBase + "/users/" + userId + "/playlists/" + playlistId + "/tracks");
             builder.Append("?fields=" + fields);
             builder.Append("&limit=" + limit);
             builder.Append("&offset=" + offset);
-            if (!String.IsNullOrEmpty(market))
+            if (!string.IsNullOrEmpty(market))
                 builder.Append("&market=" + market);
             return builder.ToString();
         }
@@ -570,7 +570,7 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string CreatePlaylist(String userId, String playlistName, Boolean isPublic = true)
+        public string CreatePlaylist(string userId, string playlistName, Boolean isPublic = true)
         {
             return $"{APIBase}/users/{userId}/playlists";
         }
@@ -582,7 +582,7 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string UpdatePlaylist(String userId, String playlistId)
+        public string UpdatePlaylist(string userId, string playlistId)
         {
             return $"{APIBase}/users/{userId}/playlists/{playlistId}";
         }
@@ -595,7 +595,7 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string ReplacePlaylistTracks(String userId, String playlistId)
+        public string ReplacePlaylistTracks(string userId, string playlistId)
         {
             return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
         }
@@ -611,7 +611,7 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string RemovePlaylistTracks(String userId, String playlistId, List<DeleteTrackUri> uris)
+        public string RemovePlaylistTracks(string userId, string playlistId, List<DeleteTrackUri> uris)
         {
             return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
         }
@@ -625,7 +625,7 @@ namespace SpotifyAPI.Web
         /// <param name="position">The position to insert the tracks, a zero-based index</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string AddPlaylistTracks(String userId, String playlistId, List<String> uris, int? position = null)
+        public string AddPlaylistTracks(string userId, string playlistId, List<string> uris, int? position = null)
         {
             if (position == null)
                 return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
@@ -639,7 +639,7 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string ReorderPlaylist(String userId, String playlistId)
+        public string ReorderPlaylist(string userId, string playlistId)
         {
             return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
         }
@@ -663,7 +663,7 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <returns></returns>
-        public string GetPublicProfile(String userId)
+        public string GetPublicProfile(string userId)
         {
             return $"{APIBase}/users/{userId}";
         }
@@ -678,9 +678,9 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs for the tracks. Maximum: 50 IDs.</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
-        public string GetSeveralTracks(List<String> ids, String market = "")
+        public string GetSeveralTracks(List<string> ids, string market = "")
         {
-            if (String.IsNullOrEmpty(market))
+            if (string.IsNullOrEmpty(market))
                 return $"{APIBase}/tracks?ids={string.Join(",", ids.Take(50))}";
             return $"{APIBase}/tracks?market={market}&ids={string.Join(",", ids.Take(50))}";
         }
@@ -691,9 +691,9 @@ namespace SpotifyAPI.Web
         /// <param name="id">The Spotify ID for the track.</param>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
         /// <returns></returns>
-        public string GetTrack(String id, String market = "")
+        public string GetTrack(string id, string market = "")
         {
-            if (String.IsNullOrEmpty(market))
+            if (string.IsNullOrEmpty(market))
                 return $"{APIBase}/tracks/{id}";
             return $"{APIBase}/tracks/{id}?market={market}";
         }

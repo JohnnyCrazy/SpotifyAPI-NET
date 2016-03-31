@@ -7,7 +7,7 @@ namespace SpotifyAPI.Local
 {
     internal static class VolumeMixerControl
     {
-        private const String SpotifyProcessName = "spotify";
+        private const string SpotifyProcessName = "spotify";
 
         internal static float GetSpotifyVolume()
         {

@@ -8,9 +8,9 @@ namespace SpotifyAPI.Local.Models
     internal class Cfid
     {
         public Error Error { get; set; }
-        public String Token { get; set; }
-        public String Version { get; set; }
-        public String ClientVersion { get; set; }
+        public string Token { get; set; }
+        public string Version { get; set; }
+        public string ClientVersion { get; set; }
         public Boolean Running { get; set; }
     }
 
@@ -19,7 +19,7 @@ namespace SpotifyAPI.Local.Models
     /// </summary>
     internal class Error
     {
-        public String Type { get; set; }
-        public String Message { get; set; }
+        public string Type { get; set; }
+        public string Message { get; set; }
     }
 }

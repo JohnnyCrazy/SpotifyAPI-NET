@@ -9,13 +9,13 @@ namespace SpotifyAPI.Web.Auth
 {
     public class ImplicitGrantAuth
     {
-        public delegate void OnResponseReceived(Token token, String state);
+        public delegate void OnResponseReceived(Token token, string state);
 
         private SimpleHttpServer _httpServer;
         private Thread _httpThread;
-        public String ClientId { get; set; }
-        public String RedirectUri { get; set; }
-        public String State { get; set; }
+        public string ClientId { get; set; }
+        public string RedirectUri { get; set; }
+        public string State { get; set; }
         public Scope Scope { get; set; }
         public Boolean ShowDialog { get; set; }
 
@@ -26,11 +26,11 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         public void DoAuth()
         {
-            String uri = GetUri();
+            string uri = GetUri();
             Process.Start(uri);
         }
 
-        private String GetUri()
+        private string GetUri()
         {
             StringBuilder builder = new StringBuilder("https://accounts.spotify.com/authorize/?");
             builder.Append("client_id=" + ClientId);

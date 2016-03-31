@@ -10,16 +10,16 @@ namespace SpotifyAPI.Local
 {
     internal class RemoteHandler
     {
-        public String OauthKey { get; private set; }
-        public String CfidKey { get; private set; }
+        public string OauthKey { get; private set; }
+        public string CfidKey { get; private set; }
 
-        public const String Host = "SpotifyAPI.spotilocal.com";
+        public const string Host = "SpotifyAPI.spotilocal.com";
 
         internal Boolean Init()
         {
             OauthKey = GetOAuthKey();
             CfidKey = GetCfid();
-            return !String.IsNullOrEmpty(CfidKey);
+            return !string.IsNullOrEmpty(CfidKey);
         }
 
         internal async void SendPauseRequest()
@@ -32,21 +32,21 @@ namespace SpotifyAPI.Local
             await QueryAsync("remote/pause.json?pause=false", true, true, -1);
         }
 
-        internal async void SendPlayRequest(String url, String context = "")
+        internal async void SendPlayRequest(string url, string context = "")
         {
             // TODO: instead of having an empty context, one way to fix the bug with the playback time beyond the length of a song would be to provide a 1-song context, and it would be fixed.
             await QueryAsync($"remote/play.json?uri={url}&context={context}", true, true, -1);
         }
 
-        internal async void SendQueueRequest(String url)
+        internal async void SendQueueRequest(string url)
         {
             await QueryAsync("remote/play.json?uri=" + url + "?action=queue", true, true, -1);
         }
 
         internal StatusResponse GetNewStatus()
         {
-            String response = Query("remote/status.json", true, true, -1);
-            if (String.IsNullOrEmpty(response))
+            string response = Query("remote/status.json", true, true, -1);
+            if (string.IsNullOrEmpty(response))
             {
                 return null;
             }
@@ -57,15 +57,15 @@ namespace SpotifyAPI.Local
             return raw[0];
         }
 
-        internal String GetOAuthKey()
+        internal string GetOAuthKey()
         {
-            String raw;
+            string raw;
             using (WebClient wc = new WebClient())
             {
                 raw = wc.DownloadString("http://open.spotify.com/token");
             }
-            Dictionary<String, object> dic = JsonConvert.DeserializeObject<Dictionary<String, object>>(raw);
-            return dic == null ? "" : (String)dic["t"];
+            Dictionary<string, object> dic = JsonConvert.DeserializeObject<Dictionary<string, object>>(raw);
+            return dic == null ? "" : (string)dic["t"];
         }
 
         internal string GetCfid()
@@ -115,7 +115,7 @@ namespace SpotifyAPI.Local
             }
             catch
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             return response;
@@ -156,7 +156,7 @@ namespace SpotifyAPI.Local
             }
             catch
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             return response;

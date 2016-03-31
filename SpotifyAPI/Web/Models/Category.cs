@@ -7,15 +7,15 @@ namespace SpotifyAPI.Web.Models
     public class Category : BasicModel
     {
         [JsonProperty("href")]
-        public String Href { get; set; }
+        public string Href { get; set; }
 
         [JsonProperty("icons")]
         public List<Image> Icons { get; set; }
 
         [JsonProperty("id")]
-        public String Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("name")]
-        public String Name { get; set; }
+        public string Name { get; set; }
     }
 }
