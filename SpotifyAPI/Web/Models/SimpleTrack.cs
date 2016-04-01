@@ -6,8 +6,8 @@ namespace SpotifyAPI.Web.Models
 {
     public class SimpleTrack : BasicModel
     {
-        [JsonProperty("artist")]
-        public SimpleArtist Artist { get; set; }
+        [JsonProperty("artists")]
+        public List<SimpleArtist> Artists { get; set; }
 
         [JsonProperty("available_markets")]
         public List<string> AvailableMarkets { get; set; }
