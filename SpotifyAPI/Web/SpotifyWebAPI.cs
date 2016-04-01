@@ -1146,6 +1146,70 @@ namespace SpotifyAPI.Web
 
         #endregion Library
 
+        #region Personalization
+
+        /// <summary>
+        ///     Get the current user’s top tracks based on calculated affinity.
+        /// </summary>
+        /// <param name="timeRange">Over what time frame the affinities are computed. 
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
+        /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
+        /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public Paging<FullTrack> GetUsersTopTracks(TimeRangeType timeRange = TimeRangeType.MediumTerm, int limit = 20, int offest = 0)
+        {
+            return DownloadData<Paging<FullTrack>>(_builder.GetUsersTopTracks(timeRange, limit, offest));
+        }
+
+        /// <summary>
+        ///     Get the current user’s top tracks based on calculated affinity asynchronously.
+        /// </summary>
+        /// <param name="timeRange">Over what time frame the affinities are computed. 
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
+        /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
+        /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<Paging<FullTrack>> GetUsersTopTracksAsync(TimeRangeType timeRange = TimeRangeType.MediumTerm, int limit = 20, int offest = 0)
+        {
+            return await DownloadDataAsync<Paging<FullTrack>>(_builder.GetUsersTopTracks(timeRange, limit, offest));
+        }
+
+        /// <summary>
+        ///     Get the current user’s top artists based on calculated affinity.
+        /// </summary>
+        /// <param name="timeRange">Over what time frame the affinities are computed. 
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
+        /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
+        /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public Paging<FullArtist> GetUsersTopArtists(TimeRangeType timeRange = TimeRangeType.MediumTerm, int limit = 20, int offest = 0)
+        {
+            return DownloadData<Paging<FullArtist>>(_builder.GetUsersTopArtists(timeRange, limit, offest));
+        }
+
+        /// <summary>
+        ///     Get the current user’s top artists based on calculated affinity asynchronously.
+        /// </summary>
+        /// <param name="timeRange">Over what time frame the affinities are computed. 
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
+        /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
+        /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<Paging<FullArtist>> GetUsersTopArtistsAsync(TimeRangeType timeRange = TimeRangeType.MediumTerm, int limit = 20, int offest = 0)
+        {
+            return await DownloadDataAsync<Paging<FullArtist>>(_builder.GetUsersTopArtists(timeRange, limit, offest));
+        }
+
+        #endregion
+
         #region Playlists
 
         /// <summary>

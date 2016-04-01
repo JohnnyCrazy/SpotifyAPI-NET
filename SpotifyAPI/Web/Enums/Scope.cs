@@ -39,6 +39,9 @@ namespace SpotifyAPI.Web.Enums
         UserFollowRead = 1024,
 
         [String("user-read-birthdate")]
-        UserReadBirthdate = 2048
+        UserReadBirthdate = 2048,
+
+        [String("user-top-read")]
+        UserTopRead = 4096
     }
 }

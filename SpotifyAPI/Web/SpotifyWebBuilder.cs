@@ -545,6 +545,50 @@ namespace SpotifyAPI.Web
 
         #endregion Library
 
+        #region Personalization
+
+        /// <summary>
+        ///     Get the current user’s top tracks based on calculated affinity.
+        /// </summary>
+        /// <param name="timeRange">Over what time frame the affinities are computed. 
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
+        /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
+        /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string GetUsersTopTracks(TimeRangeType timeRange = TimeRangeType.MediumTerm, int limit = 20, int offest = 0)
+        {
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder($"{APIBase}/me/top/tracks");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offest);
+            builder.Append("&time_range=" + timeRange.GetStringAttribute(""));
+            return builder.ToString();
+        }
+
+        /// <summary>
+        ///     Get the current user’s top artists based on calculated affinity.
+        /// </summary>
+        /// <param name="timeRange">Over what time frame the affinities are computed. 
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
+        /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
+        /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string GetUsersTopArtists(TimeRangeType timeRange = TimeRangeType.MediumTerm, int limit = 20, int offest = 0)
+        {
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder($"{APIBase}/me/top/artists");
+            builder.Append("?limit=" + limit);
+            builder.Append("&offset=" + offest);
+            builder.Append("&time_range=" + timeRange.GetStringAttribute(""));
+            return builder.ToString();
+        }
+
+        #endregion
+
         #region Playlists
 
         /// <summary>

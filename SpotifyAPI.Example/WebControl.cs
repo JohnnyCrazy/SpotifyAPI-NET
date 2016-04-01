@@ -31,7 +31,7 @@ namespace SpotifyAPI.Example
             {
                 RedirectUri = "http://localhost:8000",
                 ClientId = "26d287105e31491889f3cd293d85bfea",
-                Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate,
+                Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead,
                 State = "XSS"
             };
             _auth.OnResponseReceivedEvent += _auth_OnResponseReceivedEvent;
@@ -68,15 +68,6 @@ namespace SpotifyAPI.Example
                 Invoke(new Action(InitialSetup));
                 return;
             }
-
-            TuneableTrack asd = new TuneableTrack
-            {
-                Acousticness = 0.0029f
-            };
-            List<string> artists = new List<string>() { "0daugAjUgbJSqdlyYNwIbT" };
-
-            Recommendations reco = _spotify.GetRecommendations(target:asd, artistSeed:artists);
-            RecommendationSeedGenres genres = _spotify.GetRecommendationSeedsGenres();
 
             authButton.Enabled = false;
             _profile = _spotify.GetPrivateProfile();

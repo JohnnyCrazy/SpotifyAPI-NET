@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="Local\Models\SpotifyUri.cs" />
     <Compile Include="Local\VolumeMixerControl.cs" />
+    <Compile Include="Web\Enums\TimeRangeType.cs" />
     <Compile Include="Web\IClient.cs" />
     <Compile Include="Local\Models\CFID.cs" />
     <Compile Include="Local\Enums\AlbumArtSize.cs" />
