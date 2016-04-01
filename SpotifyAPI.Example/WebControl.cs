@@ -4,6 +4,7 @@ using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -67,6 +68,15 @@ namespace SpotifyAPI.Example
                 Invoke(new Action(InitialSetup));
                 return;
             }
+
+            TuneableTrack asd = new TuneableTrack
+            {
+                Acousticness = 0.0029f
+            };
+            List<string> artists = new List<string>() { "0daugAjUgbJSqdlyYNwIbT" };
+
+            Recommendations reco = _spotify.GetRecommendations(target:asd, artistSeed:artists);
+            RecommendationSeedGenres genres = _spotify.GetRecommendationSeedsGenres();
 
             authButton.Enabled = false;
             _profile = _spotify.GetPrivateProfile();

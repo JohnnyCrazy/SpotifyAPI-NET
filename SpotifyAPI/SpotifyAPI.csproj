@@ -88,6 +88,9 @@
     <Compile Include="Web\Models\FullArtist.cs" />
     <Compile Include="Web\Models\FullTrack.cs" />
     <Compile Include="Web\Models\NewAlbumReleases.cs" />
+    <Compile Include="Web\Models\Recommendations.cs" />
+    <Compile Include="Web\Models\RecommendationSeed .cs" />
+    <Compile Include="Web\Models\RecommendationSeedGenres.cs" />
     <Compile Include="Web\Models\SearchItem.cs" />
     <Compile Include="Web\Models\PrivateProfile.cs" />
     <Compile Include="Web\Models\GeneralModels.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="Web\Models\Paging.cs" />
     <Compile Include="Web\Enums\Scope.cs" />
     <Compile Include="Web\Enums\SearchType.cs" />
+    <Compile Include="Web\Models\TuneableTrack.cs" />
     <Compile Include="Web\SimpleHttpServer.cs" />
     <Compile Include="Web\SpotifyWebAPI.cs" />
     <Compile Include="Web\SpotifyWebBuilder.cs" />

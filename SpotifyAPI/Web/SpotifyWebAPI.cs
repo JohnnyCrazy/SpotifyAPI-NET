@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+    // ReSharper disable once InconsistentNaming
     public sealed class SpotifyWebAPI : IDisposable
     {
         [Obsolete("This Property will be removed soon. Please use SpotifyWebBuilder.APIBase")]
@@ -459,6 +460,82 @@ namespace SpotifyAPI.Web
         public async Task<CategoryPlaylist> GetCategoryPlaylistsAsync(string categoryId, string country = "", int limit = 20, int offset = 0)
         {
             return await DownloadDataAsync<CategoryPlaylist>(_builder.GetCategoryPlaylists(categoryId, country, limit, offset));
+        }
+
+        /// <summary>
+        ///     Create a playlist-style listening experience based on seed artists, tracks and genres.
+        /// </summary>
+        /// <param name="artistSeed">A comma separated list of Spotify IDs for seed artists. 
+        /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
+        /// </param>
+        /// <param name="genreSeed">A comma separated list of any genres in the set of available genre seeds.
+        /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
+        /// </param>
+        /// <param name="trackSeed">A comma separated list of Spotify IDs for a seed track.
+        /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
+        /// </param>
+        /// <param name="target">Tracks with the attribute values nearest to the target values will be preferred.</param>
+        /// <param name="min">For each tunable track attribute, a hard floor on the selected track attribute’s value can be provided</param>
+        /// <param name="max">For each tunable track attribute, a hard ceiling on the selected track attribute’s value can be provided</param>
+        /// <param name="limit">The target size of the list of recommended tracks. Default: 20. Minimum: 1. Maximum: 100.
+        /// For seeds with unusually small pools or when highly restrictive filtering is applied, it may be impossible to generate the requested number of recommended tracks.
+        /// </param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.
+        /// Because min_*, max_* and target_* are applied to pools before relinking, the generated results may not precisely match the filters applied.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public Recommendations GetRecommendations(List<string> artistSeed = null, List<string> genreSeed = null, List<string> trackSeed = null,
+            TuneableTrack target = null, TuneableTrack min = null, TuneableTrack max = null, int limit = 20, string market = "")
+        {
+            return DownloadData<Recommendations>(_builder.GetRecommendations(artistSeed, genreSeed, trackSeed, target, min, max, limit, market));
+        }
+
+        /// <summary>
+        ///     Create a playlist-style listening experience based on seed artists, tracks and genres asynchronously.
+        /// </summary>
+        /// <param name="artistSeed">A comma separated list of Spotify IDs for seed artists. 
+        /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
+        /// </param>
+        /// <param name="genreSeed">A comma separated list of any genres in the set of available genre seeds.
+        /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
+        /// </param>
+        /// <param name="trackSeed">A comma separated list of Spotify IDs for a seed track.
+        /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
+        /// </param>
+        /// <param name="target">Tracks with the attribute values nearest to the target values will be preferred.</param>
+        /// <param name="min">For each tunable track attribute, a hard floor on the selected track attribute’s value can be provided</param>
+        /// <param name="max">For each tunable track attribute, a hard ceiling on the selected track attribute’s value can be provided</param>
+        /// <param name="limit">The target size of the list of recommended tracks. Default: 20. Minimum: 1. Maximum: 100.
+        /// For seeds with unusually small pools or when highly restrictive filtering is applied, it may be impossible to generate the requested number of recommended tracks.
+        /// </param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.
+        /// Because min_*, max_* and target_* are applied to pools before relinking, the generated results may not precisely match the filters applied.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<Recommendations> GetRecommendationsAsync(List<string> artistSeed = null, List<string> genreSeed = null, List<string> trackSeed = null,
+            TuneableTrack target = null, TuneableTrack min = null, TuneableTrack max = null, int limit = 20, string market = "")
+        {
+            return await DownloadDataAsync<Recommendations>(_builder.GetRecommendations(artistSeed, genreSeed, trackSeed, target, min, max, limit, market));
+        }
+
+        /// <summary>
+        ///     Retrieve a list of available genres seed parameter values for recommendations.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public RecommendationSeedGenres GetRecommendationSeedsGenres()
+        {
+            return DownloadData<RecommendationSeedGenres>(_builder.GetRecommendationSeedsGenres());
+        }
+
+        /// <summary>
+        ///     Retrieve a list of available genres seed parameter values for recommendations asynchronously.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<RecommendationSeedGenres> GetRecommendationSeedsGenresAsync()
+        {
+            return await DownloadDataAsync<RecommendationSeedGenres>(_builder.GetRecommendationSeedsGenres());
         }
 
         #endregion Browse
