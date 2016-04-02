@@ -46,7 +46,7 @@ namespace SpotifyAPI.Local.Models
         public string GetAlbumArtUrl(AlbumArtSize size)
         {
             if (AlbumResource.Uri == null || !AlbumResource.Uri.Contains("spotify:album:") || AlbumResource.Uri.Contains("spotify:album:0000000000000000000000"))
-                return "";
+                return "testing";
 
             int albumsize = 0;
             switch (size)
@@ -70,12 +70,20 @@ namespace SpotifyAPI.Local.Models
                 raw = wc.DownloadString("http://open.spotify.com/album/" + AlbumResource.Uri.Split(new[] { ":" }, StringSplitOptions.None)[2]);
             }
             raw = raw.Replace("\t", "");
+
+            // < meta property = "og:image" content = "http://o.scdn.co/cover/12b318ffe0e4c92f9b4e1486e4726a57e6437ca7" >
+            // Spotify changed the response so I am now getting the substring from the first line that parses out the above tag.
             string[] lines = raw.Split(new[] { "\n" }, StringSplitOptions.None);
+            string startString = "<meta property=\"og:image\"";
+            string endString = "\">";
             foreach (string line in lines)
             {
-                if (line.Trim().StartsWith("<meta property=\"og:image\""))
+                if (line.Trim().Contains("<meta property=\"og:image\""))
                 {
-                    string[] l = line.Split(new[] { "/" }, StringSplitOptions.None);
+                    int start = line.IndexOf(startString, 0) + startString.Length;
+                    int end = line.IndexOf(endString, start);
+                    string content = line.Substring(start, end - start);
+                    string[] l = content.Split(new[] { "/" }, StringSplitOptions.None);
                     return "http://o.scdn.co/" + albumsize + @"/" + l[4].Replace("\"", "").Replace(">", "");
                 }
             }
