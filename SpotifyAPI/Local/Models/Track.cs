@@ -46,7 +46,7 @@ namespace SpotifyAPI.Local.Models
         public string GetAlbumArtUrl(AlbumArtSize size)
         {
             if (AlbumResource.Uri == null || !AlbumResource.Uri.Contains("spotify:album:") || AlbumResource.Uri.Contains("spotify:album:0000000000000000000000"))
-                return "testing";
+                return "";
 
             int albumsize = 0;
             switch (size)
