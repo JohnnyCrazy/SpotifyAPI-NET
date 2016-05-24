@@ -140,7 +140,7 @@ namespace SpotifyAPI.Web
                 webClient.Proxy = null;
                 webClient.Encoding = _encoding;
                 webClient.Headers = _webClient.Headers;
-                return await _webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body));
+                return await webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body));
             }
         }
 
