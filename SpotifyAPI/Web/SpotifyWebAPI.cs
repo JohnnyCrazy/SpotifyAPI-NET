@@ -1767,32 +1767,52 @@ namespace SpotifyAPI.Web
 
         #region Util
 
-        public Paging<T> GetNextPage<T>(Paging<T> paging)
+        public TOut GetNextPage<TOut, TIn>(Paging<TIn> paging)
         {
             if (!paging.HasNextPage())
                 throw new InvalidOperationException("This Paging-Object has no Next-Page");
-            return DownloadData<Paging<T>>(paging.Next);
+            return DownloadData<TOut>(paging.Next);
+        }
+
+        public Paging<T> GetNextPage<T>(Paging<T> paging)
+        {
+            return GetNextPage<Paging<T>, T>(paging);
+        }
+
+        public async Task<TOut> GetNextPageAsync<TOut, TIn>(Paging<TIn> paging)
+        {
+            if (!paging.HasNextPage())
+                throw new InvalidOperationException("This Paging-Object has no Next-Page");
+            return await DownloadDataAsync<TOut>(paging.Next);
         }
 
         public async Task<Paging<T>> GetNextPageAsync<T>(Paging<T> paging)
         {
-            if (!paging.HasNextPage())
-                throw new InvalidOperationException("This Paging-Object has no Next-Page");
-            return await DownloadDataAsync<Paging<T>>(paging.Next);
+            return await GetNextPageAsync<Paging<T>, T>(paging);
+        }
+
+        public TOut GetPreviousPage<TOut, TIn>(Paging<TIn> paging)
+        {
+            if (!paging.HasPreviousPage())
+                throw new InvalidOperationException("This Paging-Object has no Previous-Page");
+            return DownloadData<TOut>(paging.Previous);
         }
 
         public Paging<T> GetPreviousPage<T>(Paging<T> paging)
         {
+            return GetPreviousPage<Paging<T>, T>(paging);
+        }
+
+        public async Task<TOut> GetPreviousPageAsync<TOut, TIn>(Paging<TIn> paging)
+        {
             if (!paging.HasPreviousPage())
                 throw new InvalidOperationException("This Paging-Object has no Previous-Page");
-            return DownloadData<Paging<T>>(paging.Previous);
+            return await DownloadDataAsync<TOut>(paging.Previous);
         }
 
         public async Task<Paging<T>> GetPreviousPageAsync<T>(Paging<T> paging)
         {
-            if (!paging.HasPreviousPage())
-                throw new InvalidOperationException("This Paging-Object has no Previous-Page");
-            return await DownloadDataAsync<Paging<T>>(paging.Previous);
+            return await GetPreviousPageAsync<Paging<T>, T>(paging);
         }
 
         public T UploadData<T>(string url, string uploadData, string method = "POST")
