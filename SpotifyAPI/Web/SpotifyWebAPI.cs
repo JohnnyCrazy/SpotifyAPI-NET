@@ -35,7 +35,7 @@ namespace SpotifyAPI.Web
 
         public string TokenType { get; set; }
         public string AccessToken { get; set; }
-        public Boolean UseAuth { get; set; }
+        public bool UseAuth { get; set; }
         public IClient WebClient { get; set; }
 
         public void Dispose()
@@ -693,14 +693,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the artist or the user Spotify IDs to check</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<Boolean> IsFollowing(FollowType followType, List<string> ids)
+        public ListResponse<bool> IsFollowing(FollowType followType, List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
-            JToken res = DownloadData<JToken>(_builder.IsFollowing(followType, ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.IsFollowing(followType, ids));
+            ListResponse<bool> ret;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         /// <summary>
@@ -710,14 +722,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the artist or the user Spotify IDs to check</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ListResponse<Boolean>> IsFollowingAsync(FollowType followType, List<string> ids)
+        public async Task<ListResponse<bool>> IsFollowingAsync(FollowType followType, List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
-            JToken res = await DownloadDataAsync<JToken>(_builder.IsFollowing(followType, ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.IsFollowing(followType, ids));
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         /// <summary>
@@ -727,7 +751,7 @@ namespace SpotifyAPI.Web
         /// <param name="id">Artists or the Users Spotify ID</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<Boolean> IsFollowing(FollowType followType, string id)
+        public ListResponse<bool> IsFollowing(FollowType followType, string id)
         {
             return IsFollowing(followType, new List<string> { id });
         }
@@ -739,7 +763,7 @@ namespace SpotifyAPI.Web
         /// <param name="id">Artists or the Users Spotify ID</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ListResponse<Boolean>> IsFollowingAsync(FollowType followType, string id)
+        public async Task<ListResponse<bool>> IsFollowingAsync(FollowType followType, string id)
         {
             return await IsFollowingAsync(followType, new List<string> { id });
         }
@@ -822,14 +846,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of Spotify User IDs</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<Boolean> IsFollowingPlaylist(string ownerId, string playlistId, List<string> ids)
+        public ListResponse<bool> IsFollowingPlaylist(string ownerId, string playlistId, List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
-            JToken res = DownloadData<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         /// <summary>
@@ -840,14 +876,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of Spotify User IDs</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ListResponse<Boolean>> IsFollowingPlaylistAsync(string ownerId, string playlistId, List<string> ids)
+        public async Task<ListResponse<bool>> IsFollowingPlaylistAsync(string ownerId, string playlistId, List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
-            JToken res = await DownloadDataAsync<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         /// <summary>
@@ -858,7 +906,7 @@ namespace SpotifyAPI.Web
         /// <param name="id">A Spotify User ID</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<Boolean> IsFollowingPlaylist(string ownerId, string playlistId, string id)
+        public ListResponse<bool> IsFollowingPlaylist(string ownerId, string playlistId, string id)
         {
             return IsFollowingPlaylist(ownerId, playlistId, new List<string> { id });
         }
@@ -871,7 +919,7 @@ namespace SpotifyAPI.Web
         /// <param name="id">A Spotify User ID</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ListResponse<Boolean>> IsFollowingPlaylistAsync(string ownerId, string playlistId, string id)
+        public async Task<ListResponse<bool>> IsFollowingPlaylistAsync(string ownerId, string playlistId, string id)
         {
             return await IsFollowingPlaylistAsync(ownerId, playlistId, new List<string> { id });
         }
@@ -986,14 +1034,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<Boolean> CheckSavedTracks(List<string> ids)
+        public ListResponse<bool> CheckSavedTracks(List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            JToken res = DownloadData<JToken>(_builder.CheckSavedTracks(ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.CheckSavedTracks(ids));
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         /// <summary>
@@ -1002,14 +1062,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ListResponse<Boolean>> CheckSavedTracksAsync(List<string> ids)
+        public async Task<ListResponse<bool>> CheckSavedTracksAsync(List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            JToken res = await DownloadDataAsync<JToken>(_builder.CheckSavedTracks(ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.CheckSavedTracks(ids));
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         /// <summary>
@@ -1118,14 +1190,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<Boolean> CheckSavedAlbums(List<string> ids)
+        public ListResponse<bool> CheckSavedAlbums(List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            JToken res = DownloadData<JToken>(_builder.CheckSavedAlbums(ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.CheckSavedAlbums(ids));
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         /// <summary>
@@ -1134,14 +1218,26 @@ namespace SpotifyAPI.Web
         /// <param name="ids">A list of the Spotify IDs.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ListResponse<Boolean>> CheckSavedAlbumsAsync(List<string> ids)
+        public async Task<ListResponse<bool>> CheckSavedAlbumsAsync(List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedAlbumsAsync");
-            JToken res = await DownloadDataAsync<JToken>(_builder.CheckSavedAlbums(ids));
-            if (res is JArray)
-                return new ListResponse<Boolean> { List = res.ToObject<List<Boolean>>(), Error = null };
-            return new ListResponse<Boolean> { List = null, Error = res["error"].ToObject<Error>() };
+            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.CheckSavedAlbums(ids));
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         #endregion Library
@@ -1336,7 +1432,7 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public FullPlaylist CreatePlaylist(string userId, string playlistName, Boolean isPublic = true)
+        public FullPlaylist CreatePlaylist(string userId, string playlistName, bool isPublic = true)
         {
             JObject body = new JObject
             {
@@ -1360,7 +1456,7 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<FullPlaylist> CreatePlaylistAsync(string userId, string playlistName, Boolean isPublic = true)
+        public async Task<FullPlaylist> CreatePlaylistAsync(string userId, string playlistName, bool isPublic = true)
         {
             JObject body = new JObject
             {
@@ -1379,7 +1475,7 @@ namespace SpotifyAPI.Web
         /// <param name="newPublic">If true the playlist will be public, if false it will be private.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ErrorResponse UpdatePlaylist(string userId, string playlistId, string newName = null, Boolean? newPublic = null)
+        public ErrorResponse UpdatePlaylist(string userId, string playlistId, string newName = null, bool? newPublic = null)
         {
             JObject body = new JObject();
             if (newName != null)
@@ -1398,7 +1494,7 @@ namespace SpotifyAPI.Web
         /// <param name="newPublic">If true the playlist will be public, if false it will be private.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ErrorResponse> UpdatePlaylistAsync(string userId, string playlistId, string newName = null, Boolean? newPublic = null)
+        public async Task<ErrorResponse> UpdatePlaylistAsync(string userId, string playlistId, string newName = null, bool? newPublic = null)
         {
             JObject body = new JObject();
             if (newName != null)
@@ -1767,7 +1863,7 @@ namespace SpotifyAPI.Web
 
         #region Util
 
-        public TOut GetNextPage<TOut, TIn>(Paging<TIn> paging)
+        public TOut GetNextPage<TOut, TIn>(Paging<TIn> paging) where TOut : BasicModel
         {
             if (!paging.HasNextPage())
                 throw new InvalidOperationException("This Paging-Object has no Next-Page");
@@ -1779,7 +1875,7 @@ namespace SpotifyAPI.Web
             return GetNextPage<Paging<T>, T>(paging);
         }
 
-        public async Task<TOut> GetNextPageAsync<TOut, TIn>(Paging<TIn> paging)
+        public async Task<TOut> GetNextPageAsync<TOut, TIn>(Paging<TIn> paging) where TOut : BasicModel
         {
             if (!paging.HasNextPage())
                 throw new InvalidOperationException("This Paging-Object has no Next-Page");
@@ -1791,7 +1887,7 @@ namespace SpotifyAPI.Web
             return await GetNextPageAsync<Paging<T>, T>(paging);
         }
 
-        public TOut GetPreviousPage<TOut, TIn>(Paging<TIn> paging)
+        public TOut GetPreviousPage<TOut, TIn>(Paging<TIn> paging) where TOut : BasicModel
         {
             if (!paging.HasPreviousPage())
                 throw new InvalidOperationException("This Paging-Object has no Previous-Page");
@@ -1803,7 +1899,7 @@ namespace SpotifyAPI.Web
             return GetPreviousPage<Paging<T>, T>(paging);
         }
 
-        public async Task<TOut> GetPreviousPageAsync<TOut, TIn>(Paging<TIn> paging)
+        public async Task<TOut> GetPreviousPageAsync<TOut, TIn>(Paging<TIn> paging) where TOut : BasicModel
         {
             if (!paging.HasPreviousPage())
                 throw new InvalidOperationException("This Paging-Object has no Previous-Page");
@@ -1815,25 +1911,55 @@ namespace SpotifyAPI.Web
             return await GetPreviousPageAsync<Paging<T>, T>(paging);
         }
 
-        public T UploadData<T>(string url, string uploadData, string method = "POST")
+        public T UploadData<T>(string url, string uploadData, string method = "POST") where T : BasicModel
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for all Upload-Actions");
             WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
             WebClient.SetHeader("Content-Type", "application/json");
-            return WebClient.UploadJson<T>(url, uploadData, method);
+
+            Tuple<ResponseInfo, T> response = WebClient.UploadJson<T>(url, uploadData, method);
+            response.Item2.AddResponseInfo(response.Item1);
+            return response.Item2;
         }
 
-        public Task<T> UploadDataAsync<T>(string url, string uploadData, string method = "POST")
+        public async Task<T> UploadDataAsync<T>(string url, string uploadData, string method = "POST") where T : BasicModel
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for all Upload-Actions");
             WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
             WebClient.SetHeader("Content-Type", "application/json");
-            return WebClient.UploadJsonAsync<T>(url, uploadData, method);
+
+            Tuple<ResponseInfo, T> response = await WebClient.UploadJsonAsync<T>(url, uploadData, method);
+            response.Item2.AddResponseInfo(response.Item1);
+            return response.Item2;
         }
 
-        public T DownloadData<T>(string url)
+        public T DownloadData<T>(string url) where T : BasicModel
+        {
+            if (UseAuth)
+                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
+            else
+                WebClient.RemoveHeader("Authorization");
+
+            Tuple<ResponseInfo, T> response = WebClient.DownloadJson<T>(url);
+            response.Item2.AddResponseInfo(response.Item1);
+            return response.Item2;
+        }
+
+        public async Task<T> DownloadDataAsync<T>(string url) where T : BasicModel
+        {
+            if (UseAuth)
+                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
+            else
+                WebClient.RemoveHeader("Authorization");
+
+            Tuple<ResponseInfo, T> response = await WebClient.DownloadJsonAsync<T>(url);
+            response.Item2.AddResponseInfo(response.Item1);
+            return response.Item2;
+        }
+
+        private Tuple<ResponseInfo, T> DownloadDataAlt<T>(string url)
         {
             if (UseAuth)
                 WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
@@ -1842,7 +1968,7 @@ namespace SpotifyAPI.Web
             return WebClient.DownloadJson<T>(url);
         }
 
-        public Task<T> DownloadDataAsync<T>(string url)
+        private Task<Tuple<ResponseInfo, T>> DownloadDataAltAsync<T>(string url)
         {
             if (UseAuth)
                 WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web
 {
@@ -14,28 +15,28 @@ namespace SpotifyAPI.Web
         /// </summary>
         /// <param name="url">An URL</param>
         /// <returns></returns>
-        string Download(string url);
+        Tuple<ResponseInfo, string> Download(string url);
 
         /// <summary>
         ///     Downloads data async from an URL and returns it
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        Task<string> DownloadAsync(string url);
+        Task<Tuple<ResponseInfo, string>> DownloadAsync(string url);
 
         /// <summary>
         ///     Downloads data from an URL and returns it
         /// </summary>
         /// <param name="url">An URL</param>
         /// <returns></returns>
-        byte[] DownloadRaw(string url);
+        Tuple<ResponseInfo, byte[]> DownloadRaw(string url);
 
         /// <summary>
         ///     Downloads data async from an URL and returns it
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        Task<byte[]> DownloadRawAsync(string url);
+        Task<Tuple<ResponseInfo, byte[]>> DownloadRawAsync(string url);
 
         /// <summary>
         ///     Downloads data from an URL and converts it to an object
@@ -43,7 +44,7 @@ namespace SpotifyAPI.Web
         /// <typeparam name="T">The Type which the object gets converted to</typeparam>
         /// <param name="url">An URL</param>
         /// <returns></returns>
-        T DownloadJson<T>(string url);
+        Tuple<ResponseInfo, T> DownloadJson<T>(string url);
 
         /// <summary>
         ///     Downloads data async from an URL and converts it to an object
@@ -51,7 +52,7 @@ namespace SpotifyAPI.Web
         /// <typeparam name="T">The Type which the object gets converted to</typeparam>
         /// <param name="url">An URL</param>
         /// <returns></returns>
-        Task<T> DownloadJsonAsync<T>(string url);
+        Task<Tuple<ResponseInfo, T>> DownloadJsonAsync<T>(string url);
 
         /// <summary>
         ///     Uploads data from an URL and returns the response
@@ -60,7 +61,7 @@ namespace SpotifyAPI.Web
         /// <param name="body">The Body-Data (most likely a JSON String)</param>
         /// <param name="method">The Upload-method (POST,DELETE,PUT)</param>
         /// <returns></returns>
-        string Upload(string url, string body, string method);
+        Tuple<ResponseInfo, string> Upload(string url, string body, string method);
 
         /// <summary>
         ///     Uploads data async from an URL and returns the response
@@ -69,7 +70,7 @@ namespace SpotifyAPI.Web
         /// <param name="body">The Body-Data (most likely a JSON String)</param>
         /// <param name="method">The Upload-method (POST,DELETE,PUT)</param>
         /// <returns></returns>
-        Task<string> UploadAsync(string url, string body, string method);
+        Task<Tuple<ResponseInfo, string>> UploadAsync(string url, string body, string method);
 
         /// <summary>
         ///     Uploads data from an URL and returns the response
@@ -78,7 +79,7 @@ namespace SpotifyAPI.Web
         /// <param name="body">The Body-Data (most likely a JSON String)</param>
         /// <param name="method">The Upload-method (POST,DELETE,PUT)</param>
         /// <returns></returns>
-        byte[] UploadRaw(string url, string body, string method);
+        Tuple<ResponseInfo, byte[]> UploadRaw(string url, string body, string method);
 
         /// <summary>
         ///     Uploads data async from an URL and returns the response
@@ -87,7 +88,7 @@ namespace SpotifyAPI.Web
         /// <param name="body">The Body-Data (most likely a JSON String)</param>
         /// <param name="method">The Upload-method (POST,DELETE,PUT)</param>
         /// <returns></returns>
-        Task<byte[]> UploadRawAsync(string url, string body, string method);
+        Task<Tuple<ResponseInfo, byte[]>> UploadRawAsync(string url, string body, string method);
 
         /// <summary>
         ///     Uploads data from an URL and converts the response to an object
@@ -97,7 +98,7 @@ namespace SpotifyAPI.Web
         /// <param name="body">The Body-Data (most likely a JSON String)</param>
         /// <param name="method">The Upload-method (POST,DELETE,PUT)</param>
         /// <returns></returns>
-        T UploadJson<T>(string url, string body, string method);
+        Tuple<ResponseInfo, T> UploadJson<T>(string url, string body, string method);
 
         /// <summary>
         ///     Uploads data async from an URL and converts the response to an object
@@ -107,7 +108,7 @@ namespace SpotifyAPI.Web
         /// <param name="body">The Body-Data (most likely a JSON String)</param>
         /// <param name="method">The Upload-method (POST,DELETE,PUT)</param>
         /// <returns></returns>
-        Task<T> UploadJsonAsync<T>(string url, string body, string method);
+        Task<Tuple<ResponseInfo, T>> UploadJsonAsync<T>(string url, string body, string method);
 
         /// <summary>
         ///     Sets a specific Header

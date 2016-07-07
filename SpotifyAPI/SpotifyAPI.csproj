@@ -92,6 +92,7 @@
     <Compile Include="Web\Models\Recommendations.cs" />
     <Compile Include="Web\Models\RecommendationSeed .cs" />
     <Compile Include="Web\Models\RecommendationSeedGenres.cs" />
+    <Compile Include="Web\Models\ResponseInfo.cs" />
     <Compile Include="Web\Models\SearchItem.cs" />
     <Compile Include="Web\Models\PrivateProfile.cs" />
     <Compile Include="Web\Models\GeneralModels.cs" />
