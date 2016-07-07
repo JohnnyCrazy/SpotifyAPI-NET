@@ -50,7 +50,8 @@ namespace SpotifyAPI.Tests
         public void ShouldGetPrivateProfile_WithAuth()
         {
             PrivateProfile profile = GetFixture<PrivateProfile>("private-user.json");
-            _mock.Setup(client => client.DownloadJson<PrivateProfile>(It.IsAny<string>())).Returns(new Tuple<ResponseInfo, PrivateProfile>(null, profile));
+            _mock.Setup(client => client.DownloadJson<PrivateProfile>(It.IsAny<string>()))
+                .Returns(new Tuple<ResponseInfo, PrivateProfile>(ResponseInfo.Empty, profile));
 
             _spotify.UseAuth = true;
             Assert.AreEqual(profile, _spotify.GetPrivateProfile());
@@ -61,7 +62,8 @@ namespace SpotifyAPI.Tests
         public void ShouldGetPublicProfile()
         {
             PublicProfile profile = GetFixture<PublicProfile>("public-user.json");
-            _mock.Setup(client => client.DownloadJson<PublicProfile>(It.IsAny<string>())).Returns(new Tuple<ResponseInfo, PublicProfile>(null, profile));
+            _mock.Setup(client => client.DownloadJson<PublicProfile>(It.IsAny<string>()))
+                .Returns(new Tuple<ResponseInfo, PublicProfile>(ResponseInfo.Empty, profile));
 
             Assert.AreEqual(profile, _spotify.GetPublicProfile("wizzler"));
             _mock.Verify(client => client.DownloadJson<PublicProfile>(It.Is<string>(str => ContainsValues(str, "/users/wizzler"))), Times.Exactly(1));
