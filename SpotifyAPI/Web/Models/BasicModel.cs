@@ -13,7 +13,7 @@ namespace SpotifyAPI.Web.Models
 
         public bool HasError() => Error != null;
 
-        public void AddResponseInfo(ResponseInfo info) => _headers = info.Headers;
+        internal void AddResponseInfo(ResponseInfo info) => _headers = info.Headers;
 
         public string Header(string key) => _headers?.Get(key);
 
