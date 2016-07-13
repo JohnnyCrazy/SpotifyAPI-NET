@@ -11,9 +11,8 @@ namespace SpotifyAPI.Local
 
         internal static float GetSpotifyVolume()
         {
-            int pid = GetSpotifyPid();
+            ISimpleAudioVolume volume = GetSpotifyVolumeObject();
 
-            ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
             {
                 throw new COMException("Volume object creation failed");
@@ -27,9 +26,8 @@ namespace SpotifyAPI.Local
 
         internal static bool IsSpotifyMuted()
         {
-            int pid = GetSpotifyPid();
+            ISimpleAudioVolume volume = GetSpotifyVolumeObject();
 
-            ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
             {
                 throw new COMException("Volume object creation failed");
@@ -43,9 +41,8 @@ namespace SpotifyAPI.Local
 
         internal static void SetSpotifyVolume(float level)
         {
-            int pid = GetSpotifyPid();
+            ISimpleAudioVolume volume = GetSpotifyVolumeObject();
 
-            ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
             {
                 throw new COMException("Volume object creation failed");
@@ -58,9 +55,8 @@ namespace SpotifyAPI.Local
 
         internal static void MuteSpotify(bool mute)
         {
-            int pid = GetSpotifyPid();
+            ISimpleAudioVolume volume = GetSpotifyVolumeObject();
 
-            ISimpleAudioVolume volume = GetVolumeObject(pid);
             if (volume == null)
             {
                 throw new COMException("Volume object creation failed");
@@ -71,18 +67,11 @@ namespace SpotifyAPI.Local
             Marshal.ReleaseComObject(volume);
         }
 
-        private static int GetSpotifyPid()
-        {
-            Process[] processes = Process.GetProcessesByName(SpotifyProcessName);
-            if (processes.Length == 0)
-                throw new Exception("Spotify process is not running or was not found!");
-
-            Process mainProc = processes.FirstOrDefault(o => o.MainWindowHandle != IntPtr.Zero);
-
-            if(mainProc == null)
-                throw new Exception("Spotify main-process is not running or was not found!");
-
-            return mainProc.Id;
+        private static ISimpleAudioVolume GetSpotifyVolumeObject() {
+            return (from p in Process.GetProcessesByName(SpotifyProcessName)
+                    let vol = GetVolumeObject(p.Id)
+                    where vol != null
+                    select vol).FirstOrDefault();
         }
 
         private static ISimpleAudioVolume GetVolumeObject(int pid)
