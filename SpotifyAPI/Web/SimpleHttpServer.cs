@@ -15,11 +15,10 @@ using System.Web;
 
 namespace SpotifyAPI.Web
 {
-    public class HttpProcessor
+    public class HttpProcessor : IDisposable
     {
         private const int MaxPostSize = 10 * 1024 * 1024; // 10MB
         private const int BufSize = 4096;
-        private readonly TcpClient _socket;
         private readonly HttpServer _srv;
         private Stream _inputStream;
         public Hashtable HttpHeaders = new Hashtable();
@@ -27,17 +26,17 @@ namespace SpotifyAPI.Web
         public string HttpProtocolVersionstring;
         public string HttpUrl;
         public StreamWriter OutputStream;
+        private bool _isActive = true;
 
-        public HttpProcessor(TcpClient s, HttpServer srv)
+        public HttpProcessor(HttpServer srv)
         {
-            _socket = s;
             _srv = srv;
         }
 
         private string StreamReadLine(Stream inputStream)
         {
             string data = "";
-            while (true)
+            while (_isActive)
             {
                 var nextChar = inputStream.ReadByte();
                 if (nextChar == '\n')
@@ -58,14 +57,16 @@ namespace SpotifyAPI.Web
             return data;
         }
 
-        public void Process()
+        public void Process(object tcpClient)
         {
+            TcpClient socket = tcpClient as TcpClient;
+            
             // we can't use a StreamReader for input, because it buffers up extra data on us inside it's
             // "processed" view of the world, and we want the data raw after the headers
-            _inputStream = new BufferedStream(_socket.GetStream());
+            _inputStream = new BufferedStream(socket.GetStream());
 
             // we probably shouldn't be using a streamwriter for all output from handlers either
-            OutputStream = new StreamWriter(new BufferedStream(_socket.GetStream()));
+            OutputStream = new StreamWriter(new BufferedStream(socket.GetStream()));
             try
             {
                 ParseRequest();
@@ -86,7 +87,7 @@ namespace SpotifyAPI.Web
             OutputStream.Flush();
             _inputStream = null;
             OutputStream = null;
-            _socket.Close();
+            socket.Close();
         }
 
         public void ParseRequest()
@@ -184,6 +185,11 @@ namespace SpotifyAPI.Web
             OutputStream.WriteLine("Connection: close");
             OutputStream.WriteLine("");
         }
+
+        public void Dispose()
+        {
+            _isActive = false;
+        }
     }
 
     public abstract class HttpServer : IDisposable
@@ -212,13 +218,16 @@ namespace SpotifyAPI.Web
             {
                 _listener = new TcpListener(IPAddress.Any, Port);
                 _listener.Start();
-                while (IsActive)
+
+                using (HttpProcessor processor = new HttpProcessor(this))
                 {
-                    TcpClient s = _listener.AcceptTcpClient();
-                    HttpProcessor processor = new HttpProcessor(s, this);
-                    Thread thread = new Thread(processor.Process);
-                    thread.Start();
-                    Thread.Sleep(1);
+                    while (IsActive)
+                    {
+                        TcpClient s = _listener.AcceptTcpClient();
+                        Thread thread = new Thread(processor.Process);
+                        thread.Start(s);
+                        Thread.Sleep(1);
+                    }
                 }
             }
             catch (SocketException e)
