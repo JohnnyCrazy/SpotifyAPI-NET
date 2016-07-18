@@ -4,7 +4,9 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 // offered to the public domain for any use with no restriction
@@ -57,10 +59,8 @@ namespace SpotifyAPI.Web
             return data;
         }
 
-        public void Process(object tcpClient)
+        public void Process(TcpClient socket)
         {
-            TcpClient socket = tcpClient as TcpClient;
-            
             // we can't use a StreamReader for input, because it buffers up extra data on us inside it's
             // "processed" view of the world, and we want the data raw after the headers
             _inputStream = new BufferedStream(socket.GetStream());
@@ -80,7 +80,7 @@ namespace SpotifyAPI.Web
                     HandlePostRequest();
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 WriteFailure();
             }
@@ -224,9 +224,7 @@ namespace SpotifyAPI.Web
                     while (IsActive)
                     {
                         TcpClient s = _listener.AcceptTcpClient();
-                        Thread thread = new Thread(processor.Process);
-                        thread.Start(s);
-                        Thread.Sleep(1);
+                        processor.Process(s);
                     }
                 }
             }
