@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Image = System.Drawing.Image;
 
@@ -26,14 +27,7 @@ namespace SpotifyAPI.Example
             InitializeComponent();
 
             _savedTracks = new List<FullTrack>();
-            _auth = new ImplicitGrantAuth
-            {
-                RedirectUri = "http://localhost:8000",
-                ClientId = "26d287105e31491889f3cd293d85bfea",
-                Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead,
-                State = "XSS"
-            };
-            _auth.OnResponseReceivedEvent += _auth_OnResponseReceivedEvent;
+            
         }
 
         private void _auth_OnResponseReceivedEvent(Token token, string state)
@@ -57,7 +51,7 @@ namespace SpotifyAPI.Example
                 AccessToken = token.AccessToken,
                 TokenType = token.TokenType
             };
-            InitialSetup();
+            
         }
 
         private async void InitialSetup()
@@ -129,8 +123,32 @@ namespace SpotifyAPI.Example
 
         private void authButton_Click(object sender, EventArgs e)
         {
-            _auth.StartHttpServer(8000);
-            _auth.DoAuth();
+            Task.Run(() => RunAuthentication());
+        }
+
+        private async void RunAuthentication()
+        {
+            AuthenticationFactory authenticationFactory = new AuthenticationFactory(
+                "http://localhost",
+                8000,
+                "26d287105e31491889f3cd293d85bfea",
+                Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead |
+                Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead,
+                TimeSpan.FromSeconds(20));
+
+            try
+            {
+                _spotify = await authenticationFactory.GetWebApi();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            if (_spotify == null)
+                return;
+
+            InitialSetup();
         }
     }
 }
