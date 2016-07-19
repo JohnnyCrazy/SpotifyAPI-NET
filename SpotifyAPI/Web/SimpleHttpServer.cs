@@ -223,8 +223,20 @@ namespace SpotifyAPI.Web
                 {
                     while (IsActive)
                     {
-                        TcpClient s = _listener.AcceptTcpClient();
-                        processor.Process(s);
+                        _listener.BeginAcceptTcpClient(ar =>
+                        {
+                            try
+                            {
+                                TcpListener listener = (TcpListener)ar.AsyncState;
+                                var tcpCLient = listener.EndAcceptTcpClient(ar);
+                                processor.Process(tcpCLient);
+
+                            }
+                            catch (ObjectDisposedException)
+                            {
+                                // Ignore
+                            }
+                        }, _listener);
                     }
                 }
             }
