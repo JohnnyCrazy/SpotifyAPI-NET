@@ -44,15 +44,20 @@ namespace SpotifyAPI.Web.Auth
                 authenticationWaitFlag.Set();
             };
 
-            authentication.StartHttpServer(m_ListeningPort);
+            try
+            {
+                authentication.StartHttpServer(m_ListeningPort);
 
-            authentication.DoAuth();
+                authentication.DoAuth();
 
-            authenticationWaitFlag.WaitOne(m_Timeout);
-            if (spotifyWebApi == null)
-                throw new TimeoutException($"No valid response received for the last {m_Timeout.TotalSeconds} seconds");
-
-            authentication.StopHttpServer();
+                authenticationWaitFlag.WaitOne(m_Timeout);
+                if (spotifyWebApi == null)
+                    throw new TimeoutException($"No valid response received for the last {m_Timeout.TotalSeconds} seconds");
+            }
+            finally
+            {
+                authentication.StopHttpServer();
+            }
 
             return Task.FromResult(spotifyWebApi);
         }

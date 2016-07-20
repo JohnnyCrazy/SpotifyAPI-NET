@@ -87,7 +87,6 @@ namespace SpotifyAPI.Web
             OutputStream.Flush();
             _inputStream = null;
             OutputStream = null;
-            socket.Close();
         }
 
         public void ParseRequest()
@@ -219,32 +218,36 @@ namespace SpotifyAPI.Web
                 _listener = new TcpListener(IPAddress.Any, Port);
                 _listener.Start();
 
-                using (HttpProcessor processor = new HttpProcessor(this))
-                {
-                    while (IsActive)
-                    {
-                        _listener.BeginAcceptTcpClient(ar =>
-                        {
-                            try
-                            {
-                                TcpListener listener = (TcpListener)ar.AsyncState;
-                                var tcpCLient = listener.EndAcceptTcpClient(ar);
-                                processor.Process(tcpCLient);
+                _listener.BeginAcceptTcpClient(AcceptTcpConnection, _listener);
 
-                            }
-                            catch (ObjectDisposedException)
-                            {
-                                // Ignore
-                            }
-                        }, _listener);
-                    }
-                }
             }
             catch (SocketException e)
             {
                 if (e.ErrorCode != 10004) //Ignore 10004, which is thrown when the thread gets terminated
                     throw;
             }
+        }
+
+        private void AcceptTcpConnection(IAsyncResult ar)
+        {
+            TcpListener listener = (TcpListener)ar.AsyncState;
+            try
+            {
+                var tcpCLient = listener.EndAcceptTcpClient(ar);
+                using (HttpProcessor processor = new HttpProcessor(this))
+                {
+                    processor.Process(tcpCLient);
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                // Ignore
+            }
+
+            if (!IsActive)
+                return;
+            //listener.Start();
+            listener.BeginAcceptTcpClient(AcceptTcpConnection, listener);
         }
 
         public abstract void HandleGetRequest(HttpProcessor p);
