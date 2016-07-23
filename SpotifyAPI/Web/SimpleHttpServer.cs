@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -35,28 +37,13 @@ namespace SpotifyAPI.Web
             _srv = srv;
         }
 
-        private string StreamReadLine(Stream inputStream)
+        private string[] GetIncomingRequest(Stream inputStream)
         {
-            string data = "";
-            while (_isActive)
-            {
-                var nextChar = inputStream.ReadByte();
-                if (nextChar == '\n')
-                {
-                    break;
-                }
-                if (nextChar == '\r')
-                {
-                    continue;
-                }
-                if (nextChar == -1)
-                {
-                    Thread.Sleep(1);
-                    continue;
-                }
-                data += Convert.ToChar(nextChar);
-            }
-            return data;
+            var buffer = new byte[4096];
+            var read = inputStream.Read(buffer, 0, buffer.Length);
+
+            var inputData = Encoding.ASCII.GetString(buffer.Take(read).ToArray());
+            return inputData.Split('\n').Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToArray();
         }
 
         public void Process(TcpClient socket)
@@ -69,8 +56,11 @@ namespace SpotifyAPI.Web
             OutputStream = new StreamWriter(new BufferedStream(socket.GetStream()));
             try
             {
-                ParseRequest();
-                ReadHeaders();
+                var requestLines = GetIncomingRequest(_inputStream);
+
+                ParseRequest(requestLines.First());
+                ReadHeaders(requestLines.Skip(1));
+
                 if (HttpMethod.Equals("GET"))
                 {
                     HandleGetRequest();
@@ -89,9 +79,8 @@ namespace SpotifyAPI.Web
             OutputStream = null;
         }
 
-        public void ParseRequest()
+        public void ParseRequest(string request)
         {
-            string request = StreamReadLine(_inputStream);
             string[] tokens = request.Split(' ');
             if (tokens.Length < 2)
             {
@@ -101,10 +90,9 @@ namespace SpotifyAPI.Web
             HttpUrl = tokens[1];
         }
 
-        public void ReadHeaders()
+        public void ReadHeaders(IEnumerable<string> requestLines)
         {
-            string line;
-            while ((line = StreamReadLine(_inputStream)) != null)
+            foreach(var line in requestLines)
             {
                 if (string.IsNullOrEmpty(line))
                 {
@@ -328,6 +316,8 @@ namespace SpotifyAPI.Web
                                              "window.location = hashes" +
                                              "</script>" +
                                              "<h1>Spotify Auth successful!<br>Please copy the URL and paste it into the application</h1></body></html>");
+                    p.OutputStream.Flush();
+                    p.OutputStream.Close();
                     return;
                 }
                 string url = p.HttpUrl;
@@ -358,8 +348,12 @@ namespace SpotifyAPI.Web
                             State = col.Get(3)
                         });
                     });
+                    p.OutputStream.Flush();
+                    p.OutputStream.Close();
                 }
             }
+
+            
             t.Start();
         }
 
