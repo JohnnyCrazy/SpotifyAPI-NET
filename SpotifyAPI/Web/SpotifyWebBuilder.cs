@@ -540,7 +540,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string CheckSavedAlbums(List<string> ids)
         {
-            return APIBase + "/me/tracks/contains?ids=" + string.Join(",", ids);
+            return APIBase + "/me/albums/contains?ids=" + string.Join(",", ids);
         }
 
         #endregion Library
