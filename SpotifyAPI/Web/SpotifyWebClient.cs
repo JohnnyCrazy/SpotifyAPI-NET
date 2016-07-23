@@ -37,7 +37,7 @@ namespace SpotifyAPI.Web
             try
             {
                 Tuple<ResponseInfo, byte[]> raw = DownloadRaw(url);
-                response = new Tuple<ResponseInfo, string>(raw.Item1, _encoding.GetString(raw.Item2));
+                response = new Tuple<ResponseInfo, string>(raw.Item1, raw.Item2.Length > 0 ? _encoding.GetString(raw.Item2) : "{}");
             }
             catch (WebException e)
             {
@@ -58,7 +58,7 @@ namespace SpotifyAPI.Web
             try
             {
                 Tuple<ResponseInfo, byte[]> raw = await DownloadRawAsync(url);
-                response = new Tuple<ResponseInfo, string>(raw.Item1, _encoding.GetString(raw.Item2));
+                response = new Tuple<ResponseInfo, string>(raw.Item1, raw.Item2.Length > 0 ? _encoding.GetString(raw.Item2) : "{}");
             }
             catch (WebException e)
             {
@@ -118,7 +118,7 @@ namespace SpotifyAPI.Web
             try
             {
                 Tuple<ResponseInfo, byte[]> data = UploadRaw(url, body, method);
-                response = new Tuple<ResponseInfo, string>(data.Item1, _encoding.GetString(data.Item2));
+                response = new Tuple<ResponseInfo, string>(data.Item1, data.Item2.Length > 0 ? _encoding.GetString(data.Item2) : "{}");
             }
             catch (WebException e)
             {
@@ -139,7 +139,7 @@ namespace SpotifyAPI.Web
             try
             {
                 Tuple<ResponseInfo, byte[]> data = await UploadRawAsync(url, body, method);
-                response = new Tuple<ResponseInfo, string>(data.Item1, _encoding.GetString(data.Item2));
+                response = new Tuple<ResponseInfo, string>(data.Item1, data.Item2.Length > 0 ? _encoding.GetString(data.Item2) : "{}");
             }
             catch (WebException e)
             {
