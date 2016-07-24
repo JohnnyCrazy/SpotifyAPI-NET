@@ -128,7 +128,7 @@ namespace SpotifyAPI.Example
 
         private async void RunAuthentication()
         {
-            AuthenticationFactory authenticationFactory = new AuthenticationFactory(
+            WebApiFactory webApiFactory = new WebApiFactory(
                 "http://localhost",
                 8000,
                 "26d287105e31491889f3cd293d85bfea",
@@ -138,7 +138,7 @@ namespace SpotifyAPI.Example
 
             try
             {
-                _spotify = await authenticationFactory.GetWebApi();
+                _spotify = await webApiFactory.GetWebApi();
             }
             catch (Exception ex)
             {

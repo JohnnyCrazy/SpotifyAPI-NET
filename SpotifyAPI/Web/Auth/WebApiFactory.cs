@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Enums;
@@ -9,7 +6,7 @@ using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web.Auth
 {
-    public class AuthenticationFactory
+    public class WebApiFactory
     {
         private readonly string m_RedirectUrl;
         private readonly int m_ListeningPort;
@@ -17,7 +14,7 @@ namespace SpotifyAPI.Web.Auth
         private readonly TimeSpan m_Timeout;
         private Scope m_Scope;
 
-        public AuthenticationFactory(string redirectUrl, int listeningPort, string clientId, Scope scope, TimeSpan timeout)
+        public WebApiFactory(string redirectUrl, int listeningPort, string clientId, Scope scope, TimeSpan timeout)
         {
             m_RedirectUrl = redirectUrl;
             m_ListeningPort = listeningPort;
