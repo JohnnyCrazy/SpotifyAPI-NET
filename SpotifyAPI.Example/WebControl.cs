@@ -128,7 +128,7 @@ namespace SpotifyAPI.Example
 
         private async void RunAuthentication()
         {
-            WebApiFactory webApiFactory = new WebApiFactory(
+            WebAPIFactory webApiFactory = new WebAPIFactory(
                 "http://localhost",
                 8000,
                 "26d287105e31491889f3cd293d85bfea",

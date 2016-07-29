@@ -60,17 +60,9 @@ namespace SpotifyAPI.Local
 
         public event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
-        public SpotifyLocalAPI()
+        public SpotifyLocalAPI(int timerIntervall = 50)
         {
             _rh = new RemoteHandler();
-
-            AttachTimer(50);
-        }
-
-        public SpotifyLocalAPI(int timerIntervall)
-        {
-            _rh = new RemoteHandler();
-
             AttachTimer(timerIntervall);
         }
 

@@ -6,30 +6,30 @@ using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web.Auth
 {
-    public class WebApiFactory
+    public class WebAPIFactory
     {
-        private readonly string m_RedirectUrl;
-        private readonly int m_ListeningPort;
-        private readonly string m_ClientId;
-        private readonly TimeSpan m_Timeout;
-        private Scope m_Scope;
+        private readonly string _redirectUrl;
+        private readonly int _listeningPort;
+        private readonly string _clientId;
+        private readonly TimeSpan _timeout;
+        private readonly Scope _scope;
 
-        public WebApiFactory(string redirectUrl, int listeningPort, string clientId, Scope scope, TimeSpan timeout)
+        public WebAPIFactory(string redirectUrl, int listeningPort, string clientId, Scope scope, TimeSpan timeout)
         {
-            m_RedirectUrl = redirectUrl;
-            m_ListeningPort = listeningPort;
-            m_ClientId = clientId;
-            m_Scope = scope;
-            m_Timeout = timeout;
+            _redirectUrl = redirectUrl;
+            _listeningPort = listeningPort;
+            _clientId = clientId;
+            _scope = scope;
+            _timeout = timeout;
         }
 
         public Task<SpotifyWebAPI> GetWebApi()
         {
             var authentication = new ImplicitGrantAuth
             {
-                RedirectUri = $"{m_RedirectUrl}:{m_ListeningPort}",
-                ClientId = m_ClientId,
-                Scope = m_Scope,
+                RedirectUri = $"{_redirectUrl}:{_listeningPort}",
+                ClientId = _clientId,
+                Scope = _scope,
                 State = "XSS"
             };
 
@@ -43,13 +43,13 @@ namespace SpotifyAPI.Web.Auth
 
             try
             {
-                authentication.StartHttpServer(m_ListeningPort);
+                authentication.StartHttpServer(_listeningPort);
 
                 authentication.DoAuth();
 
-                authenticationWaitFlag.WaitOne(m_Timeout);
+                authenticationWaitFlag.WaitOne(_timeout);
                 if (spotifyWebApi == null)
-                    throw new TimeoutException($"No valid response received for the last {m_Timeout.TotalSeconds} seconds");
+                    throw new TimeoutException($"No valid response received for the last {_timeout.TotalSeconds} seconds");
             }
             finally
             {
