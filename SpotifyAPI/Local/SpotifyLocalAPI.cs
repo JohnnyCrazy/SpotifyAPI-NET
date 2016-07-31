@@ -8,7 +8,7 @@ using System.Timers;
 
 namespace SpotifyAPI.Local
 {
-    public class SpotifyLocalAPI
+    public class SpotifyLocalAPI : IDisposable
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
@@ -49,7 +49,7 @@ namespace SpotifyAPI.Local
         private const int KeyeventfKeyup = 0x2;
 
         private readonly RemoteHandler _rh;
-        private readonly Timer _eventTimer;
+        private Timer _eventTimer;
         private StatusResponse _eventStatusResponse;
 
         public event EventHandler<TrackChangeEventArgs> OnTrackChange;
@@ -60,13 +60,17 @@ namespace SpotifyAPI.Local
 
         public event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
-        public SpotifyLocalAPI()
+        public SpotifyLocalAPI(int timerIntervall = 50)
         {
             _rh = new RemoteHandler();
+            AttachTimer(timerIntervall);
+        }
 
+        private void AttachTimer(int intervall)
+        {
             _eventTimer = new Timer
             {
-                Interval = 50,
+                Interval = intervall,
                 AutoReset = false,
                 Enabled = false
             };
@@ -332,6 +336,14 @@ namespace SpotifyAPI.Local
             {
                 Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"spotify\spotifywebhelper.exe"));
             }
+        }
+
+        public void Dispose()
+        {
+            if (_eventTimer == null)
+                return;
+            _eventTimer.Enabled = false;
+            _eventTimer.Elapsed -= ElapsedTick;
         }
     }
 }
