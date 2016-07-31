@@ -210,6 +210,34 @@ When using ImplicitGrantAuth, another user could abuse the "localhost" RedirectU
 <p>This way is <strong>recommended</strong> and the only auth-process, which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.
 You won't be able to refresh the token. If you want to use the internal Http server, please add "http://localhost" to your application redirects.</p>
 <p>More info: <a href="https://developer.spotify.com/web-api/authorization-guide/#implicit_grant_flow">here</a></p>
+<p>For this kind of authentication, there is also a <code>WebAPIFactory</code>, it's easier to use and uses an async method:</p>
+<pre><code>static async void Main(string[] args)
+{
+  WebAPIFactory webApiFactory = new WebAPIFactory(
+       &quot;http://localhost&quot;,
+       8000,
+       &quot;XXXXXXXXXXXXXXXX&quot;,
+       Scope.UserReadPrivate,
+       TimeSpan.FromSeconds(20)
+  );
+
+  try
+  {
+    //This will open the user's browser and returns once
+    //the user is authorized.
+    _spotify = await webApiFactory.GetWebApi();
+  }
+  catch (Exception ex)
+  {
+     MessageBox.Show(ex.Message);
+  }
+
+  if (_spotify == null)
+     return;
+}
+</code></pre>
+
+<p>The old way:</p>
 <pre><code>static ImplicitGrantAuth auth;
 static void Main(string[] args)
 {
