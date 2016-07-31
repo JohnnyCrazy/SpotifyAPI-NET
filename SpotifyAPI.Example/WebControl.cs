@@ -16,7 +16,6 @@ namespace SpotifyAPI.Example
     public partial class WebControl : UserControl
     {
         private SpotifyWebAPI _spotify;
-        private ImplicitGrantAuth _auth;
 
         private PrivateProfile _profile;
         private List<FullTrack> _savedTracks;
@@ -27,30 +26,6 @@ namespace SpotifyAPI.Example
             InitializeComponent();
 
             _savedTracks = new List<FullTrack>();
-            
-        }
-
-        private void _auth_OnResponseReceivedEvent(Token token, string state)
-        {
-            _auth.StopHttpServer();
-
-            if (state != "XSS")
-            {
-                MessageBox.Show(@"Wrong state received.", @"SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (token.Error != null)
-            {
-                MessageBox.Show($"Error: {token.Error}", @"SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            _spotify = new SpotifyWebAPI
-            {
-                UseAuth = true,
-                AccessToken = token.AccessToken,
-                TokenType = token.TokenType
-            };
             
         }
 
