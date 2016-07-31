@@ -133,8 +133,7 @@ namespace SpotifyAPI.Example
                 8000,
                 "26d287105e31491889f3cd293d85bfea",
                 Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead |
-                Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead,
-                TimeSpan.FromSeconds(20));
+                Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead);
 
             try
             {

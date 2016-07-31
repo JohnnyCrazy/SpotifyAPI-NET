@@ -13,14 +13,22 @@ namespace SpotifyAPI.Web.Auth
         private readonly string _clientId;
         private readonly TimeSpan _timeout;
         private readonly Scope _scope;
+        private readonly string _xss;
 
-        public WebAPIFactory(string redirectUrl, int listeningPort, string clientId, Scope scope, TimeSpan timeout)
+        public WebAPIFactory(string redirectUrl, int listeningPort, string clientId, Scope scope)
+            : this(redirectUrl, listeningPort, clientId, scope, TimeSpan.FromSeconds(20))
+        {
+
+        }
+
+        public WebAPIFactory(string redirectUrl, int listeningPort, string clientId, Scope scope, TimeSpan timeout, string xss = "XSS")
         {
             _redirectUrl = redirectUrl;
             _listeningPort = listeningPort;
             _clientId = clientId;
             _scope = scope;
             _timeout = timeout;
+            _xss = xss;
         }
 
         public Task<SpotifyWebAPI> GetWebApi()
@@ -30,7 +38,7 @@ namespace SpotifyAPI.Web.Auth
                 RedirectUri = $"{_redirectUrl}:{_listeningPort}",
                 ClientId = _clientId,
                 Scope = _scope,
-                State = "XSS"
+                State = _xss
             };
 
             AutoResetEvent authenticationWaitFlag = new AutoResetEvent(false);
@@ -59,9 +67,9 @@ namespace SpotifyAPI.Web.Auth
             return Task.FromResult(spotifyWebApi);
         }
 
-        private static SpotifyWebAPI HandleSpotifyResponse(string state, Token token)
+        private SpotifyWebAPI HandleSpotifyResponse(string state, Token token)
         {
-            if (state != "XSS")
+            if (state != _xss)
                 throw new SpotifyWebApiException($"Wrong state '{state}' received.");
 
             if (token.Error != null)
