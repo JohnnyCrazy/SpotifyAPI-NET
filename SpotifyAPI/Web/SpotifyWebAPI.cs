@@ -715,21 +715,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
             Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.IsFollowing(followType, ids));
-            ListResponse<bool> ret;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         /// <summary>
@@ -744,21 +730,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
             Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.IsFollowing(followType, ids));
-            ListResponse<bool> ret = null;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         /// <summary>
@@ -868,21 +840,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
             Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
-            ListResponse<bool> ret = null;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         /// <summary>
@@ -898,21 +856,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
             Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
-            ListResponse<bool> ret = null;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         /// <summary>
@@ -1056,21 +1000,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
             Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.CheckSavedTracks(ids));
-            ListResponse<bool> ret = null;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         /// <summary>
@@ -1084,21 +1014,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
             Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.CheckSavedTracks(ids));
-            ListResponse<bool> ret = null;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         /// <summary>
@@ -1212,21 +1128,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
             Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.CheckSavedAlbums(ids));
-            ListResponse<bool> ret = null;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         /// <summary>
@@ -1240,21 +1142,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedAlbumsAsync");
             Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.CheckSavedAlbums(ids));
-            ListResponse<bool> ret = null;
-            if (res.Item2 is JArray)
-                ret = new ListResponse<bool>
-                {
-                    List = res.Item2.ToObject<List<bool>>(),
-                    Error = null
-                };
-            else
-                ret = new ListResponse<bool>
-                {
-                    List = null,
-                    Error = res.Item2["error"].ToObject<Error>()
-                };
-            ret.AddResponseInfo(res.Item1);
-            return ret;
+            return ExtractDataFromAltDownload(res);
         }
 
         #endregion Library
@@ -1926,6 +1814,25 @@ namespace SpotifyAPI.Web
         public async Task<Paging<T>> GetPreviousPageAsync<T>(Paging<T> paging)
         {
             return await GetPreviousPageAsync<Paging<T>, T>(paging);
+        }
+
+        private static ListResponse<bool> ExtractDataFromAltDownload(Tuple<ResponseInfo, JToken> res)
+        {
+            ListResponse<bool> ret = null;
+            if (res.Item2 is JArray)
+                ret = new ListResponse<bool>
+                {
+                    List = res.Item2.ToObject<List<bool>>(),
+                    Error = null
+                };
+            else
+                ret = new ListResponse<bool>
+                {
+                    List = null,
+                    Error = res.Item2["error"].ToObject<Error>()
+                };
+            ret.AddResponseInfo(res.Item1);
+            return ret;
         }
 
         public T UploadData<T>(string url, string uploadData, string method = "POST") where T : BasicModel
