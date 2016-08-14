@@ -59,6 +59,8 @@ namespace SpotifyAPI.Web
         /// Maximum number of tries for one failed request.
         /// </summary>
         public int RetryTimes { get; set; } = 10;
+
+        public IEnumerable<int> RetryErrorCodes { get; private set; } = new int[] { 500, 502, 503 };
         #endregion Configuration
 
         #region Search
@@ -714,9 +716,12 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
-            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.IsFollowing(followType, ids));
-            return ExtractDataFromAltDownload(res);
+
+            var url = _builder.IsFollowing(followType, ids);
+            return DownloadDataAltAndExtract(url);
         }
+
+
 
         /// <summary>
         ///     Check to see if the current user is following one or more artists or other Spotify users asynchronously.
@@ -729,8 +734,9 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
-            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.IsFollowing(followType, ids));
-            return ExtractDataFromAltDownload(res);
+
+            var url = _builder.IsFollowing(followType, ids);
+            return await DownloadDataAltAndExtractAsync(url);
         }
 
         /// <summary>
@@ -839,8 +845,9 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
-            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
-            return ExtractDataFromAltDownload(res);
+
+            var url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
+            return DownloadDataAltAndExtract(url);
         }
 
         /// <summary>
@@ -855,8 +862,9 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
-            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.IsFollowingPlaylist(ownerId, playlistId, ids));
-            return ExtractDataFromAltDownload(res);
+
+            var url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
+            return await DownloadDataAltAndExtractAsync(url);
         }
 
         /// <summary>
@@ -999,8 +1007,9 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.CheckSavedTracks(ids));
-            return ExtractDataFromAltDownload(res);
+
+            var url = _builder.CheckSavedTracks(ids);
+            return DownloadDataAltAndExtract(url);
         }
 
         /// <summary>
@@ -1013,8 +1022,8 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.CheckSavedTracks(ids));
-            return ExtractDataFromAltDownload(res);
+            var url = _builder.CheckSavedTracks(ids);
+            return await DownloadDataAltAndExtractAsync(url);
         }
 
         /// <summary>
@@ -1127,8 +1136,9 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(_builder.CheckSavedAlbums(ids));
-            return ExtractDataFromAltDownload(res);
+
+            var url = _builder.CheckSavedAlbums(ids);
+            return DownloadDataAltAndExtract(url);
         }
 
         /// <summary>
@@ -1141,8 +1151,8 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedAlbumsAsync");
-            Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(_builder.CheckSavedAlbums(ids));
-            return ExtractDataFromAltDownload(res);
+            var url = _builder.CheckSavedAlbums(ids);
+            return await DownloadDataAltAndExtractAsync(url);
         }
 
         #endregion Library
@@ -1816,6 +1826,46 @@ namespace SpotifyAPI.Web
             return await GetPreviousPageAsync<Paging<T>, T>(paging);
         }
 
+        private ListResponse<bool> DownloadDataAltAndExtract(string url)
+        {
+            int triesLeft = RetryTimes + 1;
+            Error lastError = null;
+
+            ListResponse<bool> data = null;
+            do
+            {
+                Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(url);
+                data = ExtractDataFromAltDownload(res);
+
+                lastError = data.Error;
+
+                triesLeft -= 1;
+
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
+
+            return data;
+        }
+
+        private async Task<ListResponse<bool>> DownloadDataAltAndExtractAsync(string url)
+        {
+            int triesLeft = RetryTimes + 1;
+            Error lastError = null;
+
+            ListResponse<bool> data = null;
+            do
+            {
+                Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(url);
+                data = ExtractDataFromAltDownload(res);
+
+                lastError = data.Error;
+
+                triesLeft -= 1;
+
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
+
+            return data;
+        }
+
         private static ListResponse<bool> ExtractDataFromAltDownload(Tuple<ResponseInfo, JToken> res)
         {
             ListResponse<bool> ret = null;
@@ -1855,7 +1905,7 @@ namespace SpotifyAPI.Web
 
                 triesLeft -= 1;
 
-            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
 
             return response.Item2;
         }
@@ -1881,7 +1931,7 @@ namespace SpotifyAPI.Web
 
                 triesLeft -= 1;
 
-            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
 
             return response.Item2;
         }
@@ -1901,7 +1951,7 @@ namespace SpotifyAPI.Web
 
                 triesLeft -= 1;
 
-            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
 
 
             return response.Item2;
@@ -1922,7 +1972,7 @@ namespace SpotifyAPI.Web
 
                 triesLeft -= 1;
 
-            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
 
 
             return response.Item2;
