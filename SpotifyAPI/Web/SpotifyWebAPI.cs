@@ -1932,11 +1932,24 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for all Upload-Actions");
-            WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-            WebClient.SetHeader("Content-Type", "application/json");
+            int triesLeft = RetryTimes + 1;
+            Error lastError = null;
 
-            Tuple<ResponseInfo, T> response = WebClient.UploadJson<T>(url, uploadData, method);
-            response.Item2.AddResponseInfo(response.Item1);
+            Tuple<ResponseInfo, T> response = null;
+            do
+            {
+                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
+                WebClient.SetHeader("Content-Type", "application/json");
+
+                response = WebClient.UploadJson<T>(url, uploadData, method);
+
+                response.Item2.AddResponseInfo(response.Item1);
+                lastError = response.Item2.Error;
+
+                triesLeft -= 1;
+
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+
             return response.Item2;
         }
 
@@ -1944,26 +1957,67 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for all Upload-Actions");
-            WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-            WebClient.SetHeader("Content-Type", "application/json");
 
-            Tuple<ResponseInfo, T> response = await WebClient.UploadJsonAsync<T>(url, uploadData, method);
-            response.Item2.AddResponseInfo(response.Item1);
+            int triesLeft = RetryTimes + 1;
+            Error lastError = null;
+
+            Tuple<ResponseInfo, T> response = null;
+            do
+            {
+                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
+                WebClient.SetHeader("Content-Type", "application/json");
+
+                response = await WebClient.UploadJsonAsync<T>(url, uploadData, method);
+
+                response.Item2.AddResponseInfo(response.Item1);
+                lastError = response.Item2.Error;
+
+                triesLeft -= 1;
+
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+
             return response.Item2;
         }
 
         public T DownloadData<T>(string url) where T : BasicModel
         {
-            Tuple<ResponseInfo, T> response = DownloadDataAlt<T>(url);
+            int triesLeft = RetryTimes + 1;
+            Error lastError = null;
 
-            response.Item2.AddResponseInfo(response.Item1);
+            Tuple<ResponseInfo, T> response = null;
+            do
+            {
+                response = DownloadDataAlt<T>(url);
+
+                response.Item2.AddResponseInfo(response.Item1);
+                lastError = response.Item2.Error;
+
+                triesLeft -= 1;
+
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+
+
             return response.Item2;
         }
 
         public async Task<T> DownloadDataAsync<T>(string url) where T : BasicModel
         {
-            Tuple<ResponseInfo, T> response = await DownloadDataAltAsync<T>(url);
-            response.Item2.AddResponseInfo(response.Item1);
+            int triesLeft = RetryTimes + 1;
+            Error lastError = null;
+
+            Tuple<ResponseInfo, T> response = null;
+            do
+            {
+                response = await DownloadDataAltAsync<T>(url);
+
+                response.Item2.AddResponseInfo(response.Item1);
+                lastError = response.Item2.Error;
+
+                triesLeft -= 1;
+
+            } while (UseAutoRetry && triesLeft > 0 && lastError != null);
+
+
             return response.Item2;
         }
 
