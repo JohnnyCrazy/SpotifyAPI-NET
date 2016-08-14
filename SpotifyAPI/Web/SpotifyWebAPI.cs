@@ -53,7 +53,7 @@ namespace SpotifyAPI.Web
         /// <summary>
         /// Should a failed request (Error 500, 502, or 503) be automatically retried or not.
         /// </summary>
-        public bool UseAutoRetry { get; set; } = true;
+        public bool UseAutoRetry { get; set; } = false;
 
         /// <summary>
         /// Maximum number of tries for one failed request.
