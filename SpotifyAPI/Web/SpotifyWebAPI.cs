@@ -53,7 +53,7 @@ namespace SpotifyAPI.Web
         /// <summary>
         /// Should a failed request (Error 500, 502, or 503) be automatically retried or not.
         /// </summary>
-        public bool UseAutoRetry { get; set; } = false;
+        public bool UseAutoRetry { get; set; } = true;
 
         /// <summary>
         /// Maximum number of tries for one failed request.
@@ -1834,6 +1834,7 @@ namespace SpotifyAPI.Web
             ListResponse<bool> data = null;
             do
             {
+                if (data != null) { System.Threading.Thread.Sleep(RetryAfter); }
                 Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(url);
                 data = ExtractDataFromAltDownload(res);
 
@@ -1854,6 +1855,7 @@ namespace SpotifyAPI.Web
             ListResponse<bool> data = null;
             do
             {
+                if (data != null) { await Task.Delay(RetryAfter); }
                 Tuple<ResponseInfo, JToken> res = await DownloadDataAltAsync<JToken>(url);
                 data = ExtractDataFromAltDownload(res);
 
@@ -1898,6 +1900,7 @@ namespace SpotifyAPI.Web
                 WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
                 WebClient.SetHeader("Content-Type", "application/json");
 
+                if (response != null) { System.Threading.Thread.Sleep(RetryAfter); }
                 response = WebClient.UploadJson<T>(url, uploadData, method);
 
                 response.Item2.AddResponseInfo(response.Item1);
@@ -1924,6 +1927,7 @@ namespace SpotifyAPI.Web
                 WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
                 WebClient.SetHeader("Content-Type", "application/json");
 
+                if (response != null) { await Task.Delay(RetryAfter); }
                 response = await WebClient.UploadJsonAsync<T>(url, uploadData, method);
 
                 response.Item2.AddResponseInfo(response.Item1);
@@ -1944,6 +1948,7 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, T> response = null;
             do
             {
+                if(response != null) { System.Threading.Thread.Sleep(RetryAfter); }
                 response = DownloadDataAlt<T>(url);
 
                 response.Item2.AddResponseInfo(response.Item1);
@@ -1965,6 +1970,7 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, T> response = null;
             do
             {
+                if (response != null) { await Task.Delay(RetryAfter); }
                 response = await DownloadDataAltAsync<T>(url);
 
                 response.Item2.AddResponseInfo(response.Item1);
