@@ -44,6 +44,23 @@ namespace SpotifyAPI.Web
             GC.SuppressFinalize(this);
         }
 
+        #region Configuration
+        /// <summary>
+        /// Specifies after how many miliseconds should a failed request be retried.
+        /// </summary>
+        public int RetryAfter { get; set; } = 50;
+
+        /// <summary>
+        /// Should a failed request (Error 500, 502, or 503) be automatically retried or not.
+        /// </summary>
+        public bool UseAutoRetry { get; set; } = false;
+
+        /// <summary>
+        /// Maximum number of tries for one failed request.
+        /// </summary>
+        public int RetryTimes { get; set; } = 10;
+        #endregion Configuration
+
         #region Search
 
         /// <summary>
@@ -1937,24 +1954,15 @@ namespace SpotifyAPI.Web
 
         public T DownloadData<T>(string url) where T : BasicModel
         {
-            if (UseAuth)
-                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-            else
-                WebClient.RemoveHeader("Authorization");
+            Tuple<ResponseInfo, T> response = DownloadDataAlt<T>(url);
 
-            Tuple<ResponseInfo, T> response = WebClient.DownloadJson<T>(url);
             response.Item2.AddResponseInfo(response.Item1);
             return response.Item2;
         }
 
         public async Task<T> DownloadDataAsync<T>(string url) where T : BasicModel
         {
-            if (UseAuth)
-                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-            else
-                WebClient.RemoveHeader("Authorization");
-
-            Tuple<ResponseInfo, T> response = await WebClient.DownloadJsonAsync<T>(url);
+            Tuple<ResponseInfo, T> response = await DownloadDataAltAsync<T>(url);
             response.Item2.AddResponseInfo(response.Item1);
             return response.Item2;
         }
