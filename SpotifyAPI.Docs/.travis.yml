@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.4"
+# command to install dependencies
+install:
+  - "pip install mkdocs"
+env:
+    global:
+    - secure: "TrPdzgDDelezvEch5VmGkn0gu7E/4imfdae85qr7pPvk4jwdYtBI918+fgMkT8oowEfrd14M39dttpVrp8Fjns+QsWoy742F/N8bc+HiEDzKNnc2KJgA5AF5KysdDeQthDEn8egeOlzLjMY7L/JPj67Ene8fik1IdkpFpMwNnf8="
+# command to run tests
+before_script: "mkdocs build --clean" 
+script: 
+- "chmod ugo+x ./push-ghpages.sh"
+- "./push-ghpages.sh"
+sudo: false
