@@ -51,7 +51,7 @@ namespace SpotifyAPI.Web
         public int RetryAfter { get; set; } = 50;
 
         /// <summary>
-        /// Should a failed request (Error 500, 502, or 503) be automatically retried or not.
+        /// Should a failed request (specified by <see cref="RetryErrorCodes"/> be automatically retried or not.
         /// </summary>
         public bool UseAutoRetry { get; set; } = false;
 
