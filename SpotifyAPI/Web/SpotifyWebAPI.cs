@@ -60,6 +60,9 @@ namespace SpotifyAPI.Web
         /// </summary>
         public int RetryTimes { get; set; } = 10;
 
+        /// <summary>
+        /// Error codes that will trigger auto-retry if <see cref="UseAutoRetry"/> is enabled.
+        /// </summary>
         public IEnumerable<int> RetryErrorCodes { get; private set; } = new int[] { 500, 502, 503 };
         #endregion Configuration
 
