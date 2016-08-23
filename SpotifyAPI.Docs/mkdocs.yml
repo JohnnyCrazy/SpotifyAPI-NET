@@ -1,0 +1,26 @@
+site_name: 'SpotifyAPI-NET'
+theme_dir: 'mytheme'
+pages:
+- ['index.md', 'Home']
+- ['SpotifyWebAPI/gettingstarted.md', 'SpotifyWebAPI', 'Getting started']
+- ['SpotifyWebAPI/examples.md', 'SpotifyWebAPI', 'Examples']
+- ['SpotifyWebAPI/auth.md', 'SpotifyWebAPI', 'Authentication']
+- ['SpotifyWebAPI/albums.md', 'SpotifyWebAPI', '- Albums']
+- ['SpotifyWebAPI/artists.md', 'SpotifyWebAPI', '- Artists']
+- ['SpotifyWebAPI/browse.md', 'SpotifyWebAPI', '- Browse']
+- ['SpotifyWebAPI/follow.md', 'SpotifyWebAPI', '- Follow']
+- ['SpotifyWebAPI/library.md', 'SpotifyWebAPI', '- Library']
+- ['SpotifyWebAPI/playlists.md', 'SpotifyWebAPI', '- Playlists']
+- ['SpotifyWebAPI/profiles.md', 'SpotifyWebAPI', '- Profiles']
+- ['SpotifyWebAPI/search.md', 'SpotifyWebAPI', '- Search']
+- ['SpotifyWebAPI/tracks.md', 'SpotifyWebAPI', '- Tracks']
+- ['SpotifyWebAPI/util.md', 'SpotifyWebAPI', '- Util']
+- ['SpotifyLocalAPI/index.md', 'SpotifyLocalAPI', 'SpotifyLocalAPI']
+repo_url: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET'
+site_author: 'JohnnyCrazy'
+site_description: 'API Docs for SpotifyAPI-NET'
+extra_javascript:
+- '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js'
+- 'highlight.js'
+markdown_extensions:
+- sane_lists
