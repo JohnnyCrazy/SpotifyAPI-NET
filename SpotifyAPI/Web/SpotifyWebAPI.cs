@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
@@ -33,11 +34,6 @@ namespace SpotifyAPI.Web
             };
         }
 
-        public string TokenType { get; set; }
-        public string AccessToken { get; set; }
-        public bool UseAuth { get; set; }
-        public IClient WebClient { get; set; }
-
         public void Dispose()
         {
             WebClient.Dispose();
@@ -45,25 +41,48 @@ namespace SpotifyAPI.Web
         }
 
         #region Configuration
+
         /// <summary>
-        /// Specifies after how many miliseconds should a failed request be retried.
+        ///     The type of the <see cref="AccessToken"/>
+        /// </summary>
+        public string TokenType { get; set; }
+
+        /// <summary>
+        ///     A valid token issued by spotify. Used only when <see cref="UseAuth"/> is true
+        /// </summary>
+        public string AccessToken { get; set; }
+
+        /// <summary>
+        ///     If true, an authorization header based on <see cref="TokenType"/> and <see cref="AccessToken"/> will be used
+        /// </summary>
+        public bool UseAuth { get; set; }
+
+        /// <summary>
+        ///     A custom WebClient, used for Unit-Testing
+        /// </summary>
+        public IClient WebClient { get; set; }
+
+
+        /// <summary>
+        ///     Specifies after how many miliseconds should a failed request be retried.
         /// </summary>
         public int RetryAfter { get; set; } = 50;
 
         /// <summary>
-        /// Should a failed request (specified by <see cref="RetryErrorCodes"/> be automatically retried or not.
+        ///     Should a failed request (specified by <see cref="RetryErrorCodes"/> be automatically retried or not.
         /// </summary>
         public bool UseAutoRetry { get; set; } = false;
 
         /// <summary>
-        /// Maximum number of tries for one failed request.
+        ///     Maximum number of tries for one failed request.
         /// </summary>
         public int RetryTimes { get; set; } = 10;
 
         /// <summary>
-        /// Error codes that will trigger auto-retry if <see cref="UseAutoRetry"/> is enabled.
+        ///     Error codes that will trigger auto-retry if <see cref="UseAutoRetry"/> is enabled.
         /// </summary>
-        public IEnumerable<int> RetryErrorCodes { get; private set; } = new int[] { 500, 502, 503 };
+        public IEnumerable<int> RetryErrorCodes { get; set; } = new[] { 500, 502, 503 };
+
         #endregion Configuration
 
         #region Search
@@ -1832,12 +1851,12 @@ namespace SpotifyAPI.Web
         private ListResponse<T> DownloadList<T>(string url)
         {
             int triesLeft = RetryTimes + 1;
-            Error lastError = null;
+            Error lastError;
 
             ListResponse<T> data = null;
             do
             {
-                if (data != null) { System.Threading.Thread.Sleep(RetryAfter); }
+                if (data != null) { Thread.Sleep(RetryAfter); }
                 Tuple<ResponseInfo, JToken> res = DownloadDataAlt<JToken>(url);
                 data = ExtractDataToListResponse<T>(res);
 
@@ -1853,7 +1872,7 @@ namespace SpotifyAPI.Web
         private async Task<ListResponse<T>> DownloadListAsync<T>(string url)
         {
             int triesLeft = RetryTimes + 1;
-            Error lastError = null;
+            Error lastError;
 
             ListResponse<T> data = null;
             do
@@ -1873,7 +1892,7 @@ namespace SpotifyAPI.Web
 
         private static ListResponse<T> ExtractDataToListResponse<T>(Tuple<ResponseInfo, JToken> res)
         {
-            ListResponse<T> ret = null;
+            ListResponse<T> ret;
             if (res.Item2 is JArray)
             {
                 ret = new ListResponse<T>
@@ -1899,7 +1918,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for all Upload-Actions");
             int triesLeft = RetryTimes + 1;
-            Error lastError = null;
+            Error lastError;
 
             Tuple<ResponseInfo, T> response = null;
             do
@@ -1907,7 +1926,7 @@ namespace SpotifyAPI.Web
                 WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
                 WebClient.SetHeader("Content-Type", "application/json");
 
-                if (response != null) { System.Threading.Thread.Sleep(RetryAfter); }
+                if (response != null) { Thread.Sleep(RetryAfter); }
                 response = WebClient.UploadJson<T>(url, uploadData, method);
 
                 response.Item2.AddResponseInfo(response.Item1);
@@ -1926,7 +1945,7 @@ namespace SpotifyAPI.Web
                 throw new InvalidOperationException("Auth is required for all Upload-Actions");
 
             int triesLeft = RetryTimes + 1;
-            Error lastError = null;
+            Error lastError;
 
             Tuple<ResponseInfo, T> response = null;
             do
@@ -1950,12 +1969,12 @@ namespace SpotifyAPI.Web
         public T DownloadData<T>(string url) where T : BasicModel
         {
             int triesLeft = RetryTimes + 1;
-            Error lastError = null;
+            Error lastError;
 
             Tuple<ResponseInfo, T> response = null;
             do
             {
-                if(response != null) { System.Threading.Thread.Sleep(RetryAfter); }
+                if(response != null) { Thread.Sleep(RetryAfter); }
                 response = DownloadDataAlt<T>(url);
 
                 response.Item2.AddResponseInfo(response.Item1);
@@ -1972,7 +1991,7 @@ namespace SpotifyAPI.Web
         public async Task<T> DownloadDataAsync<T>(string url) where T : BasicModel
         {
             int triesLeft = RetryTimes + 1;
-            Error lastError = null;
+            Error lastError;
 
             Tuple<ResponseInfo, T> response = null;
             do
