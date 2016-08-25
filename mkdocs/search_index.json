@@ -437,13 +437,13 @@
         }, 
         {
             "location": "/SpotifyLocalAPI/", 
-            "text": "WIP", 
+            "text": "WIP, will update tomorrow", 
             "title": "SpotifyLocalAPI"
         }, 
         {
-            "location": "/SpotifyLocalAPI/#wip", 
+            "location": "/SpotifyLocalAPI/#wip-will-update-tomorrow", 
             "text": "", 
-            "title": "WIP"
+            "title": "WIP, will update tomorrow"
         }
     ]
 }
