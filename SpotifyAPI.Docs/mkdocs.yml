@@ -20,7 +20,7 @@ repo_url: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET'
 site_author: 'JohnnyCrazy'
 site_description: 'API Docs for SpotifyAPI-NET'
 extra_javascript:
-- '//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js'
+- 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js'
 - 'highlight.js'
 markdown_extensions:
 - sane_lists
