@@ -19,7 +19,7 @@ if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" (
   git commit -m "Built docs | AppVeyor Build %APPVEYOR_BUILD_NUMBER%"
   git push -fq origin gh-pages
 
-  cd ../..
+  cd ../../../
 ) else (
   echo Skipping doc build
 )
