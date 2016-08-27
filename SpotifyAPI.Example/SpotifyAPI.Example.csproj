@@ -96,9 +96,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SpotifyAPI\SpotifyAPI.csproj">
+    <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj">
+      <Project>{b69145aa-1ecc-488d-b8f3-c6f608e41025}</Project>
+      <Name>SpotifyAPI.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpotifyAPI.Local\SpotifyAPI.Local.csproj">
       <Project>{ebbe35e2-7b91-4d7d-b8fc-3a0472f5119d}</Project>
-      <Name>SpotifyAPI</Name>
+      <Name>SpotifyAPI.Local</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
