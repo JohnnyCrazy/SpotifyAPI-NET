@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-	<title>Getting started - SpotifyAPI-NET</title>
+	<title>SpotifyLocalAPI - SpotifyAPI-NET</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -116,15 +116,8 @@
             
             
             
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyLocalAPI <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        <li class="active">
-                            <a href="./">Getting started</a>
-                        </li>
-                    
-                    </ul>
+                <li class="active">
+                    <a href="./">SpotifyLocalAPI</a>
                 </li>
             
             
@@ -162,14 +155,142 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#wip">WIP</a></li>
+        <li class="main active"><a href="#getting-started">Getting started</a></li>
+        
+            <li><a href="#first-steps">First steps</a></li>
+        
+            <li><a href="#anti-virus-blocking-response">Anti-Virus Blocking Response</a></li>
+        
+            <li><a href="#client-status">Client Status</a></li>
+        
+            <li><a href="#current-track">Current Track</a></li>
+        
+            <li><a href="#events">Events</a></li>
+        
+            <li><a href="#methods">Methods</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="wip">WIP</h1></div>
+<h1 id="getting-started">Getting started</h1>
+<p>This API provides some access to the local running Spotify-Client (Windows only).<br />
+You can fetch details for the current track, play/pause, skip/previous track and
+get notified on various events.</p>
+<p><strong>NOTE:</strong> This API is unofficial, things may brake in the future and there is no
+guarantee everything works out of the box.</p>
+<hr />
+<h2 id="first-steps">First steps</h2>
+<p><strong>Imports</strong><br />
+So after you added the API to your project, you may want to add following imports to your files:</p>
+<pre><code class="cs">using SpotifyAPI.Local; //Base Namespace
+using SpotifyAPI.Local.Enums; //Enums
+using SpotifyAPI.Local.Models; //Models for the JSON-responses
+using SpotifyAPI.Local; //Base Namespace
+</code></pre>
+
+<p><strong>Basic-Usage</strong><br />
+Now you can actually start fetching infos from your spotify client, just create a new Instance of SpotifyLocalAPI:</p>
+<pre><code class="cs">private static SpotifyLocalAPI _spotify;
+
+public static void Main(String[] args)
+{
+    _spotify = new SpotifyLocalAPI();
+    if (!SpotifyLocalAPI.IsSpotifyRunning())
+      return; //Make sure the spotify client is running
+    if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
+      return; //Make sure the WebHelper is running
+
+    if(!_spotify.Connect())
+      return; //We need to call Connect before fetching infos, this will handle Auth stuff
+
+    StatusResponse status = _spotify.GetStatus(); //status contains infos
+}
+</code></pre>
+
+<h2 id="anti-virus-blocking-response">Anti-Virus Blocking Response</h2>
+<p>Some Anti-Virus Software blocks the response from spotify due wrong headers.
+Currently, it's confirmed for AVG's LinkScanner and Bitdefender.
+Adding <code>http://SpotifyAPI.spotilocal.com:4380</code> to the URL-Exceptions seems to fix it for most users.
+More infos can be found <a href="https://github.com/JohnnyCrazy/SpotifyAPI-NET/issues/51">here</a></p>
+<h2 id="client-status">Client Status</h2>
+<p>Calling <code>_spotify.GetStatus()</code> after connecting returns the following <code>StatusResponse</code>:</p>
+<pre><code>public int Version { get; set; }
+
+public string ClientVersion { get; set; }
+
+public bool Playing { get; set; }
+
+public bool Shuffle { get; set; }
+
+public bool Repeat { get; set; }
+
+public bool PlayEnabled { get; set; }
+
+public bool PrevEnabled { get; set; }
+
+public bool NextEnabled { get; set; }
+
+public Track Track { get; set; }
+
+public double PlayingPosition { get; set; }
+
+public int ServerTime { get; set; }
+
+public double Volume { get; set; }
+
+public bool Online { get; set; }
+
+public bool Running { get; set; }
+</code></pre>
+
+<p>Most of the properties are self-explanatory, some notes:</p>
+<ul>
+<li><code>Shuffle</code> and <code>Repeat</code> currently always return <code>false</code></li>
+</ul>
+<h2 id="current-track">Current Track</h2>
+<p>The current Track can be fetched via <code>_spotify.GetStatus().Track</code> and contains following properties/methods:</p>
+<ul>
+<li><code>TrackResource</code> - <code>SpotifyResource</code> which contains Track <code>Name</code> and <code>Uri</code></li>
+<li><code>AlbumResource</code> - <code>SpotifyResource</code> which contains Album <code>Name</code> and <code>Uri</code></li>
+<li><code>ArtistResource</code> - <code>SpotifyResource</code> which contains Artist <code>Name</code> and <code>Uri</code> (Only the main artist will be listed)</li>
+<li><code>IsAd()</code> will check whether the current track is an AD</li>
+<li>Various methods for getting the album art:</li>
+<li><code>string GetAlbumArtUrl(AlbumArtSize size)</code></li>
+<li><code>Task&lt;Bitmap&gt; GetAlbumArtAsync(AlbumArtSize size)</code></li>
+<li><code>Bitmap GetAlbumArt(AlbumArtSize size)</code></li>
+<li><code>Task&lt;byte[]&gt; GetAlbumArtAsByteArrayAsync(AlbumArtSize size)</code></li>
+<li><code>byte[] GetAlbumArtAsByteArray(AlbumArtSize size)</code></li>
+</ul>
+<h2 id="events">Events</h2>
+<p>To receive events, make sure you listen for them <code>_spotify.ListenForEvents = true;</code><br />
+You can set a <code>SynchronizingObject</code>, then the events will be called on the specific context</p>
+<p>Following events can be overriden:</p>
+<ul>
+<li><code>OnPlayStateChange</code> - triggers when the player changes from <code>play</code> to <code>pause</code> and vice versa</li>
+<li><code>OnTrackChange</code> - triggers when a new track will be played</li>
+<li><code>OnTrackTimeChange</code> - triggers when a track is playing and track-time changes</li>
+<li><code>OnVolumeChange</code> - triggeres when the internal volume of spotify changes</li>
+</ul>
+<h2 id="methods">Methods</h2>
+<p>Furthermore, following methods are available:</p>
+<ul>
+<li><code>void Mute()</code> - will mute the Spotify client via WindowsAPI</li>
+<li><code>void UnMute()</code> - will unmute the Spotify client via WindowsAPI</li>
+<li><code>bool IsSpotifyMuted()</code> - will return wether the Spotify client is muted</li>
+<li><code>void SetSpotifyVolume(float volume = 100)</code> - sets the windows volume of spotify (0 - 100)</li>
+<li><code>float GetSpotifyVolume()</code> - returns the windows volume of spotify (0 - 100)</li>
+<li><code>void Pause()</code> - will pause spotify's playback</li>
+<li><code>void Play()</code> - will resume spotify's playback</li>
+<li><code>void PlayURL(string uri, string context = "")</code> - will play a spotify URI (track/album/playlist) in the specifc context (can be a album/playlist URI)</li>
+<li><code>void Skip()</code> - will skip the track via an emulated media key</li>
+<li><code>void Previous()</code> - will play the previous track via an emulated media key</li>
+<li><code>bool IsSpotifyRunning()</code> - returns true if a spotify client instance is running, false if not</li>
+<li><code>bool IsSpotifyWebHelperRunning()</code> - returns true if a spotify web-helper instance is running, false if not</li>
+<li><code>void RunSpotify()</code> - will attempt to start a Spotify instance</li>
+<li><code>void RunSpotifyWebHelper()</code> - will attempt to start a Spotify web-helper instance</li>
+</ul></div>
         </div>
 
         
