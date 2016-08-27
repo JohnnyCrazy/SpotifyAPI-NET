@@ -18,7 +18,6 @@ So after you added the API to your project, you may want to add following import
 using SpotifyAPI.Local; //Base Namespace
 using SpotifyAPI.Local.Enums; //Enums
 using SpotifyAPI.Local.Models; //Models for the JSON-responses
-using SpotifyAPI.Local; //Base Namespace
 ```
 
 **Basic-Usage**  
