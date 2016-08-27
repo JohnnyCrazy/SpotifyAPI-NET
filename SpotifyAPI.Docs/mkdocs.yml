@@ -16,8 +16,7 @@ pages:
     - '- Search': 'SpotifyWebAPI/search.md'
     - '- Tracks': 'SpotifyWebAPI/tracks.md'
     - '- Util': 'SpotifyWebAPI/util.md'
-  - 'SpotifyLocalAPI':
-    - 'Getting started': 'SpotifyLocalAPI/index.md'
+  - 'SpotifyLocalAPI': 'SpotifyLocalAPI/index.md'
 repo_url: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET'
 site_author: 'JohnnyCrazy'
 site_description: 'API Docs for SpotifyAPI-NET'
