@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI.Local", "SpotifyAPI\SpotifyAPI.Local.csproj", "{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI.Local", "SpotifyAPI.Local\SpotifyAPI.Local.csproj", "{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI.Tests", "SpotifyAPI.Tests\SpotifyAPI.Tests.csproj", "{A06CE1BA-B2C4-4C3C-9E79-D2E8D36DDF0B}"
 EndProject
