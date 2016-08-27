@@ -7,8 +7,8 @@
     <ProjectGuid>{EBBE35E2-7B91-4D7D-B8FC-3A0472F5119D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpotifyAPI</RootNamespace>
-    <AssemblyName>SpotifyAPI</AssemblyName>
+    <RootNamespace>SpotifyAPI.Local</RootNamespace>
+    <AssemblyName>SpotifyAPI.Local</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\SpotifyAPI.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\SpotifyAPI.Local.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\SpotifyAPI.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\SpotifyAPI.Local.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
