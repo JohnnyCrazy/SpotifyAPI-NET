@@ -103,7 +103,7 @@ namespace SpotifyAPI.Local
                 parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
             }
 
-            string address = "http://" + Host + ":4380/" + request + parameters;
+            string address = "https://" + Host + ":4371/" + request + parameters;
             string response = "";
             try
             {
@@ -144,7 +144,7 @@ namespace SpotifyAPI.Local
                 parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
             }
 
-            string address = "http://" + Host + ":4380/" + request + parameters;
+            string address = "https://" + Host + ":4371/" + request + parameters;
             string response = "";
             try
             {
