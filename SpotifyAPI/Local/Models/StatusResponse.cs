@@ -43,6 +43,9 @@ namespace SpotifyAPI.Local.Models
         [JsonProperty("online")]
         public bool Online { get; set; }
 
+        [JsonProperty("open_graph_state")]
+        public OpenGraphState OpenGraphState { get; set; }
+
         [JsonProperty("running")]
         public bool Running { get; set; }
     }
