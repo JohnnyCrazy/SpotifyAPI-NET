@@ -13,7 +13,7 @@ namespace SpotifyAPI.Local.Models
         [JsonProperty("playing")]
         public bool Playing { get; set; }
 
-        [JsonProperty("schuffle")]
+        [JsonProperty("shuffle")]
         public bool Shuffle { get; set; }
 
         [JsonProperty("repeat")]
