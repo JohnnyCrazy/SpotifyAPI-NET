@@ -24,23 +24,23 @@ namespace SpotifyAPI.Local
 
         internal async void SendPauseRequest()
         {
-            await QueryAsync("remote/pause.json?pause=true", true, true, -1);
+            await QueryAsync("remote/pause.json?pause=true", true, true, -1).ConfigureAwait(false);
         }
 
         internal async void SendPlayRequest()
         {
-            await QueryAsync("remote/pause.json?pause=false", true, true, -1);
+            await QueryAsync("remote/pause.json?pause=false", true, true, -1).ConfigureAwait(false);
         }
 
         internal async void SendPlayRequest(string url, string context = "")
         {
             // TODO: instead of having an empty context, one way to fix the bug with the playback time beyond the length of a song would be to provide a 1-song context, and it would be fixed.
-            await QueryAsync($"remote/play.json?uri={url}&context={context}", true, true, -1);
+            await QueryAsync($"remote/play.json?uri={url}&context={context}", true, true, -1).ConfigureAwait(false);
         }
 
         internal async void SendQueueRequest(string url)
         {
-            await QueryAsync("remote/play.json?uri=" + url + "?action=queue", true, true, -1);
+            await QueryAsync("remote/play.json?uri=" + url + "?action=queue", true, true, -1).ConfigureAwait(false);
         }
 
         internal StatusResponse GetNewStatus()
@@ -151,7 +151,7 @@ namespace SpotifyAPI.Local
                 using (var wc = new ExtendedWebClient())
                 {
                     if (SpotifyLocalAPI.IsSpotifyRunning())
-                        response = "[ " + await wc.DownloadStringTaskAsync(new Uri(address)) + " ]";
+                        response = "[ " + await wc.DownloadStringTaskAsync(new Uri(address)).ConfigureAwait(false) + " ]";
                 }
             }
             catch

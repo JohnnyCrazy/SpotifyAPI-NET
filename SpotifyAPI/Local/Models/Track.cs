@@ -103,7 +103,9 @@ namespace SpotifyAPI.Local.Models
                 string url = GetAlbumArtUrl(size);
                 if (url == "")
                     return null;
-                var data = await wc.DownloadDataTaskAsync(url);
+                var data = 
+                    
+                    wc.DownloadDataTaskAsync(url);
                 using (MemoryStream ms = new MemoryStream(data))
                 {
                     return (Bitmap)Image.FromStream(ms);
@@ -116,7 +118,7 @@ namespace SpotifyAPI.Local.Models
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
         /// <returns>A byte[], which is the albumart in binary data</returns>
-        public async Task<byte[]> GetAlbumArtAsByteArrayAsync(AlbumArtSize size)
+        public Task<byte[]> GetAlbumArtAsByteArrayAsync(AlbumArtSize size)
         {
             using (WebClient wc = new WebClient())
             {
@@ -124,7 +126,7 @@ namespace SpotifyAPI.Local.Models
                 string url = GetAlbumArtUrl(size);
                 if (url == "")
                     return null;
-                return await wc.DownloadDataTaskAsync(url);
+                return wc.DownloadDataTaskAsync(url);
             }
         }
 

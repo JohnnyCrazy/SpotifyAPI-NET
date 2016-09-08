@@ -57,7 +57,7 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, string> response;
             try
             {
-                Tuple<ResponseInfo, byte[]> raw = await DownloadRawAsync(url);
+                Tuple<ResponseInfo, byte[]> raw = await DownloadRawAsync(url).ConfigureAwait(false);
                 response = new Tuple<ResponseInfo, string>(raw.Item1, raw.Item2.Length > 0 ? _encoding.GetString(raw.Item2) : "{}");
             }
             catch (WebException e)
@@ -91,7 +91,7 @@ namespace SpotifyAPI.Web
                 webClient.Encoding = _encoding;
                 webClient.Headers = _webClient.Headers;
 
-                byte[] data = await _webClient.DownloadDataTaskAsync(url);
+                byte[] data = await _webClient.DownloadDataTaskAsync(url).ConfigureAwait(false);
                 ResponseInfo info = new ResponseInfo()
                 {
                     Headers = webClient.ResponseHeaders
@@ -108,7 +108,7 @@ namespace SpotifyAPI.Web
 
         public async Task<Tuple<ResponseInfo, T>> DownloadJsonAsync<T>(string url)
         {
-            Tuple<ResponseInfo, string> response = await DownloadAsync(url);
+            Tuple<ResponseInfo, string> response = await DownloadAsync(url).ConfigureAwait(false);
             return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
         }
 
@@ -138,7 +138,7 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, string> response;
             try
             {
-                Tuple<ResponseInfo, byte[]> data = await UploadRawAsync(url, body, method);
+                Tuple<ResponseInfo, byte[]> data = await UploadRawAsync(url, body, method).ConfigureAwait(false);
                 response = new Tuple<ResponseInfo, string>(data.Item1, data.Item2.Length > 0 ? _encoding.GetString(data.Item2) : "{}");
             }
             catch (WebException e)
@@ -171,7 +171,7 @@ namespace SpotifyAPI.Web
                 webClient.Proxy = null;
                 webClient.Encoding = _encoding;
                 webClient.Headers = _webClient.Headers;
-                byte[] data = await _webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body));
+                byte[] data = await _webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body)).ConfigureAwait(false);
                 ResponseInfo info = new ResponseInfo
                 {
                     Headers = _webClient.ResponseHeaders
@@ -188,7 +188,7 @@ namespace SpotifyAPI.Web
 
         public async Task<Tuple<ResponseInfo, T>> UploadJsonAsync<T>(string url, string body, string method)
         {
-            Tuple<ResponseInfo, string> response = await UploadAsync(url, body, method);
+            Tuple<ResponseInfo, string> response = await UploadAsync(url, body, method).ConfigureAwait(false);
             return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
         }
 
