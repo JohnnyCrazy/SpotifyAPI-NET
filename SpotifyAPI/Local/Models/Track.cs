@@ -103,9 +103,7 @@ namespace SpotifyAPI.Local.Models
                 string url = GetAlbumArtUrl(size);
                 if (url == "")
                     return null;
-                var data = 
-                    
-                    wc.DownloadDataTaskAsync(url);
+                var data = await wc.DownloadDataTaskAsync(url).ConfigureAwait(false);
                 using (MemoryStream ms = new MemoryStream(data))
                 {
                     return (Bitmap)Image.FromStream(ms);
