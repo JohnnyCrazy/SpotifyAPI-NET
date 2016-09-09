@@ -4,6 +4,7 @@ using SpotifyAPI.Local.Models;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SpotifyAPI.Example
@@ -22,7 +23,7 @@ namespace SpotifyAPI.Example
             _spotify.OnTrackChange += _spotify_OnTrackChange;
             _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
             _spotify.OnVolumeChange += _spotify_OnVolumeChange;
-            _spotify.SynchronizingObject = this;
+            //_spotify.SynchronizingObject = this;
 
             artistLinkLabel.Click += (sender, args) => Process.Start(artistLinkLabel.Tag.ToString());
             albumLinkLabel.Click += (sender, args) => Process.Start(albumLinkLabel.Tag.ToString());
@@ -108,22 +109,42 @@ namespace SpotifyAPI.Example
 
         private void _spotify_OnVolumeChange(object sender, VolumeChangeEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnVolumeChange(sender, e)));
+                return;
+            }
             volumeLabel.Text = (e.NewVolume * 100).ToString(CultureInfo.InvariantCulture);
         }
 
         private void _spotify_OnTrackTimeChange(object sender, TrackTimeChangeEventArgs e)
         {
-            timeLabel.Text = $"{FormatTime(e.TrackTime)}/{FormatTime(_currentTrack.Length)}";
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnTrackTimeChange(sender, e)));
+                return;
+            }
+            timeLabel.Text = $@"{FormatTime(e.TrackTime)}/{FormatTime(_currentTrack.Length)}";
             timeProgressBar.Value = (int)e.TrackTime;
         }
 
         private void _spotify_OnTrackChange(object sender, TrackChangeEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnTrackChange(sender, e)));
+                return;
+            }
             UpdateTrack(e.NewTrack);
         }
 
         private void _spotify_OnPlayStateChange(object sender, PlayStateEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnPlayStateChange(sender, e)));
+                return;
+            }
             UpdatePlayingStatus(e.Playing);
         }
 
@@ -132,19 +153,19 @@ namespace SpotifyAPI.Example
             Connect();
         }
 
-        private void playUrlBtn_Click(object sender, EventArgs e)
+        private async void playUrlBtn_Click(object sender, EventArgs e)
         {
-            _spotify.PlayURL(playTextBox.Text, contextTextBox.Text);
+            await _spotify.PlayURL(playTextBox.Text, contextTextBox.Text);
         }
 
-        private void playBtn_Click(object sender, EventArgs e)
+        private async void playBtn_Click(object sender, EventArgs e)
         {
-            _spotify.Play();
+            await _spotify.Play();
         }
 
-        private void pauseBtn_Click(object sender, EventArgs e)
+        private async void pauseBtn_Click(object sender, EventArgs e)
         {
-            _spotify.Pause();
+            await _spotify.Pause();
         }
 
         private void prevBtn_Click(object sender, EventArgs e)
