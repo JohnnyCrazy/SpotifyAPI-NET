@@ -13,7 +13,7 @@ namespace SpotifyAPI.Local
         public string OauthKey { get; private set; }
         public string CfidKey { get; private set; }
 
-        public const string Host = "SpotifyAPI.spotilocal.com";
+        public const string Host = "127.0.0.1"; //Localhost since domain fails to resolve on some hosts
 
         internal Boolean Init()
         {

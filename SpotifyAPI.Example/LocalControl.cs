@@ -4,7 +4,6 @@ using SpotifyAPI.Local.Models;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SpotifyAPI.Example
@@ -96,7 +95,7 @@ namespace SpotifyAPI.Example
 
             SpotifyUri uri = track.TrackResource.ParseUri();
 
-            trackInfoBox.Text = $"Track Info - {uri.Id}";
+            trackInfoBox.Text = $@"Track Info - {uri.Id}";
 
             bigAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size640);
             smallAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size160);
@@ -125,7 +124,8 @@ namespace SpotifyAPI.Example
                 return;
             }
             timeLabel.Text = $@"{FormatTime(e.TrackTime)}/{FormatTime(_currentTrack.Length)}";
-            timeProgressBar.Value = (int)e.TrackTime;
+            if(e.TrackTime < _currentTrack.Length)
+                timeProgressBar.Value = (int)e.TrackTime;
         }
 
         private void _spotify_OnTrackChange(object sender, TrackChangeEventArgs e)
