@@ -1,28 +1,29 @@
 ﻿using System;
-using System.Net;
+using System.Net.Http;
 
 namespace SpotifyAPI.Local
 {
-    internal class ExtendedWebClient : WebClient
+    internal class ExtendedWebClient : HttpClient
     {
-        public int Timeout { get; set; }
-
-        public ExtendedWebClient()
+#if NET461
+        public ExtendedWebClient() : base()
         {
-            // TODO Remove once SSL Issues are resolved #115
-            ServicePointManager.ServerCertificateValidationCallback = (s, certificate, chain, sslPolicyErrors) => true;
-
-            Timeout = 2000;
-            Headers.Add("Origin", "https://embed.spotify.com");
-            Headers.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
+            Timeout = new TimeSpan(0, 0, 2);
+            DefaultRequestHeaders.Add("Origin", "https://embed.spotify.com");
+            DefaultRequestHeaders.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
         }
-
-        protected override WebRequest GetWebRequest(Uri address)
+#else
+        private static readonly WinHttpHandler HttpHandler = new WinHttpHandler
         {
-            WebRequest webRequest = base.GetWebRequest(address);
-            if (webRequest != null)
-                webRequest.Timeout = Timeout;
-            return webRequest;
+            ServerCertificateValidationCallback = (message, certificate2, arg3, arg4) => true
+        };
+
+        public ExtendedWebClient() : base(HttpHandler)
+        {
+            Timeout = new TimeSpan(0, 0, 2);
+            DefaultRequestHeaders.Add("Origin", "https://embed.spotify.com");
+            DefaultRequestHeaders.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");
         }
+#endif
     }
 }

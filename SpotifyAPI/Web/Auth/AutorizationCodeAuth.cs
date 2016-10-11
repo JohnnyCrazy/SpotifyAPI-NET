@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿#if NET461
+using Newtonsoft.Json;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web.Auth
 {
@@ -21,7 +22,7 @@ namespace SpotifyAPI.Web.Auth
         public string RedirectUri { get; set; }
         public string State { get; set; }
         public Scope Scope { get; set; }
-        public Boolean ShowDialog { get; set; }
+        public bool ShowDialog { get; set; }
 
         /// <summary>
         ///     Will be fired once the user authenticated
@@ -42,33 +43,22 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         /// <param name="refreshToken">The refresh-token of the earlier gathered token</param>
         /// <param name="clientSecret">Your Client-Secret, don't provide it if this is running on a client!</param>
-        public Token RefreshToken(string refreshToken, string clientSecret)
+        public async Task<Token> RefreshToken(string refreshToken, string clientSecret)
         {
-            using (WebClient wc = new WebClient())
+            using(HttpClient httpClient = new HttpClient())
             {
-                wc.Proxy = null;
-                wc.Headers.Add("Authorization",
+                httpClient.DefaultRequestHeaders.Add("Authorization",
                     "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + clientSecret)));
-                NameValueCollection col = new NameValueCollection
-                {
-                    {"grant_type", "refresh_token"},
-                    {"refresh_token", refreshToken}
-                };
 
-                string response;
-                try
+                HttpContent content = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>()
                 {
-                    byte[] data = wc.UploadValues("https://accounts.spotify.com/api/token", "POST", col);
-                    response = Encoding.UTF8.GetString(data);
-                }
-                catch (WebException e)
-                {
-                    using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
-                    {
-                        response = reader.ReadToEnd();
-                    }
-                }
-                return JsonConvert.DeserializeObject<Token>(response);
+                    new KeyValuePair<string, string>("grant_type", "refresh_token"),
+                    new KeyValuePair<string, string>("refresh_token", refreshToken)
+                });
+
+                HttpResponseMessage response = await httpClient.PostAsync("https://accounts.spotify.com/api/token", content);
+
+                return JsonConvert.DeserializeObject<Token>(await response.Content.ReadAsStringAsync());
             }
         }
 
@@ -121,35 +111,22 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="code">The gathered code from the response</param>
         /// <param name="clientSecret">Your Client-Secret, don't provide it if this is running on a client!</param>
         /// <returns></returns>
-        public Token ExchangeAuthCode(string code, string clientSecret)
+        public async Task<Token> ExchangeAuthCode(string code, string clientSecret)
         {
-            using (WebClient wc = new WebClient())
-            {
-                wc.Proxy = null;
+            using (HttpClient httpClient = new HttpClient())
+            { 
+                HttpContent content = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                    new KeyValuePair<string, string>("code", code),
+                    new KeyValuePair<string, string>("redirect_uri", RedirectUri),
+                    new KeyValuePair<string, string>("client_id", ClientId),
+                    new KeyValuePair<string, string>("client_secret", clientSecret)
+                });
 
-                NameValueCollection col = new NameValueCollection
-                {
-                    {"grant_type", "authorization_code"},
-                    {"code", code},
-                    {"redirect_uri", RedirectUri},
-                    {"client_id", ClientId},
-                    {"client_secret", clientSecret}
-                };
+                HttpResponseMessage response = await httpClient.PostAsync("https://accounts.spotify.com/api/token", content);
 
-                string response;
-                try
-                {
-                    byte[] data = wc.UploadValues("https://accounts.spotify.com/api/token", "POST", col);
-                    response = Encoding.UTF8.GetString(data);
-                }
-                catch (WebException e)
-                {
-                    using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
-                    {
-                        response = reader.ReadToEnd();
-                    }
-                }
-                return JsonConvert.DeserializeObject<Token>(response);
+                return JsonConvert.DeserializeObject<Token>(await response.Content.ReadAsStringAsync());
             }
         }
     }
@@ -161,3 +138,4 @@ namespace SpotifyAPI.Web.Auth
         public string Error { get; set; }
     }
 }
+#endif

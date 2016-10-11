@@ -1,35 +1,19 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Allgemeine Informationen über eine Assembly werden über die folgenden
-// Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
-// die mit einer Assembly verknüpft sind.
-[assembly: AssemblyTitle("SpotifyLocalAPIClass")]
-[assembly: AssemblyDescription("")]
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SpotifyLocalAPIClass")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyProduct("SpotifyAPI")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
-// Durch Festlegen von ComVisible auf "false" werden die Typen in dieser Assembly unsichtbar
-// für COM-Komponenten.  Wenn Sie auf einen Typ in dieser Assembly von
-// COM zugreifen müssen, legen Sie das ComVisible-Attribut für diesen Typ auf "true" fest.
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
-[assembly: Guid("3a30f0ac-4874-4d18-ba0e-d20d0f67ed32")]
-
-// Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
-//
-//      Hauptversion
-//      Nebenversion
-//      Buildnummer
-//      Revision
-//
-// Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern
-// übernehmen, indem Sie "*" eingeben:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("a5a8fa78-d353-47a9-9b8d-dc41f2eb9a96")]

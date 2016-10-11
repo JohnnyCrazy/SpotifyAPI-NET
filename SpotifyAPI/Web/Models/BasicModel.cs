@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Net;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Collections.Generic;
 
 namespace SpotifyAPI.Web.Models
 {
@@ -9,14 +10,30 @@ namespace SpotifyAPI.Web.Models
         [JsonProperty("error")]
         public Error Error { get; set; }
 
-        private WebHeaderCollection _headers;
+        private HttpHeaders _headers;
 
         public bool HasError() => Error != null;
 
         internal void AddResponseInfo(ResponseInfo info) => _headers = info.Headers;
 
-        public string Header(string key) => _headers?.Get(key);
+        /// <summary>
+        ///     Returns the first header matching the key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string Header(string key) => _headers?.GetValues(key).FirstOrDefault();
 
-        public WebHeaderCollection Headers() => _headers;
+        /// <summary>
+        ///     Returns all headers
+        /// </summary>
+        /// <returns></returns>
+        public HttpHeaders Headers() => _headers;
+
+        /// <summary>
+        ///     Returns all headers matching the key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public IEnumerable<string> Headers(string key) => _headers?.GetValues(key);
     }
 }

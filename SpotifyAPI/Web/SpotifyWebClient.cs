@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Models;
@@ -14,198 +14,76 @@ namespace SpotifyAPI.Web
     {
         public JsonSerializerSettings JsonSettings { get; set; }
 
-        private readonly WebClient _webClient;
-        private readonly Encoding _encoding = Encoding.UTF8;
+        private static readonly Encoding Encoding = Encoding.UTF8;
+
+        private HttpClient _httpClient;
 
         public SpotifyWebClient()
         {
-            _webClient = new WebClient()
-            {
-                Proxy = null,
-                Encoding = _encoding
-            };
+            _httpClient = new HttpClient();
         }
 
         public void Dispose()
         {
-            _webClient.Dispose();
+            _httpClient.Dispose();
         }
 
-        public Tuple<ResponseInfo, string> Download(string url)
+        public async Task<Tuple<ResponseInfo, string>> Download(string url, params KeyValuePair<string, string>[] headers)
         {
-            Tuple<ResponseInfo, string> response;
-            try
-            {
-                Tuple<ResponseInfo, byte[]> raw = DownloadRaw(url);
-                response = new Tuple<ResponseInfo, string>(raw.Item1, raw.Item2.Length > 0 ? _encoding.GetString(raw.Item2) : "{}");
-            }
-            catch (WebException e)
-            {
-                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
-                {
-                    response = new Tuple<ResponseInfo, string>(new ResponseInfo
-                    {
-                        Headers = _webClient.ResponseHeaders
-                    }, reader.ReadToEnd());
-                }
-            }
-            return response;
+            Tuple<ResponseInfo, byte[]> raw = await DownloadRaw(url).ConfigureAwait(false);
+            return new Tuple<ResponseInfo, string>(raw.Item1, raw.Item2.Length > 0 ? Encoding.GetString(raw.Item2) : "{}");
         }
 
-        public async Task<Tuple<ResponseInfo, string>> DownloadAsync(string url)
-        {
-            Tuple<ResponseInfo, string> response;
-            try
-            {
-                Tuple<ResponseInfo, byte[]> raw = await DownloadRawAsync(url).ConfigureAwait(false);
-                response = new Tuple<ResponseInfo, string>(raw.Item1, raw.Item2.Length > 0 ? _encoding.GetString(raw.Item2) : "{}");
-            }
-            catch (WebException e)
-            {
-                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
-                {
-                    response = new Tuple<ResponseInfo, string>(new ResponseInfo
-                    {
-                        Headers = _webClient.ResponseHeaders
-                    }, reader.ReadToEnd());
-                }
-            }
-            return response;
-        }
 
-        public Tuple<ResponseInfo, byte[]> DownloadRaw(string url)
+        public async Task<Tuple<ResponseInfo, byte[]>> DownloadRaw(string url, params KeyValuePair<string, string>[] headers)
         {
-            byte[] data = _webClient.DownloadData(url);
-            ResponseInfo info = new ResponseInfo()
-            {
-                Headers = _webClient.ResponseHeaders
-            };
-            return new Tuple<ResponseInfo, byte[]>(info, data);
-        }
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
+            foreach (KeyValuePair<string, string> header in headers)
+                request.Headers.Add(header.Key, header.Value);
 
-        public async Task<Tuple<ResponseInfo, byte[]>> DownloadRawAsync(string url)
-        {
-            using (WebClient webClient = new WebClient())
-            {
-                webClient.Proxy = null;
-                webClient.Encoding = _encoding;
-                webClient.Headers = _webClient.Headers;
-
-                byte[] data = await _webClient.DownloadDataTaskAsync(url).ConfigureAwait(false);
-                ResponseInfo info = new ResponseInfo()
-                {
-                    Headers = webClient.ResponseHeaders
-                };
-                return new Tuple<ResponseInfo, byte[]>(info, data);
-            }
-        }
-
-        public Tuple<ResponseInfo, T> DownloadJson<T>(string url)
-        {
-            Tuple<ResponseInfo, string> response = Download(url);
-            return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
-        }
-
-        public async Task<Tuple<ResponseInfo, T>> DownloadJsonAsync<T>(string url)
-        {
-            Tuple<ResponseInfo, string> response = await DownloadAsync(url).ConfigureAwait(false);
-            return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
-        }
-
-        public Tuple<ResponseInfo, string> Upload(string url, string body, string method)
-        {
-            Tuple<ResponseInfo, string> response;
-            try
-            {
-                Tuple<ResponseInfo, byte[]> data = UploadRaw(url, body, method);
-                response = new Tuple<ResponseInfo, string>(data.Item1, data.Item2.Length > 0 ? _encoding.GetString(data.Item2) : "{}");
-            }
-            catch (WebException e)
-            {
-                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
-                {
-                    response = new Tuple<ResponseInfo, string>(new ResponseInfo
-                    {
-                        Headers = _webClient.ResponseHeaders
-                    }, reader.ReadToEnd());
-                }
-            }
-            return response;
-        }
-
-        public async Task<Tuple<ResponseInfo, string>> UploadAsync(string url, string body, string method)
-        {
-            Tuple<ResponseInfo, string> response;
-            try
-            {
-                Tuple<ResponseInfo, byte[]> data = await UploadRawAsync(url, body, method).ConfigureAwait(false);
-                response = new Tuple<ResponseInfo, string>(data.Item1, data.Item2.Length > 0 ? _encoding.GetString(data.Item2) : "{}");
-            }
-            catch (WebException e)
-            {
-                using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
-                {
-                    response = new Tuple<ResponseInfo, string>(new ResponseInfo
-                    {
-                        Headers = _webClient.ResponseHeaders
-                    }, reader.ReadToEnd());
-                }
-            }
-            return response;
-        }
-
-        public Tuple<ResponseInfo, byte[]> UploadRaw(string url, string body, string method)
-        {
-            byte[] data = _webClient.UploadData(url, method, _encoding.GetBytes(body));
+            HttpResponseMessage result = await _httpClient.SendAsync(request).ConfigureAwait(false);
             ResponseInfo info = new ResponseInfo
             {
-                Headers = _webClient.ResponseHeaders
+                Headers = result.Headers
             };
-            return new Tuple<ResponseInfo, byte[]>(info, data);
+            return new Tuple<ResponseInfo, byte[]>(info, await result.Content.ReadAsByteArrayAsync());
         }
 
-        public async Task<Tuple<ResponseInfo, byte[]>> UploadRawAsync(string url, string body, string method)
+        public async Task<Tuple<ResponseInfo, T>> DownloadJson<T>(string url, params KeyValuePair<string, string>[] headers)
         {
-            using (WebClient webClient = new WebClient())
+            Tuple<ResponseInfo, string> response = await Download(url).ConfigureAwait(false);
+            return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
+        }
+
+        public async Task<Tuple<ResponseInfo, string>> Upload(string url, string body, string method, params KeyValuePair<string, string>[] headers)
+        {
+            Tuple<ResponseInfo, byte[]> data = await UploadRaw(url, body, method).ConfigureAwait(false);
+            return new Tuple<ResponseInfo, string>(data.Item1, data.Item2.Length > 0 ? Encoding.GetString(data.Item2) : "{}");
+        }
+
+        public async Task<Tuple<ResponseInfo, byte[]>> UploadRaw(string url, string body, string method, params KeyValuePair<string, string>[] headers)
+        {
+            var httpRequest = new HttpRequestMessage(new HttpMethod(method), url)
             {
-                webClient.Proxy = null;
-                webClient.Encoding = _encoding;
-                webClient.Headers = _webClient.Headers;
-                byte[] data = await _webClient.UploadDataTaskAsync(url, method, _encoding.GetBytes(body)).ConfigureAwait(false);
-                ResponseInfo info = new ResponseInfo
-                {
-                    Headers = _webClient.ResponseHeaders
-                };
-                return new Tuple<ResponseInfo, byte[]>(info, data);
+                Content = new StringContent(url, Encoding)
+            };
+            foreach (KeyValuePair<string, string> header in headers)
+            {
+                httpRequest.Headers.Add(header.Key, header.Value);
             }
+
+            HttpResponseMessage result = await _httpClient.SendAsync(httpRequest).ConfigureAwait(false);
+            ResponseInfo info = new ResponseInfo
+            {
+                Headers = result.Headers
+            };
+            return new Tuple<ResponseInfo, byte[]>(info, await result.Content.ReadAsByteArrayAsync());
         }
 
-        public Tuple<ResponseInfo, T> UploadJson<T>(string url, string body, string method)
+        public async Task<Tuple<ResponseInfo, T>> UploadJson<T>(string url, string body, string method, params KeyValuePair<string, string>[] headers)
         {
-            Tuple<ResponseInfo, string> response = Upload(url, body, method);
+            Tuple<ResponseInfo, string> response = await Upload(url, body, method).ConfigureAwait(false);
             return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
-        }
-
-        public async Task<Tuple<ResponseInfo, T>> UploadJsonAsync<T>(string url, string body, string method)
-        {
-            Tuple<ResponseInfo, string> response = await UploadAsync(url, body, method).ConfigureAwait(false);
-            return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
-        }
-
-        public void SetHeader(string header, string value)
-        {
-            _webClient.Headers[header] = value;
-        }
-
-        public void RemoveHeader(string header)
-        {
-            if (_webClient.Headers[header] != null)
-                _webClient.Headers.Remove(header);
-        }
-
-        public List<KeyValuePair<string, string>> GetHeaders()
-        {
-            return _webClient.Headers.AllKeys.Select(header => new KeyValuePair<string, string>(header, _webClient.Headers[header])).ToList();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 
 namespace SpotifyAPI.Web
 {
@@ -14,8 +15,8 @@ namespace SpotifyAPI.Web
             Enum.GetValues(typeof(T))
             .Cast<T>()
             .Where(v => e.HasFlag((Enum)(object)v))
-            .Select(v => typeof(T).GetField(v.ToString(CultureInfo.InvariantCulture)))
-            .Select(f => f.GetCustomAttributes(typeof(StringAttribute), false)[0])
+            .Select(v => typeof(T).GetTypeInfo().GetDeclaredField(v.ToString(CultureInfo.InvariantCulture)))
+            .Select(f => f.GetCustomAttributes(typeof(StringAttribute), false).FirstOrDefault())
             .Cast<StringAttribute>();
 
             List<string> list = new List<string>();

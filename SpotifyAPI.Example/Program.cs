@@ -1,19 +1,30 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using SpotifyAPI.Web;
+using System;
+using System.Threading.Tasks;
 
 namespace SpotifyAPI.Example
 {
-    internal static class Program
+    public class Program
     {
-        /// <summary>
-        /// Der Haupteinstiegspunkt für die Anwendung.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        public static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ExampleForm());
+            Start();
+            Console.ReadLine();
+        }
+
+        public static async Task Start()
+        {
+            Console.WriteLine("Starting...");
+            SpotifyWebAPI spotify = new SpotifyWebAPI();
+            var track = await spotify.GetTrack("asdasd6hlAgsvXoIWJrcVD7qYp4N");
+            var track2 = await spotify.GetTrack("4kG3iPdJ13SNOoCnhdlpx7");
+
+            Console.WriteLine($"Server: {track.Header("Server")}");
+
+
+            Console.WriteLine(track.Name);
+            Console.WriteLine(track2.Name);
+            Console.WriteLine("Finished");
         }
     }
 }

@@ -55,7 +55,7 @@ namespace SpotifyAPI.Web.Models
         public string BuildUrlParams(string prefix)
         {
             List<string> urlParams = new List<string>();
-            foreach (PropertyInfo info in GetType().GetProperties())
+            foreach (PropertyInfo info in GetType().GetTypeInfo().DeclaredProperties)
             {
                 object value = info.GetValue(this);
                 string name = info.GetCustomAttribute<StringAttribute>()?.Text;

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿#if NET461
+
+using Newtonsoft.Json;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
@@ -50,3 +52,4 @@ namespace SpotifyAPI.Web.Auth
         }
     }
 }
+#endif

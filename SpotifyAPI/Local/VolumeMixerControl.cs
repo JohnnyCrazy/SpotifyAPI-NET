@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET461
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -69,9 +70,9 @@ namespace SpotifyAPI.Local
 
         private static ISimpleAudioVolume GetSpotifyVolumeObject() {
             return (from p in Process.GetProcessesByName(SpotifyProcessName)
-                    let vol = GetVolumeObject(p.Id)
-                    where vol != null
-                    select vol).FirstOrDefault();
+                let vol = GetVolumeObject(p.Id)
+                where vol != null
+                select vol).FirstOrDefault();
         }
 
         private static ISimpleAudioVolume GetVolumeObject(int pid)
@@ -240,3 +241,4 @@ namespace SpotifyAPI.Local
         }
     }
 }
+#endif

@@ -1,11 +1,12 @@
-﻿using System;
+﻿#if NET461
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web.Auth
-{
+{ 
     public class WebAPIFactory
     {
         private readonly string _redirectUrl;
@@ -86,10 +87,10 @@ namespace SpotifyAPI.Web.Auth
         }
     }
 
-    [Serializable]
     public class SpotifyWebApiException : Exception
     {
         public SpotifyWebApiException(string message) : base(message)
         { }
     }
 }
+#endif

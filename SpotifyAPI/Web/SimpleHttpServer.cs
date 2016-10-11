@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET461
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -8,7 +9,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 
 // offered to the public domain for any use with no restriction
@@ -368,3 +368,4 @@ namespace SpotifyAPI.Web
         Authorization
     }
 }
+#endif
