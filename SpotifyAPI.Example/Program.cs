@@ -1,11 +1,15 @@
 ﻿using SpotifyAPI.Web;
 using System;
 using System.Threading.Tasks;
+using SpotifyAPI.Local;
+using SpotifyAPI.Local.Models;
 
 namespace SpotifyAPI.Example
 {
     public class Program
     {
+        private static SpotifyLocalAPI _spotify;
+
         public static void Main(string[] args)
         {
             Start();
@@ -15,16 +19,14 @@ namespace SpotifyAPI.Example
         public static async Task Start()
         {
             Console.WriteLine("Starting...");
-            SpotifyWebAPI spotify = new SpotifyWebAPI();
-            var track = await spotify.GetTrack("asdasd6hlAgsvXoIWJrcVD7qYp4N");
-            var track2 = await spotify.GetTrack("4kG3iPdJ13SNOoCnhdlpx7");
+            _spotify = new SpotifyLocalAPI();
 
-            Console.WriteLine($"Server: {track.Header("Server")}");
-
-
-            Console.WriteLine(track.Name);
-            Console.WriteLine(track2.Name);
-            Console.WriteLine("Finished");
+            while (!await _spotify.Connect())
+            {
+                await _spotify.Connect();
+            }
+            StatusResponse status = await _spotify.GetStatus(); // never pass the while.... 
+            Console.WriteLine(status.Track.TrackResource.Name);
         }
     }
 }
