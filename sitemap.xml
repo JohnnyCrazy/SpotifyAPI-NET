@@ -3,8 +3,8 @@
 
     
     <url>
-     <loc>None/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,80 +12,80 @@
     
         
     <url>
-     <loc>None/SpotifyWebAPI/gettingstarted/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/gettingstarted/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/examples/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/examples/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/auth/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/auth/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/albums/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/albums/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/artists/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/artists/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/browse/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/browse/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/follow/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/follow/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/library/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/library/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/playlists/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/playlists/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/profiles/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/profiles/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/search/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/search/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/tracks/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/tracks/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/SpotifyWebAPI/util/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyWebAPI/util/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -93,8 +93,8 @@
 
     
     <url>
-     <loc>None/SpotifyLocalAPI/</loc>
-     <lastmod>2016-09-30</lastmod>
+     <loc>/SpotifyLocalAPI/</loc>
+     <lastmod>2017-03-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
