@@ -587,6 +587,26 @@ namespace SpotifyAPI.Web
             return builder.ToString();
         }
 
+        /// <summary>
+        ///     Get tracks from the current user’s recent play history.
+        /// </summary>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+        /// <param name="after">A Unix timestamp in milliseconds. Returns all items after (but not including) this cursor position. If after is specified, before must not be specified.</param>
+        /// <param name="before">A Unix timestamp in milliseconds. Returns all items before (but not including) this cursor position. If before is specified, after must not be specified.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string GetUsersRecentlyPlayedTracks(int limit = 20, DateTime? after = null, DateTime? before = null)
+        {
+            limit = Math.Min(50, limit);
+            StringBuilder builder = new StringBuilder($"{APIBase}/me/player/recently-played");
+            builder.Append("?limit=" + limit);
+            if (after.HasValue)
+                builder.Append("&after=" + after.Value.ToUnixTimeMillisecondsPoly());
+            if (before.HasValue)
+                builder.Append("&before=" + before.Value.ToUnixTimeMillisecondsPoly());
+            return builder.ToString();
+        }
+
         #endregion
 
         #region Playlists

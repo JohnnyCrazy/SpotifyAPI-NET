@@ -45,6 +45,9 @@ namespace SpotifyAPI.Web.Enums
         UserTopRead = 4096,
 
         [String("playlist-read-collaborative")]
-        PlaylistReadCollaborative = 8192
+        PlaylistReadCollaborative = 8192,
+
+        [String("user-read-recently-played")]
+        UserReadRecentlyPlayed = 16384
     }
 }

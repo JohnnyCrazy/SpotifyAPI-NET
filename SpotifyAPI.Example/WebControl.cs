@@ -37,6 +37,8 @@ namespace SpotifyAPI.Example
                 return;
             }
 
+            var test = _spotify.GetUsersRecentlyPlayedTracks();
+
             authButton.Enabled = false;
             _profile = _spotify.GetPrivateProfile();
 
@@ -108,7 +110,8 @@ namespace SpotifyAPI.Example
                 8000,
                 "26d287105e31491889f3cd293d85bfea",
                 Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead |
-                Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative);
+                Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative |
+                Scope.UserReadRecentlyPlayed);
 
             try
             {

@@ -90,6 +90,7 @@
     <Compile Include="Web\Models\FullArtist.cs" />
     <Compile Include="Web\Models\FullTrack.cs" />
     <Compile Include="Web\Models\NewAlbumReleases.cs" />
+    <Compile Include="Web\Models\PlayHistory.cs" />
     <Compile Include="Web\Models\Recommendations.cs" />
     <Compile Include="Web\Models\RecommendationSeed .cs" />
     <Compile Include="Web\Models\RecommendationSeedGenres.cs" />

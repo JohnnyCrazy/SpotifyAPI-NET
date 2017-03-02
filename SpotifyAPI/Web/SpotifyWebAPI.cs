@@ -1240,6 +1240,34 @@ namespace SpotifyAPI.Web
             return DownloadDataAsync<Paging<FullArtist>>(_builder.GetUsersTopArtists(timeRange, limit, offest));
         }
 
+        /// <summary>
+        ///     Get tracks from the current user’s recent play history.
+        /// </summary>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+        /// <param name="after">A Unix timestamp in milliseconds. Returns all items after (but not including) this cursor position. If after is specified, before must not be specified.</param>
+        /// <param name="before">A Unix timestamp in milliseconds. Returns all items before (but not including) this cursor position. If before is specified, after must not be specified.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public CursorPaging<PlayHistory> GetUsersRecentlyPlayedTracks(int limit = 20, DateTime? after = null,
+            DateTime? before = null)
+        {
+            return DownloadData<CursorPaging<PlayHistory>>(_builder.GetUsersRecentlyPlayedTracks(limit, after, before));
+        }
+
+        /// <summary>
+        ///     Get tracks from the current user’s recent play history asynchronously
+        /// </summary>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50. </param>
+        /// <param name="after">A Unix timestamp in milliseconds. Returns all items after (but not including) this cursor position. If after is specified, before must not be specified.</param>
+        /// <param name="before">A Unix timestamp in milliseconds. Returns all items before (but not including) this cursor position. If before is specified, after must not be specified.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public Task<CursorPaging<PlayHistory>> GetUsersRecentlyPlayedTracksAsync(int limit = 20, DateTime? after = null,
+            DateTime? before = null)
+        {
+            return DownloadDataAsync<CursorPaging<PlayHistory>>(_builder.GetUsersRecentlyPlayedTracks(limit, after, before));
+        }
+
         #endregion
 
         #region Playlists

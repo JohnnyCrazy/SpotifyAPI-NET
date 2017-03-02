@@ -22,6 +22,11 @@ namespace SpotifyAPI.Web
             attributes.ToList().ForEach(element => list.Add(element.Text));
             return string.Join(separator, list);
         }
+
+        public static int ToUnixTimeMillisecondsPoly(this DateTime time)
+        {
+            return (int)time.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
+        }
     }
 
     public sealed class StringAttribute : Attribute

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SpotifyAPI.Web.Models
 {
-    public class CursorPaging<T>
+    public class CursorPaging<T> : BasicModel
     {
         [JsonProperty("href")]
         public string Href { get; set; }
