@@ -60,7 +60,7 @@ namespace SpotifyAPI.Local
         internal string GetOAuthKey()
         {
             string raw;
-            using (WebClient wc = new WebClient())
+            using (WebClient wc = GetWebClientWithUserAgentHeader())
             {
                 raw = wc.DownloadString("http://open.spotify.com/token");
             }
@@ -165,6 +165,15 @@ namespace SpotifyAPI.Local
         internal int GetTimestamp()
         {
             return Convert.ToInt32((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
+        }
+
+        internal WebClient GetWebClientWithUserAgentHeader()
+        {
+            var wc = new WebClient();
+
+            wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.50.41368.gbd68dbef)");
+
+            return wc;
         }
     }
 }
