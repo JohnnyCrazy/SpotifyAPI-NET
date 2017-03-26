@@ -33,13 +33,27 @@ namespace SpotifyAPI.Example
         {
             if (!SpotifyLocalAPI.IsSpotifyRunning())
             {
-                MessageBox.Show(@"Spotify isn't running!");
-                return;
+                if (runSpotifyChk.Checked)
+                {
+                    SpotifyLocalAPI.RunSpotify();
+                }
+                else
+                {
+                    MessageBox.Show(@"Spotify isn't running!");
+                    return;
+                }
             }
             if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
             {
-                MessageBox.Show(@"SpotifyWebHelper isn't running!");
-                return;
+                if (runSpotifyChk.Checked)
+                {
+                    SpotifyLocalAPI.RunSpotifyWebHelper();
+                }
+                else
+                {
+                    MessageBox.Show(@"SpotifyWebHelper isn't running!");
+                    return;
+                }
             }
 
             bool successful = _spotify.Connect();
@@ -47,6 +61,7 @@ namespace SpotifyAPI.Example
             {
                 connectBtn.Text = @"Connection to Spotify successful";
                 connectBtn.Enabled = false;
+                runSpotifyChk.Enabled = false;
                 UpdateInfos();
                 _spotify.ListenForEvents = true;
             }
