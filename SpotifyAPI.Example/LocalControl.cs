@@ -85,8 +85,8 @@ namespace SpotifyAPI.Example
             versionLabel.Text = status.Version.ToString();
             repeatShuffleLabel.Text = status.Repeat + @" and " + status.Shuffle;
 
-            if (status.Track != null) //Update track infos
-                UpdateTrack(status.Track);
+            //if (status.Track != null) //Update track infos
+            //    UpdateTrack(status.Track);
         }
 
         public async void UpdateTrack(Track track)
