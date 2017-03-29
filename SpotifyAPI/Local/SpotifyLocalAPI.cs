@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
@@ -16,6 +17,7 @@ namespace SpotifyAPI.Local
 
         private bool _listenForEvents;
         private bool _isFirstTrackChange = true;
+        private bool _isConnected;
 
         public bool ListenForEvents
         {
@@ -26,7 +28,7 @@ namespace SpotifyAPI.Local
             set
             {
                 _listenForEvents = value;
-                _eventTimer.Enabled = value;
+                StartRaisingEvents();
             }
         }
 
@@ -145,13 +147,21 @@ namespace SpotifyAPI.Local
             });
         }
 
+        private void StartRaisingEvents()
+        {
+            if (!_isConnected || !_listenForEvents) return;
+            _eventTimer.Start();
+        }
+
         /// <summary>
         /// Connects with Spotify. Needs to be called before all other SpotifyAPI functions
         /// </summary>
         /// <returns>Returns true, if it was successful, false if not</returns>
         public Boolean Connect()
         {
-            return _rh.Init();
+            _isConnected = _rh.Init();
+            StartRaisingEvents();
+            return _isConnected;
         }
 
         /// <summary>
