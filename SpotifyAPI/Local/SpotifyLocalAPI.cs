@@ -15,6 +15,7 @@ namespace SpotifyAPI.Local
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
         private bool _listenForEvents;
+        private bool _isFirstTrackChange = true;
 
         public bool ListenForEvents
         {
@@ -97,15 +98,15 @@ namespace SpotifyAPI.Local
                 _eventTimer.Start();
                 return;
             }
-            if (newStatusResponse.Track != null && _eventStatusResponse.Track != null)
+            if (_isFirstTrackChange && newStatusResponse.Track != null)
+            {
+                RaiseOnTrackChange(null, newStatusResponse.Track);
+            }
+            else if (newStatusResponse.Track != null && _eventStatusResponse.Track != null)
             {
                 if (newStatusResponse.Track.TrackResource?.Uri != _eventStatusResponse.Track.TrackResource?.Uri)
                 {
-                    OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
-                    {
-                        OldTrack = _eventStatusResponse.Track,
-                        NewTrack = newStatusResponse.Track
-                    });
+                    RaiseOnTrackChange(_eventStatusResponse.Track, newStatusResponse.Track);
                 }
             }
             if (newStatusResponse.Playing != _eventStatusResponse.Playing)
@@ -132,6 +133,16 @@ namespace SpotifyAPI.Local
             }
             _eventStatusResponse = newStatusResponse;
             _eventTimer.Start();
+        }
+
+        private void RaiseOnTrackChange(Track oldTrack, Track newTrack)
+        {
+            _isFirstTrackChange = false;
+            OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
+            {
+                OldTrack = oldTrack,
+                NewTrack = newTrack
+            });
         }
 
         /// <summary>
