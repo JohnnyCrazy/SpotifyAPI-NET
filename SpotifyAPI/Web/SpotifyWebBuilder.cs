@@ -354,7 +354,7 @@ namespace SpotifyAPI.Web
         {
             limit = Math.Min(limit, 50);
             const FollowType followType = FollowType.Artist; //currently only artist is supported.
-            StringBuilder builder = new StringBuilder(APIBase + "/me/following?type=" + followType.GetStringAttribute(""));
+            StringBuilder builder = new StringBuilder(APIBase + "/me/following?type=" + followType.GetStringAttribute());
             builder.Append("&limit=" + limit);
             if (!string.IsNullOrEmpty(after))
                 builder.Append("&after=" + after);
@@ -369,7 +369,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string Follow(FollowType followType)
         {
-            return $"{APIBase}/me/following?type={followType.GetStringAttribute("")}";
+            return $"{APIBase}/me/following?type={followType.GetStringAttribute()}";
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string Unfollow(FollowType followType)
         {
-            return $"{APIBase}/me/following?type={followType.GetStringAttribute("")}";
+            return $"{APIBase}/me/following?type={followType.GetStringAttribute()}";
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string IsFollowing(FollowType followType, List<string> ids)
         {
-            return $"{APIBase}/me/following/contains?type={followType.GetStringAttribute("")}&ids={string.Join(",", ids)}";
+            return $"{APIBase}/me/following/contains?type={followType.GetStringAttribute()}&ids={string.Join(",", ids)}";
         }
 
         /// <summary>
@@ -563,7 +563,7 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder($"{APIBase}/me/top/tracks");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offest);
-            builder.Append("&time_range=" + timeRange.GetStringAttribute(""));
+            builder.Append("&time_range=" + timeRange.GetStringAttribute());
             return builder.ToString();
         }
 
@@ -583,7 +583,7 @@ namespace SpotifyAPI.Web
             StringBuilder builder = new StringBuilder($"{APIBase}/me/top/artists");
             builder.Append("?limit=" + limit);
             builder.Append("&offset=" + offest);
-            builder.Append("&time_range=" + timeRange.GetStringAttribute(""));
+            builder.Append("&time_range=" + timeRange.GetStringAttribute());
             return builder.ToString();
         }
 
@@ -840,5 +840,153 @@ namespace SpotifyAPI.Web
         }
 
         #endregion Tracks
+
+        #region Player
+
+        /// <summary>
+        ///     Get information about a user’s available devices.
+        /// </summary>
+        /// <returns></returns>
+        public string GetDevices()
+        {
+            return $"{APIBase}/me/player/devices";
+        }
+
+        /// <summary>
+        ///     Get information about the user’s current playback state, including track, track progress, and active device.
+        /// </summary>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        public string GetPlayback(string market = "")
+        {
+            if (string.IsNullOrEmpty(market))
+                return $"{APIBase}/me/player";
+            return $"{APIBase}/me/player?market={market}";
+        }
+
+        /// <summary>
+        ///     Get the object currently being played on the user’s Spotify account.
+        /// </summary>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        public string GetPlayingTrack(string market = "")
+        {
+            if (string.IsNullOrEmpty(market))
+                return $"{APIBase}/me/player/currently-playing";
+            return $"{APIBase}/me/player/currently-playing?market={market}";
+        }
+
+        /// <summary>
+        ///     Transfer playback to a new device and determine if it should start playing.
+        /// </summary>
+        /// <returns></returns>
+        public string TransferPlayback()
+        {
+            return $"{APIBase}/me/player";
+        }
+
+        /// <summary>
+        ///     Start a new context or resume current playback on the user’s active device.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string ResumePlayback(string deviceId = "")
+        {
+            if(string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/play";
+            return $"{APIBase}/me/player/play?device_id={deviceId}";
+        }
+
+        /// <summary>
+        ///     Pause playback on the user’s account.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string PausePlayback(string deviceId = "")
+        {
+            if (string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/pause";
+            return $"{APIBase}/me/player/pause?device_id={deviceId}";
+        }
+
+        /// <summary>
+        ///     Skips to next track in the user’s queue.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string SkipPlaybackToNext(string deviceId = "")
+        {
+            if (string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/next";
+            return $"{APIBase}/me/player/next?device_id={deviceId}";
+        }
+
+        /// <summary>
+        ///     Skips to previous track in the user’s queue.
+        ///     Note that this will ALWAYS skip to the previous track, regardless of the current track’s progress.
+        ///     Returning to the start of the current track should be performed using the https://api.spotify.com/v1/me/player/seek endpoint.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string SkipPlaybackToPrevious(string deviceId = "")
+        {
+            if (string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/previous";
+            return $"{APIBase}/me/player/previous?device_id={deviceId}";
+        }
+
+        /// <summary>
+        ///     Seeks to the given position in the user’s currently playing track.
+        /// </summary>
+        /// <param name="positionMs">The position in milliseconds to seek to. Must be a positive number. 
+        /// Passing in a position that is greater than the length of the track will cause the player to start playing the next song.</param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string SeekPlayback(int positionMs, string deviceId = "")
+        {
+            if (string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/seek?position_ms={positionMs}";
+            return $"{APIBase}/me/player/seek?position_ms={positionMs}&device_id={deviceId}";
+        }
+
+        /// <summary>
+        ///     Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.
+        /// </summary>
+        /// <param name="repeatState">track, context or off.</param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string SetRepeatMode(RepeatState repeatState, string deviceId = "")
+        {
+            if (string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/repeat?state={repeatState.GetStringAttribute()}";
+            return $"{APIBase}/me/player/repeat?state={repeatState.GetStringAttribute()}&device_id={deviceId}";
+        }
+
+        /// <summary>
+        ///     Set the volume for the user’s current playback device.
+        /// </summary>
+        /// <param name="volumePercent">Integer. The volume to set. Must be a value from 0 to 100 inclusive.</param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string SetVolume(int volumePercent, string deviceId = "")
+        {
+            if (string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/volume?volume_percent={volumePercent}";
+            return $"{APIBase}/me/player/volume?volume_percent={volumePercent}&device_id={deviceId}";
+        }
+
+        /// <summary>
+        ///     Toggle shuffle on or off for user’s playback.
+        /// </summary>
+        /// <param name="shuffle">True of False.</param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public string SetShuffle(bool shuffle, string deviceId = "")
+        {
+            if (string.IsNullOrEmpty(deviceId))
+                return $"{APIBase}/me/player/shuffle?state={shuffle}";
+            return $"{APIBase}/me/player/shuffle?state={shuffle}&device_id={deviceId}";
+        }
+        #endregion
     }
 }

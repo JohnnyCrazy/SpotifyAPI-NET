@@ -7,7 +7,7 @@ namespace SpotifyAPI.Web
 {
     public static class Util
     {
-        public static string GetStringAttribute<T>(this T en, string separator) where T : struct, IConvertible
+        public static string GetStringAttribute<T>(this T en, string separator = "") where T : struct, IConvertible
         {
             Enum e = (Enum)(object)en;
             IEnumerable<StringAttribute> attributes =
