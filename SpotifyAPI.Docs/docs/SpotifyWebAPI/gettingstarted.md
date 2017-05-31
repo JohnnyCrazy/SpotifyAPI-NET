@@ -1,4 +1,4 @@
-#Getting started
+# Getting started
 
 This API provides full access to the new SpotifyWebAPI introduced [here](https://developer.spotify.com/web-api/).  
 With it, you can search for Tracks/Albums/Artists and also get User-based information.  
@@ -6,7 +6,7 @@ It's also possible to create new playlists and add tracks to it.
 
 ---
 
-##First steps
+## First steps
 
 **Imports**  
 So after you added the API to your project, you may want to add following imports to your files:
@@ -37,18 +37,18 @@ public static void Main(String[] args)
 
 ---
 
-##Authentication
+## Authentication
 If you look through the available API-Methods, you will soon notice nearly all of them require Authentication.
 Further infos on how to implement Authentication can be found [here](/SpotifyWebAPI/auth)
 
 ---
 
-##Examples  
+## Examples  
 A list of small examples can be found [here](/SpotifyWebAPI/examples). Do you think a specific example is missing? Feel free to open a PR/Issue!
 
 ---
 
-##Error-Handling
+## Error-Handling
 Every API-Call returns a reponse-model which consists of base-error model. To check if a specific API-Call was successful, use the following approach:
 ```cs
 PrivateProfile profile = _spotify.GetPrivateProfile();
@@ -59,7 +59,7 @@ if (profile.HasError())
 }
 ```
 
-##Asynchronous
+## Asynchronous
 Every API-Call now has an asynchronous method. Just append `Async` to the Method-Name.  
 Example:
 ```cs
@@ -72,28 +72,28 @@ public async void Test()
 
 ---
 
-##API-Reference
+## API-Reference
 
-###Albums
+### Albums
 * [GetAlbumTracks](/SpotifyWebAPI/albums#getalbumtracks)
 * [GetAlbum](/SpotifyWebAPI/albums#getalbum)
 * [GetSeveralAlbums](/SpotifyWebAPI/albums#getseveralalbums)
 
-###Artists
+### Artists
 * [GetArtist](/SpotifyWebAPI/artists#getartist)
 * [GetRelatedArtists](/SpotifyWebAPI/artists#getrelatedartists)
 * [GetArtistsTopTracks](/SpotifyWebAPI/artists#getartiststoptracks)
 * [GetArtistsAlbums](/SpotifyWebAPI/artists#getartistsalbums)
 * [GetSeveralArtists](/SpotifyWebAPI/artists#getseveralartists)
 
-###Browse
+### Browse
 * [GetFeaturedPlaylists](/SpotifyWebAPI/browse#getfeaturedplaylists)
 * [GetNewAlbumReleases](/SpotifyWebAPI/browse#getnewalbumreleases)
 * [GetCategories](/SpotifyWebAPI/browse#getcategories)
 * [GetCategory](/SpotifyWebAPI/browse#getcategory)
 * [GetCategoryPlaylists](/SpotifyWebAPI/browse#getcategoryplaylists)
 
-###Follow
+### Follow
 * [Follow](/SpotifyWebAPI/follow#follow)
 * [Unfollow](/SpotifyWebAPI/follow#unfollow)
 * [IsFollowing](/SpotifyWebAPI/follow#isfollowing)
@@ -101,7 +101,7 @@ public async void Test()
 * [UnfollowPlaylist](/SpotifyWebAPI/follow#unfollowplaylist)
 * [IsFollowingPlaylist](/SpotifyWebAPI/follow#isfollowingplaylist)
 
-###Library
+### Library
 * [SaveTracks](/SpotifyWebAPI/library#savetracks)
 * [SaveTrack](/SpotifyWebAPI/library#savetrack)
 * [GetSavedTracks](/SpotifyWebAPI/library#getsavedtracks)
@@ -113,7 +113,21 @@ public async void Test()
 * [RemoveSavedAlbums](/SpotifyWebAPI/library#removesavedalbums)
 * [CheckSavedAlbums](/SpotifyWebAPI/library#checksavedalbums)
 
-###Playlists
+### Player
+
+* [GetDevices](/SpotifyWebAPI/player#getdevices)
+* [GetPlayback](/SpotifyWebAPI/player#getplayback)
+* [GetPlayingTrack](/SpotifyWebAPI/player#getplayingtrack)
+* [TransferPlayback](/SpotifyWebAPI/player#transferplayback)
+* [ResumePlayback](/SpotifyWebAPI/player#resumeplayback)
+* [PausePlayback](/SpotifyWebAPI/player#pauseplayback)
+* [SkipPlaybackToNext](/SpotifyWebAPI/player#skipplaybacktonext)
+* [SkipPlaybackToPrevious](/SpotifyWebAPI/player#skipplaybacktoprevious)
+* [SetRepeatMode](/SpotifyWebAPI/player#setrepeatmode)
+* [SetVolume](/SpotifyWebAPI/player#setvolume)
+* [SetShuffle](/SpotifyWebAPI/player#setshuffle)
+
+### Playlists
 * [GetUserPlaylists](/SpotifyWebAPI/playlists#getuserplaylists)
 * [GetPlaylist](/SpotifyWebAPI/playlists#getplaylist)
 * [GetPlaylistTracks](/SpotifyWebAPI/playlists#getplaylisttracks)
@@ -126,16 +140,16 @@ public async void Test()
 * [AddPlaylistTrack](/SpotifyWebAPI/playlists#addplaylisttrack)
 * [ReorderPlaylist](/SpotifyWebAPI/playlists#reorderplaylist)
 
-###Profiles
+### Profiles
 * [GetPublicProfile](/SpotifyWebAPI/profiles#getpublicprofile)
 * [GetPrivateProfile](/SpotifyWebAPI/profiles#getprivateprofile)
 
-###Search
+### Search
 * [SearchItems](/SpotifyWebAPI/search#searchitems)
 
-###Tracks
+### Tracks
 * [GetSeveralTracks](/SpotifyWebAPI/tracks#getseveraltracks)
 * [GetTrack](/SpotifyWebAPI/tracks#gettrack)
 
-###Util
+### Util
 * [Utility-Functions](/SpotifyWebAPI/util)
