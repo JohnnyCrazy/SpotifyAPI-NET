@@ -43,8 +43,9 @@ namespace SpotifyAPI.Web
                 }
                 using (HttpResponseMessage response = Task.Run(() => client.GetAsync(url)).Result)
                 {
-                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo()
+                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
+                        StatusCode = response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
                 }
@@ -64,8 +65,9 @@ namespace SpotifyAPI.Web
                 }
                 using (HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(false))
                 {
-                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo()
+                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
+                        StatusCode = response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, await response.Content.ReadAsByteArrayAsync());
                 }
@@ -116,6 +118,7 @@ namespace SpotifyAPI.Web
                 {
                     return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
+                        StatusCode = response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
                 }
@@ -142,6 +145,7 @@ namespace SpotifyAPI.Web
                 {
                     return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
+                        StatusCode = response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, await response.Content.ReadAsByteArrayAsync());
                 }
