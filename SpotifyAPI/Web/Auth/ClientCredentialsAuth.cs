@@ -23,7 +23,6 @@ namespace SpotifyAPI.Web.Auth
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 wc.Headers.Add("Authorization",
                     "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + ClientSecret)));
 

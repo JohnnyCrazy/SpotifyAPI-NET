@@ -46,7 +46,6 @@ namespace SpotifyAPI.Web.Auth
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 wc.Headers.Add("Authorization",
                     "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + clientSecret)));
                 NameValueCollection col = new NameValueCollection
@@ -125,8 +124,6 @@ namespace SpotifyAPI.Web.Auth
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
-
                 NameValueCollection col = new NameValueCollection
                 {
                     {"grant_type", "authorization_code"},

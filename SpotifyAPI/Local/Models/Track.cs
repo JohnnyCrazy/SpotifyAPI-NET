@@ -66,7 +66,6 @@ namespace SpotifyAPI.Local.Models
             string raw;
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 raw = wc.DownloadString("http://open.spotify.com/album/" + AlbumResource.Uri.Split(new[] { ":" }, StringSplitOptions.None)[2]);
             }
             raw = raw.Replace("\t", "");
@@ -99,7 +98,6 @@ namespace SpotifyAPI.Local.Models
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 string url = GetAlbumArtUrl(size);
                 if (url == "")
                     return null;
@@ -120,7 +118,6 @@ namespace SpotifyAPI.Local.Models
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 string url = GetAlbumArtUrl(size);
                 if (url == "")
                     return null;
@@ -137,7 +134,6 @@ namespace SpotifyAPI.Local.Models
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 string url = GetAlbumArtUrl(size);
                 if (string.IsNullOrEmpty(url))
                     return null;
@@ -158,7 +154,6 @@ namespace SpotifyAPI.Local.Models
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 string url = GetAlbumArtUrl(size);
                 if (string.IsNullOrEmpty(url))
                     return null;
