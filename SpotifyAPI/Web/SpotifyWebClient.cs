@@ -38,7 +38,7 @@ namespace SpotifyAPI.Web
                 {
                     foreach (KeyValuePair<string, string> headerPair in headers)
                     {
-                        client.DefaultRequestHeaders.Add(headerPair.Key, headerPair.Value);
+                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
                     }
                 }
                 using (HttpResponseMessage response = Task.Run(() => client.GetAsync(url)).Result)
@@ -60,7 +60,7 @@ namespace SpotifyAPI.Web
                 {
                     foreach (KeyValuePair<string, string> headerPair in headers)
                     {
-                        client.DefaultRequestHeaders.Add(headerPair.Key, headerPair.Value);
+                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
                     }
                 }
                 using (HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(false))
@@ -106,7 +106,7 @@ namespace SpotifyAPI.Web
                 {
                     foreach (KeyValuePair<string, string> headerPair in headers)
                     {
-                        client.DefaultRequestHeaders.Add(headerPair.Key, headerPair.Value);
+                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
                     }
                 }
 
@@ -133,7 +133,7 @@ namespace SpotifyAPI.Web
                 {
                     foreach (KeyValuePair<string, string> headerPair in headers)
                     {
-                        client.DefaultRequestHeaders.Add(headerPair.Key, headerPair.Value);
+                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
                     }
                 }
 
