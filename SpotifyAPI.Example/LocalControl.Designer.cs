@@ -61,6 +61,7 @@
             this.artistLinkLabel = new System.Windows.Forms.LinkLabel();
             this.titleLinkLabel = new System.Windows.Forms.LinkLabel();
             this.smallAlbumPicture = new System.Windows.Forms.PictureBox();
+            this.runSpotifyChk = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.bigAlbumPicture)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.trackInfoBox.SuspendLayout();
@@ -97,9 +98,9 @@
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(3, 57);
+            this.groupBox1.Location = new System.Drawing.Point(3, 65);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(318, 286);
+            this.groupBox1.Size = new System.Drawing.Size(318, 278);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Spotify Info";
@@ -167,7 +168,7 @@
             // skipBtn
             // 
             this.skipBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skipBtn.Location = new System.Drawing.Point(245, 252);
+            this.skipBtn.Location = new System.Drawing.Point(245, 241);
             this.skipBtn.Name = "skipBtn";
             this.skipBtn.Size = new System.Drawing.Size(67, 23);
             this.skipBtn.TabIndex = 24;
@@ -178,7 +179,7 @@
             // prevBtn
             // 
             this.prevBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prevBtn.Location = new System.Drawing.Point(164, 252);
+            this.prevBtn.Location = new System.Drawing.Point(164, 241);
             this.prevBtn.Name = "prevBtn";
             this.prevBtn.Size = new System.Drawing.Size(75, 23);
             this.prevBtn.TabIndex = 23;
@@ -189,7 +190,7 @@
             // pauseBtn
             // 
             this.pauseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pauseBtn.Location = new System.Drawing.Point(83, 252);
+            this.pauseBtn.Location = new System.Drawing.Point(83, 241);
             this.pauseBtn.Name = "pauseBtn";
             this.pauseBtn.Size = new System.Drawing.Size(75, 23);
             this.pauseBtn.TabIndex = 22;
@@ -200,7 +201,7 @@
             // playBtn
             // 
             this.playBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playBtn.Location = new System.Drawing.Point(6, 252);
+            this.playBtn.Location = new System.Drawing.Point(6, 241);
             this.playBtn.Name = "playBtn";
             this.playBtn.Size = new System.Drawing.Size(71, 23);
             this.playBtn.TabIndex = 21;
@@ -212,7 +213,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 206);
+            this.label1.Location = new System.Drawing.Point(6, 195);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 17);
             this.label1.TabIndex = 20;
@@ -221,7 +222,7 @@
             // contextTextBox
             // 
             this.contextTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contextTextBox.Location = new System.Drawing.Point(9, 226);
+            this.contextTextBox.Location = new System.Drawing.Point(9, 215);
             this.contextTextBox.Name = "contextTextBox";
             this.contextTextBox.Size = new System.Drawing.Size(232, 20);
             this.contextTextBox.TabIndex = 19;
@@ -229,7 +230,7 @@
             // playUrlBtn
             // 
             this.playUrlBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playUrlBtn.Location = new System.Drawing.Point(247, 165);
+            this.playUrlBtn.Location = new System.Drawing.Point(247, 154);
             this.playUrlBtn.Name = "playUrlBtn";
             this.playUrlBtn.Size = new System.Drawing.Size(65, 81);
             this.playUrlBtn.TabIndex = 18;
@@ -240,7 +241,7 @@
             // playTextBox
             // 
             this.playTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playTextBox.Location = new System.Drawing.Point(6, 185);
+            this.playTextBox.Location = new System.Drawing.Point(6, 174);
             this.playTextBox.Name = "playTextBox";
             this.playTextBox.Size = new System.Drawing.Size(232, 20);
             this.playTextBox.TabIndex = 17;
@@ -250,7 +251,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 165);
+            this.label2.Location = new System.Drawing.Point(6, 154);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(131, 17);
             this.label2.TabIndex = 16;
@@ -428,10 +429,21 @@
             this.smallAlbumPicture.TabIndex = 5;
             this.smallAlbumPicture.TabStop = false;
             // 
+            // runSpotifyChk
+            // 
+            this.runSpotifyChk.AutoSize = true;
+            this.runSpotifyChk.Location = new System.Drawing.Point(3, 42);
+            this.runSpotifyChk.Name = "runSpotifyChk";
+            this.runSpotifyChk.Size = new System.Drawing.Size(145, 17);
+            this.runSpotifyChk.TabIndex = 5;
+            this.runSpotifyChk.Text = "Run Spotify if not running";
+            this.runSpotifyChk.UseVisualStyleBackColor = true;
+            // 
             // LocalControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.runSpotifyChk);
             this.Controls.Add(this.trackInfoBox);
             this.Controls.Add(this.connectBtn);
             this.Controls.Add(this.groupBox1);
@@ -445,6 +457,7 @@
             this.trackInfoBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.smallAlbumPicture)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -483,5 +496,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label repeatShuffleLabel;
         private System.Windows.Forms.Label advertLabel;
+        private System.Windows.Forms.CheckBox runSpotifyChk;
     }
 }
