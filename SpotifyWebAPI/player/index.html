@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>- Library - SpotifyAPI-NET</title>
+	<title>- Player - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -87,12 +87,12 @@
                             <a href="../follow/">- Follow</a>
                         </li>
                     
-                        <li class="active">
-                            <a href="./">- Library</a>
+                        <li >
+                            <a href="../library/">- Library</a>
                         </li>
                     
-                        <li >
-                            <a href="../player/">- Player</a>
+                        <li class="active">
+                            <a href="./">- Player</a>
                         </li>
                     
                         <li >
@@ -131,12 +131,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../follow/">
+                    <a rel="next" href="../library/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../player/">
+                    <a rel="prev" href="../playlists/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -159,44 +159,49 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#savetracks">SaveTracks</a></li>
+        <li class="main active"><a href="#getdevices">GetDevices</a></li>
         
     
-        <li class="main "><a href="#savetrack">SaveTrack</a></li>
+        <li class="main "><a href="#getplayback">GetPlayback</a></li>
         
     
-        <li class="main "><a href="#getsavedtracks">GetSavedTracks</a></li>
+        <li class="main "><a href="#getplayingtrack">GetPlayingTrack</a></li>
         
     
-        <li class="main "><a href="#removesavedtracks">RemoveSavedTracks</a></li>
+        <li class="main "><a href="#transferplayback">TransferPlayback</a></li>
         
     
-        <li class="main "><a href="#checksavedtracks">CheckSavedTracks</a></li>
+        <li class="main "><a href="#resumeplayback">ResumePlayback</a></li>
         
     
-        <li class="main "><a href="#savealbums">SaveAlbums</a></li>
+        <li class="main "><a href="#pauseplayback">PausePlayback</a></li>
         
     
-        <li class="main "><a href="#savealbum">SaveAlbum</a></li>
+        <li class="main "><a href="#skipplaybacktonext">SkipPlaybackToNext</a></li>
         
     
-        <li class="main "><a href="#getsavedalbums">GetSavedAlbums</a></li>
+        <li class="main "><a href="#skipplaybacktoprevious">SkipPlaybackToPrevious</a></li>
         
     
-        <li class="main "><a href="#removesavedalbums">RemoveSavedAlbums</a></li>
+        <li class="main "><a href="#seekplayback">SeekPlayback</a></li>
         
     
-        <li class="main "><a href="#checksavedalbums">CheckSavedAlbums</a></li>
+        <li class="main "><a href="#setrepeatmode">SetRepeatMode</a></li>
+        
+    
+        <li class="main "><a href="#setvolume">SetVolume</a></li>
+        
+    
+        <li class="main "><a href="#setshuffle">SetShuffle</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="savetracks">SaveTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<h2 id="getdevices">GetDevices</h2>
 <blockquote>
-<p>Save one or more tracks to the current user’s “Your Music” library.</p>
+<p>Get information about a user’s available devices.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -207,26 +212,17 @@
 <th>Example</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td>ids</td>
-<td>A list of the Spotify IDs</td>
-<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
-</tr>
-</tbody>
+<tbody></tbody>
 </table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.SaveTracks(new List&lt;string&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
+<pre><code class="cs">AvailabeDevices devices = _spotify.GetDevices();
+devices.Devices.ForEach(device =&gt; Console.WriteLine(device.Name));
 </code></pre>
 
 <hr />
-<h2 id="savetrack">SaveTrack</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<h2 id="getplayback">GetPlayback</h2>
 <blockquote>
-<p>Save one track to the current user’s “Your Music” library.</p>
+<p>Get information about the user’s current playback state, including track, track progress, and active device.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -238,64 +234,23 @@ if(!response.HasError())
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>id</td>
-<td>A Spotify ID</td>
-<td><code>"3Hvu1pq89D4R0lyPBoujSv"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.SaveTrack(&quot;3Hvu1pq89D4R0lyPBoujSv&quot;);
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
-</code></pre>
-
-<hr />
-<h2 id="getsavedtracks">GetSavedTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Get a list of the songs saved in the current Spotify user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>[limit]</td>
-<td>The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</td>
-<td><code>20</code></td>
-</tr>
-<tr>
-<td>[offset]</td>
-<td>The index of the first object to return. Default: 0 (i.e., the first object)</td>
-<td><code>0</code></td>
-</tr>
 <tr>
 <td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td><code>DE</code></td>
+<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>Paging<SavedTrack></strong>, <strong>SavedTrack</strong> contains 2 properties, <code>DateTime AddedAt</code> and <code>FullTrack Track</code></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">Paging&lt;SavedTrack&gt; savedTracks = _spotify.GetSavedTracks();
-savedTracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
+<pre><code class="cs">PlaybackContext context = _spotify.GetPlayback();
+if(contex.Item != null)
+  Console.WriteLine(context.Item.Name)); //Print the current song
 </code></pre>
 
 <hr />
-<h2 id="removesavedtracks">RemoveSavedTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<h2 id="getplayingtrack">GetPlayingTrack</h2>
 <blockquote>
-<p>Remove one or more tracks from the current user’s “Your Music” library.</p>
+<p>Get the object currently being played on the user’s Spotify account.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -307,154 +262,24 @@ savedTracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>ids</td>
-<td>A list of the Spotify IDs.</td>
-<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.RemoveSavedTracks(new List&lt;string&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
-</code></pre>
-
-<hr />
-<h2 id="checksavedtracks">CheckSavedTracks</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ids</td>
-<td>A list of the Spotify IDs.</td>
-<td><code>new List&lt;String&gt; { "3Hvu1pq89D4R0lyPBoujSv" }</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ListResponse<bool></strong> which contains a property, <code>List&lt;bool&gt; List</code></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ListResponse&lt;bool&gt; tracksSaved = _spotify.CheckSavedTracks(new List&lt;String&gt; { &quot;3Hvu1pq89D4R0lyPBoujSv&quot; });
-if(tracksSaved.List[0])
-    Console.WriteLine(&quot;The track is in your library!&quot;);
-</code></pre>
-
-<hr />
-<h2 id="savealbums">SaveAlbums</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Save one or more albums to the current user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ids</td>
-<td>A list of the Spotify IDs</td>
-<td><code>new List&lt;String&gt; { "1cq06d0kTUnFmJHixz1RaF" }</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.SaveAlbums(new List&lt;string&gt; { &quot;1cq06d0kTUnFmJHixz1RaF&quot; });
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
-</code></pre>
-
-<hr />
-<h2 id="savealbum">SaveAlbum</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Save one album to the current user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>A Spotify ID</td>
-<td><code>"1cq06d0kTUnFmJHixz1RaF"</code></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.SaveAlbum(&quot;1cq06d0kTUnFmJHixz1RaF&quot;);
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
-</code></pre>
-
-<hr />
-<h2 id="getsavedalbums">GetSavedAlbums</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Get a list of the albums saved in the current Spotify user’s “Your Music” library.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>[limit]</td>
-<td>The maximum number of objects to return. Default: 20. Minimum: 1. Maximum: 50.</td>
-<td><code>20</code></td>
-</tr>
-<tr>
-<td>[offset]</td>
-<td>The index of the first object to return. Default: 0 (i.e., the first object)</td>
-<td><code>0</code></td>
-</tr>
 <tr>
 <td>[market]</td>
 <td>An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</td>
-<td><code>DE</code></td>
+<td><code>"DE"</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <code>Paging&lt;SavedAlbum&gt;</code>, <strong>SavedAlbum</strong> contains 2 properties, <code>DateTime AddedAt</code> and <code>FullAlbum Album</code></p>
+<p>This is a simpler (less data) version of <code>GetPlayback</code></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">Paging&lt;SavedAlbum&gt; savedAlbums = _spotify.GetSavedAlbums();
-savedAlbums.Items.ForEach(album =&gt; Console.WriteLine(album.Album.Name));
+<pre><code class="cs">PlaybackContext context = _spotify.GetPlayingTrack();
+if(contex.Item != null)
+  Console.WriteLine(context.Item.Name)); //Print the current song
 </code></pre>
 
 <hr />
-<h2 id="removesavedalbums">RemoveSavedAlbums</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<h2 id="transferplayback">TransferPlayback</h2>
 <blockquote>
-<p>Remove one or more albums from the current user’s “Your Music” library.</p>
+<p>Transfer playback to a new device and determine if it should start playing.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -467,24 +292,25 @@ savedAlbums.Items.ForEach(album =&gt; Console.WriteLine(album.Album.Name));
 </thead>
 <tbody>
 <tr>
-<td>ids</td>
-<td>A list of the Spotify IDs.</td>
-<td><code>new List&lt;String&gt; { "1cq06d0kTUnFmJHixz1RaF" }</code></td>
+<td>deviceIds or deviceId</td>
+<td>A JSON array containing the ID of the device on which playback should be started/transferred</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+<tr>
+<td>play</td>
+<td>true: ensure playback happens on new device, false: keep current playback state</td>
+<td><code>true</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>ErrorResponse</strong> which just contains a possible error. (<code>response.HasError()</code> and <code>response.Error</code>)</p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">ErrorResponse response = _spotify.RemoveSavedAlbums(new List&lt;string&gt; { &quot;1cq06d0kTUnFmJHixz1RaF&quot; });
-if(!response.HasError())
-    Console.WriteLine(&quot;success&quot;);
+<pre><code class="cs">ErrorResponse error = _spotify.TransferPlayback(&quot;XXXX-XXXX-XXXX-XXXX&quot;);
 </code></pre>
 
 <hr />
-<h2 id="checksavedalbums">CheckSavedAlbums</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
+<h2 id="resumeplayback">ResumePlayback</h2>
 <blockquote>
-<p>Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.</p>
+<p>Start a new context or resume current playback on the user’s active device.</p>
 </blockquote>
 <p><strong>Paramters</strong>  </p>
 <table>
@@ -497,20 +323,234 @@ if(!response.HasError())
 </thead>
 <tbody>
 <tr>
-<td>ids</td>
-<td>A list of the Spotify IDs.</td>
-<td><code>new List&lt;String&gt; { "1cq06d0kTUnFmJHixz1RaF" }</code></td>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+<tr>
+<td>contextUri</td>
+<td>Spotify URI of the context to play</td>
+<td><code>"spotify:album:1Je1IMUlBXcx1Fz0WE7oPT"</code></td>
+</tr>
+<tr>
+<td>uris</td>
+<td>An array of the Spotify track URIs to play.</td>
+<td><code>new List&lt;string&gt; { "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" }</code></td>
+</tr>
+<tr>
+<td>offset</td>
+<td>Indicates from where in the context playback should start. Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</td>
+<td><code>0</code></td>
 </tr>
 </tbody>
 </table>
-<p>Returns a <strong>ListResponse<bool></strong> which contains a property, <code>List&lt;bool&gt; List</code></p>
 <p><strong>Usage</strong>  </p>
-<pre><code class="cs">ListResponse&lt;bool&gt; albumsSaved = _spotify.CheckSavedAlbums(new List&lt;String&gt; { &quot;1cq06d0kTUnFmJHixz1RaF&quot; });
-if(albumsSaved.List[0])
-    Console.WriteLine(&quot;The album is in your library!&quot;);
+<pre><code class="cs">ErrorResponse error = _spotify.ResumePlayback(uris: new List&lt;string&gt; { &quot;spotify:track:4iV5W9uYEdYUVa79Axb7Rh&quot; });
 </code></pre>
 
-<hr /></div>
+<hr />
+<h2 id="pauseplayback">PausePlayback</h2>
+<blockquote>
+<p>Pause playback on the user’s account.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse error = _spotify.PausePlayback();
+</code></pre>
+
+<hr />
+<h2 id="skipplaybacktonext">SkipPlaybackToNext</h2>
+<blockquote>
+<p>Skips to next track in the user’s queue.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse error = _spotify.SkipPlaybackToNext();
+</code></pre>
+
+<hr />
+<h2 id="skipplaybacktoprevious">SkipPlaybackToPrevious</h2>
+<blockquote>
+<p>Skips to previous track in the user’s queue.
+Note that this will ALWAYS skip to the previous track, regardless of the current track’s progress.
+Returning to the start of the current track should be performed using the https://api.spotify.com/v1/me/player/seek endpoint.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse error = _spotify.SkipPlaybackToPrevious();
+</code></pre>
+
+<hr />
+<h2 id="seekplayback">SeekPlayback</h2>
+<blockquote>
+<p>Seeks to the given position in the user’s currently playing track.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>positionMs</td>
+<td>The position in milliseconds to seek to. Must be a positive number. Passing in a position that is greater than the length of the track will cause the player to start playing the next song.</td>
+<td><code>50</code></td>
+</tr>
+<tr>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse error = _spotify.SeekPlayback(50);
+</code></pre>
+
+<hr />
+<h2 id="setrepeatmode">SetRepeatMode</h2>
+<blockquote>
+<p>Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>state</td>
+<td>track, context or off.</td>
+<td><code>RepeatState.Track</code></td>
+</tr>
+<tr>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse error = _spotify.SetRepeatMode(RepeatState.Track);
+</code></pre>
+
+<hr />
+<h2 id="setvolume">SetVolume</h2>
+<blockquote>
+<p>Set the volume for the user’s current playback device.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>volumePercent</td>
+<td>Integer. The volume to set. Must be a value from 0 to 100 inclusive.</td>
+<td><code>50</code></td>
+</tr>
+<tr>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse error = _spotify.SetVolume(50);
+</code></pre>
+
+<hr />
+<h2 id="setshuffle">SetShuffle</h2>
+<blockquote>
+<p>Toggle shuffle on or off for user’s playback.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shuffle</td>
+<td>True or False</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>[deviceId]</td>
+<td>The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</td>
+<td><code>"XXXX-XXXX-XXXX-XXXX"</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">ErrorResponse error = _spotify.SetShuffle(false);
+</code></pre></div>
         </div>
 
         
