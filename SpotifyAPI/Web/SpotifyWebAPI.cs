@@ -2115,11 +2115,14 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, T> response = null;
             do
             {
-                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-                WebClient.SetHeader("Content-Type", "application/json");
+                Dictionary<string, string> headers = new Dictionary<string, string>
+                {
+                    { "Authorization", TokenType + " " + AccessToken},
+                    { "Content-Type", "application/json" }
+                };
 
                 if (response != null) { Thread.Sleep(RetryAfter); }
-                response = WebClient.UploadJson<T>(url, uploadData, method);
+                response = WebClient.UploadJson<T>(url, uploadData, method, headers);
 
                 response.Item2.AddResponseInfo(response.Item1);
                 lastError = response.Item2.Error;
@@ -2142,11 +2145,14 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, T> response = null;
             do
             {
-                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-                WebClient.SetHeader("Content-Type", "application/json");
+                Dictionary<string, string> headers = new Dictionary<string, string>
+                {
+                    { "Authorization", TokenType + " " + AccessToken},
+                    { "Content-Type", "application/json" }
+                };
 
                 if (response != null) { await Task.Delay(RetryAfter).ConfigureAwait(false); }
-                response = await WebClient.UploadJsonAsync<T>(url, uploadData, method).ConfigureAwait(false);
+                response = await WebClient.UploadJsonAsync<T>(url, uploadData, method, headers).ConfigureAwait(false);
 
                 response.Item2.AddResponseInfo(response.Item1);
                 lastError = response.Item2.Error;
@@ -2204,20 +2210,18 @@ namespace SpotifyAPI.Web
 
         private Tuple<ResponseInfo, T> DownloadDataAlt<T>(string url)
         {
+            Dictionary<string, string> headers = new Dictionary<string, string>();
             if (UseAuth)
-                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-            else
-                WebClient.RemoveHeader("Authorization");
-            return WebClient.DownloadJson<T>(url);
+                headers.Add("Authorization", TokenType + " " + AccessToken);
+            return WebClient.DownloadJson<T>(url, headers);
         }
 
         private Task<Tuple<ResponseInfo, T>> DownloadDataAltAsync<T>(string url)
         {
+            Dictionary<string, string> headers = new Dictionary<string, string>();
             if (UseAuth)
-                WebClient.SetHeader("Authorization", TokenType + " " + AccessToken);
-            else
-                WebClient.RemoveHeader("Authorization");
-            return WebClient.DownloadJsonAsync<T>(url);
+                headers.Add("Authorization", TokenType + " " + AccessToken);
+            return WebClient.DownloadJsonAsync<T>(url, headers);
         }
 
         #endregion Util

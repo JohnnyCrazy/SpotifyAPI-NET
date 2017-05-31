@@ -38,7 +38,7 @@ namespace SpotifyAPI.Example
             }
 
             authButton.Enabled = false;
-            _profile = _spotify.GetPrivateProfile();
+            _profile = await _spotify.GetPrivateProfileAsync();
 
             _savedTracks = GetSavedTracks();
             savedTracksCountLabel.Text = _savedTracks.Count.ToString();
