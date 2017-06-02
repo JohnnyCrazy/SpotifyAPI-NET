@@ -11,9 +11,6 @@ namespace SpotifyAPI.Local
 {
     public class SpotifyLocalAPI : IDisposable
     {
-        private const int WindowsSevenMajorVersion = 6;
-        private const int WindowsSevenMinorVersion = 1;
-
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
@@ -47,6 +44,8 @@ namespace SpotifyAPI.Local
             }
         }
 
+        private const int WindowsSevenMajorVersion = 6;
+        private const int WindowsSevenMinorVersion = 1;
         private const byte VkMediaNextTrack = 0xb0;
         private const byte VkMediaPrevTrack = 0xb1;
         private const int KeyeventfExtendedkey = 0x1;
