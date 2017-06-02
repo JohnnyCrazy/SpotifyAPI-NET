@@ -138,12 +138,8 @@ namespace SpotifyAPI.Local
 
         private bool IsOSCompatible(int minMajor, int minMinor)
         {
-            if (Environment.OSVersion.Version.Major > minMajor || (Environment.OSVersion.Version.Major == minMajor && Environment.OSVersion.Version.Minor >= minMinor))
-                return true;
-            else
-                return false;
+            return Environment.OSVersion.Version.Major > minMajor || (Environment.OSVersion.Version.Major == minMajor && Environment.OSVersion.Version.Minor >= minMinor);
         }
-
         /// <summary>
         /// Connects with Spotify. Needs to be called before all other SpotifyAPI functions
         /// </summary>
