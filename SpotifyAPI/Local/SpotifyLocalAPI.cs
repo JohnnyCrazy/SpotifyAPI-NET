@@ -11,6 +11,9 @@ namespace SpotifyAPI.Local
 {
     public class SpotifyLocalAPI : IDisposable
     {
+        private const int WINDOWS7_MAJOR_VERSION = 6;
+        private const int WINDOWS7_MINOR_VERSION = 1;
+
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
@@ -134,6 +137,14 @@ namespace SpotifyAPI.Local
             _eventTimer.Start();
         }
 
+        private bool IsOSCompatible(int minMajor, int minMinor)
+        {
+            if (Environment.OSVersion.Version.Major > minMajor || (Environment.OSVersion.Version.Major == minMajor && Environment.OSVersion.Version.Minor >= minMinor))
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Connects with Spotify. Needs to be called before all other SpotifyAPI functions
         /// </summary>
@@ -157,13 +168,8 @@ namespace SpotifyAPI.Local
         /// </summary>
         public void Mute()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (IsOSCompatible(WINDOWS7_MAJOR_VERSION, WINDOWS7_MINOR_VERSION))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if(Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             VolumeMixerControl.MuteSpotify(true);
         }
 
@@ -172,13 +178,8 @@ namespace SpotifyAPI.Local
         /// </summary>
         public void UnMute()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (IsOSCompatible(WINDOWS7_MAJOR_VERSION, WINDOWS7_MINOR_VERSION))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             VolumeMixerControl.MuteSpotify(false);
         }
 
@@ -188,13 +189,8 @@ namespace SpotifyAPI.Local
         /// <returns>Null if an error occured, otherwise the muted state</returns>
         public bool IsSpotifyMuted()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (IsOSCompatible(WINDOWS7_MAJOR_VERSION, WINDOWS7_MINOR_VERSION))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             return VolumeMixerControl.IsSpotifyMuted();
         }
 
@@ -204,13 +200,8 @@ namespace SpotifyAPI.Local
         /// <param name="volume">A value between 0 and 100</param>
         public void SetSpotifyVolume(float volume = 100)
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (IsOSCompatible(WINDOWS7_MAJOR_VERSION, WINDOWS7_MINOR_VERSION))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             if (volume < 0 || volume > 100)
                 throw new ArgumentOutOfRangeException(nameof(volume));
             VolumeMixerControl.SetSpotifyVolume(volume);
@@ -222,13 +213,8 @@ namespace SpotifyAPI.Local
         /// <returns>Null if an error occured, otherwise a float between 0 and 100</returns>
         public float GetSpotifyVolume()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (IsOSCompatible(WINDOWS7_MAJOR_VERSION, WINDOWS7_MINOR_VERSION))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             return VolumeMixerControl.GetSpotifyVolume();
         }
 
