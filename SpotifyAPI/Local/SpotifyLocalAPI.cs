@@ -168,7 +168,7 @@ namespace SpotifyAPI.Local
         /// </summary>
         public void Mute()
         {
-            if(IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
+            if(!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             VolumeMixerControl.MuteSpotify(true);
         }
@@ -178,7 +178,7 @@ namespace SpotifyAPI.Local
         /// </summary>
         public void UnMute()
         {
-            if (IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             VolumeMixerControl.MuteSpotify(false);
         }
@@ -189,7 +189,7 @@ namespace SpotifyAPI.Local
         /// <returns>Null if an error occured, otherwise the muted state</returns>
         public bool IsSpotifyMuted()
         {
-            if (IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             return VolumeMixerControl.IsSpotifyMuted();
         }
@@ -200,7 +200,7 @@ namespace SpotifyAPI.Local
         /// <param name="volume">A value between 0 and 100</param>
         public void SetSpotifyVolume(float volume = 100)
         {
-            if (IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             if (volume < 0 || volume > 100)
                 throw new ArgumentOutOfRangeException(nameof(volume));
@@ -213,7 +213,7 @@ namespace SpotifyAPI.Local
         /// <returns>Null if an error occured, otherwise a float between 0 and 100</returns>
         public float GetSpotifyVolume()
         {
-            if (IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             return VolumeMixerControl.GetSpotifyVolume();
         }
