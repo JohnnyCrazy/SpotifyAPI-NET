@@ -76,7 +76,7 @@ static void Main(string[] args)
         //Set this to localhost if you want to use the built-in HTTP Server
         RedirectUri = "http://localhost",
         //How many permissions we need?
-        Scope = Scope.USER_READ_PRIVATE,
+        Scope = Scope.UserReadPrivate,
     };
     //Start the internal http server
     auth.StartHttpServer();
