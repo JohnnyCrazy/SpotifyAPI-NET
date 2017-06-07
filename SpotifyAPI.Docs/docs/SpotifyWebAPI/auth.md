@@ -122,7 +122,7 @@ static void Main(string[] args)
         //Set this to localhost if you want to use the built-in HTTP Server
         RedirectUri = "http://localhost",
         //How many permissions we need?
-        Scope = Scope.USER_READ_PRIVATE,
+        Scope = Scope.UserReadPrivate,
     };
     //This will be called, if the user cancled/accept the auth-request
     auth.OnResponseReceivedEvent += auth_OnResponseReceivedEvent;
@@ -176,7 +176,7 @@ static void Main(string[] args)
         //Your client secret UNSECURE!!
         ClientSecret = "XXXXXXXXXXXX",
         //How many permissions we need?
-        Scope = Scope.USER_READ_PRIVATE,
+        Scope = Scope.UserReadPrivate,
     };
     //With this token object, we now can make calls
     Token token = auth.DoAuth();
