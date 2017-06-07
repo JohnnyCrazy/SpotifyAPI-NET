@@ -35,7 +35,7 @@ namespace SpotifyAPI.Web.Auth
         {
             var authentication = new ImplicitGrantAuth
             {
-                RedirectUri = $"{_redirectUrl}:{_listeningPort}",
+                RedirectUri = new UriBuilder(_redirectUrl) { Port = _listeningPort }.Uri.OriginalString.TrimEnd('/'),
                 ClientId = _clientId,
                 Scope = _scope,
                 State = _xss
