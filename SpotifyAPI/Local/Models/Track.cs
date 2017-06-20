@@ -74,7 +74,7 @@ namespace SpotifyAPI.Local.Models
 
             // <img id="cover-img" src="https://d3rt1990lpmkn.cloudfront.net/640/e62a04cfea4122961f3b9159493730c27d61f71b" ...
             string[] lines = raw.Split(new[] { "\n" }, StringSplitOptions.None);
-            const string pattern = "id=\"[^\"]*cover-img[^\"]*\".*?src=\"(.*?)\"";
+            const string pattern = "id=\"cover-img\".*?src=\"(.*?)\"";
             Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
             foreach (string line in lines)
             {
