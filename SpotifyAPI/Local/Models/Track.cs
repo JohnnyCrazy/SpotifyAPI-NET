@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SpotifyAPI.Local.Models
@@ -66,24 +67,23 @@ namespace SpotifyAPI.Local.Models
             string raw;
             using (WebClient wc = new WebClient())
             {
+                wc.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
                 raw = wc.DownloadString("http://open.spotify.com/album/" + AlbumResource.Uri.Split(new[] { ":" }, StringSplitOptions.None)[2]);
             }
             raw = raw.Replace("\t", "");
 
-            // < meta property = "og:image" content = "http://o.scdn.co/cover/12b318ffe0e4c92f9b4e1486e4726a57e6437ca7" >
-            // Spotify changed the response so I am now getting the substring from the first line that parses out the above tag.
+            // <img id="cover-img" src="https://d3rt1990lpmkn.cloudfront.net/640/e62a04cfea4122961f3b9159493730c27d61f71b" ...
             string[] lines = raw.Split(new[] { "\n" }, StringSplitOptions.None);
-            string startString = "<meta property=\"og:image\"";
-            string endString = "\">";
+            const string pattern = "id=\"cover-img\".*?src=\"(.*?)\"";
+            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
             foreach (string line in lines)
             {
-                if (line.Trim().Contains("<meta property=\"og:image\""))
+                MatchCollection matches = rgx.Matches(line);
+                if (matches.Count > 0)
                 {
-                    int start = line.IndexOf(startString, 0) + startString.Length;
-                    int end = line.IndexOf(endString, start);
-                    string content = line.Substring(start, end - start);
+                    string content = matches[0].Groups[1].Value;
                     string[] l = content.Split(new[] { "/" }, StringSplitOptions.None);
-                    return "http://o.scdn.co/" + albumsize + @"/" + l[4].Replace("\"", "").Replace(">", "");
+                    return "http://o.scdn.co/" + albumsize + @"/" + l[4];
                 }
             }
             return "";
