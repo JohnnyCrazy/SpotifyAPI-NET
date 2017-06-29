@@ -1781,6 +1781,28 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Get a detailed audio analysis for a single track identified by its unique Spotify ID.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the track.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public AudioAnalysis GetAudioAnalysis(string id)
+        {
+            return DownloadData<AudioAnalysis>(_builder.GetAudioAnalysis(id));
+        }
+
+        /// <summary>
+        ///     Get a detailed audio analysis for a single track identified by its unique Spotify ID asynchronously.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the track.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public Task<AudioAnalysis> GetAudioAnalysisAsync(string id)
+        {
+            return DownloadDataAsync<AudioAnalysis>(_builder.GetAudioAnalysis(id));
+        }
+
+        /// <summary>
         ///     Get audio feature information for a single track identified by its unique Spotify ID.
         /// </summary>
         /// <param name="id">The Spotify ID for the track.</param>

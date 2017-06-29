@@ -818,6 +818,17 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Get a detailed audio analysis for a single track identified by its unique Spotify ID.
+        /// </summary>
+        /// <param name="id">The Spotify ID for the track.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string GetAudioAnalysis(string id)
+        {
+            return $"{APIBase}/audio-analysis/{id}";
+        }
+
+        /// <summary>
         ///     Get audio feature information for a single track identified by its unique Spotify ID.
         /// </summary>
         /// <param name="id">The Spotify ID for the track.</param>
