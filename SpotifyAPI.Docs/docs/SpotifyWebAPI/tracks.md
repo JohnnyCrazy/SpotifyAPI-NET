@@ -38,3 +38,22 @@ Console.WriteLine(track.Name);
 ```
 
 ---
+##GetAudioAnalysis
+
+> Get a detailed audio analysis for a single track identified by its unique Spotify ID.
+
+**Paramters**  
+
+|Name|Description|Example|
+|--------------|-------------------------|-------------------------|
+|id| The Spotify ID for the track. | `"6Y1CLPwYe7zvI8PJiWVz6T"`
+
+Returns a AudioAnalysis (currently lacking Spotify documentation)
+
+**Usage**  
+```cs
+AudioAnalysis analysis = _spotify.GetAudioAnalysis("6Y1CLPwYe7zvI8PJiWVz6T");
+Console.WriteLine(analysis.Meta.DetailedStatus);
+```
+
+---
