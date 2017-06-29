@@ -48,7 +48,7 @@ Console.WriteLine(track.Name);
 |--------------|-------------------------|-------------------------|
 |id| The Spotify ID for the track. | `"6Y1CLPwYe7zvI8PJiWVz6T"`
 
-Returns a AudioAnalysis (currently lacking Spotify documentation)
+Returns a AudioAnalysis. This object is currently lacking Spotify documentation but archived [EchoNest documentation](https://web.archive.org/web/20160528174915/http://developer.echonest.com/docs/v4/_static/AnalyzeDocumentation.pdf) is relevant.
 
 **Usage**  
 ```cs
