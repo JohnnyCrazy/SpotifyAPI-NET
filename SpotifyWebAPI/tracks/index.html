@@ -165,6 +165,9 @@
         <li class="main "><a href="#gettrack">GetTrack</a></li>
         
     
+        <li class="main "><a href="#getaudioanalysis">GetAudioAnalysis</a></li>
+        
+    
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
@@ -232,6 +235,34 @@ severalTracks.Tracks.ForEach(track =&gt; Console.WriteLine(track.Name));
 <p><strong>Usage</strong>  </p>
 <pre><code class="cs">FullTrack track = _spotify.GetTrack(&quot;6Y1CLPwYe7zvI8PJiWVz6T&quot;);
 Console.WriteLine(track.Name);
+</code></pre>
+
+<hr />
+<h2 id="getaudioanalysis">GetAudioAnalysis</h2>
+<blockquote>
+<p>Get a detailed audio analysis for a single track identified by its unique Spotify ID.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The Spotify ID for the track.</td>
+<td><code>"6Y1CLPwYe7zvI8PJiWVz6T"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a AudioAnalysis. This object is currently lacking Spotify documentation but archived <a href="https://web.archive.org/web/20160528174915/http://developer.echonest.com/docs/v4/_static/AnalyzeDocumentation.pdf">EchoNest documentation</a> is relevant.</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">AudioAnalysis analysis = _spotify.GetAudioAnalysis(&quot;6Y1CLPwYe7zvI8PJiWVz6T&quot;);
+Console.WriteLine(analysis.Meta.DetailedStatus);
 </code></pre>
 
 <hr /></div>
