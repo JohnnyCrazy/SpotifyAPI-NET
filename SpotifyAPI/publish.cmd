@@ -1,4 +1,4 @@
-if "%APPVEYOR_REPO_TAG %" == "true" (
+if "%APPVEYOR_REPO_TAG%" == "true" (
 echo Publishing...
 
 cd ./SpotifyAPI
