@@ -1985,7 +1985,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public ErrorResponse SetRepeatMode(RepeatState state, string deviceId = "")
         {
-            return UploadData<ErrorResponse>(_builder.SetRepeatMode(state, deviceId), string.Empty);
+            return UploadData<ErrorResponse>(_builder.SetRepeatMode(state, deviceId), string.Empty, "PUT");
         }
 
         /// <summary>
@@ -1996,7 +1996,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public ErrorResponse SetVolume(int volumePercent, string deviceId = "")
         {
-            return UploadData<ErrorResponse>(_builder.SetVolume(volumePercent, deviceId), string.Empty);
+            return UploadData<ErrorResponse>(_builder.SetVolume(volumePercent, deviceId), string.Empty, "PUT");
         }
 
         /// <summary>
@@ -2007,7 +2007,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public ErrorResponse SetShuffle(bool shuffle, string deviceId = "")
         {
-            return UploadData<ErrorResponse>(_builder.SetShuffle(shuffle, deviceId), string.Empty);
+            return UploadData<ErrorResponse>(_builder.SetShuffle(shuffle, deviceId), string.Empty, "PUT");
         }
 
         #endregion
