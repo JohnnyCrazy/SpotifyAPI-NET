@@ -172,6 +172,7 @@ namespace SpotifyAPI.Local
             var wc = new WebClient();
 
             wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.50.41368.gbd68dbef)");
+            wc.Proxy.Credentials = CredentialCache.DefaultCredentials;
 
             return wc;
         }
