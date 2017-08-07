@@ -1,6 +1,6 @@
-﻿using SpotifyAPI.Web;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SpotifyAPI.Local;
 using SpotifyAPI.Local.Models;
 
@@ -12,21 +12,26 @@ namespace SpotifyAPI.Example
 
         public static void Main(string[] args)
         {
-            Start();
+            var statusResult = Start();
+            statusResult.ContinueWith(task =>
+            {
+                Console.WriteLine(JsonConvert.SerializeObject(task.Result));
+            });
             Console.ReadLine();
         }
 
-        public static async Task Start()
+        public static async Task<StatusResponse> Start()
         {
             Console.WriteLine("Starting...");
             _spotify = new SpotifyLocalAPI();
 
             while (!await _spotify.Connect())
             {
+                Console.WriteLine("Trying to connect...");
                 await _spotify.Connect();
             }
-            StatusResponse status = await _spotify.GetStatus(); // never pass the while.... 
-            Console.WriteLine(status.Track.TrackResource.Name);
+
+            return await _spotify.GetStatus(); // never pass the while.... 
         }
     }
 }
