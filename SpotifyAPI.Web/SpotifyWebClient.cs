@@ -10,7 +10,7 @@ using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web
 {
-    internal class SpotifyWebClient : IClient
+    public class SpotifyWebClient : IClient
     {
         public JsonSerializerSettings JsonSettings { get; set; }
 
@@ -30,7 +30,7 @@ namespace SpotifyAPI.Web
 
         public async Task<Tuple<ResponseInfo, string>> Download(string url, params KeyValuePair<string, string>[] headers)
         {
-            Tuple<ResponseInfo, byte[]> raw = await DownloadRaw(url).ConfigureAwait(false);
+            Tuple<ResponseInfo, byte[]> raw = await DownloadRaw(url, headers).ConfigureAwait(false);
             return new Tuple<ResponseInfo, string>(raw.Item1, raw.Item2.Length > 0 ? Encoding.GetString(raw.Item2) : "{}");
         }
 
@@ -51,7 +51,7 @@ namespace SpotifyAPI.Web
 
         public async Task<Tuple<ResponseInfo, T>> DownloadJson<T>(string url, params KeyValuePair<string, string>[] headers)
         {
-            Tuple<ResponseInfo, string> response = await Download(url).ConfigureAwait(false);
+            Tuple<ResponseInfo, string> response = await Download(url, headers).ConfigureAwait(false);
             return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
         }
 
