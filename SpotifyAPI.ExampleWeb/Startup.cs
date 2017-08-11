@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AspNet.Security.OAuth.Spotify;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Enums;
 
@@ -69,16 +68,27 @@ namespace SpotifyAPI.ExampleWeb
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                LoginPath = new PathString("/signin"),
-                LogoutPath = new PathString("/signout"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(5),
+                LoginPath = new PathString("/Authentication/signin"),
+                LogoutPath = new PathString("/Authentication/signout")
             });
 
             app.UseSpotifyAuthentication(new SpotifyAuthenticationOptions()
             {
                 ClientId = Configuration["Spotify:ClientId"],
                 ClientSecret = Configuration["Spotify:ClientSecret"],
-                Scope = { Scope.UserReadPrivate.GetStringAttribute(":") , Scope.UserReadEmail.GetStringAttribute(":") , Scope.PlaylistReadPrivate.GetStringAttribute(":") , Scope.UserLibraryRead.GetStringAttribute(":") ,
-                    Scope.UserReadPrivate.GetStringAttribute(":") , Scope.UserFollowRead.GetStringAttribute(":") , Scope.UserReadBirthdate.GetStringAttribute(":") , Scope.UserTopRead.GetStringAttribute(":") , Scope.PlaylistReadCollaborative.GetStringAttribute(":") }
+                SaveTokens = true,
+                Scope = {
+                    Scope.UserReadPrivate.GetStringAttribute(":"),
+                    Scope.UserReadEmail.GetStringAttribute(":"),
+                    Scope.PlaylistReadPrivate.GetStringAttribute(":"),
+                    Scope.UserLibraryRead.GetStringAttribute(":"),
+                    Scope.UserReadPrivate.GetStringAttribute(":"),
+                    Scope.UserFollowRead.GetStringAttribute(":"),
+                    Scope.UserReadBirthdate.GetStringAttribute(":"),
+                    Scope.UserTopRead.GetStringAttribute(":"),
+                    Scope.PlaylistReadCollaborative.GetStringAttribute(":"),
+                }
             });
 
             app.UseMvc(routes =>

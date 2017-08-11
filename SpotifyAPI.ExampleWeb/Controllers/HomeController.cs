@@ -1,15 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using SpotifyAPI.Web;
 
 namespace SpotifyAPI.ExampleWeb.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var token = await HttpContext.Authentication.GetTokenAsync("access_token");
+            if (!string.IsNullOrEmpty(token))
+            {
+                var spotifyWebApi = new SpotifyWebAPI
+                {
+                    UseAuth = true,
+                    AccessToken = token,
+                    TokenType = "Bearer",
+                };
+                var profile = await spotifyWebApi.GetPrivateProfile();
+                ViewData["SpotifUserDisplayName"] = profile?.DisplayName;
+            }
             return View();
         }
 
