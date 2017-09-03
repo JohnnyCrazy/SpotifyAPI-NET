@@ -114,7 +114,6 @@ namespace SpotifyAPI.Local
                 {
                     if (SpotifyLocalAPI.IsSpotifyRunning())
                     {
-                        wc.Encoding = Encoding.UTF8;
                         response = "[ " + wc.DownloadString(address) + " ]";
                     }
                 }
