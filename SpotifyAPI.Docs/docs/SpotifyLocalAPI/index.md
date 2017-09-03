@@ -40,6 +40,18 @@ public static void Main(String[] args)
 }
 ```
 
+## Configuration
+
+Different spotify versions often require different configuration. Some versions run their web-helper on port `4371`, others on `4381`. Also, some use `https`, and others use `http`. You can use `SpotifyLocalAPIConfig` to configure the API:
+
+```cs
+_spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
+{
+    Port = 4371,
+    HostUrl = "https://127.0.0.1"
+});
+```
+
 ## Anti-Virus Blocking Response
 
 Some Anti-Virus Software blocks the response from spotify due wrong headers.
