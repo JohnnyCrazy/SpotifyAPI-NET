@@ -5,8 +5,8 @@
     {
         public int TimerInterval { get; set; } = 50;
 
-        public string HostUrl { get; set; } = "https://127.0.0.1";
+        public string HostUrl { get; set; } = "http://127.0.0.1";
 
-        public int Port { get; set; } = 4371;
+        public int Port { get; set; } = 4381;
     }
 }
