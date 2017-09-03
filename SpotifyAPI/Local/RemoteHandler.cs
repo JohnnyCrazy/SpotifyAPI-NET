@@ -56,8 +56,6 @@ namespace SpotifyAPI.Local
                 return null;
             }
             response = response.Replace("\\n", "");
-            byte[] bytes = Encoding.Default.GetBytes(response);
-            response = Encoding.UTF8.GetString(bytes);
             List<StatusResponse> raw = JsonConvert.DeserializeObject<List<StatusResponse>>(response);
             return raw[0];
         }
@@ -115,7 +113,10 @@ namespace SpotifyAPI.Local
                 using (var wc = new ExtendedWebClient())
                 {
                     if (SpotifyLocalAPI.IsSpotifyRunning())
+                    {
+                        wc.Encoding = Encoding.UTF8;
                         response = "[ " + wc.DownloadString(address) + " ]";
+                    }
                 }
             }
             catch
