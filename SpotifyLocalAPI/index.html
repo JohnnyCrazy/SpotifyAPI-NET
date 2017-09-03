@@ -163,6 +163,8 @@
         
             <li><a href="#first-steps">First steps</a></li>
         
+            <li><a href="#configuration">Configuration</a></li>
+        
             <li><a href="#anti-virus-blocking-response">Anti-Virus Blocking Response</a></li>
         
             <li><a href="#client-status">Client Status</a></li>
@@ -210,6 +212,15 @@ public static void Main(String[] args)
 
     StatusResponse status = _spotify.GetStatus(); //status contains infos
 }
+</code></pre>
+
+<h2 id="configuration">Configuration</h2>
+<p>Different spotify versions often require different configuration. Some versions run their web-helper on port <code>4371</code>, others on <code>4381</code>. Also, some use <code>https</code>, and others use <code>http</code>. You can use <code>SpotifyLocalAPIConfig</code> to configure the API:</p>
+<pre><code class="cs">_spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
+{
+    Port = 4371,
+    HostUrl = &quot;https://127.0.0.1&quot;
+});
 </code></pre>
 
 <h2 id="anti-virus-blocking-response">Anti-Virus Blocking Response</h2>
