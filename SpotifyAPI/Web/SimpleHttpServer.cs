@@ -280,7 +280,7 @@ namespace SpotifyAPI.Web
                 NameValueCollection col = HttpUtility.ParseQueryString(url);
                 if (col.Keys.Get(0) != "code")
                 {
-                    p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
+                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
                     t = new Thread(o =>
                     {
                         OnAuth?.Invoke(new AuthEventArgs()

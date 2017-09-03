@@ -65,8 +65,14 @@ namespace SpotifyAPI.Local
 
         public SpotifyLocalAPI(int timerIntervall = 50)
         {
-            _rh = new RemoteHandler();
+            _rh = new RemoteHandler(new SpotifyLocalAPIConfig());
             AttachTimer(timerIntervall);
+        }
+
+        public SpotifyLocalAPI(SpotifyLocalAPIConfig config)
+        {
+            _rh = new RemoteHandler(config);
+            AttachTimer(config.TimerInterval);
         }
 
         private void AttachTimer(int intervall)

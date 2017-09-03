@@ -13,7 +13,12 @@ namespace SpotifyAPI.Local
         public string OauthKey { get; private set; }
         public string CfidKey { get; private set; }
 
-        public const string Host = "127.0.0.1"; //Localhost since domain fails to resolve on some hosts
+        private SpotifyLocalAPIConfig _config;
+
+        public RemoteHandler(SpotifyLocalAPIConfig config)
+        {
+            _config = config;
+        }
 
         internal Boolean Init()
         {
@@ -103,7 +108,7 @@ namespace SpotifyAPI.Local
                 parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
             }
 
-            string address = "https://" + Host + ":4371/" + request + parameters;
+            string address = $"{_config.HostUrl}:{_config.Port}/{request}{parameters}";
             string response = "";
             try
             {
@@ -144,7 +149,7 @@ namespace SpotifyAPI.Local
                 parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
             }
 
-            string address = "https://" + Host + ":4371/" + request + parameters;
+            string address = $"{_config.HostUrl}:{_config.Port}/{request}{parameters}";
             string response = "";
             try
             {
