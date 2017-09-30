@@ -88,15 +88,15 @@ static void Main(string[] args)
 
 static void auth_OnResponseReceivedEvent(Token token, string state, string error)
 {
-    //stop the http server
-    auth.StopHttpServer();
-
     var spotify = new SpotifyWebApiClass()
     {
         TokenType = token.TokenType,
         AccessToken = token.AccessToken
     };
     //We can now make calls with the token object
+    
+    //stop the http server
+    auth.StopHttpServer();
 }
 ```
 
@@ -138,8 +138,6 @@ static void Main(string[] args)
 
 private static void auth_OnResponseReceivedEvent(AutorizationCodeAuthResponse response)
 {
-    //Stop the HTTP Server, done.
-    auth.StopHttpServer();
 
     //NEVER DO THIS! You would need to provide the ClientSecret.
     //You would need to do it e.g via a PHP-Script.
@@ -152,6 +150,9 @@ private static void auth_OnResponseReceivedEvent(AutorizationCodeAuthResponse re
     };
 
     //With the token object, you can now make API calls
+    
+    //Stop the HTTP Server, done.
+    auth.StopHttpServer();
 }
 ```
 
