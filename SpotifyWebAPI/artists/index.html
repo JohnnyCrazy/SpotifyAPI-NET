@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="JohnnyCrazy">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+
+	<title>- Artists - SpotifyAPI-NET</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/agate.min.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">SpotifyAPI-NET</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li >
+                    <a href="../..">Home</a>
+                </li>
+            
+            
+            
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        <li >
+                            <a href="../gettingstarted/">Getting started</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../examples/">Examples</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../auth/">Authentication</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../albums/">- Albums</a>
+                        </li>
+                    
+                        <li class="active">
+                            <a href="./">- Artists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../browse/">- Browse</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../follow/">- Follow</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../library/">- Library</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../player/">- Player</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../playlists/">- Playlists</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../profiles/">- Profiles</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../search/">- Search</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../tracks/">- Tracks</a>
+                        </li>
+                    
+                        <li >
+                            <a href="../util/">- Util</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li >
+                    <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                <li >
+                    <a rel="next" href="../albums/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../browse/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/JohnnyCrazy/SpotifyAPI-NET">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#getartist">GetArtist</a></li>
+        
+    
+        <li class="main "><a href="#getrelatedartists">GetRelatedArtists</a></li>
+        
+    
+        <li class="main "><a href="#getartiststoptracks">GetArtistsTopTracks</a></li>
+        
+    
+        <li class="main "><a href="#getartistsalbums">GetArtistsAlbums</a></li>
+        
+    
+        <li class="main "><a href="#getseveralartists">GetSeveralArtists</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h2 id="getartist">GetArtist</h2>
+<blockquote>
+<p>Get Spotify catalog information for a single artist identified by their unique Spotify ID.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The Spotify ID for the artist.</td>
+<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">FullArtist artist = _spotify.GetArtist(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
+Console.WriteLine()
+</code></pre>
+
+<hr />
+<h2 id="getrelatedartists">GetRelatedArtists</h2>
+<blockquote>
+<p>Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The Spotify ID for the artist.</td>
+<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>SeveralArtists</strong> object which contains the property <code>List&lt;FullArtist&gt; Artists</code> (<a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a>)</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">SeveralArtists artists = _spotify.GetRelatedArtists(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;);
+Console.WriteLine(artists.Artists[0].Name);
+</code></pre>
+
+<hr />
+<h2 id="getartiststoptracks">GetArtistsTopTracks</h2>
+<blockquote>
+<p>Get Spotify catalog information about an artist's top tracks by country.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The Spotify ID for the artist.</td>
+<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+</tr>
+<tr>
+<td>country</td>
+<td>The country: an ISO 3166-1 alpha-2 country code.</td>
+<td><code>"DE"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>SeveralTracks</strong> object which contains the property <code>List&lt;FullTrack&gt; Tracks</code> (<a href="https://developer.spotify.com/web-api/object-model/#track-object-full">FullTrack</a>)</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">SeveralTracks tracks = _spotify.GetArtistsTopTracks(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;, &quot;DE&quot;);
+Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
+</code></pre>
+
+<hr />
+<h2 id="getartistsalbums">GetArtistsAlbums</h2>
+<blockquote>
+<p>Get Spotify catalog information about an artist's albums. Optional parameters can be specified in the query string to filter and sort the response.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>The Spotify ID for the artist.</td>
+<td><code>"1KpCi9BOfviCVhmpI4G2sY"</code></td>
+</tr>
+<tr>
+<td>[type]</td>
+<td>A list of keywords that will be used to filter the response. If not supplied, all album types will be returned</td>
+<td><code>AlbumType.All</code></td>
+</tr>
+<tr>
+<td>[limit]</td>
+<td>The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</td>
+<td><code>20</code></td>
+</tr>
+<tr>
+<td>[offset]</td>
+<td>The index of the first album to return. Default: 0</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td>[market]</td>
+<td>An ISO 3166-1 alpha-2 country code. Supply this parameter to limit the response to one particular geographical market</td>
+<td><code>"DE"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#album-object-simplified">SimpleAlbum</a> wrapped inside a <a href="https://developer.spotify.com/web-api/object-model/#paging-object">Paging-object</a></p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">Paging&lt;SimpleAlbum&gt; albums = _spotify.GetArtistsAlbums(&quot;1KpCi9BOfviCVhmpI4G2sY&quot;, AlbumType.All);
+albums.Items.ForEach(album =&gt; Console.WriteLine(album.Name));
+</code></pre>
+
+<hr />
+<h2 id="getseveralartists">GetSeveralArtists</h2>
+<blockquote>
+<p>Get Spotify catalog information for several artists based on their Spotify IDs.</p>
+</blockquote>
+<p><strong>Paramters</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ids</td>
+<td>A list of the Spotify IDs for the artists. Maximum: 50 IDs.</td>
+<td><code>new List&lt;String&gt;() { "1KpCi9BOfviCVhmpI4G2sY" }</code></td>
+</tr>
+</tbody>
+</table>
+<p>Returns a <strong>SeveralArtists</strong> object which contains the property <code>List&lt;FullArtist&gt; Artists</code> (<a href="https://developer.spotify.com/web-api/object-model/#artist-object-full">FullArtist</a>)</p>
+<p><strong>Usage</strong>  </p>
+<pre><code class="cs">SeveralArtists artists = _spotify.GetSeveralArtists(new List&lt;String&gt;() {&quot;1KpCi9BOfviCVhmpI4G2sY&quot;});
+artists.Artists.ForEach(artist =&gt; Console.WriteLine(artist.Name));
+</code></pre>
+
+<hr /></div>
+        </div>
+
+        
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/base.js"></script>
+        <script src="../../highlight.js"></script>
+    </body>
+</html>
