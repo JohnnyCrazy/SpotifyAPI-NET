@@ -1,7 +1,7 @@
 if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" (
   if "%APPVEYOR_REPO_BRANCH%" == "master" (
     echo Building docs...
-    pip install mkdocs
+    pip install 'mkdocs<=0.16.3'
 
     cd ./SpotifyAPI.Docs
     mkdocs build --clean
