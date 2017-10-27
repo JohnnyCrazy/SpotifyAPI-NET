@@ -1974,7 +1974,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public ErrorResponse SeekPlayback(int positionMs, string deviceId = "")
         {
-            return UploadData<ErrorResponse>(_builder.SeekPlayback(positionMs, deviceId), string.Empty);
+            return UploadData<ErrorResponse>(_builder.SeekPlayback(positionMs, deviceId), string.Empty, "PUT");
         }
 
         /// <summary>
