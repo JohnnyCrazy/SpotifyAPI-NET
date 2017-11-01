@@ -4,7 +4,7 @@ This API provides some access to the local running Spotify-Client (Windows only)
 You can fetch details for the current track, play/pause, skip/previous track and
 get notified on various events.
 
-**NOTE:** This API is unofficial, things may brake in the future and there is no
+**NOTE:** This API is unofficial, things may break in the future and there is no
 guarantee everything works out of the box.
 
 ---
