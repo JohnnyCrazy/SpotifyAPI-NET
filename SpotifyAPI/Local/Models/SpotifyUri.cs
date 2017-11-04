@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpotifyAPI.Local.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,29 @@ namespace SpotifyAPI.Local.Models
 {
     public class SpotifyUri
     {
-        public string Base { get; internal set; }
-        public string Type { get; internal set; }
-        public string Id { get; internal set; }
+        internal Dictionary<UriType, string> _properties = new Dictionary<UriType, string>();
 
-        public SpotifyUri(string uriBase, string uriType, string uriId)
+        public string Base { get; internal set; }
+        public UriType Type => _properties?.LastOrDefault().Key ?? UriType.none;
+        public string Id => _properties?.LastOrDefault().Value;
+
+        public SpotifyUri(string uriBase, Dictionary<UriType, string> properties)
         {
             Base = uriBase;
-            Type = uriType;
-            Id = uriId;
+            _properties = properties;
+        }
+
+        public SpotifyUri(string uriBase, UriType uriType, string uriId)
+        {
+            Base = uriBase;
+            _properties.Add(uriType, uriId);
+        }
+
+        public string GetUriPropValue(UriType type)
+        {
+            if (!_properties.ContainsKey(type))
+                return null;
+            return _properties[type];
         }
 
         public static SpotifyUri Parse(string uri)
@@ -25,15 +40,23 @@ namespace SpotifyAPI.Local.Models
                 throw new ArgumentNullException("Uri");
 
             string[] props = uri.Split(':');
-            if (props.Length != 3)
+            if (props.Length < 3 || !Enum.TryParse(props[1], out UriType uriType))
                 throw new ArgumentException("Unexpected Uri");
 
-            return new SpotifyUri(props[0], props[1], props[2]);
+            Dictionary<UriType, string> properties = new Dictionary<UriType, string> { { uriType, props[2] } };
+
+            for (int index = 3; index < props.Length; index += 2)
+            {
+                if (Enum.TryParse(props[index], out UriType type))
+                    properties.Add(type, props[index + 1]);
+            }
+
+            return new SpotifyUri(props[0], properties);
         }
 
         public override string ToString()
         {
-            return $"{Base}:{Type}:{Id}";
+            return $"{Base}:{string.Join(":", _properties.SelectMany(x => new string[] { x.Key.ToString(), x.Value }))}";
         }
     }
 }
