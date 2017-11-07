@@ -39,15 +39,17 @@ namespace SpotifyAPI.Local.Models
             if (string.IsNullOrEmpty(uri))
                 throw new ArgumentNullException("Uri");
 
+            UriType uriType = UriType.none;
             string[] props = uri.Split(':');
-            if (props.Length < 3 || !Enum.TryParse(props[1], out UriType uriType))
+            if (props.Length < 3 || !Enum.TryParse(props[1], out uriType))
                 throw new ArgumentException("Unexpected Uri");
 
             Dictionary<UriType, string> properties = new Dictionary<UriType, string> { { uriType, props[2] } };
 
             for (int index = 3; index < props.Length; index += 2)
             {
-                if (Enum.TryParse(props[index], out UriType type))
+                UriType type = UriType.none;
+                if (Enum.TryParse(props[index], out type))
                     properties.Add(type, props[index + 1]);
             }
 
