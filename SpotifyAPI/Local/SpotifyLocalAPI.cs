@@ -303,6 +303,31 @@ namespace SpotifyAPI.Local
         }
 
         /// <summary>
+        /// Determines whether [spotify is installed].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [spotify is installed]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsSpotifyInstalled()
+        {
+            bool isInstalled = false;
+
+            // Checks if UWP Spotify is installed.
+            string uwpSpotifyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Packages\SpotifyAB.SpotifyMusic_zpdnekdrzrea0");
+
+            isInstalled = Directory.Exists(uwpSpotifyPath);
+
+            // If UWP Spotify is not installed, try look for desktop version
+            if (!isInstalled)
+            {
+                string desktopSpotifyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Spotify\Spotify.exe");
+                isInstalled = File.Exists(desktopSpotifyPath);
+            }
+
+            return isInstalled;
+        }
+
+        /// <summary>
         /// Runs Spotify
         /// </summary>
         public static void RunSpotify()
