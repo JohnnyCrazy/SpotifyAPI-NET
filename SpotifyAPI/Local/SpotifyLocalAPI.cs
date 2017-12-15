@@ -107,7 +107,8 @@ namespace SpotifyAPI.Local
             }
             if (newStatusResponse.Track != null && _eventStatusResponse.Track != null)
             {
-                if (newStatusResponse.Track.TrackResource?.Uri != _eventStatusResponse.Track.TrackResource?.Uri)
+                if (newStatusResponse.Track.TrackResource?.Uri != _eventStatusResponse.Track.TrackResource?.Uri ||
+                    newStatusResponse.Track.IsOtherTrackType() && newStatusResponse.Track.Length != this._eventStatusResponse.Track.Length)
                 {
                     OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {

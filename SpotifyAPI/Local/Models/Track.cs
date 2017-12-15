@@ -38,6 +38,15 @@ namespace SpotifyAPI.Local.Models
                 return true;
             return false;
         }
+        
+        /// <summary>
+        /// Checks if the track id of type "other"
+        /// </summary>
+        /// <returns>true if the track is neither an advert nor a normal track, for example a podcast</returns>
+        public bool IsOtherTrackType()
+        {
+            return TrackType == "other";
+        }
 
         /// <summary>
         /// Returns a URL to the album cover in the provided size
