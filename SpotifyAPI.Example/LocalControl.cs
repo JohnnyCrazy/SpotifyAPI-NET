@@ -84,21 +84,21 @@ namespace SpotifyAPI.Example
             if (track.IsAd())
                 return; //Don't process further, maybe null values
 
-            titleLinkLabel.Text = track.TrackResource.Name;
-            titleLinkLabel.Tag = track.TrackResource.Uri;
+            titleLinkLabel.Text = track.TrackResource?.Name;
+            titleLinkLabel.Tag = track.TrackResource?.Uri;
 
-            artistLinkLabel.Text = track.ArtistResource.Name;
-            artistLinkLabel.Tag = track.ArtistResource.Uri;
+            artistLinkLabel.Text = track.ArtistResource?.Name;
+            artistLinkLabel.Tag = track.ArtistResource?.Uri;
 
-            albumLinkLabel.Text = track.AlbumResource.Name;
-            albumLinkLabel.Tag = track.AlbumResource.Uri;
+            albumLinkLabel.Text = track.AlbumResource?.Name;
+            albumLinkLabel.Tag = track.AlbumResource?.Uri;
 
-            SpotifyUri uri = track.TrackResource.ParseUri();
+            SpotifyUri uri = track.TrackResource?.ParseUri();
 
-            trackInfoBox.Text = $@"Track Info - {uri.Id}";
+            trackInfoBox.Text = $@"Track Info - {uri?.Id}";
 
-            bigAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size640);
-            smallAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size160);
+            bigAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size640) : null;
+            smallAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size160) : null;
         }
 
         public void UpdatePlayingStatus(bool playing)
