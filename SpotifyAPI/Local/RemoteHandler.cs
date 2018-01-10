@@ -2,12 +2,18 @@
 using SpotifyAPI.Local.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Web;
+
+[assembly: InternalsVisibleTo("SpotifyAPI.Tests")]
+
 
 namespace SpotifyAPI.Local
 {
+
     internal class RemoteHandler
     {
         public string OauthKey { get; private set; }
@@ -29,23 +35,32 @@ namespace SpotifyAPI.Local
 
         internal async Task SendPauseRequest()
         {
-            await QueryAsync("remote/pause.json?pause=true", true, true, -1).ConfigureAwait(false);
+            var @params = new NameValueCollection() { { "pause", "true" } };
+            await QueryAsync("remote/pause.json", true, true, -1, @params).ConfigureAwait(false);
         }
 
         internal async Task SendPlayRequest()
         {
-            await QueryAsync("remote/pause.json?pause=false", true, true, -1).ConfigureAwait(false);
+            var @params = new NameValueCollection() { { "pause", "false" } };
+            await QueryAsync("remote/pause.json", true, true, -1, @params).ConfigureAwait(false);
         }
 
         internal async Task SendPlayRequest(string url, string context = "")
         {
+
             // TODO: instead of having an empty context, one way to fix the bug with the playback time beyond the length of a song would be to provide a 1-song context, and it would be fixed.
-            await QueryAsync($"remote/play.json?uri={url}&context={context}", true, true, -1).ConfigureAwait(false);
+            var @params = new NameValueCollection() { {"uri", url },
+                { "context", context} };
+            await QueryAsync($"remote/play.json", true, true, -1, @params).ConfigureAwait(false);
+
         }
 
         internal async Task SendQueueRequest(string url)
         {
-            await QueryAsync("remote/play.json?uri=" + url + "?action=queue", true, true, -1).ConfigureAwait(false);
+            var @params = new NameValueCollection() { {"uri", url },
+                { "action", "queue"} };
+            await QueryAsync("remote/play.json", true, true, -1, @params).ConfigureAwait(false);
+
         }
 
         internal StatusResponse GetNewStatus()
@@ -83,31 +98,41 @@ namespace SpotifyAPI.Local
             return cfidList[0].Error == null ? cfidList[0].Token : "";
         }
 
-        internal string Query(string request, bool oauth, bool cfid, int wait)
+        internal string BuildQueryString(bool oauth, bool cfid, int wait, NameValueCollection @params = null)
         {
-            string parameters = "?&ref=&cors=&_=" + GetTimestamp();
-            if (request.Contains("?"))
+            if (@params == null)
             {
-                parameters = parameters.Substring(1);
+                @params = new NameValueCollection();
             }
-
+            var queryParameter = HttpUtility.ParseQueryString(string.Empty);
+            queryParameter.Add(@params);
+            queryParameter.Add(new NameValueCollection() {
+                { "ref", string.Empty},
+                { "cors", string.Empty},
+                { "_", GetTimestamp().ToString()}
+            });
             if (oauth)
             {
-                parameters += "&oauth=" + OauthKey;
+                queryParameter.Add("oauth", OauthKey);
             }
             if (cfid)
             {
-                parameters += "&csrf=" + CfidKey;
+                queryParameter.Add("csrf", CfidKey);
             }
 
             if (wait != -1)
             {
-                parameters += "&returnafter=" + wait;
-                parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
+                queryParameter.Add("returnafter", wait.ToString());
+                queryParameter.Add("returnon", "login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap");
             }
 
-            string address = $"{_config.HostUrl}:{_config.Port}/{request}{parameters}";
-            string response = "";
+            return queryParameter.ToString();
+        }
+        internal string Query(string baseUrl, bool oauth, bool cfid, int wait, NameValueCollection @params = null)
+        {
+            string parameters = BuildQueryString(oauth, cfid, wait, @params);
+            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}{parameters}";
+            string response = string.Empty;
             try
             {
                 using (var wc = new ExtendedWebClient())
@@ -126,30 +151,10 @@ namespace SpotifyAPI.Local
             return response;
         }
 
-        internal async Task<string> QueryAsync(string request, bool oauth, bool cfid, int wait)
+        internal async Task<string> QueryAsync(string baseUrl, bool oauth, bool cfid, int wait, NameValueCollection @params = null)
         {
-            string parameters = "?&ref=&cors=&_=" + GetTimestamp();
-            if (request.Contains("?"))
-            {
-                parameters = parameters.Substring(1);
-            }
-
-            if (oauth)
-            {
-                parameters += "&oauth=" + OauthKey;
-            }
-            if (cfid)
-            {
-                parameters += "&csrf=" + CfidKey;
-            }
-
-            if (wait != -1)
-            {
-                parameters += "&returnafter=" + wait;
-                parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
-            }
-
-            string address = $"{_config.HostUrl}:{_config.Port}/{request}{parameters}";
+            string parameters = BuildQueryString(oauth, cfid, wait, @params);
+            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}{parameters}";
             string response = "";
             try
             {
@@ -166,7 +171,6 @@ namespace SpotifyAPI.Local
 
             return response;
         }
-
         internal int GetTimestamp()
         {
             return Convert.ToInt32((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
