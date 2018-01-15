@@ -60,6 +60,12 @@
     </url>
         
     <url>
+     <loc>/SpotifyWebAPI/personalization/</loc>
+     <lastmod>2018-01-15</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/SpotifyWebAPI/player/</loc>
      <lastmod>2018-01-15</lastmod>
      <changefreq>daily</changefreq>

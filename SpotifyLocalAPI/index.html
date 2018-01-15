@@ -92,6 +92,10 @@
                         </li>
                     
                         <li >
+                            <a href="../SpotifyWebAPI/personalization/">- Personalization</a>
+                        </li>
+                    
+                        <li >
                             <a href="../SpotifyWebAPI/player/">- Player</a>
                         </li>
                     
@@ -215,7 +219,7 @@ public static void Main(String[] args)
 </code></pre>
 
 <h2 id="configuration">Configuration</h2>
-<p>Different spotify versions often require different configuration. Some versions run their web-helper on port <code>4371</code>, others on <code>4381</code>. Also, some use <code>https</code>, and others use <code>http</code>. You can use <code>SpotifyLocalAPIConfig</code> to configure the API:</p>
+<p>Different spotify versions often require different configuration. Some versions run their web-helper on port <code>4371</code>, others on <code>4381</code> or <code>4380</code>. Also, some use <code>https</code>, and others use <code>http</code>. You can use <code>SpotifyLocalAPIConfig</code> to configure the API:</p>
 <pre><code class="cs">_spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
 {
     Port = 4371,
