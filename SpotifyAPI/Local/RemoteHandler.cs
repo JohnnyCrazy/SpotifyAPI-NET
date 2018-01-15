@@ -26,7 +26,7 @@ namespace SpotifyAPI.Local
             _config = config;
         }
 
-        internal Boolean Init()
+        internal bool Init()
         {
             OauthKey = GetOAuthKey();
             CfidKey = GetCfid();
@@ -35,13 +35,13 @@ namespace SpotifyAPI.Local
 
         internal async Task SendPauseRequest()
         {
-            var @params = new NameValueCollection() { { "pause", "true" } };
+            NameValueCollection @params = new NameValueCollection { { "pause", "true" } };
             await QueryAsync("remote/pause.json", true, true, -1, @params).ConfigureAwait(false);
         }
 
         internal async Task SendPlayRequest()
         {
-            var @params = new NameValueCollection() { { "pause", "false" } };
+            NameValueCollection @params = new NameValueCollection { { "pause", "false" } };
             await QueryAsync("remote/pause.json", true, true, -1, @params).ConfigureAwait(false);
         }
 
@@ -49,16 +49,22 @@ namespace SpotifyAPI.Local
         {
 
             // TODO: instead of having an empty context, one way to fix the bug with the playback time beyond the length of a song would be to provide a 1-song context, and it would be fixed.
-            var @params = new NameValueCollection() { {"uri", url },
-                { "context", context} };
+            NameValueCollection @params = new NameValueCollection
+            {
+                {"uri", url},
+                {"context", context}
+            };
             await QueryAsync($"remote/play.json", true, true, -1, @params).ConfigureAwait(false);
 
         }
 
         internal async Task SendQueueRequest(string url)
         {
-            var @params = new NameValueCollection() { {"uri", url },
-                { "action", "queue"} };
+            NameValueCollection @params = new NameValueCollection
+            {
+                {"uri", url},
+                {"action", "queue"}
+            };
             await QueryAsync("remote/play.json", true, true, -1, @params).ConfigureAwait(false);
 
         }
@@ -67,9 +73,7 @@ namespace SpotifyAPI.Local
         {
             string response = Query("remote/status.json", true, true, -1);
             if (string.IsNullOrEmpty(response))
-            {
                 return null;
-            }
             response = response.Replace("\\n", "");
             List<StatusResponse> raw = JsonConvert.DeserializeObject<List<StatusResponse>>(response);
             return raw[0];
@@ -104,7 +108,7 @@ namespace SpotifyAPI.Local
             {
                 @params = new NameValueCollection();
             }
-            var queryParameter = HttpUtility.ParseQueryString(string.Empty);
+            NameValueCollection queryParameter = HttpUtility.ParseQueryString(string.Empty);
             queryParameter.Add(@params);
             queryParameter.Add(new NameValueCollection() {
                 { "ref", string.Empty},
@@ -135,7 +139,7 @@ namespace SpotifyAPI.Local
             string response = string.Empty;
             try
             {
-                using (var wc = new ExtendedWebClient())
+                using (ExtendedWebClient wc = new ExtendedWebClient())
                 {
                     if (SpotifyLocalAPI.IsSpotifyRunning())
                     {
@@ -158,7 +162,7 @@ namespace SpotifyAPI.Local
             string response = "";
             try
             {
-                using (var wc = new ExtendedWebClient())
+                using (ExtendedWebClient wc = new ExtendedWebClient())
                 {
                     if (SpotifyLocalAPI.IsSpotifyRunning())
                         response = "[ " + await wc.DownloadStringTaskAsync(new Uri(address)).ConfigureAwait(false) + " ]";
@@ -178,7 +182,7 @@ namespace SpotifyAPI.Local
 
         internal WebClient GetWebClientWithUserAgentHeader()
         {
-            var wc = new WebClient();
+            WebClient wc = new WebClient();
 
             wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.50.41368.gbd68dbef)");
 
