@@ -42,7 +42,7 @@ public static void Main(String[] args)
 
 ## Configuration
 
-Different spotify versions often require different configuration. Some versions run their web-helper on port `4371`, others on `4381`. Also, some use `https`, and others use `http`. You can use `SpotifyLocalAPIConfig` to configure the API:
+Different spotify versions often require different configuration. Some versions run their web-helper on port `4371`, others on `4381` or `4380`. Also, some use `https`, and others use `http`. You can use `SpotifyLocalAPIConfig` to configure the API:
 
 ```cs
 _spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
