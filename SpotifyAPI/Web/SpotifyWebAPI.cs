@@ -2148,7 +2148,6 @@ namespace SpotifyAPI.Web
 
                 response.Item2.AddResponseInfo(response.Item1);
                 lastError = response.Item2.Error;
-
                 triesLeft -= 1;
 
             } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));

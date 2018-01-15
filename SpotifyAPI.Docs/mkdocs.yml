@@ -11,6 +11,7 @@ pages:
     - '- Browse': 'SpotifyWebAPI/browse.md'
     - '- Follow': 'SpotifyWebAPI/follow.md'
     - '- Library': 'SpotifyWebAPI/library.md'
+    - '- Personalization': 'SpotifyWebAPI/personalization.md'
     - '- Player': 'SpotifyWebAPI/player.md'
     - '- Playlists': 'SpotifyWebAPI/playlists.md'
     - '- Profiles': 'SpotifyWebAPI/profiles.md'
