@@ -131,7 +131,7 @@ namespace SpotifyAPI.Local
         internal string Query(string baseUrl, bool oauth, bool cfid, int wait, NameValueCollection @params = null)
         {
             string parameters = BuildQueryString(oauth, cfid, wait, @params);
-            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}{parameters}";
+            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}?{parameters}";
             string response = string.Empty;
             try
             {
@@ -154,7 +154,7 @@ namespace SpotifyAPI.Local
         internal async Task<string> QueryAsync(string baseUrl, bool oauth, bool cfid, int wait, NameValueCollection @params = null)
         {
             string parameters = BuildQueryString(oauth, cfid, wait, @params);
-            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}{parameters}";
+            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}?{parameters}";
             string response = "";
             try
             {
