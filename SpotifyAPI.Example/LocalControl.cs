@@ -72,6 +72,8 @@ namespace SpotifyAPI.Example
 
             if (status.Track != null) //Update track infos
                 UpdateTrack(status.Track);
+
+            RefreshVolumeMixerVolume();
         }
 
         public async void UpdateTrack(Track track)
@@ -104,6 +106,11 @@ namespace SpotifyAPI.Example
         public void UpdatePlayingStatus(bool playing)
         {
             isPlayingLabel.Text = playing.ToString();
+        }
+
+        public void RefreshVolumeMixerVolume()
+        {
+            volumeMixerLabel.Text = _spotify.GetSpotifyVolume().ToString(CultureInfo.InvariantCulture);
         }
 
         private void _spotify_OnVolumeChange(object sender, VolumeChangeEventArgs e)
@@ -176,6 +183,24 @@ namespace SpotifyAPI.Example
         private void skipBtn_Click(object sender, EventArgs e)
         {
             _spotify.Skip();
+        }
+
+        private void volumeUpBtn_Click(object sender, EventArgs e)
+        {
+            float currentVolume = _spotify.GetSpotifyVolume();
+            float newVolume = currentVolume + 2.0f;
+            _spotify.SetSpotifyVolume(newVolume >= 100.0f ? 100.0f : newVolume);
+
+            RefreshVolumeMixerVolume();
+        }
+
+        private void volumeDownBtn_Click(object sender, EventArgs e)
+        {
+            float currentVolume = _spotify.GetSpotifyVolume();
+            float newVolume = currentVolume - 2.0f;
+            _spotify.SetSpotifyVolume(newVolume <= 0.0f ? 0.0f : newVolume);
+
+            RefreshVolumeMixerVolume();
         }
 
         private static String FormatTime(double sec)

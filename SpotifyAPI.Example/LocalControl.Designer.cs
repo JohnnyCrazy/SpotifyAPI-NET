@@ -61,6 +61,10 @@
             this.artistLinkLabel = new System.Windows.Forms.LinkLabel();
             this.titleLinkLabel = new System.Windows.Forms.LinkLabel();
             this.smallAlbumPicture = new System.Windows.Forms.PictureBox();
+            this.volumeDownBtn = new System.Windows.Forms.Button();
+            this.volumeUpBtn = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.volumeMixerLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bigAlbumPicture)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.trackInfoBox.SuspendLayout();
@@ -69,7 +73,7 @@
             // 
             // bigAlbumPicture
             // 
-            this.bigAlbumPicture.Location = new System.Drawing.Point(327, 13);
+            this.bigAlbumPicture.Location = new System.Drawing.Point(330, 13);
             this.bigAlbumPicture.Name = "bigAlbumPicture";
             this.bigAlbumPicture.Size = new System.Drawing.Size(640, 640);
             this.bigAlbumPicture.TabIndex = 2;
@@ -77,6 +81,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.volumeMixerLabel);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.volumeUpBtn);
+            this.groupBox1.Controls.Add(this.volumeDownBtn);
             this.groupBox1.Controls.Add(this.repeatShuffleLabel);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.versionLabel);
@@ -428,6 +436,50 @@
             this.smallAlbumPicture.TabIndex = 5;
             this.smallAlbumPicture.TabStop = false;
             // 
+            // volumeDownBtn
+            // 
+            this.volumeDownBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.volumeDownBtn.Location = new System.Drawing.Point(247, 134);
+            this.volumeDownBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.volumeDownBtn.Name = "volumeDownBtn";
+            this.volumeDownBtn.Size = new System.Drawing.Size(65, 24);
+            this.volumeDownBtn.TabIndex = 32;
+            this.volumeDownBtn.Text = "Volume-";
+            this.volumeDownBtn.UseVisualStyleBackColor = true;
+            this.volumeDownBtn.Click += new System.EventHandler(this.volumeDownBtn_Click);
+            // 
+            // volumeUpBtn
+            // 
+            this.volumeUpBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.volumeUpBtn.Location = new System.Drawing.Point(247, 110);
+            this.volumeUpBtn.Margin = new System.Windows.Forms.Padding(0);
+            this.volumeUpBtn.Name = "volumeUpBtn";
+            this.volumeUpBtn.Size = new System.Drawing.Size(65, 24);
+            this.volumeUpBtn.TabIndex = 33;
+            this.volumeUpBtn.Text = "Volume+";
+            this.volumeUpBtn.UseVisualStyleBackColor = true;
+            this.volumeUpBtn.Click += new System.EventHandler(this.volumeUpBtn_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(7, 117);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(155, 17);
+            this.label9.TabIndex = 34;
+            this.label9.Text = "Volume Mixer\'s volume:";
+            // 
+            // volumeMixerLabel
+            // 
+            this.volumeMixerLabel.AutoSize = true;
+            this.volumeMixerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.volumeMixerLabel.Location = new System.Drawing.Point(168, 117);
+            this.volumeMixerLabel.Name = "volumeMixerLabel";
+            this.volumeMixerLabel.Size = new System.Drawing.Size(13, 17);
+            this.volumeMixerLabel.TabIndex = 35;
+            this.volumeMixerLabel.Text = "-";
+            // 
             // LocalControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -483,5 +535,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label repeatShuffleLabel;
         private System.Windows.Forms.Label advertLabel;
+        private System.Windows.Forms.Button volumeUpBtn;
+        private System.Windows.Forms.Button volumeDownBtn;
+        private System.Windows.Forms.Label volumeMixerLabel;
+        private System.Windows.Forms.Label label9;
     }
 }
