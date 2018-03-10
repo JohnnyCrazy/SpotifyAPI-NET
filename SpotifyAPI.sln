@@ -1,16 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpotifyAPI", "SpotifyAPI\SpotifyAPI.xproj", "{A5A8FA78-D353-47A9-9B8D-DC41F2EB9A96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyAPI.Web", "SpotifyAPI.Web\SpotifyAPI.Web.csproj", "{A5A8FA78-D353-47A9-9B8D-DC41F2EB9A96}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D8DFFBD8-1657-462E-8A1A-D1A81AEA41FE}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyAPI.Example", "SpotifyAPI.Example\SpotifyAPI.Example.csproj", "{C96044CC-046B-4444-8DBA-C391834BF4E6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SpotifyAPI.Example", "SpotifyAPI.Example\SpotifyAPI.Example.xproj", "{C96044CC-046B-4444-8DBA-C391834BF4E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyAPI.Local", "SpotifyAPI.Local\SpotifyAPI.Local.csproj", "{56F08363-59A7-44F3-ADBD-84AC843315FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI.ExampleWeb", "SpotifyAPI.ExampleWeb\SpotifyAPI.ExampleWeb.csproj", "{EFF7BA9B-4864-4314-B0C0-B3C9EB37AF69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +25,14 @@ Global
 		{C96044CC-046B-4444-8DBA-C391834BF4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C96044CC-046B-4444-8DBA-C391834BF4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C96044CC-046B-4444-8DBA-C391834BF4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56F08363-59A7-44F3-ADBD-84AC843315FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F08363-59A7-44F3-ADBD-84AC843315FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F08363-59A7-44F3-ADBD-84AC843315FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F08363-59A7-44F3-ADBD-84AC843315FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF7BA9B-4864-4314-B0C0-B3C9EB37AF69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF7BA9B-4864-4314-B0C0-B3C9EB37AF69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF7BA9B-4864-4314-B0C0-B3C9EB37AF69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF7BA9B-4864-4314-B0C0-B3C9EB37AF69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

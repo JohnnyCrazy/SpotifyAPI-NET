@@ -1,0 +1,19 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http.Authentication
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model IEnumerable<AuthenticationDescription>
+
+<div class="jumbotron">
+    <h1>Authentication</h1>
+    <p class="lead text-left">Sign in using one of these external providers:</p>
+
+    @foreach (var description in Model)
+    {
+        @Html.BeginForm("SignIn", "Authentication")
+        {
+            <input type="hidden" name="Provider" value="@description.AuthenticationScheme" />
+            <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+            <button class="btn btn-lg btn-success" type="submit">Connect using @description.DisplayName</button>
+        }
+    }
+</div>
