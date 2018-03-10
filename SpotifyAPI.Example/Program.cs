@@ -10,13 +10,12 @@ namespace SpotifyAPI.Example
     {
         private static SpotifyLocalAPI _spotify;
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var statusResult = Start();
-            statusResult.ContinueWith(task =>
-            {
-                Console.WriteLine(JsonConvert.SerializeObject(task.Result));
-            });
+            var statusResult = await Start();
+            if (statusResult == null) return;
+
+            Console.WriteLine(JsonConvert.SerializeObject(statusResult));
             Console.ReadLine();
         }
 
@@ -25,13 +24,20 @@ namespace SpotifyAPI.Example
             Console.WriteLine("Starting...");
             _spotify = new SpotifyLocalAPI();
 
+            Console.WriteLine("Trying to connect...");
             while (!await _spotify.Connect())
             {
-                Console.WriteLine("Trying to connect...");
-                await _spotify.Connect();
+                Console.WriteLine("Failed to connect. Retry? (y/[n])");
+                var key = Console.ReadLine()?.ToLowerInvariant();
+                if (key == "y")
+                {
+                    Console.WriteLine("Trying to connect...");
+                    continue;
+                }
+                return null;
             }
 
-            return await _spotify.GetStatus(); // never pass the while.... 
+            return await _spotify.GetStatus();
         }
     }
 }
