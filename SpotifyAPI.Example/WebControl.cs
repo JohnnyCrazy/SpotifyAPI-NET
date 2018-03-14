@@ -15,6 +15,7 @@ namespace SpotifyAPI.Example
 {
     public partial class WebControl : UserControl
     {
+        private readonly ProxyConfig _proxyConfig;
         private SpotifyWebAPI _spotify;
 
         private PrivateProfile _profile;
@@ -25,8 +26,9 @@ namespace SpotifyAPI.Example
         {
             InitializeComponent();
 
+            _proxyConfig = new ProxyConfig();
+
             _savedTracks = new List<FullTrack>();
-            
         }
 
         private async void InitialSetup()
@@ -109,7 +111,8 @@ namespace SpotifyAPI.Example
                 "26d287105e31491889f3cd293d85bfea",
                 Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead |
                 Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative |
-                Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState);
+                Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
+                _proxyConfig);
 
             try
             {
@@ -124,6 +127,14 @@ namespace SpotifyAPI.Example
                 return;
 
             InitialSetup();
+        }
+
+        private void applyProxyBtn_Click(object sender, EventArgs e)
+        {
+            _proxyConfig.Host = proxyHostTextBox.Text;
+            _proxyConfig.Port = (int)proxyPortUpDown.Value;
+            _proxyConfig.Username = proxyUsernameTextBox.Text;
+            _proxyConfig.Password = proxyPasswordTextBox.Text;
         }
     }
 }
