@@ -187,22 +187,7 @@ namespace SpotifyAPI.Local
             WebClient wc = new WebClient();
 
             if (!string.IsNullOrWhiteSpace(_proxyConfig?.Host))
-            {
-                WebProxy proxy = new WebProxy
-                {
-                    Address = _proxyConfig.GetUri(),
-                    UseDefaultCredentials = true,
-                    BypassProxyOnLocal = _proxyConfig.BypassProxyOnLocal
-                };
-
-                if (!string.IsNullOrEmpty(_proxyConfig.Username) && !string.IsNullOrEmpty(_proxyConfig.Password))
-                {
-                    proxy.UseDefaultCredentials = false;
-                    proxy.Credentials = new NetworkCredential(_proxyConfig.Username, _proxyConfig.Password);
-                }
-
-                wc.Proxy = proxy;
-            }
+                wc.Proxy = _proxyConfig.CreateWebProxy();
 
             wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.50.41368.gbd68dbef)");
 
