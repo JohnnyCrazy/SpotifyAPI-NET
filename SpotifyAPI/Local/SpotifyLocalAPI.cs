@@ -63,15 +63,23 @@ namespace SpotifyAPI.Local
 
         public event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
-        public SpotifyLocalAPI(int timerIntervall = 50)
+        public SpotifyLocalAPI(int timerIntervall = 50) : this(null, timerIntervall)
         {
-            _rh = new RemoteHandler(new SpotifyLocalAPIConfig());
+        }
+
+        public SpotifyLocalAPI(ProxyConfig proxyConfig, int timerIntervall = 50)
+        {
+            _rh = new RemoteHandler(new SpotifyLocalAPIConfig(), proxyConfig);
             AttachTimer(timerIntervall);
         }
 
-        public SpotifyLocalAPI(SpotifyLocalAPIConfig config)
+        public SpotifyLocalAPI(SpotifyLocalAPIConfig config) : this(config, null)
         {
-            _rh = new RemoteHandler(config);
+        }
+
+        public SpotifyLocalAPI(SpotifyLocalAPIConfig config, ProxyConfig proxyConfig)
+        {
+            _rh = new RemoteHandler(config, proxyConfig);
             AttachTimer(config.TimerInterval);
         }
 
