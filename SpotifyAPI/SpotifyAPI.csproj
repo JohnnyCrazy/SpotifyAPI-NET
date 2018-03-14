@@ -61,6 +61,7 @@
     <Compile Include="Local\Models\SpotifyUri.cs" />
     <Compile Include="Local\SpotifyLocalAPIConfig.cs" />
     <Compile Include="Local\VolumeMixerControl.cs" />
+    <Compile Include="ProxyConfig.cs" />
     <Compile Include="Web\Auth\WebAPIFactory.cs" />
     <Compile Include="Web\Enums\RepeatState.cs" />
     <Compile Include="Web\Enums\TimeRangeType.cs" />
