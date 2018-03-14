@@ -20,7 +20,11 @@ namespace SpotifyAPI.Web
 
         private readonly SpotifyWebBuilder _builder;
 
-        public SpotifyWebAPI()
+        public SpotifyWebAPI() : this(null)
+        {
+        }
+
+        public SpotifyWebAPI(ProxyConfig proxyConfig)
         {
             _builder = new SpotifyWebBuilder();
             UseAuth = true;
@@ -31,7 +35,8 @@ namespace SpotifyAPI.Web
                     {
                         NullValueHandling = NullValueHandling.Ignore,
                         TypeNameHandling = TypeNameHandling.All
-                    }
+                    },
+                ProxyConfig = proxyConfig
             };
         }
 
