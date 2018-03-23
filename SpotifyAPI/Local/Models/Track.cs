@@ -130,12 +130,8 @@ namespace SpotifyAPI.Local.Models
         {
             using (WebClient wc = new WebClient())
             {
-                IWebProxy proxy = null;
-                if (!string.IsNullOrWhiteSpace(proxyConfig?.Host))
-                {
-                    proxy = proxyConfig.CreateWebProxy();
-                    wc.Proxy = proxy;
-                }
+                IWebProxy proxy = proxyConfig?.CreateWebProxy();
+                wc.Proxy = proxy;
 
                 string url = GetAlbumArtUrl(size, proxy);
                 if (url == "")
@@ -169,12 +165,8 @@ namespace SpotifyAPI.Local.Models
         {
             using (WebClient wc = new WebClient())
             {
-                IWebProxy proxy = null;
-                if (!string.IsNullOrWhiteSpace(proxyConfig?.Host))
-                {
-                    proxy = proxyConfig.CreateWebProxy();
-                    wc.Proxy = proxy;
-                }
+                IWebProxy proxy = proxyConfig?.CreateWebProxy();
+                wc.Proxy = proxy;
 
                 string url = GetAlbumArtUrl(size, proxy);
                 if (string.IsNullOrEmpty(url))

@@ -184,11 +184,10 @@ namespace SpotifyAPI.Local
 
         internal WebClient GetWebClientWithUserAgentHeader()
         {
-            WebClient wc = new WebClient();
-
-            if (!string.IsNullOrWhiteSpace(_proxyConfig?.Host))
-                wc.Proxy = _proxyConfig.CreateWebProxy();
-
+            WebClient wc = new WebClient
+            {
+                Proxy = this._proxyConfig?.CreateWebProxy()
+            };
             wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.50.41368.gbd68dbef)");
 
             return wc;

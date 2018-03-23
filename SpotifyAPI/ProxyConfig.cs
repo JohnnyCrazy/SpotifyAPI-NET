@@ -27,6 +27,19 @@ namespace SpotifyAPI
             this.BypassProxyOnLocal = proxyConfig?.BypassProxyOnLocal ?? false;
         }
 
+        /// <summary>
+        /// Whether both <see cref="Host"/> and <see cref="Port"/> have valid values.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid()
+        {
+            return !string.IsNullOrWhiteSpace(Host) && Port > 0;
+        }
+
+        /// <summary>
+        /// Create a <see cref="Uri"/> from the host and port number
+        /// </summary>
+        /// <returns>A URI</returns>
         public Uri GetUri()
         {
             UriBuilder uriBuilder = new UriBuilder(Host)
@@ -36,8 +49,15 @@ namespace SpotifyAPI
             return uriBuilder.Uri;
         }
 
+        /// <summary>
+        /// Creates a <see cref="WebProxy"/> from the proxy details of this object.
+        /// </summary>
+        /// <returns>A <see cref="WebProxy"/> or <code>null</code> if the proxy details are invalid.</returns>
         public WebProxy CreateWebProxy()
         {
+            if (!IsValid())
+                return null;
+
             WebProxy proxy = new WebProxy
             {
                 Address = GetUri(),
