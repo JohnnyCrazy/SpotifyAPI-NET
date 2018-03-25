@@ -10,14 +10,20 @@ namespace SpotifyAPI.Example
 {
     public partial class LocalControl : UserControl
     {
-        private readonly SpotifyLocalAPI _spotify;
+        private readonly SpotifyLocalAPIConfig _config;
+        private SpotifyLocalAPI _spotify;
         private Track _currentTrack;
 
         public LocalControl()
         {
             InitializeComponent();
+            
+            _config = new SpotifyLocalAPIConfig
+            {
+                ProxyConfig = new ProxyConfig()
+            };
 
-            _spotify = new SpotifyLocalAPI();
+            _spotify = new SpotifyLocalAPI(_config);
             _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
             _spotify.OnTrackChange += _spotify_OnTrackChange;
             _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
@@ -99,8 +105,8 @@ namespace SpotifyAPI.Example
 
             trackInfoBox.Text = $@"Track Info - {uri?.Id}";
 
-            bigAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size640) : null;
-            smallAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size160) : null;
+            bigAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size640, _config.ProxyConfig) : null;
+            smallAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size160, _config.ProxyConfig) : null;
         }
 
         public void UpdatePlayingStatus(bool playing)
@@ -111,6 +117,36 @@ namespace SpotifyAPI.Example
         public void RefreshVolumeMixerVolume()
         {
             volumeMixerLabel.Text = _spotify.GetSpotifyVolume().ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void applyProxyBtn_Click(object sender, EventArgs e)
+        {
+            _config.ProxyConfig.Host = proxyHostTextBox.Text;
+            _config.ProxyConfig.Port = (int)proxyPortUpDown.Value;
+            _config.ProxyConfig.Username = proxyUsernameTextBox.Text;
+            _config.ProxyConfig.Password = proxyPasswordTextBox.Text;
+
+            bool connected = _spotify.ListenForEvents;
+            if (connected)
+            {
+                // Reconnect using new proxy
+                _spotify.ListenForEvents = false;
+                _spotify.OnPlayStateChange -= _spotify_OnPlayStateChange;
+                _spotify.OnTrackChange -= _spotify_OnTrackChange;
+                _spotify.OnTrackTimeChange -= _spotify_OnTrackTimeChange;
+                _spotify.OnVolumeChange -= _spotify_OnVolumeChange;
+
+                _spotify.Dispose();
+
+                _spotify = new SpotifyLocalAPI(_config);
+                _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
+                _spotify.OnTrackChange += _spotify_OnTrackChange;
+                _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
+                _spotify.OnVolumeChange += _spotify_OnVolumeChange;
+
+                connectBtn.Text = @"Reconnecting...";
+                Connect();
+            }
         }
 
         private void _spotify_OnVolumeChange(object sender, VolumeChangeEventArgs e)
