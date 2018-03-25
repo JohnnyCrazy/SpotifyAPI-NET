@@ -37,6 +37,4 @@ Install-Package SpotifyAPI-Net -pre
 
 If you want to support this project or my work in general, you can donate a buck or two via the link below. However, this will be always optional!
 
-<a align="center" href="htts://paypal.me/JohnnyCrazy" rel="nofollower noopener">
-  <img src="donate.svg" width="500" height="150" />
-</a>
+[![Donate Link](donate.svg)](htts://paypal.me/JohnnyCrazy)
