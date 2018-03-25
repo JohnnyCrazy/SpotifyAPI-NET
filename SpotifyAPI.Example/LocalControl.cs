@@ -10,17 +10,20 @@ namespace SpotifyAPI.Example
 {
     public partial class LocalControl : UserControl
     {
-        private readonly ProxyConfig _proxyConfig;
+        private readonly SpotifyLocalAPIConfig _config;
         private SpotifyLocalAPI _spotify;
         private Track _currentTrack;
 
         public LocalControl()
         {
             InitializeComponent();
+            
+            _config = new SpotifyLocalAPIConfig
+            {
+                ProxyConfig = new ProxyConfig()
+            };
 
-            _proxyConfig = new ProxyConfig();
-
-            _spotify = new SpotifyLocalAPI(_proxyConfig);
+            _spotify = new SpotifyLocalAPI(_config);
             _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
             _spotify.OnTrackChange += _spotify_OnTrackChange;
             _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
@@ -102,8 +105,8 @@ namespace SpotifyAPI.Example
 
             trackInfoBox.Text = $@"Track Info - {uri?.Id}";
 
-            bigAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size640, _proxyConfig) : null;
-            smallAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size160, _proxyConfig) : null;
+            bigAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size640, _config.ProxyConfig) : null;
+            smallAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size160, _config.ProxyConfig) : null;
         }
 
         public void UpdatePlayingStatus(bool playing)
@@ -118,10 +121,10 @@ namespace SpotifyAPI.Example
 
         private void applyProxyBtn_Click(object sender, EventArgs e)
         {
-            _proxyConfig.Host = proxyHostTextBox.Text;
-            _proxyConfig.Port = (int)proxyPortUpDown.Value;
-            _proxyConfig.Username = proxyUsernameTextBox.Text;
-            _proxyConfig.Password = proxyPasswordTextBox.Text;
+            _config.ProxyConfig.Host = proxyHostTextBox.Text;
+            _config.ProxyConfig.Port = (int)proxyPortUpDown.Value;
+            _config.ProxyConfig.Username = proxyUsernameTextBox.Text;
+            _config.ProxyConfig.Password = proxyPasswordTextBox.Text;
 
             bool connected = _spotify.ListenForEvents;
             if (connected)
@@ -135,7 +138,7 @@ namespace SpotifyAPI.Example
 
                 _spotify.Dispose();
 
-                _spotify = new SpotifyLocalAPI(_proxyConfig);
+                _spotify = new SpotifyLocalAPI(_config);
                 _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
                 _spotify.OnTrackChange += _spotify_OnTrackChange;
                 _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
