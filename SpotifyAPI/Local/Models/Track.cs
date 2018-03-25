@@ -114,10 +114,15 @@ namespace SpotifyAPI.Local.Models
         public async Task<Bitmap> GetAlbumArtAsync(AlbumArtSize size, ProxyConfig proxyConfig = null)
         {
             var data = await GetAlbumArtAsByteArrayAsync(size, proxyConfig).ConfigureAwait(false);
-            using (MemoryStream ms = new MemoryStream(data))
+            if (data != null)
             {
-                return (Bitmap)Image.FromStream(ms);
+                using (MemoryStream ms = new MemoryStream(data))
+                {
+                    return (Bitmap)Image.FromStream(ms);
+                }
             }
+
+            return null;
         }
 
         /// <summary>
@@ -149,10 +154,15 @@ namespace SpotifyAPI.Local.Models
         public Bitmap GetAlbumArt(AlbumArtSize size, ProxyConfig proxyConfig = null)
         {
             var data = GetAlbumArtAsByteArray(size, proxyConfig);
-            using (MemoryStream ms = new MemoryStream(data))
+            if (data != null)
             {
-                return (Bitmap)Image.FromStream(ms);
+                using (MemoryStream ms = new MemoryStream(data))
+                {
+                    return (Bitmap)Image.FromStream(ms);
+                }
             }
+
+            return null;
         }
 
         /// <summary>

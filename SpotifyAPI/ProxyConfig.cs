@@ -20,11 +20,11 @@ namespace SpotifyAPI
 
         public void Set(ProxyConfig proxyConfig)
         {
-            this.Host = proxyConfig?.Host;
-            this.Port = proxyConfig?.Port ?? 80;
-            this.Username = proxyConfig?.Username;
-            this.Password = proxyConfig?.Password;
-            this.BypassProxyOnLocal = proxyConfig?.BypassProxyOnLocal ?? false;
+            Host = proxyConfig?.Host;
+            Port = proxyConfig?.Port ?? 80;
+            Username = proxyConfig?.Username;
+            Password = proxyConfig?.Password;
+            BypassProxyOnLocal = proxyConfig?.BypassProxyOnLocal ?? false;
         }
 
         /// <summary>

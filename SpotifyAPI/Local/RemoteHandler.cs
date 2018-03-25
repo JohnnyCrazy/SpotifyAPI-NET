@@ -20,12 +20,10 @@ namespace SpotifyAPI.Local
         public string CfidKey { get; private set; }
 
         private SpotifyLocalAPIConfig _config;
-        private ProxyConfig _proxyConfig;
 
-        public RemoteHandler(SpotifyLocalAPIConfig config, ProxyConfig proxyConfig)
+        public RemoteHandler(SpotifyLocalAPIConfig config)
         {
             _config = config;
-            _proxyConfig = proxyConfig;
         }
 
         internal bool Init()
@@ -186,7 +184,7 @@ namespace SpotifyAPI.Local
         {
             WebClient wc = new WebClient
             {
-                Proxy = this._proxyConfig?.CreateWebProxy()
+                Proxy = _config?.ProxyConfig?.CreateWebProxy()
             };
             wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.50.41368.gbd68dbef)");
 

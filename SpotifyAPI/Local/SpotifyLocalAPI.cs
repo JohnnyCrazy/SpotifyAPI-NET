@@ -63,23 +63,15 @@ namespace SpotifyAPI.Local
 
         public event EventHandler<TrackTimeChangeEventArgs> OnTrackTimeChange;
 
-        public SpotifyLocalAPI(int timerIntervall = 50) : this(null, timerIntervall)
+        public SpotifyLocalAPI(int timerIntervall = 50)
         {
-        }
-
-        public SpotifyLocalAPI(ProxyConfig proxyConfig, int timerIntervall = 50)
-        {
-            _rh = new RemoteHandler(new SpotifyLocalAPIConfig(), proxyConfig);
+            _rh = new RemoteHandler(new SpotifyLocalAPIConfig());
             AttachTimer(timerIntervall);
         }
 
-        public SpotifyLocalAPI(SpotifyLocalAPIConfig config) : this(config, null)
+        public SpotifyLocalAPI(SpotifyLocalAPIConfig config)
         {
-        }
-
-        public SpotifyLocalAPI(SpotifyLocalAPIConfig config, ProxyConfig proxyConfig)
-        {
-            _rh = new RemoteHandler(config, proxyConfig);
+            _rh = new RemoteHandler(config);
             AttachTimer(config.TimerInterval);
         }
 
@@ -116,7 +108,7 @@ namespace SpotifyAPI.Local
             if (newStatusResponse.Track != null && _eventStatusResponse.Track != null)
             {
                 if (newStatusResponse.Track.TrackResource?.Uri != _eventStatusResponse.Track.TrackResource?.Uri ||
-                    newStatusResponse.Track.IsOtherTrackType() && newStatusResponse.Track.Length != this._eventStatusResponse.Track.Length)
+                    newStatusResponse.Track.IsOtherTrackType() && newStatusResponse.Track.Length != _eventStatusResponse.Track.Length)
                 {
                     OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
