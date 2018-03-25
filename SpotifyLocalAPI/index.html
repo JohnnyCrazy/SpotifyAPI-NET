@@ -72,6 +72,10 @@
                         </li>
                     
                         <li >
+                            <a href="../SpotifyWebAPI/proxy/">Proxy</a>
+                        </li>
+                    
+                        <li >
                             <a href="../SpotifyWebAPI/albums/">- Albums</a>
                         </li>
                     
@@ -169,6 +173,8 @@
         
             <li><a href="#configuration">Configuration</a></li>
         
+            <li><a href="#proxy-settings">Proxy Settings</a></li>
+        
             <li><a href="#anti-virus-blocking-response">Anti-Virus Blocking Response</a></li>
         
             <li><a href="#client-status">Client Status</a></li>
@@ -224,6 +230,18 @@ public static void Main(String[] args)
 {
     Port = 4371,
     HostUrl = &quot;https://127.0.0.1&quot;
+});
+</code></pre>
+
+<h2 id="proxy-settings">Proxy Settings</h2>
+<p>You can forward your proxy settings to the local api by using a field in the <code>SpotifyLocalAPIConfig</code>.</p>
+<pre><code class="cs">_spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
+{
+    ProxyConfig = new ProxyConfig() {
+      Host = &quot;127.0.0.1&quot;,
+      Port = 8080
+      // Additional values like Username and Password are available
+    }
 });
 </code></pre>
 

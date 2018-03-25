@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>- Profiles - SpotifyAPI-NET</title>
+	<title>Proxy - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -71,8 +71,8 @@
                             <a href="../auth/">Authentication</a>
                         </li>
                     
-                        <li >
-                            <a href="../proxy/">Proxy</a>
+                        <li class="active">
+                            <a href="./">Proxy</a>
                         </li>
                     
                         <li >
@@ -107,8 +107,8 @@
                             <a href="../playlists/">- Playlists</a>
                         </li>
                     
-                        <li class="active">
-                            <a href="./">- Profiles</a>
+                        <li >
+                            <a href="../profiles/">- Profiles</a>
                         </li>
                     
                         <li >
@@ -139,12 +139,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../playlists/">
+                    <a rel="next" href="../auth/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../search/">
+                    <a rel="prev" href="../albums/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -167,71 +167,28 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary" style="height=90%;">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#getprivateprofile">GetPrivateProfile</a></li>
-        
-    
-        <li class="main "><a href="#getpublicprofile">GetPublicProfile</a></li>
+        <li class="main active"><a href="#proxy-settings">Proxy Settings</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="getprivateprofile">GetPrivateProfile</h2>
-<p><span class="label label-warning">AUTH REQUIRED</span></p>
-<blockquote>
-<p>Get detailed profile information about the current user (including the current user’s username).</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-private">PrivateProfile</a></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs">PrivateUser user = _spotify.GetPrivateProfile();
-Console.WriteLine(user.DisplayName);
-</code></pre>
+<h2 id="proxy-settings">Proxy Settings</h2>
+<p>You can forward your proxy settings to the web api by using a field in the <code>SpotifyLocalAPIConfig</code>.</p>
+<pre><code class="cs">ProxyConfig proxyConfig = new ProxyConfig() 
+{
+    Host = &quot;127.0.0.1&quot;,
+    Port = 8080
+    // Additional values like Username and Password are available
+};
 
-<hr />
-<h2 id="getpublicprofile">GetPublicProfile</h2>
-<blockquote>
-<p>Get public profile information about a Spotify user.</p>
-</blockquote>
-<p><strong>Paramters</strong>  </p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>userId</td>
-<td>The user's Spotify user ID.</td>
-<td>EXAMPLE</td>
-</tr>
-</tbody>
-</table>
-<p>Returns a <a href="https://developer.spotify.com/web-api/object-model/#user-object-public">PublicProfile</a></p>
-<p><strong>Usage</strong>  </p>
-<pre><code class="cs"></code></pre>
+SpotifyWebAPI api = new SpotifyWebAPI(proxyConfig);
+// or
+WebAPIFactory webApiFactory = new WebAPIFactory(..., proxyConfig);
+SpotifyWebAPI api = await webApiFactory.GetWebApi();
 
-<hr /></div>
+</code></pre></div>
         </div>
 
         

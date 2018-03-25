@@ -30,6 +30,12 @@
     </url>
         
     <url>
+     <loc>/SpotifyWebAPI/proxy/</loc>
+     <lastmod>2018-03-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/SpotifyWebAPI/albums/</loc>
      <lastmod>2018-03-25</lastmod>
      <changefreq>daily</changefreq>
