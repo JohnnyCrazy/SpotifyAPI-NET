@@ -52,6 +52,21 @@ _spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
 });
 ```
 
+## Proxy Settings
+
+You can forward your proxy settings to the local api by using a field in the `SpotifyLocalAPIConfig`.
+
+```cs
+_spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
+{
+    ProxyConfig = new ProxyConfig() {
+      Host = "127.0.0.1",
+      Port = 8080
+      // Additional values like Username and Password are available
+    }
+});
+```
+
 ## Anti-Virus Blocking Response
 
 Some Anti-Virus Software blocks the response from spotify due wrong headers.

@@ -6,6 +6,7 @@ pages:
     - 'Getting started': 'SpotifyWebAPI/gettingstarted.md'
     - 'Examples': 'SpotifyWebAPI/examples.md'
     - 'Authentication': 'SpotifyWebAPI/auth.md'
+    - 'Proxy': 'SpotifyWebAPI/proxy.md'
     - '- Albums': 'SpotifyWebAPI/albums.md'
     - '- Artists': 'SpotifyWebAPI/artists.md'
     - '- Browse': 'SpotifyWebAPI/browse.md'
