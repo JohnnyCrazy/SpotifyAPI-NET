@@ -27,6 +27,12 @@ namespace SpotifyAPI.Web.Models
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("release_date")]
+        public string ReleaseDate { get; set; }
+
+        [JsonProperty("release_date_precision")]
+        public string ReleaseDatePrecision { get; set; }
+
         [JsonProperty("type")]
         public string Type { get; set; }
 
