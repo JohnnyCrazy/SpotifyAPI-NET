@@ -1,16 +1,11 @@
-﻿using Moq;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using SpotifyAPI.Local;
+﻿using NUnit.Framework;
 using SpotifyAPI.Local.Models;
 using SpotifyAPI.Local.Enums;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace SpotifyAPI.Tests
 {
+    [TestFixture]
     public class SpotifyUriTest
     {
         [Test]

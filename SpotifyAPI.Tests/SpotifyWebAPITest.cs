@@ -11,7 +11,7 @@ using System.Linq;
 namespace SpotifyAPI.Tests
 {
     [TestFixture]
-    public class TestClass
+    public class SpotifyWebAPITest
     {
         private static readonly string FixtureDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../fixtures/");
 
