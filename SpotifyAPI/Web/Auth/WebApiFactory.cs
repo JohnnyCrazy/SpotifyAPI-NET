@@ -42,13 +42,14 @@ namespace SpotifyAPI.Web.Auth
             _xss = xss;
         }
 
-        public Task<SpotifyWebAPI> GetWebApi()
+        public Task<SpotifyWebAPI> GetWebApi(bool showDialog = false)
         {
             var authentication = new ImplicitGrantAuth
             {
                 RedirectUri = new UriBuilder(_redirectUrl) { Port = _listeningPort }.Uri.OriginalString.TrimEnd('/'),
                 ClientId = _clientId,
                 Scope = _scope,
+                ShowDialog = showDialog,
                 State = _xss
             };
 
