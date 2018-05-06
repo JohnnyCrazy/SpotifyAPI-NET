@@ -30,14 +30,7 @@ namespace SpotifyAPI.Local.Models
         /// Checks if the track is an advert
         /// </summary>
         /// <returns>true if the track is an advert, false otherwise</returns>
-        public bool IsAd()
-        {
-            if (TrackType == "ad")
-                return true;
-            if (Length == 0)
-                return true;
-            return false;
-        }
+        public bool IsAd() => TrackType == "ad" || Length == 0;
 
         /// <summary>
         /// Checks if the track id of type "other"
