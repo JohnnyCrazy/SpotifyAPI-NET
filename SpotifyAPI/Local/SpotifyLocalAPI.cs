@@ -46,8 +46,6 @@ namespace SpotifyAPI.Local
 
         private const int WindowsSevenMajorVersion = 6;
         private const int WindowsSevenMinorVersion = 1;
-        private const byte VkMediaNextTrack = 0xb0;
-        private const byte VkMediaPrevTrack = 0xb1;
         private const int KeyeventfExtendedkey = 0x1;
         private const int KeyeventfKeyup = 0x2;
 
@@ -55,6 +53,18 @@ namespace SpotifyAPI.Local
         private Timer _eventTimer;
         private StatusResponse _eventStatusResponse;
         private Track _eventStatusTrack;
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern bool PostMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+        private const uint WM_APPCOMMAND = 0x0319;
+        private const long cmdNextTrack = 0x000B0000L;
+        private const long cmdPreviousTrack = 0x000C0000L;
+
+        Process proc = Process.GetProcessesByName("Spotify").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
+
+        private IntPtr spotifyHWnd = proc.MainWindowHandle;
 
         public event EventHandler<TrackChangeEventArgs> OnTrackChange;
 
@@ -274,20 +284,21 @@ namespace SpotifyAPI.Local
             await _rh.SendQueueRequest(uri);
         }
 
+
         /// <summary>
-        /// Skips the current song (Using keypress simulation)
+        /// Skips the current song (Using Post Message)
         /// </summary>
         public void Skip()
         {
-            PressKey(VkMediaNextTrack);
+            PostMessage(spotifyHWnd, WM_APPCOMMAND, IntPtr.Zero, (IntPtr)cmdNextTrack);
         }
 
         /// <summary>
-        /// Emulates the "Previous" Key (Using keypress simulation)
+        /// Emulates the "Previous" Key (Using Post Message)
         /// </summary>
         public void Previous()
         {
-            PressKey(VkMediaPrevTrack);
+            PostMessage(spotifyHWnd, WM_APPCOMMAND, IntPtr.Zero, (IntPtr)cmdPreviousTrack);
         }
 
         /// <summary>
