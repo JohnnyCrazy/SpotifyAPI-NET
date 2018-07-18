@@ -186,7 +186,7 @@ namespace SpotifyAPI.Local
             {
                 Proxy = _config?.ProxyConfig?.CreateWebProxy()
             };
-            wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.50.41368.gbd68dbef)");
+            wc.Headers.Add(HttpRequestHeader.UserAgent, "Spotify (1.0.85.257.g0f8531bd)");
 
             return wc;
         }
