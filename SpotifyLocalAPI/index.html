@@ -233,6 +233,16 @@ public static void Main(String[] args)
 });
 </code></pre>
 
+<p>it's also possible to change the current <code>UserAgent</code> string, which is needed if the library wasn't updated for some time. In this case, you should first make an unauthenticated call with <code>spotify.GetStatus()</code>, receive the current spotify version, and update the config afterwards:</p>
+<pre><code class="cs">var config = new SpotifyLocalAPIConfig { Port = 4371, HostUrl = &quot;https://127.0.0.1&quot; });
+_spotify = new SpotifyLocalAPI(config);
+
+var status = _spotify.GetStatus();
+config.UserAgent = status.ClientVersion;
+
+// Now you should call auth stuff, like &quot;_spotify.Connect()&quot;
+</code></pre>
+
 <h2 id="proxy-settings">Proxy Settings</h2>
 <p>You can forward your proxy settings to the local api by using a field in the <code>SpotifyLocalAPIConfig</code>.</p>
 <pre><code class="cs">_spotify = new SpotifyLocalAPI(new SpotifyLocalAPIConfig
