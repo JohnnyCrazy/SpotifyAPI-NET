@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using SpotifyAPI.Web.Auth;
 
 namespace SpotifyAPI.Web
 {
@@ -1922,11 +1923,13 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <param name="offsetUri">Indicates from which track uri within context should start</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
-            int? offset = null)
+            int? offset = null, string offsetUri = "")
         {
             JObject ob = new JObject();
             if(!string.IsNullOrEmpty(contextUri))
@@ -1935,6 +1938,10 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if(offset != null)
                 ob.Add("offset", new JObject { { "position", offset } });
+            if (!string.IsNullOrEmpty(offsetUri))
+                ob.Add("offset", new JObject { { "uri", offsetUri } });
+            if (offset != null && !string.IsNullOrEmpty(offsetUri))
+                throw new SpotifyWebApiException("Only either offset or offsetUri allowed");
             return UploadData<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
