@@ -7,7 +7,7 @@ namespace SpotifyAPI.Web
 {
     public static class Util
     {
-        public static string GetStringAttribute<T>(this T en, string separator) where T : struct, IConvertible
+        public static string GetStringAttribute<T>(this T en, string separator = "") where T : struct, IConvertible
         {
             Enum e = (Enum)(object)en;
             IEnumerable<StringAttribute> attributes =
@@ -21,6 +21,11 @@ namespace SpotifyAPI.Web
             List<string> list = new List<string>();
             attributes.ToList().ForEach(element => list.Add(element.Text));
             return string.Join(separator, list);
+        }
+
+        public static long ToUnixTimeMillisecondsPoly(this DateTime time)
+        {
+            return (long)time.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
         }
     }
 

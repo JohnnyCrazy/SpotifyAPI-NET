@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web.Auth
 {
@@ -23,7 +24,6 @@ namespace SpotifyAPI.Web.Auth
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
                 wc.Headers.Add("Authorization",
                     "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + ClientSecret)));
 
@@ -43,6 +43,39 @@ namespace SpotifyAPI.Web.Auth
                     using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
                     {
                         data = Encoding.UTF8.GetBytes(reader.ReadToEnd());
+                    }
+                }
+                return JsonConvert.DeserializeObject<Token>(Encoding.UTF8.GetString(data));
+            }
+        }
+
+        /// <summary>
+        ///     Starts the auth process async and
+        /// </summary>
+        /// <returns>A new Token</returns>
+        public async Task<Token> DoAuthAsync()
+        {
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers.Add("Authorization",
+                    "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + ClientSecret)));
+
+                NameValueCollection col = new NameValueCollection
+                {
+                    {"grant_type", "client_credentials"},
+                    {"scope", Scope.GetStringAttribute(" ")}
+                };
+
+                byte[] data;
+                try
+                {
+                    data = await wc.UploadValuesTaskAsync("https://accounts.spotify.com/api/token", "POST", col);
+                }
+                catch (WebException e)
+                {
+                    using (StreamReader reader = new StreamReader(e.Response.GetResponseStream()))
+                    {
+                        data = Encoding.UTF8.GetBytes(await reader.ReadToEndAsync());
                     }
                 }
                 return JsonConvert.DeserializeObject<Token>(Encoding.UTF8.GetString(data));

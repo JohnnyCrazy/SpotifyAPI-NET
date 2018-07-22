@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Text;
 
 namespace SpotifyAPI.Local
 {
@@ -9,6 +10,9 @@ namespace SpotifyAPI.Local
 
         public ExtendedWebClient()
         {
+            // TODO Remove once SSL Issues are resolved #115
+            ServicePointManager.ServerCertificateValidationCallback = (s, certificate, chain, sslPolicyErrors) => true;
+            Encoding = Encoding.UTF8;
             Timeout = 2000;
             Headers.Add("Origin", "https://embed.spotify.com");
             Headers.Add("Referer", "https://embed.spotify.com/?uri=spotify:track:5Zp4SWOpbuOdnsxLqwgutt");

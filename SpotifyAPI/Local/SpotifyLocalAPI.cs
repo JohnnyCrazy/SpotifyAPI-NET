@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace SpotifyAPI.Local
@@ -43,6 +44,8 @@ namespace SpotifyAPI.Local
             }
         }
 
+        private const int WindowsSevenMajorVersion = 6;
+        private const int WindowsSevenMinorVersion = 1;
         private const byte VkMediaNextTrack = 0xb0;
         private const byte VkMediaPrevTrack = 0xb1;
         private const int KeyeventfExtendedkey = 0x1;
@@ -51,6 +54,7 @@ namespace SpotifyAPI.Local
         private readonly RemoteHandler _rh;
         private Timer _eventTimer;
         private StatusResponse _eventStatusResponse;
+        private Track _eventStatusTrack;
 
         public event EventHandler<TrackChangeEventArgs> OnTrackChange;
 
@@ -62,8 +66,14 @@ namespace SpotifyAPI.Local
 
         public SpotifyLocalAPI(int timerIntervall = 50)
         {
-            _rh = new RemoteHandler();
+            _rh = new RemoteHandler(new SpotifyLocalAPIConfig());
             AttachTimer(timerIntervall);
+        }
+
+        public SpotifyLocalAPI(SpotifyLocalAPIConfig config)
+        {
+            _rh = new RemoteHandler(config);
+            AttachTimer(config.TimerInterval);
         }
 
         private void AttachTimer(int intervall)
@@ -96,13 +106,14 @@ namespace SpotifyAPI.Local
                 _eventTimer.Start();
                 return;
             }
-            if (newStatusResponse.Track != null && _eventStatusResponse.Track != null)
+            if (newStatusResponse.Track != null && _eventStatusTrack != null)
             {
-                if (newStatusResponse.Track.TrackResource?.Name != _eventStatusResponse.Track.TrackResource?.Name)
+                if (newStatusResponse.Track.TrackResource?.Uri != _eventStatusTrack.TrackResource?.Uri ||
+                    newStatusResponse.Track.IsOtherTrackType() && newStatusResponse.Track.Length != _eventStatusTrack.Length)
                 {
                     OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
-                        OldTrack = _eventStatusResponse.Track,
+                        OldTrack = _eventStatusTrack,
                         NewTrack = newStatusResponse.Track
                     });
                 }
@@ -130,9 +141,17 @@ namespace SpotifyAPI.Local
                 });
             }
             _eventStatusResponse = newStatusResponse;
+            if (newStatusResponse.Track != null)
+            {
+                _eventStatusTrack = newStatusResponse.Track;
+            }
             _eventTimer.Start();
         }
 
+        private bool IsOSCompatible(int minMajor, int minMinor)
+        {
+            return Environment.OSVersion.Version.Major > minMajor || (Environment.OSVersion.Version.Major == minMajor && Environment.OSVersion.Version.Minor >= minMinor);
+        }
         /// <summary>
         /// Connects with Spotify. Needs to be called before all other SpotifyAPI functions
         /// </summary>
@@ -156,13 +175,8 @@ namespace SpotifyAPI.Local
         /// </summary>
         public void Mute()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if(!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if(Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             VolumeMixerControl.MuteSpotify(true);
         }
 
@@ -171,13 +185,8 @@ namespace SpotifyAPI.Local
         /// </summary>
         public void UnMute()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             VolumeMixerControl.MuteSpotify(false);
         }
 
@@ -187,13 +196,8 @@ namespace SpotifyAPI.Local
         /// <returns>Null if an error occured, otherwise the muted state</returns>
         public bool IsSpotifyMuted()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             return VolumeMixerControl.IsSpotifyMuted();
         }
 
@@ -203,13 +207,8 @@ namespace SpotifyAPI.Local
         /// <param name="volume">A value between 0 and 100</param>
         public void SetSpotifyVolume(float volume = 100)
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             if (volume < 0 || volume > 100)
                 throw new ArgumentOutOfRangeException(nameof(volume));
             VolumeMixerControl.SetSpotifyVolume(volume);
@@ -221,30 +220,25 @@ namespace SpotifyAPI.Local
         /// <returns>Null if an error occured, otherwise a float between 0 and 100</returns>
         public float GetSpotifyVolume()
         {
-            //Windows < Windows Vista Check
-            if (Environment.OSVersion.Version.Major < 6)
+            if (!IsOSCompatible(WindowsSevenMajorVersion, WindowsSevenMinorVersion))
                 throw new NotSupportedException("This feature is only available on Windows 7 or newer");
-            //Windows Vista Check
-            if (Environment.OSVersion.Version.Major == 6)
-                if (Environment.OSVersion.Version.Minor == 0)
-                    throw new NotSupportedException("This feature is only available on Windows 7 or newer");
             return VolumeMixerControl.GetSpotifyVolume();
         }
 
         /// <summary>
         /// Pause function
         /// </summary>
-        public void Pause()
+        public async Task Pause()
         {
-            _rh.SendPauseRequest();
+            await _rh.SendPauseRequest();
         }
 
         /// <summary>
         /// Play function
         /// </summary>
-        public void Play()
+        public async Task Play()
         {
-            _rh.SendPlayRequest();
+            await _rh.SendPlayRequest();
         }
 
         /// <summary>
@@ -265,9 +259,9 @@ namespace SpotifyAPI.Local
         /// <remarks>
         /// Contexts are basically a queue in spotify. a song can be played within a context, meaning that hitting next / previous would lead to another song. Contexts are leveraged by widgets as described in the "Multiple tracks player" section of the following documentation page: https://developer.spotify.com/technologies/widgets/spotify-play-button/
         /// </remarks>
-        public void PlayURL(string uri, string context = "")
+        public async Task PlayURL(string uri, string context = "")
         {
-            _rh.SendPlayRequest(uri, context);
+            await _rh.SendPlayRequest(uri, context);
         }
 
         /// <summary>
@@ -275,9 +269,9 @@ namespace SpotifyAPI.Local
         /// </summary>
         /// <param name="uri">The Spotify URI</param>
         [Obsolete("This method doesn't work with the current spotify version.")]
-        public void AddToQueue(string uri)
+        public async Task AddToQueue(string uri)
         {
-            _rh.SendQueueRequest(uri);
+            await _rh.SendQueueRequest(uri);
         }
 
         /// <summary>
@@ -312,6 +306,31 @@ namespace SpotifyAPI.Local
         public static Boolean IsSpotifyWebHelperRunning()
         {
             return Process.GetProcessesByName("spotifywebhelper").Length >= 1;
+        }
+
+        /// <summary>
+        /// Determines whether [spotify is installed].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [spotify is installed]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsSpotifyInstalled()
+        {
+            bool isInstalled = false;
+
+            // Checks if UWP Spotify is installed.
+            string uwpSpotifyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Packages\SpotifyAB.SpotifyMusic_zpdnekdrzrea0");
+
+            isInstalled = Directory.Exists(uwpSpotifyPath);
+
+            // If UWP Spotify is not installed, try look for desktop version
+            if (!isInstalled)
+            {
+                string desktopSpotifyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Spotify\Spotify.exe");
+                isInstalled = File.Exists(desktopSpotifyPath);
+            }
+
+            return isInstalled;
         }
 
         /// <summary>

@@ -35,6 +35,9 @@ namespace SpotifyAPI.Web.Models
 
         [JsonProperty("images")]
         public List<Image> Images { get; set; }
+        
+        [JsonProperty("label")]
+        public string Label { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

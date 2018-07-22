@@ -37,13 +37,14 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -53,12 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Local\Enums\UriType.cs" />
     <Compile Include="Local\ExtendedWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Local\Models\SpotifyUri.cs" />
+    <Compile Include="Local\SpotifyLocalAPIConfig.cs" />
     <Compile Include="Local\VolumeMixerControl.cs" />
+    <Compile Include="ProxyConfig.cs" />
     <Compile Include="Web\Auth\WebAPIFactory.cs" />
+    <Compile Include="Web\Enums\RepeatState.cs" />
     <Compile Include="Web\Enums\TimeRangeType.cs" />
     <Compile Include="Web\IClient.cs" />
     <Compile Include="Local\Models\CFID.cs" />
@@ -77,19 +82,29 @@
     <Compile Include="Web\Auth\ClientCredentialsAuth.cs" />
     <Compile Include="Web\Enums\FollowType.cs" />
     <Compile Include="Web\Auth\ImplicitGrantAuth.cs" />
+    <Compile Include="Web\Models\AnalysisSegment.cs" />
+    <Compile Include="Web\Models\AnalysisTimeSlice.cs" />
+    <Compile Include="Web\Models\AnalysisMeta.cs" />
+    <Compile Include="Web\Models\AnalysisSection.cs" />
+    <Compile Include="Web\Models\AnalysisTrack.cs" />
     <Compile Include="Web\Models\ArrayResponse.cs" />
+    <Compile Include="Web\Models\AudioAnalysis.cs" />
     <Compile Include="Web\Models\AudioFeatures.cs" />
+    <Compile Include="Web\Models\AvailabeDevices.cs" />
     <Compile Include="Web\Models\BasicModel.cs" />
     <Compile Include="Web\Models\Category.cs" />
     <Compile Include="Web\Models\CategoryList.cs" />
     <Compile Include="Web\Models\CategoryPlaylist.cs" />
     <Compile Include="Web\Models\CursorPaging.cs" />
+    <Compile Include="Web\Models\Device.cs" />
     <Compile Include="Web\Models\FeaturedPlaylists.cs" />
     <Compile Include="Web\Models\FollowedArtists.cs" />
     <Compile Include="Web\Models\FullAlbum.cs" />
     <Compile Include="Web\Models\FullArtist.cs" />
     <Compile Include="Web\Models\FullTrack.cs" />
     <Compile Include="Web\Models\NewAlbumReleases.cs" />
+    <Compile Include="Web\Models\PlaybackContext.cs" />
+    <Compile Include="Web\Models\PlayHistory.cs" />
     <Compile Include="Web\Models\Recommendations.cs" />
     <Compile Include="Web\Models\RecommendationSeed .cs" />
     <Compile Include="Web\Models\RecommendationSeedGenres.cs" />

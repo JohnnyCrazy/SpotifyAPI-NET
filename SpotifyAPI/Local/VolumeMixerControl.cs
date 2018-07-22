@@ -18,8 +18,7 @@ namespace SpotifyAPI.Local
                 throw new COMException("Volume object creation failed");
             }
 
-            float level;
-            volume.GetMasterVolume(out level);
+            volume.GetMasterVolume(out float level);
             Marshal.ReleaseComObject(volume);
             return level * 100;
         }
@@ -33,8 +32,7 @@ namespace SpotifyAPI.Local
                 throw new COMException("Volume object creation failed");
             }
 
-            bool mute;
-            volume.GetMute(out mute);
+            volume.GetMute(out bool mute);
             Marshal.ReleaseComObject(volume);
             return mute;
         }
@@ -67,41 +65,80 @@ namespace SpotifyAPI.Local
             Marshal.ReleaseComObject(volume);
         }
 
-        private static ISimpleAudioVolume GetSpotifyVolumeObject() {
-            return (from p in Process.GetProcessesByName(SpotifyProcessName)
-                    let vol = GetVolumeObject(p.Id)
-                    where vol != null
-                    select vol).FirstOrDefault();
+        private static ISimpleAudioVolume GetSpotifyVolumeObject()
+        {
+            var audioVolumeObjects = from p in Process.GetProcessesByName(SpotifyProcessName)
+                                     let vol = GetVolumeObject(p.Id)
+                                     where vol != null
+                                     select vol;
+            return audioVolumeObjects.FirstOrDefault();
         }
 
         private static ISimpleAudioVolume GetVolumeObject(int pid)
         {
             // get the speakers (1st render + multimedia) device
-            IMmDeviceEnumerator deviceEnumerator = (IMmDeviceEnumerator)(new MMDeviceEnumerator());
-            IMmDevice speakers;
-            deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.ERender, ERole.EMultimedia, out speakers);
+            IMmDeviceEnumerator deviceEnumerator = (IMmDeviceEnumerator) new MMDeviceEnumerator();
+            deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.ERender, ERole.EMultimedia, out IMmDevice speakers);
 
+            speakers.GetId(out string defaultDeviceId);
+
+            ISimpleAudioVolume volumeControl = GetVolumeObject(pid, speakers);
+            Marshal.ReleaseComObject(speakers);
+
+            if (volumeControl == null)
+            {
+                // If volumeControl is null, then the process's volume object might be on a different device.
+                // This happens if the process doesn't use the default device.
+                // 
+                // As far as Spotify is concerned, if using the "--enable-audio-graph" command line argument,
+                // a new option becomes available in the Settings that makes it possible to change the playback device.
+
+                deviceEnumerator.EnumAudioEndpoints(EDataFlow.ERender, EDeviceState.Active, out IMmDeviceCollection deviceCollection);
+
+                deviceCollection.GetCount(out int count);
+                for (int i = 0; i < count; i++)
+                {
+                    deviceCollection.Item(i, out IMmDevice device);
+                    device.GetId(out string deviceId);
+
+                    try
+                    {
+                        if (deviceId == defaultDeviceId)
+                            continue;
+
+                        volumeControl = GetVolumeObject(pid, device);
+                        if (volumeControl != null)
+                            break;
+                    }
+                    finally
+                    {
+                        Marshal.ReleaseComObject(device);
+                    }
+                }
+            }
+            
+            Marshal.ReleaseComObject(deviceEnumerator);
+            return volumeControl;
+        }
+
+        private static ISimpleAudioVolume GetVolumeObject(int pid, IMmDevice device)
+        {
             // activate the session manager. we need the enumerator
             Guid iidIAudioSessionManager2 = typeof(IAudioSessionManager2).GUID;
-            object o;
-            speakers.Activate(ref iidIAudioSessionManager2, 0, IntPtr.Zero, out o);
-            IAudioSessionManager2 mgr = (IAudioSessionManager2)o;
+            device.Activate(ref iidIAudioSessionManager2, 0, IntPtr.Zero, out object o);
+            IAudioSessionManager2 mgr = (IAudioSessionManager2) o;
 
             // enumerate sessions for on this device
-            IAudioSessionEnumerator sessionEnumerator;
-            mgr.GetSessionEnumerator(out sessionEnumerator);
-            int count;
-            sessionEnumerator.GetCount(out count);
+            mgr.GetSessionEnumerator(out IAudioSessionEnumerator sessionEnumerator);
+            sessionEnumerator.GetCount(out int count);
 
             // search for an audio session with the required name
             // NOTE: we could also use the process id instead of the app name (with IAudioSessionControl2)
             ISimpleAudioVolume volumeControl = null;
             for (int i = 0; i < count; i++)
             {
-                IAudioSessionControl2 ctl;
-                sessionEnumerator.GetSession(i, out ctl);
-                int cpid;
-                ctl.GetProcessId(out cpid);
+                sessionEnumerator.GetSession(i, out IAudioSessionControl2 ctl);
+                ctl.GetProcessId(out int cpid);
 
                 if (cpid == pid)
                 {
@@ -112,8 +149,6 @@ namespace SpotifyAPI.Local
             }
             Marshal.ReleaseComObject(sessionEnumerator);
             Marshal.ReleaseComObject(mgr);
-            Marshal.ReleaseComObject(speakers);
-            Marshal.ReleaseComObject(deviceEnumerator);
             return volumeControl;
         }
 
@@ -121,7 +156,6 @@ namespace SpotifyAPI.Local
         [Guid("BCDE0395-E52F-467C-8E3D-C4579291692E")]
         private class MMDeviceEnumerator
         {
-
         }
 
         private enum EDataFlow
@@ -140,10 +174,21 @@ namespace SpotifyAPI.Local
             ERoleEnumCount
         }
 
+        [Flags]
+        private enum EDeviceState
+        {
+            Active = 0x00000001,
+            Disabled = 0x00000002,
+            NotPresent = 0x00000004,
+            UnPlugged = 0x00000008,
+            All = 0x0000000F
+        }
+
         [Guid("A95664D2-9614-4F35-A746-DE8DB63617E6"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private interface IMmDeviceEnumerator
         {
-            int NotImpl1();
+            [PreserveSig]
+            int EnumAudioEndpoints(EDataFlow dataFlow, EDeviceState stateMask, [Out] out IMmDeviceCollection deviceCollection);
 
             [PreserveSig]
             int GetDefaultAudioEndpoint(EDataFlow dataFlow, ERole role, out IMmDevice ppDevice);
@@ -154,6 +199,21 @@ namespace SpotifyAPI.Local
         {
             [PreserveSig]
             int Activate(ref Guid iid, int dwClsCtx, IntPtr pActivationParams, [MarshalAs(UnmanagedType.IUnknown)] out object ppInterface);
+
+            int OpenPropertyStore_NotImpl();
+
+            [PreserveSig]
+            int GetId([Out, MarshalAs(UnmanagedType.LPWStr)] out string ppstrId);
+        }
+
+        [Guid("0BD7A1BE-7A1A-44DB-8397-CC5392387B5E"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        private interface IMmDeviceCollection
+        {
+            [PreserveSig]
+            int GetCount(out int deviceCount);
+
+            [PreserveSig]
+            int Item(int deviceIndex, [Out] out IMmDevice device);
         }
 
         [Guid("77AA99A0-1BD6-484F-8BC7-2C654C9A9B6F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

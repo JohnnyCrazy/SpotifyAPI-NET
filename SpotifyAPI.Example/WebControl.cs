@@ -15,8 +15,8 @@ namespace SpotifyAPI.Example
 {
     public partial class WebControl : UserControl
     {
+        private readonly ProxyConfig _proxyConfig;
         private SpotifyWebAPI _spotify;
-        private ImplicitGrantAuth _auth;
 
         private PrivateProfile _profile;
         private List<FullTrack> _savedTracks;
@@ -26,32 +26,9 @@ namespace SpotifyAPI.Example
         {
             InitializeComponent();
 
+            _proxyConfig = new ProxyConfig();
+
             _savedTracks = new List<FullTrack>();
-            
-        }
-
-        private void _auth_OnResponseReceivedEvent(Token token, string state)
-        {
-            _auth.StopHttpServer();
-
-            if (state != "XSS")
-            {
-                MessageBox.Show(@"Wrong state received.", @"SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (token.Error != null)
-            {
-                MessageBox.Show($"Error: {token.Error}", @"SpotifyWeb API Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            _spotify = new SpotifyWebAPI
-            {
-                UseAuth = true,
-                AccessToken = token.AccessToken,
-                TokenType = token.TokenType
-            };
-            
         }
 
         private async void InitialSetup()
@@ -63,7 +40,7 @@ namespace SpotifyAPI.Example
             }
 
             authButton.Enabled = false;
-            _profile = _spotify.GetPrivateProfile();
+            _profile = await _spotify.GetPrivateProfileAsync();
 
             _savedTracks = GetSavedTracks();
             savedTracksCountLabel.Text = _savedTracks.Count.ToString();
@@ -133,8 +110,9 @@ namespace SpotifyAPI.Example
                 8000,
                 "26d287105e31491889f3cd293d85bfea",
                 Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead |
-                Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead,
-                TimeSpan.FromSeconds(20));
+                Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative |
+                Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState,
+                _proxyConfig);
 
             try
             {
@@ -149,6 +127,14 @@ namespace SpotifyAPI.Example
                 return;
 
             InitialSetup();
+        }
+
+        private void applyProxyBtn_Click(object sender, EventArgs e)
+        {
+            _proxyConfig.Host = proxyHostTextBox.Text;
+            _proxyConfig.Port = (int)proxyPortUpDown.Value;
+            _proxyConfig.Username = proxyUsernameTextBox.Text;
+            _proxyConfig.Password = proxyPasswordTextBox.Text;
         }
     }
 }

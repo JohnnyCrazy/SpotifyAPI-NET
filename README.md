@@ -1,5 +1,9 @@
-SpotifyAPI-NET [![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)[![Nuget](https://badge.fury.io/nu/SpotifyAPI-NET.svg)](https://www.nuget.org/packages/SpotifyAPI-NET/)
+SpotifyAPI-NET 
 ===
+
+[![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
+[![Nuget](https://badge.fury.io/nu/SpotifyAPI-NET.svg)](https://www.nuget.org/packages/SpotifyAPI-NET/)
+[![Gitter](https://img.shields.io/gitter/room/SpotifyAPI-NET/Lobby.svg)](https://gitter.im/SpotifyAPI-NET/Lobby)
 
 An API for the Spotify-Client and Spotify's Web API, written in .NET  
 
@@ -11,11 +15,11 @@ An API for the Spotify-Client and Spotify's Web API, written in .NET
 > Do you ever wanted to control your local Spotify Client with some sort of API? Now you can! This API gives you full control over your spotify client.
 > You can get infos about the currently playing song, get its Album-Art, skip/pause and much more. It also features multiple Event-Interfaces.
 
-###Docs and Usage
+### Docs and Usage
 
 More Information, Installation-Instructions, Examples and API-Reference can be found at [github.io/SpotifyAPI-Net/](http://johnnycrazy.github.io/SpotifyAPI-NET/)
 
-###NuGet  
+### NuGet  
 You can add the API to your project via [nuget-package](https://www.nuget.org/packages/SpotifyAPI-NET/):  
 ```
 Install-Package SpotifyAPI-NET
@@ -23,8 +27,14 @@ Install-Package SpotifyAPI-NET
 Install-Package SpotifyAPI-Net -pre
 ```
 
-###Example
+### Example
 
 | SpotifyLocalAPI Example   | SpotifyWebAPI Example     |
 | :------------- | :------------- |
 | ![WebExample](http://i.imgur.com/Vo0lMk8.png) | ![LocalExample](http://i.imgur.com/E8Ba7Qm.png) |
+
+### Donations
+
+If you want to support this project or my work in general, you can donate a buck or two via the link below. However, this will be always optional!
+
+[![Donate Link](./donate.svg)](https://paypal.me/JohnnyCrazy)

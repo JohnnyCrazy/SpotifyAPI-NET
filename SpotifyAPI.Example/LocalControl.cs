@@ -10,19 +10,25 @@ namespace SpotifyAPI.Example
 {
     public partial class LocalControl : UserControl
     {
-        private readonly SpotifyLocalAPI _spotify;
+        private readonly SpotifyLocalAPIConfig _config;
+        private SpotifyLocalAPI _spotify;
         private Track _currentTrack;
 
         public LocalControl()
         {
             InitializeComponent();
+            
+            _config = new SpotifyLocalAPIConfig
+            {
+                ProxyConfig = new ProxyConfig()
+            };
 
-            _spotify = new SpotifyLocalAPI();
+            _spotify = new SpotifyLocalAPI(_config);
             _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
             _spotify.OnTrackChange += _spotify_OnTrackChange;
             _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
             _spotify.OnVolumeChange += _spotify_OnVolumeChange;
-            _spotify.SynchronizingObject = this;
+            //_spotify.SynchronizingObject = this;
 
             artistLinkLabel.Click += (sender, args) => Process.Start(artistLinkLabel.Tag.ToString());
             albumLinkLabel.Click += (sender, args) => Process.Start(albumLinkLabel.Tag.ToString());
@@ -72,6 +78,8 @@ namespace SpotifyAPI.Example
 
             if (status.Track != null) //Update track infos
                 UpdateTrack(status.Track);
+
+            RefreshVolumeMixerVolume();
         }
 
         public async void UpdateTrack(Track track)
@@ -84,21 +92,21 @@ namespace SpotifyAPI.Example
             if (track.IsAd())
                 return; //Don't process further, maybe null values
 
-            titleLinkLabel.Text = track.TrackResource.Name;
-            titleLinkLabel.Tag = track.TrackResource.Uri;
+            titleLinkLabel.Text = track.TrackResource?.Name;
+            titleLinkLabel.Tag = track.TrackResource?.Uri;
 
-            artistLinkLabel.Text = track.ArtistResource.Name;
-            artistLinkLabel.Tag = track.ArtistResource.Uri;
+            artistLinkLabel.Text = track.ArtistResource?.Name;
+            artistLinkLabel.Tag = track.ArtistResource?.Uri;
 
-            albumLinkLabel.Text = track.AlbumResource.Name;
-            albumLinkLabel.Tag = track.AlbumResource.Uri;
+            albumLinkLabel.Text = track.AlbumResource?.Name;
+            albumLinkLabel.Tag = track.AlbumResource?.Uri;
 
-            SpotifyUri uri = track.TrackResource.ParseUri();
+            SpotifyUri uri = track.TrackResource?.ParseUri();
 
-            trackInfoBox.Text = $"Track Info - {uri.Id}";
+            trackInfoBox.Text = $@"Track Info - {uri?.Id}";
 
-            bigAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size640);
-            smallAlbumPicture.Image = await track.GetAlbumArtAsync(AlbumArtSize.Size160);
+            bigAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size640, _config.ProxyConfig) : null;
+            smallAlbumPicture.Image = track.AlbumResource != null ? await track.GetAlbumArtAsync(AlbumArtSize.Size160, _config.ProxyConfig) : null;
         }
 
         public void UpdatePlayingStatus(bool playing)
@@ -106,24 +114,80 @@ namespace SpotifyAPI.Example
             isPlayingLabel.Text = playing.ToString();
         }
 
+        public void RefreshVolumeMixerVolume()
+        {
+            volumeMixerLabel.Text = _spotify.GetSpotifyVolume().ToString(CultureInfo.InvariantCulture);
+        }
+
+        private void applyProxyBtn_Click(object sender, EventArgs e)
+        {
+            _config.ProxyConfig.Host = proxyHostTextBox.Text;
+            _config.ProxyConfig.Port = (int)proxyPortUpDown.Value;
+            _config.ProxyConfig.Username = proxyUsernameTextBox.Text;
+            _config.ProxyConfig.Password = proxyPasswordTextBox.Text;
+
+            bool connected = _spotify.ListenForEvents;
+            if (connected)
+            {
+                // Reconnect using new proxy
+                _spotify.ListenForEvents = false;
+                _spotify.OnPlayStateChange -= _spotify_OnPlayStateChange;
+                _spotify.OnTrackChange -= _spotify_OnTrackChange;
+                _spotify.OnTrackTimeChange -= _spotify_OnTrackTimeChange;
+                _spotify.OnVolumeChange -= _spotify_OnVolumeChange;
+
+                _spotify.Dispose();
+
+                _spotify = new SpotifyLocalAPI(_config);
+                _spotify.OnPlayStateChange += _spotify_OnPlayStateChange;
+                _spotify.OnTrackChange += _spotify_OnTrackChange;
+                _spotify.OnTrackTimeChange += _spotify_OnTrackTimeChange;
+                _spotify.OnVolumeChange += _spotify_OnVolumeChange;
+
+                connectBtn.Text = @"Reconnecting...";
+                Connect();
+            }
+        }
+
         private void _spotify_OnVolumeChange(object sender, VolumeChangeEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnVolumeChange(sender, e)));
+                return;
+            }
             volumeLabel.Text = (e.NewVolume * 100).ToString(CultureInfo.InvariantCulture);
         }
 
         private void _spotify_OnTrackTimeChange(object sender, TrackTimeChangeEventArgs e)
         {
-            timeLabel.Text = $"{FormatTime(e.TrackTime)}/{FormatTime(_currentTrack.Length)}";
-            timeProgressBar.Value = (int)e.TrackTime;
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnTrackTimeChange(sender, e)));
+                return;
+            }
+            timeLabel.Text = $@"{FormatTime(e.TrackTime)}/{FormatTime(_currentTrack.Length)}";
+            if(e.TrackTime < _currentTrack.Length)
+                timeProgressBar.Value = (int)e.TrackTime;
         }
 
         private void _spotify_OnTrackChange(object sender, TrackChangeEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnTrackChange(sender, e)));
+                return;
+            }
             UpdateTrack(e.NewTrack);
         }
 
         private void _spotify_OnPlayStateChange(object sender, PlayStateEventArgs e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => _spotify_OnPlayStateChange(sender, e)));
+                return;
+            }
             UpdatePlayingStatus(e.Playing);
         }
 
@@ -132,19 +196,19 @@ namespace SpotifyAPI.Example
             Connect();
         }
 
-        private void playUrlBtn_Click(object sender, EventArgs e)
+        private async void playUrlBtn_Click(object sender, EventArgs e)
         {
-            _spotify.PlayURL(playTextBox.Text, contextTextBox.Text);
+            await _spotify.PlayURL(playTextBox.Text, contextTextBox.Text);
         }
 
-        private void playBtn_Click(object sender, EventArgs e)
+        private async void playBtn_Click(object sender, EventArgs e)
         {
-            _spotify.Play();
+            await _spotify.Play();
         }
 
-        private void pauseBtn_Click(object sender, EventArgs e)
+        private async void pauseBtn_Click(object sender, EventArgs e)
         {
-            _spotify.Pause();
+            await _spotify.Pause();
         }
 
         private void prevBtn_Click(object sender, EventArgs e)
@@ -155,6 +219,24 @@ namespace SpotifyAPI.Example
         private void skipBtn_Click(object sender, EventArgs e)
         {
             _spotify.Skip();
+        }
+
+        private void volumeUpBtn_Click(object sender, EventArgs e)
+        {
+            float currentVolume = _spotify.GetSpotifyVolume();
+            float newVolume = currentVolume + 2.0f;
+            _spotify.SetSpotifyVolume(newVolume >= 100.0f ? 100.0f : newVolume);
+
+            RefreshVolumeMixerVolume();
+        }
+
+        private void volumeDownBtn_Click(object sender, EventArgs e)
+        {
+            float currentVolume = _spotify.GetSpotifyVolume();
+            float newVolume = currentVolume - 2.0f;
+            _spotify.SetSpotifyVolume(newVolume <= 0.0f ? 0.0f : newVolume);
+
+            RefreshVolumeMixerVolume();
         }
 
         private static String FormatTime(double sec)

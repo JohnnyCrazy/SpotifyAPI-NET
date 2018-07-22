@@ -13,7 +13,7 @@ namespace SpotifyAPI.Local.Models
         [JsonProperty("playing")]
         public bool Playing { get; set; }
 
-        [JsonProperty("schuffle")]
+        [JsonProperty("shuffle")]
         public bool Shuffle { get; set; }
 
         [JsonProperty("repeat")]
@@ -42,6 +42,9 @@ namespace SpotifyAPI.Local.Models
 
         [JsonProperty("online")]
         public bool Online { get; set; }
+
+        [JsonProperty("open_graph_state")]
+        public OpenGraphState OpenGraphState { get; set; }
 
         [JsonProperty("running")]
         public bool Running { get; set; }

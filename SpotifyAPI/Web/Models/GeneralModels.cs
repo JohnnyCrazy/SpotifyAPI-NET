@@ -137,5 +137,23 @@ namespace SpotifyAPI.Web.Models
     {
         [JsonProperty("after")]
         public string After { get; set; }
+
+        [JsonProperty("before")]
+        public string Before { get; set; }
+    }
+
+    public class Context
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("href")]
+        public string Href { get; set; }
+
+        [JsonProperty("external_urls")]
+        public Dictionary<string, string> ExternalUrls { get; set; }
+
+        [JsonProperty("uri")]
+        public string Uri { get; set; }
     }
 }

@@ -2,57 +2,79 @@
 using SpotifyAPI.Local.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Web;
+
+[assembly: InternalsVisibleTo("SpotifyAPI.Tests")]
+
 
 namespace SpotifyAPI.Local
 {
+
     internal class RemoteHandler
     {
         public string OauthKey { get; private set; }
         public string CfidKey { get; private set; }
 
-        public const string Host = "SpotifyAPI.spotilocal.com";
+        private SpotifyLocalAPIConfig _config;
 
-        internal Boolean Init()
+        public RemoteHandler(SpotifyLocalAPIConfig config)
+        {
+            _config = config;
+        }
+
+        internal bool Init()
         {
             OauthKey = GetOAuthKey();
             CfidKey = GetCfid();
             return !string.IsNullOrEmpty(CfidKey);
         }
 
-        internal async void SendPauseRequest()
+        internal async Task SendPauseRequest()
         {
-            await QueryAsync("remote/pause.json?pause=true", true, true, -1);
+            NameValueCollection @params = new NameValueCollection { { "pause", "true" } };
+            await QueryAsync("remote/pause.json", true, true, -1, @params).ConfigureAwait(false);
         }
 
-        internal async void SendPlayRequest()
+        internal async Task SendPlayRequest()
         {
-            await QueryAsync("remote/pause.json?pause=false", true, true, -1);
+            NameValueCollection @params = new NameValueCollection { { "pause", "false" } };
+            await QueryAsync("remote/pause.json", true, true, -1, @params).ConfigureAwait(false);
         }
 
-        internal async void SendPlayRequest(string url, string context = "")
+        internal async Task SendPlayRequest(string url, string context = "")
         {
+
             // TODO: instead of having an empty context, one way to fix the bug with the playback time beyond the length of a song would be to provide a 1-song context, and it would be fixed.
-            await QueryAsync($"remote/play.json?uri={url}&context={context}", true, true, -1);
+            NameValueCollection @params = new NameValueCollection
+            {
+                {"uri", url},
+                {"context", context}
+            };
+            await QueryAsync($"remote/play.json", true, true, -1, @params).ConfigureAwait(false);
+
         }
 
-        internal async void SendQueueRequest(string url)
+        internal async Task SendQueueRequest(string url)
         {
-            await QueryAsync("remote/play.json?uri=" + url + "?action=queue", true, true, -1);
+            NameValueCollection @params = new NameValueCollection
+            {
+                {"uri", url},
+                {"action", "queue"}
+            };
+            await QueryAsync("remote/play.json", true, true, -1, @params).ConfigureAwait(false);
+
         }
 
         internal StatusResponse GetNewStatus()
         {
             string response = Query("remote/status.json", true, true, -1);
             if (string.IsNullOrEmpty(response))
-            {
                 return null;
-            }
             response = response.Replace("\\n", "");
-            byte[] bytes = Encoding.Default.GetBytes(response);
-            response = Encoding.UTF8.GetString(bytes);
             List<StatusResponse> raw = JsonConvert.DeserializeObject<List<StatusResponse>>(response);
             return raw[0];
         }
@@ -60,7 +82,7 @@ namespace SpotifyAPI.Local
         internal string GetOAuthKey()
         {
             string raw;
-            using (WebClient wc = new WebClient())
+            using (WebClient wc = GetWebClientWithUserAgentHeader())
             {
                 raw = wc.DownloadString("http://open.spotify.com/token");
             }
@@ -80,37 +102,49 @@ namespace SpotifyAPI.Local
             return cfidList[0].Error == null ? cfidList[0].Token : "";
         }
 
-        internal string Query(string request, bool oauth, bool cfid, int wait)
+        internal string BuildQueryString(bool oauth, bool cfid, int wait, NameValueCollection @params = null)
         {
-            string parameters = "?&ref=&cors=&_=" + GetTimestamp();
-            if (request.Contains("?"))
+            if (@params == null)
             {
-                parameters = parameters.Substring(1);
+                @params = new NameValueCollection();
             }
-
+            NameValueCollection queryParameter = HttpUtility.ParseQueryString(string.Empty);
+            queryParameter.Add(@params);
+            queryParameter.Add(new NameValueCollection() {
+                { "ref", string.Empty},
+                { "cors", string.Empty},
+                { "_", GetTimestamp().ToString()}
+            });
             if (oauth)
             {
-                parameters += "&oauth=" + OauthKey;
+                queryParameter.Add("oauth", OauthKey);
             }
             if (cfid)
             {
-                parameters += "&csrf=" + CfidKey;
+                queryParameter.Add("csrf", CfidKey);
             }
 
             if (wait != -1)
             {
-                parameters += "&returnafter=" + wait;
-                parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
+                queryParameter.Add("returnafter", wait.ToString());
+                queryParameter.Add("returnon", "login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap");
             }
 
-            string address = "http://" + Host + ":4380/" + request + parameters;
-            string response = "";
+            return queryParameter.ToString();
+        }
+        internal string Query(string baseUrl, bool oauth, bool cfid, int wait, NameValueCollection @params = null)
+        {
+            string parameters = BuildQueryString(oauth, cfid, wait, @params);
+            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}?{parameters}";
+            string response = string.Empty;
             try
             {
-                using (var wc = new ExtendedWebClient())
+                using (ExtendedWebClient wc = new ExtendedWebClient())
                 {
                     if (SpotifyLocalAPI.IsSpotifyRunning())
+                    {
                         response = "[ " + wc.DownloadString(address) + " ]";
+                    }
                 }
             }
             catch
@@ -121,37 +155,17 @@ namespace SpotifyAPI.Local
             return response;
         }
 
-        internal async Task<string> QueryAsync(string request, bool oauth, bool cfid, int wait)
+        internal async Task<string> QueryAsync(string baseUrl, bool oauth, bool cfid, int wait, NameValueCollection @params = null)
         {
-            string parameters = "?&ref=&cors=&_=" + GetTimestamp();
-            if (request.Contains("?"))
-            {
-                parameters = parameters.Substring(1);
-            }
-
-            if (oauth)
-            {
-                parameters += "&oauth=" + OauthKey;
-            }
-            if (cfid)
-            {
-                parameters += "&csrf=" + CfidKey;
-            }
-
-            if (wait != -1)
-            {
-                parameters += "&returnafter=" + wait;
-                parameters += "&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap";
-            }
-
-            string address = "http://" + Host + ":4380/" + request + parameters;
+            string parameters = BuildQueryString(oauth, cfid, wait, @params);
+            string address = $"{_config.HostUrl}:{_config.Port}/{baseUrl}?{parameters}";
             string response = "";
             try
             {
-                using (var wc = new ExtendedWebClient())
+                using (ExtendedWebClient wc = new ExtendedWebClient())
                 {
                     if (SpotifyLocalAPI.IsSpotifyRunning())
-                        response = "[ " + await wc.DownloadStringTaskAsync(new Uri(address)) + " ]";
+                        response = "[ " + await wc.DownloadStringTaskAsync(new Uri(address)).ConfigureAwait(false) + " ]";
                 }
             }
             catch
@@ -161,10 +175,20 @@ namespace SpotifyAPI.Local
 
             return response;
         }
-
         internal int GetTimestamp()
         {
             return Convert.ToInt32((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
+        }
+
+        internal WebClient GetWebClientWithUserAgentHeader()
+        {
+            WebClient wc = new WebClient
+            {
+                Proxy = _config?.ProxyConfig?.CreateWebProxy()
+            };
+            wc.Headers.Add(HttpRequestHeader.UserAgent, _config?.UserAgent);
+
+            return wc;
         }
     }
 }

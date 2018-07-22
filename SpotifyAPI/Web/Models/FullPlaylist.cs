@@ -36,6 +36,9 @@ namespace SpotifyAPI.Web.Models
         [JsonProperty("public")]
         public Boolean Public { get; set; }
 
+        [JsonProperty("snapshot_id")]
+        public string SnapshotId { get; set; }
+
         [JsonProperty("tracks")]
         public Paging<PlaylistTrack> Tracks { get; set; }
 

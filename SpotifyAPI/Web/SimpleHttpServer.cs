@@ -25,12 +25,11 @@ namespace SpotifyAPI.Web
         private const int BufSize = 4096;
         private readonly HttpServer _srv;
         private Stream _inputStream;
-        public Hashtable HttpHeaders = new Hashtable();
-        public string HttpMethod;
+        private readonly Hashtable _httpHeaders = new Hashtable();
+        private string _httpMethod;
         public string HttpProtocolVersionstring;
         public string HttpUrl;
         public StreamWriter OutputStream;
-        private bool _isActive = true;
 
         public HttpProcessor(HttpServer srv)
         {
@@ -61,16 +60,16 @@ namespace SpotifyAPI.Web
                 ParseRequest(requestLines.First());
                 ReadHeaders(requestLines.Skip(1));
 
-                if (HttpMethod.Equals("GET"))
+                if (_httpMethod.Equals("GET"))
                 {
                     HandleGetRequest();
                 }
-                else if (HttpMethod.Equals("POST"))
+                else if (_httpMethod.Equals("POST"))
                 {
                     HandlePostRequest();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 WriteFailure();
             }
@@ -86,7 +85,7 @@ namespace SpotifyAPI.Web
             {
                 throw new Exception("Invalid HTTP request line");
             }
-            HttpMethod = tokens[0].ToUpper();
+            _httpMethod = tokens[0].ToUpper();
             HttpUrl = tokens[1];
         }
 
@@ -112,7 +111,7 @@ namespace SpotifyAPI.Web
                 }
 
                 string value = line.Substring(pos, line.Length - pos);
-                HttpHeaders[name] = value;
+                _httpHeaders[name] = value;
             }
         }
 
@@ -130,9 +129,9 @@ namespace SpotifyAPI.Web
             // length, because otherwise he won't know when he's seen it all!
 
             MemoryStream ms = new MemoryStream();
-            if (HttpHeaders.ContainsKey("Content-Length"))
+            if (_httpHeaders.ContainsKey("Content-Length"))
             {
-                var contentLen = Convert.ToInt32(HttpHeaders["Content-Length"]);
+                var contentLen = Convert.ToInt32(_httpHeaders["Content-Length"]);
                 if (contentLen > MaxPostSize)
                 {
                     throw new Exception($"POST Content-Length({contentLen}) too big for this simple server");
@@ -175,7 +174,7 @@ namespace SpotifyAPI.Web
 
         public void Dispose()
         {
-            _isActive = false;
+
         }
     }
 
@@ -281,7 +280,7 @@ namespace SpotifyAPI.Web
                 NameValueCollection col = HttpUtility.ParseQueryString(url);
                 if (col.Keys.Get(0) != "code")
                 {
-                    p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
+                     p.OutputStream.WriteLine("<html><body><h1>Spotify Auth canceled!</h1></body></html>");
                     t = new Thread(o =>
                     {
                         OnAuth?.Invoke(new AuthEventArgs()

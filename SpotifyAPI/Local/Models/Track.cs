@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SpotifyAPI.Local.Models
@@ -29,21 +30,29 @@ namespace SpotifyAPI.Local.Models
         /// Checks if the track is an advert
         /// </summary>
         /// <returns>true if the track is an advert, false otherwise</returns>
-        public bool IsAd()
+        public bool IsAd() => TrackType == "ad" || Length == 0;
+
+        /// <summary>
+        /// Checks if the track id of type "other"
+        /// </summary>
+        /// <returns>true if the track is neither an advert nor a normal track, for example a podcast</returns>
+        public bool IsOtherTrackType()
         {
-            if (TrackType == "ad")
-                return true;
-            if (Length == 0)
-                return true;
-            return false;
+            return TrackType == "other";
         }
 
         /// <summary>
         /// Returns a URL to the album cover in the provided size
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <param name="proxyConfig">Optional proxy settings</param>
         /// <returns>A String, which is the URL to the Albumart</returns>
-        public string GetAlbumArtUrl(AlbumArtSize size)
+        public string GetAlbumArtUrl(AlbumArtSize size, ProxyConfig proxyConfig = null)
+        {
+            return GetAlbumArtUrl(size, proxyConfig?.CreateWebProxy());
+        }
+
+        private string GetAlbumArtUrl(AlbumArtSize size, IWebProxy proxy = null)
         {
             if (AlbumResource.Uri == null || !AlbumResource.Uri.Contains("spotify:album:") || AlbumResource.Uri.Contains("spotify:album:0000000000000000000000"))
                 return "";
@@ -66,25 +75,24 @@ namespace SpotifyAPI.Local.Models
             string raw;
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
+                wc.Proxy = proxy;
+                wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
                 raw = wc.DownloadString("http://open.spotify.com/album/" + AlbumResource.Uri.Split(new[] { ":" }, StringSplitOptions.None)[2]);
             }
             raw = raw.Replace("\t", "");
 
-            // < meta property = "og:image" content = "http://o.scdn.co/cover/12b318ffe0e4c92f9b4e1486e4726a57e6437ca7" >
-            // Spotify changed the response so I am now getting the substring from the first line that parses out the above tag.
+            // <img id="cover-img" src="https://d3rt1990lpmkn.cloudfront.net/640/e62a04cfea4122961f3b9159493730c27d61f71b" ...
             string[] lines = raw.Split(new[] { "\n" }, StringSplitOptions.None);
-            string startString = "<meta property=\"og:image\"";
-            string endString = "\">";
+            const string pattern = "id=\"cover-img\".*?src=\"(.*?)\"";
+            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
             foreach (string line in lines)
             {
-                if (line.Trim().Contains("<meta property=\"og:image\""))
+                MatchCollection matches = rgx.Matches(line);
+                if (matches.Count > 0)
                 {
-                    int start = line.IndexOf(startString, 0) + startString.Length;
-                    int end = line.IndexOf(endString, start);
-                    string content = line.Substring(start, end - start);
+                    string content = matches[0].Groups[1].Value;
                     string[] l = content.Split(new[] { "/" }, StringSplitOptions.None);
-                    return "http://o.scdn.co/" + albumsize + @"/" + l[4].Replace("\"", "").Replace(">", "");
+                    return "http://o.scdn.co/" + albumsize + @"/" + l[4];
                 }
             }
             return "";
@@ -94,37 +102,39 @@ namespace SpotifyAPI.Local.Models
         /// Returns a Bitmap of the album cover in the provided size asynchronous
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <param name="proxyConfig">Optional proxy settings</param>
         /// <returns>A Bitmap, which is the albumart</returns>
-        public async Task<Bitmap> GetAlbumArtAsync(AlbumArtSize size)
+        public async Task<Bitmap> GetAlbumArtAsync(AlbumArtSize size, ProxyConfig proxyConfig = null)
         {
-            using (WebClient wc = new WebClient())
+            var data = await GetAlbumArtAsByteArrayAsync(size, proxyConfig).ConfigureAwait(false);
+            if (data != null)
             {
-                wc.Proxy = null;
-                string url = GetAlbumArtUrl(size);
-                if (url == "")
-                    return null;
-                var data = await wc.DownloadDataTaskAsync(url);
                 using (MemoryStream ms = new MemoryStream(data))
                 {
                     return (Bitmap)Image.FromStream(ms);
                 }
             }
+
+            return null;
         }
 
         /// <summary>
         /// Returns a byte[] of the the album cover in the provided size asynchronous
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <param name="proxyConfig">Optional proxy settings</param>
         /// <returns>A byte[], which is the albumart in binary data</returns>
-        public async Task<byte[]> GetAlbumArtAsByteArrayAsync(AlbumArtSize size)
+        public Task<byte[]> GetAlbumArtAsByteArrayAsync(AlbumArtSize size, ProxyConfig proxyConfig = null)
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
-                string url = GetAlbumArtUrl(size);
+                IWebProxy proxy = proxyConfig?.CreateWebProxy();
+                wc.Proxy = proxy;
+
+                string url = GetAlbumArtUrl(size, proxy);
                 if (url == "")
                     return null;
-                return await wc.DownloadDataTaskAsync(url);
+                return wc.DownloadDataTaskAsync(url);
             }
         }
 
@@ -132,34 +142,36 @@ namespace SpotifyAPI.Local.Models
         /// Returns a Bitmap of the album cover in the provided size
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <param name="proxyConfig">Optional proxy settings</param>
         /// <returns>A Bitmap, which is the albumart</returns>
-        public Bitmap GetAlbumArt(AlbumArtSize size)
+        public Bitmap GetAlbumArt(AlbumArtSize size, ProxyConfig proxyConfig = null)
         {
-            using (WebClient wc = new WebClient())
+            var data = GetAlbumArtAsByteArray(size, proxyConfig);
+            if (data != null)
             {
-                wc.Proxy = null;
-                string url = GetAlbumArtUrl(size);
-                if (string.IsNullOrEmpty(url))
-                    return null;
-                var data = wc.DownloadData(url);
                 using (MemoryStream ms = new MemoryStream(data))
                 {
                     return (Bitmap)Image.FromStream(ms);
                 }
             }
+
+            return null;
         }
 
         /// <summary>
         /// Returns a byte[] of the album cover in the provided size
         /// </summary>
         /// <param name="size">AlbumArtSize (160,320,640)</param>
+        /// <param name="proxyConfig">Optional proxy settings</param>
         /// <returns>A byte[], which is the albumart in binary data</returns>
-        public byte[] GetAlbumArtAsByteArray(AlbumArtSize size)
+        public byte[] GetAlbumArtAsByteArray(AlbumArtSize size, ProxyConfig proxyConfig = null)
         {
             using (WebClient wc = new WebClient())
             {
-                wc.Proxy = null;
-                string url = GetAlbumArtUrl(size);
+                IWebProxy proxy = proxyConfig?.CreateWebProxy();
+                wc.Proxy = proxy;
+
+                string url = GetAlbumArtUrl(size, proxy);
                 if (string.IsNullOrEmpty(url))
                     return null;
                 return wc.DownloadData(url);
