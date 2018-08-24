@@ -47,7 +47,19 @@
             this.emailLabel = new System.Windows.Forms.Label();
             this.accountLabel = new System.Windows.Forms.Label();
             this.avatarPictureBox = new System.Windows.Forms.PictureBox();
+            this.proxyGroupBox = new System.Windows.Forms.GroupBox();
+            this.proxyPortUpDown = new System.Windows.Forms.NumericUpDown();
+            this.proxyPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.proxyUsernameTextBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.proxyHostTextBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.applyProxyBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.avatarPictureBox)).BeginInit();
+            this.proxyGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.proxyPortUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // authButton
@@ -64,7 +76,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 73);
+            this.label3.Location = new System.Drawing.Point(3, 251);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 17);
             this.label3.TabIndex = 5;
@@ -74,7 +86,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 90);
+            this.label4.Location = new System.Drawing.Point(3, 268);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 17);
             this.label4.TabIndex = 6;
@@ -84,7 +96,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 107);
+            this.label5.Location = new System.Drawing.Point(3, 285);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 17);
             this.label5.TabIndex = 7;
@@ -94,7 +106,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 124);
+            this.label1.Location = new System.Drawing.Point(3, 302);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 17);
             this.label1.TabIndex = 8;
@@ -181,7 +193,7 @@
             // 
             this.displayNameLabel.AutoSize = true;
             this.displayNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.displayNameLabel.Location = new System.Drawing.Point(109, 73);
+            this.displayNameLabel.Location = new System.Drawing.Point(109, 251);
             this.displayNameLabel.Name = "displayNameLabel";
             this.displayNameLabel.Size = new System.Drawing.Size(13, 17);
             this.displayNameLabel.TabIndex = 15;
@@ -191,7 +203,7 @@
             // 
             this.countryLabel.AutoSize = true;
             this.countryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.countryLabel.Location = new System.Drawing.Point(70, 90);
+            this.countryLabel.Location = new System.Drawing.Point(70, 268);
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(13, 17);
             this.countryLabel.TabIndex = 16;
@@ -201,7 +213,7 @@
             // 
             this.emailLabel.AutoSize = true;
             this.emailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.emailLabel.Location = new System.Drawing.Point(60, 107);
+            this.emailLabel.Location = new System.Drawing.Point(60, 285);
             this.emailLabel.Name = "emailLabel";
             this.emailLabel.Size = new System.Drawing.Size(13, 17);
             this.emailLabel.TabIndex = 17;
@@ -211,7 +223,7 @@
             // 
             this.accountLabel.AutoSize = true;
             this.accountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.accountLabel.Location = new System.Drawing.Point(109, 124);
+            this.accountLabel.Location = new System.Drawing.Point(109, 302);
             this.accountLabel.Name = "accountLabel";
             this.accountLabel.Size = new System.Drawing.Size(13, 17);
             this.accountLabel.TabIndex = 18;
@@ -219,16 +231,133 @@
             // 
             // avatarPictureBox
             // 
-            this.avatarPictureBox.Location = new System.Drawing.Point(3, 144);
+            this.avatarPictureBox.Location = new System.Drawing.Point(3, 322);
             this.avatarPictureBox.Name = "avatarPictureBox";
             this.avatarPictureBox.Size = new System.Drawing.Size(234, 212);
             this.avatarPictureBox.TabIndex = 19;
             this.avatarPictureBox.TabStop = false;
             // 
+            // proxyGroupBox
+            // 
+            this.proxyGroupBox.Controls.Add(this.proxyPortUpDown);
+            this.proxyGroupBox.Controls.Add(this.proxyPasswordTextBox);
+            this.proxyGroupBox.Controls.Add(this.label15);
+            this.proxyGroupBox.Controls.Add(this.proxyUsernameTextBox);
+            this.proxyGroupBox.Controls.Add(this.label14);
+            this.proxyGroupBox.Controls.Add(this.label13);
+            this.proxyGroupBox.Controls.Add(this.proxyHostTextBox);
+            this.proxyGroupBox.Controls.Add(this.label12);
+            this.proxyGroupBox.Controls.Add(this.applyProxyBtn);
+            this.proxyGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.proxyGroupBox.Location = new System.Drawing.Point(6, 73);
+            this.proxyGroupBox.Name = "proxyGroupBox";
+            this.proxyGroupBox.Size = new System.Drawing.Size(231, 167);
+            this.proxyGroupBox.TabIndex = 20;
+            this.proxyGroupBox.TabStop = false;
+            this.proxyGroupBox.Text = "Proxy Config";
+            // 
+            // proxyPortUpDown
+            // 
+            this.proxyPortUpDown.Location = new System.Drawing.Point(50, 47);
+            this.proxyPortUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.proxyPortUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.proxyPortUpDown.Name = "proxyPortUpDown";
+            this.proxyPortUpDown.Size = new System.Drawing.Size(76, 24);
+            this.proxyPortUpDown.TabIndex = 6;
+            this.proxyPortUpDown.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
+            // proxyPasswordTextBox
+            // 
+            this.proxyPasswordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.proxyPasswordTextBox.Location = new System.Drawing.Point(85, 103);
+            this.proxyPasswordTextBox.Name = "proxyPasswordTextBox";
+            this.proxyPasswordTextBox.Size = new System.Drawing.Size(140, 20);
+            this.proxyPasswordTextBox.TabIndex = 42;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(6, 104);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(73, 17);
+            this.label15.TabIndex = 41;
+            this.label15.Text = "Password:";
+            // 
+            // proxyUsernameTextBox
+            // 
+            this.proxyUsernameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.proxyUsernameTextBox.Location = new System.Drawing.Point(89, 77);
+            this.proxyUsernameTextBox.Name = "proxyUsernameTextBox";
+            this.proxyUsernameTextBox.Size = new System.Drawing.Size(136, 20);
+            this.proxyUsernameTextBox.TabIndex = 40;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(6, 78);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(77, 17);
+            this.label14.TabIndex = 39;
+            this.label14.Text = "Username:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(6, 51);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(38, 17);
+            this.label13.TabIndex = 37;
+            this.label13.Text = "Port:";
+            // 
+            // proxyHostTextBox
+            // 
+            this.proxyHostTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.proxyHostTextBox.Location = new System.Drawing.Point(49, 21);
+            this.proxyHostTextBox.Name = "proxyHostTextBox";
+            this.proxyHostTextBox.Size = new System.Drawing.Size(176, 20);
+            this.proxyHostTextBox.TabIndex = 36;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(6, 22);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 17);
+            this.label12.TabIndex = 36;
+            this.label12.Text = "Host:";
+            // 
+            // applyProxyBtn
+            // 
+            this.applyProxyBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.applyProxyBtn.Location = new System.Drawing.Point(147, 136);
+            this.applyProxyBtn.Name = "applyProxyBtn";
+            this.applyProxyBtn.Size = new System.Drawing.Size(78, 25);
+            this.applyProxyBtn.TabIndex = 0;
+            this.applyProxyBtn.Text = "Apply";
+            this.applyProxyBtn.UseVisualStyleBackColor = true;
+            this.applyProxyBtn.Click += new System.EventHandler(this.applyProxyBtn_Click);
+            // 
             // WebControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.proxyGroupBox);
             this.Controls.Add(this.avatarPictureBox);
             this.Controls.Add(this.accountLabel);
             this.Controls.Add(this.emailLabel);
@@ -248,6 +377,9 @@
             this.Name = "WebControl";
             this.Size = new System.Drawing.Size(970, 670);
             ((System.ComponentModel.ISupportInitialize)(this.avatarPictureBox)).EndInit();
+            this.proxyGroupBox.ResumeLayout(false);
+            this.proxyGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.proxyPortUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,5 +406,15 @@
         private System.Windows.Forms.Label emailLabel;
         private System.Windows.Forms.Label accountLabel;
         private System.Windows.Forms.PictureBox avatarPictureBox;
+        private System.Windows.Forms.GroupBox proxyGroupBox;
+        private System.Windows.Forms.NumericUpDown proxyPortUpDown;
+        private System.Windows.Forms.TextBox proxyPasswordTextBox;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox proxyUsernameTextBox;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox proxyHostTextBox;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button applyProxyBtn;
     }
 }

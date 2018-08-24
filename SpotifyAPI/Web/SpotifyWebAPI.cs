@@ -20,7 +20,11 @@ namespace SpotifyAPI.Web
 
         private readonly SpotifyWebBuilder _builder;
 
-        public SpotifyWebAPI()
+        public SpotifyWebAPI() : this(null)
+        {
+        }
+
+        public SpotifyWebAPI(ProxyConfig proxyConfig)
         {
             _builder = new SpotifyWebBuilder();
             UseAuth = true;
@@ -31,7 +35,8 @@ namespace SpotifyAPI.Web
                     {
                         NullValueHandling = NullValueHandling.Ignore,
                         TypeNameHandling = TypeNameHandling.All
-                    }
+                    },
+                ProxyConfig = proxyConfig
             };
         }
 
@@ -1860,6 +1865,15 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Get information about a user’s available devices.
+        /// </summary>
+        /// <returns></returns>
+        public Task<AvailabeDevices> GetDevicesAsync()
+        {
+            return DownloadDataAsync<AvailabeDevices>(_builder.GetDevices());
+        }
+
+        /// <summary>
         ///     Get information about the user’s current playback state, including track, track progress, and active device.
         /// </summary>
         /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
@@ -1867,6 +1881,16 @@ namespace SpotifyAPI.Web
         public PlaybackContext GetPlayback(string market = "")
         {
             return DownloadData<PlaybackContext>(_builder.GetPlayback(market));
+        }
+
+        /// <summary>
+        ///     Get information about the user’s current playback state, including track, track progress, and active device.
+        /// </summary>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        public Task<PlaybackContext> GetPlaybackAsync(string market = "")
+        {
+            return DownloadDataAsync<PlaybackContext>(_builder.GetPlayback(market));
         }
 
         /// <summary>
@@ -1880,6 +1904,16 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Get the object currently being played on the user’s Spotify account.
+        /// </summary>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+        /// <returns></returns>
+        public Task<PlaybackContext> GetPlayingTrackAsync(string market = "")
+        {
+            return DownloadDataAsync<PlaybackContext>(_builder.GetPlayingTrack(market));
+        }
+
+        /// <summary>
         ///     Transfer playback to a new device and determine if it should start playing.
         /// </summary>
         /// <param name="deviceId">ID of the device on which playback should be started/transferred to</param>
@@ -1889,6 +1923,18 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         public ErrorResponse TransferPlayback(string deviceId, bool play = false) => TransferPlayback(
+            new List<string> { deviceId }, play);
+
+        /// <summary>
+        ///     Transfer playback to a new device and determine if it should start playing.
+        /// </summary>
+        /// <param name="deviceId">ID of the device on which playback should be started/transferred to</param>
+        /// <param name="play">
+        /// true: ensure playback happens on new device.
+        /// false or not provided: keep the current playback state.
+        /// </param>
+        /// <returns></returns>
+        public Task<ErrorResponse> TransferPlaybackAsync(string deviceId, bool play = false) => TransferPlaybackAsync(
             new List<string> { deviceId }, play);
 
         /// <summary>
@@ -1912,6 +1958,26 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Transfer playback to a new device and determine if it should start playing. 
+        ///     NOTE: Although an array is accepted, only a single device_id is currently supported. Supplying more than one will return 400 Bad Request
+        /// </summary>
+        /// <param name="deviceIds">A array containing the ID of the device on which playback should be started/transferred.</param>
+        /// <param name="play">
+        /// true: ensure playback happens on new device.
+        /// false or not provided: keep the current playback state.
+        /// </param>
+        /// <returns></returns>
+        public Task<ErrorResponse> TransferPlaybackAsync(List<string> deviceIds, bool play = false)
+        {
+            JObject ob = new JObject()
+            {
+                { "play", play },
+                { "device_ids", new JArray(deviceIds) }
+            };
+            return UploadDataAsync<ErrorResponse>(_builder.TransferPlayback(), ob.ToString(Formatting.None), "PUT");
+        }
+
+        /// <summary>
         ///     Start a new context or resume current playback on the user’s active device.
         /// </summary>
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
@@ -1929,8 +1995,74 @@ namespace SpotifyAPI.Web
             if(uris != null)
                 ob.Add("uris", new JArray(uris));
             if(offset != null)
-                ob.Add("offset", offset);
+                ob.Add("offset", new JObject { { "position", offset } });
             return UploadData<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
+        }
+
+        /// <summary>
+        ///     Start a new context or resume current playback on the user’s active device.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <param name="contextUri">Spotify URI of the context to play.</param>
+        /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
+        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
+            int? offset = null)
+        {
+            JObject ob = new JObject();
+            if (!string.IsNullOrEmpty(contextUri))
+                ob.Add("context_uri", contextUri);
+            if (uris != null)
+                ob.Add("uris", new JArray(uris));
+            if (offset != null)
+                ob.Add("offset", new JObject { { "position", offset } });
+            return UploadDataAsync<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
+        }
+
+        /// <summary>
+        ///     Start a new context or resume current playback on the user’s active device.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <param name="contextUri">Spotify URI of the context to play.</param>
+        /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
+        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <returns></returns>
+        public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
+            string offset = "")
+        {
+            JObject ob = new JObject();
+            if (!string.IsNullOrEmpty(contextUri))
+                ob.Add("context_uri", contextUri);
+            if (uris != null)
+                ob.Add("uris", new JArray(uris));
+            if (!string.IsNullOrEmpty(offset))
+                ob.Add("offset", new JObject {{"uri", offset}});
+            return UploadData<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
+        }
+
+        /// <summary>
+        ///     Start a new context or resume current playback on the user’s active device.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <param name="contextUri">Spotify URI of the context to play.</param>
+        /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
+        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
+            string offset = "")
+        {
+            JObject ob = new JObject();
+            if (!string.IsNullOrEmpty(contextUri))
+                ob.Add("context_uri", contextUri);
+            if (uris != null)
+                ob.Add("uris", new JArray(uris));
+            if (!string.IsNullOrEmpty(offset))
+                ob.Add("offset", new JObject { { "uri", offset } });
+            return UploadDataAsync<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
         /// <summary>
@@ -1944,6 +2076,16 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Pause playback on the user’s account.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> PausePlaybackAsync(string deviceId = "")
+        {
+            return UploadDataAsync<ErrorResponse>(_builder.PausePlayback(deviceId), string.Empty, "PUT");
+        }
+
+        /// <summary>
         ///     Skips to next track in the user’s queue.
         /// </summary>
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
@@ -1951,6 +2093,16 @@ namespace SpotifyAPI.Web
         public ErrorResponse SkipPlaybackToNext(string deviceId = "")
         {
             return UploadData<ErrorResponse>(_builder.SkipPlaybackToNext(deviceId), string.Empty);
+        }
+
+        /// <summary>
+        ///     Skips to next track in the user’s queue.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> SkipPlaybackToNextAsync(string deviceId = "")
+        {
+            return UploadDataAsync<ErrorResponse>(_builder.SkipPlaybackToNext(deviceId), string.Empty);
         }
 
         /// <summary>
@@ -1966,6 +2118,18 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Skips to previous track in the user’s queue.
+        ///     Note that this will ALWAYS skip to the previous track, regardless of the current track’s progress.
+        ///     Returning to the start of the current track should be performed using the https://api.spotify.com/v1/me/player/seek endpoint.
+        /// </summary>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> SkipPlaybackToPreviousAsync(string deviceId = "")
+        {
+            return UploadDataAsync<ErrorResponse>(_builder.SkipPlaybackToPrevious(deviceId), string.Empty);
+        }
+
+        /// <summary>
         ///     Seeks to the given position in the user’s currently playing track.
         /// </summary>
         /// <param name="positionMs">The position in milliseconds to seek to. Must be a positive number. 
@@ -1975,6 +2139,18 @@ namespace SpotifyAPI.Web
         public ErrorResponse SeekPlayback(int positionMs, string deviceId = "")
         {
             return UploadData<ErrorResponse>(_builder.SeekPlayback(positionMs, deviceId), string.Empty, "PUT");
+        }
+
+        /// <summary>
+        ///     Seeks to the given position in the user’s currently playing track.
+        /// </summary>
+        /// <param name="positionMs">The position in milliseconds to seek to. Must be a positive number. 
+        /// Passing in a position that is greater than the length of the track will cause the player to start playing the next song.</param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> SeekPlaybackAsync(int positionMs, string deviceId = "")
+        {
+            return UploadDataAsync<ErrorResponse>(_builder.SeekPlayback(positionMs, deviceId), string.Empty, "PUT");
         }
 
         /// <summary>
@@ -1989,6 +2165,17 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.
+        /// </summary>
+        /// <param name="state">track, context or off. </param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> SetRepeatModeAsync(RepeatState state, string deviceId = "")
+        {
+            return UploadDataAsync<ErrorResponse>(_builder.SetRepeatMode(state, deviceId), string.Empty, "PUT");
+        }
+
+        /// <summary>
         ///     Set the volume for the user’s current playback device.
         /// </summary>
         /// <param name="volumePercent">Integer. The volume to set. Must be a value from 0 to 100 inclusive.</param>
@@ -2000,6 +2187,17 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Set the volume for the user’s current playback device.
+        /// </summary>
+        /// <param name="volumePercent">Integer. The volume to set. Must be a value from 0 to 100 inclusive.</param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> SetVolumeAsync(int volumePercent, string deviceId = "")
+        {
+            return UploadDataAsync<ErrorResponse>(_builder.SetVolume(volumePercent, deviceId), string.Empty, "PUT");
+        }
+
+        /// <summary>
         ///     Toggle shuffle on or off for user’s playback.
         /// </summary>
         /// <param name="shuffle">True or False</param>
@@ -2008,6 +2206,17 @@ namespace SpotifyAPI.Web
         public ErrorResponse SetShuffle(bool shuffle, string deviceId = "")
         {
             return UploadData<ErrorResponse>(_builder.SetShuffle(shuffle, deviceId), string.Empty, "PUT");
+        }
+
+        /// <summary>
+        ///     Toggle shuffle on or off for user’s playback.
+        /// </summary>
+        /// <param name="shuffle">True or False</param>
+        /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
+        /// <returns></returns>
+        public Task<ErrorResponse> SetShuffleAsync(bool shuffle, string deviceId = "")
+        {
+            return UploadDataAsync<ErrorResponse>(_builder.SetShuffle(shuffle, deviceId), string.Empty, "PUT");
         }
 
         #endregion

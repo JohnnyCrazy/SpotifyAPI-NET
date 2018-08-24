@@ -54,6 +54,7 @@ namespace SpotifyAPI.Local
         private readonly RemoteHandler _rh;
         private Timer _eventTimer;
         private StatusResponse _eventStatusResponse;
+        private Track _eventStatusTrack;
 
         public event EventHandler<TrackChangeEventArgs> OnTrackChange;
 
@@ -105,14 +106,14 @@ namespace SpotifyAPI.Local
                 _eventTimer.Start();
                 return;
             }
-            if (newStatusResponse.Track != null && _eventStatusResponse.Track != null)
+            if (newStatusResponse.Track != null && _eventStatusTrack != null)
             {
-                if (newStatusResponse.Track.TrackResource?.Uri != _eventStatusResponse.Track.TrackResource?.Uri ||
-                    newStatusResponse.Track.IsOtherTrackType() && newStatusResponse.Track.Length != this._eventStatusResponse.Track.Length)
+                if (newStatusResponse.Track.TrackResource?.Uri != _eventStatusTrack.TrackResource?.Uri ||
+                    newStatusResponse.Track.IsOtherTrackType() && newStatusResponse.Track.Length != _eventStatusTrack.Length)
                 {
                     OnTrackChange?.Invoke(this, new TrackChangeEventArgs()
                     {
-                        OldTrack = _eventStatusResponse.Track,
+                        OldTrack = _eventStatusTrack,
                         NewTrack = newStatusResponse.Track
                     });
                 }
@@ -140,6 +141,10 @@ namespace SpotifyAPI.Local
                 });
             }
             _eventStatusResponse = newStatusResponse;
+            if (newStatusResponse.Track != null)
+            {
+                _eventStatusTrack = newStatusResponse.Track;
+            }
             _eventTimer.Start();
         }
 

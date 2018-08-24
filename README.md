@@ -32,3 +32,9 @@ Install-Package SpotifyAPI-Net -pre
 | SpotifyLocalAPI Example   | SpotifyWebAPI Example     |
 | :------------- | :------------- |
 | ![WebExample](http://i.imgur.com/Vo0lMk8.png) | ![LocalExample](http://i.imgur.com/E8Ba7Qm.png) |
+
+### Donations
+
+If you want to support this project or my work in general, you can donate a buck or two via the link below. However, this will be always optional!
+
+[![Donate Link](./donate.svg)](https://paypal.me/JohnnyCrazy)

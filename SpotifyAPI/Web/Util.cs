@@ -23,9 +23,9 @@ namespace SpotifyAPI.Web
             return string.Join(separator, list);
         }
 
-        public static double ToUnixTimeMillisecondsPoly(this DateTime time)
+        public static long ToUnixTimeMillisecondsPoly(this DateTime time)
         {
-            return time.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
+            return (long)time.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
         }
     }
 

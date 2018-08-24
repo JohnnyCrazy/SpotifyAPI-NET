@@ -18,8 +18,7 @@ namespace SpotifyAPI.Local
                 throw new COMException("Volume object creation failed");
             }
 
-            float level;
-            volume.GetMasterVolume(out level);
+            volume.GetMasterVolume(out float level);
             Marshal.ReleaseComObject(volume);
             return level * 100;
         }
@@ -33,8 +32,7 @@ namespace SpotifyAPI.Local
                 throw new COMException("Volume object creation failed");
             }
 
-            bool mute;
-            volume.GetMute(out mute);
+            volume.GetMute(out bool mute);
             Marshal.ReleaseComObject(volume);
             return mute;
         }
@@ -79,12 +77,10 @@ namespace SpotifyAPI.Local
         private static ISimpleAudioVolume GetVolumeObject(int pid)
         {
             // get the speakers (1st render + multimedia) device
-            IMmDeviceEnumerator deviceEnumerator = (IMmDeviceEnumerator)(new MMDeviceEnumerator());
-            IMmDevice speakers;
-            deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.ERender, ERole.EMultimedia, out speakers);
+            IMmDeviceEnumerator deviceEnumerator = (IMmDeviceEnumerator) new MMDeviceEnumerator();
+            deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.ERender, ERole.EMultimedia, out IMmDevice speakers);
 
-            string defaultDeviceId;
-            speakers.GetId(out defaultDeviceId);
+            speakers.GetId(out string defaultDeviceId);
 
             ISimpleAudioVolume volumeControl = GetVolumeObject(pid, speakers);
             Marshal.ReleaseComObject(speakers);
@@ -97,18 +93,13 @@ namespace SpotifyAPI.Local
                 // As far as Spotify is concerned, if using the "--enable-audio-graph" command line argument,
                 // a new option becomes available in the Settings that makes it possible to change the playback device.
 
-                IMmDeviceCollection deviceCollection;
-                deviceEnumerator.EnumAudioEndpoints(EDataFlow.ERender, EDeviceState.Active, out deviceCollection);
+                deviceEnumerator.EnumAudioEndpoints(EDataFlow.ERender, EDeviceState.Active, out IMmDeviceCollection deviceCollection);
 
-                int count;
-                deviceCollection.GetCount(out count);
+                deviceCollection.GetCount(out int count);
                 for (int i = 0; i < count; i++)
                 {
-                    IMmDevice device;
-                    deviceCollection.Item(i, out device);
-
-                    string deviceId;
-                    device.GetId(out deviceId);
+                    deviceCollection.Item(i, out IMmDevice device);
+                    device.GetId(out string deviceId);
 
                     try
                     {
@@ -134,29 +125,24 @@ namespace SpotifyAPI.Local
         {
             // activate the session manager. we need the enumerator
             Guid iidIAudioSessionManager2 = typeof(IAudioSessionManager2).GUID;
-            object o;
-            device.Activate(ref iidIAudioSessionManager2, 0, IntPtr.Zero, out o);
-            IAudioSessionManager2 mgr = (IAudioSessionManager2)o;
+            device.Activate(ref iidIAudioSessionManager2, 0, IntPtr.Zero, out object o);
+            IAudioSessionManager2 mgr = (IAudioSessionManager2) o;
 
             // enumerate sessions for on this device
-            IAudioSessionEnumerator sessionEnumerator;
-            mgr.GetSessionEnumerator(out sessionEnumerator);
-            int count;
-            sessionEnumerator.GetCount(out count);
+            mgr.GetSessionEnumerator(out IAudioSessionEnumerator sessionEnumerator);
+            sessionEnumerator.GetCount(out int count);
 
             // search for an audio session with the required name
             // NOTE: we could also use the process id instead of the app name (with IAudioSessionControl2)
             ISimpleAudioVolume volumeControl = null;
             for (int i = 0; i < count; i++)
             {
-                IAudioSessionControl2 ctl;
-                sessionEnumerator.GetSession(i, out ctl);
-                int cpid;
-                ctl.GetProcessId(out cpid);
+                sessionEnumerator.GetSession(i, out IAudioSessionControl2 ctl);
+                ctl.GetProcessId(out int cpid);
 
                 if (cpid == pid)
                 {
-                    volumeControl = (ISimpleAudioVolume)ctl;
+                    volumeControl = (ISimpleAudioVolume) ctl;
                     break;
                 }
                 Marshal.ReleaseComObject(ctl);

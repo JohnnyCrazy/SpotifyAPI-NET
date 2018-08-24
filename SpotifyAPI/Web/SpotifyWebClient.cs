@@ -16,6 +16,8 @@ namespace SpotifyAPI.Web
     {
         public JsonSerializerSettings JsonSettings { get; set; }
 
+        public ProxyConfig ProxyConfig { get; set; }
+
         private readonly Encoding _encoding = Encoding.UTF8;
 
         public Tuple<ResponseInfo, string> Download(string url, Dictionary<string, string> headers = null)
@@ -32,7 +34,8 @@ namespace SpotifyAPI.Web
 
         public Tuple<ResponseInfo, byte[]> DownloadRaw(string url, Dictionary<string, string> headers = null)
         {
-            using (HttpClient client = new HttpClient())
+            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
+            using (HttpClient client = new HttpClient(clientHandler))
             {
                 if (headers != null)
                 {
@@ -54,7 +57,8 @@ namespace SpotifyAPI.Web
 
         public async Task<Tuple<ResponseInfo, byte[]>> DownloadRawAsync(string url, Dictionary<string, string> headers = null)
         {
-            using (HttpClient client = new HttpClient())
+            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
+            using (HttpClient client = new HttpClient(clientHandler))
             {
                 if (headers != null)
                 {
@@ -100,7 +104,8 @@ namespace SpotifyAPI.Web
 
         public Tuple<ResponseInfo, byte[]> UploadRaw(string url, string body, string method, Dictionary<string, string> headers = null)
         {
-            using (HttpClient client = new HttpClient())
+            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
+            using (HttpClient client = new HttpClient(clientHandler))
             {
                 if (headers != null)
                 {
@@ -127,7 +132,8 @@ namespace SpotifyAPI.Web
 
         public async Task<Tuple<ResponseInfo, byte[]>> UploadRawAsync(string url, string body, string method, Dictionary<string, string> headers = null)
         {
-            using (HttpClient client = new HttpClient())
+            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
+            using (HttpClient client = new HttpClient(clientHandler))
             {
                 if (headers != null)
                 {
@@ -180,6 +186,27 @@ namespace SpotifyAPI.Web
                 }
             }
             return newHeaders;
+        }
+
+        private static HttpClientHandler CreateClientHandler(ProxyConfig proxyConfig = null)
+        {
+            HttpClientHandler clientHandler = new HttpClientHandler
+            {
+                PreAuthenticate = false,
+                UseDefaultCredentials = true,
+                UseProxy = false
+            };
+
+            if (!string.IsNullOrWhiteSpace(proxyConfig?.Host))
+            {
+                WebProxy proxy = proxyConfig.CreateWebProxy();
+                clientHandler.UseProxy = true;
+                clientHandler.Proxy = proxy;
+                clientHandler.UseDefaultCredentials = proxy.UseDefaultCredentials;
+                clientHandler.PreAuthenticate = proxy.UseDefaultCredentials;
+            }
+
+            return clientHandler;
         }
     }
 }

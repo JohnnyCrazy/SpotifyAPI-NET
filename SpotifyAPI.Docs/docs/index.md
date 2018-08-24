@@ -1,6 +1,7 @@
 # SpotifyAPI-NET Documentation
 
-##About
+## About
+
 This Library, written in C#/.NET, combines two independent SpotifyAPIs into one.
 
 **Spotify's Web API** ([link](https://developer.spotify.com/web-api/))
@@ -15,7 +16,8 @@ Both combined can be used for any kind of application.
 
 ---
 
-##Installing
+## Installing
+
 * Via NuGet Package:
 ```cs
 Install-Package SpotifyAPI-NET
@@ -27,7 +29,18 @@ Install-Package SpotifyAPI-NET -pre
 
 ---
 
-##Projects
-###[Spofy](https://github.com/eltoncezar/Spofy) by [@eltoncezar](https://github.com/eltoncezar)
+## Projects
+
+### [Spofy](https://github.com/eltoncezar/Spofy) by [@eltoncezar](https://github.com/eltoncezar)
 
 > A Spotify mini player and notifier for Windows
+
+### [Toastify](https://github.com/aleab/toastify) by [@aleab](https://github.com/aleab)
+
+> Toastify adds global hotkeys and toast notifications to Spotify  
+> 
+> *Forked from [nachmore/toastify](https://github.com/nachmore/toastify)*
+
+### [Spotify Oculus](https://github.com/CaptainMorgs/spotify-oculus-release) by [@CaptainMorgs](https://github.com/CaptainMorgs)
+
+> Unity project for interacting with Spotify in virtual reality for the Oculus Rift.

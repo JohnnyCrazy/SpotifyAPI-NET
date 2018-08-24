@@ -9,9 +9,9 @@ namespace SpotifyAPI.Local.Models
 {
     public class SpotifyUri
     {
-        internal Dictionary<UriType, string> _properties = new Dictionary<UriType, string>();
+        private readonly Dictionary<UriType, string> _properties = new Dictionary<UriType, string>();
 
-        public string Base { get; internal set; }
+        public string Base { get; }
         public UriType Type => _properties?.LastOrDefault().Key ?? UriType.none;
         public string Id => _properties?.LastOrDefault().Value;
 
@@ -29,9 +29,7 @@ namespace SpotifyAPI.Local.Models
 
         public string GetUriPropValue(UriType type)
         {
-            if (!_properties.ContainsKey(type))
-                return null;
-            return _properties[type];
+            return !_properties.ContainsKey(type) ? null : _properties[type];
         }
 
         public static SpotifyUri Parse(string uri)
@@ -39,17 +37,15 @@ namespace SpotifyAPI.Local.Models
             if (string.IsNullOrEmpty(uri))
                 throw new ArgumentNullException("Uri");
 
-            UriType uriType = UriType.none;
             string[] props = uri.Split(':');
-            if (props.Length < 3 || !Enum.TryParse(props[1], out uriType))
+            if (props.Length < 3 || !Enum.TryParse(props[1], out UriType uriType))
                 throw new ArgumentException("Unexpected Uri");
 
             Dictionary<UriType, string> properties = new Dictionary<UriType, string> { { uriType, props[2] } };
 
             for (int index = 3; index < props.Length; index += 2)
             {
-                UriType type = UriType.none;
-                if (Enum.TryParse(props[index], out type))
+                if (Enum.TryParse(props[index], out UriType type))
                     properties.Add(type, props[index + 1]);
             }
 
@@ -58,7 +54,7 @@ namespace SpotifyAPI.Local.Models
 
         public override string ToString()
         {
-            return $"{Base}:{string.Join(":", _properties.SelectMany(x => new string[] { x.Key.ToString(), x.Value }))}";
+            return $"{Base}:{string.Join(":", _properties.SelectMany(x => new[] { x.Key.ToString(), x.Value }))}";
         }
     }
 }
