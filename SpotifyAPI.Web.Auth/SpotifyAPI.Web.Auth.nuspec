@@ -19,8 +19,11 @@
     <tags>spotify api music .net c# spotify-client</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="11.0.2" />
+      <dependency id="SpotifyAPI.Web" version="3.0.0" />
     </dependencies>
   </metadata>
   <files>
+    <file src="bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.dll" target="lib\SpotifyAPI.Web.Auth.dll" />
+    <file src="bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.xml" target="lib\SpotifyAPI.Web.Auth.xml" />
   </files>
 </package>

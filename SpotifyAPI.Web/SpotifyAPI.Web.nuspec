@@ -22,5 +22,7 @@
     </dependencies>
   </metadata>
   <files>
+      <file src="bin\Release\netstandard2.0\SpotifyAPI.Web.dll" target="lib\SpotifyAPI.Web.dll" />
+      <file src="bin\Release\netstandard2.0\SpotifyAPI.Web.xml" target="lib\SpotifyAPI.Web.xml" />
   </files>
 </package>

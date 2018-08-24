@@ -8,6 +8,10 @@
     <DocumentationFile>bin\Debug\netstandard2.0\SpotifyAPI.Web.Auth.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="EmbedIO" Version="1.15.0" />
   </ItemGroup>
