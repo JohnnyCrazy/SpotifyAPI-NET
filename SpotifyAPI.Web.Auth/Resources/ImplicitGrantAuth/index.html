@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    const serialize = (obj) => {
+        var str = [];
+        for (let p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    }
+
+
+    document.addEventListener("DOMContentLoaded",
+        () => {
+            const hash = window.location.hash.substr(1);
+            let result;
+
+            if (hash === "") {
+                const params = (new URL(document.location)).searchParams;
+                result = {
+                    error: params.get("error"),
+                    state: params.get("state")
+                }
+            } else {
+                result = hash.split('&').reduce(function(res, item) {
+                        const parts = item.split('=');
+                        res[parts[0]] = parts[1];
+                        return res;
+                    },
+                    {});
+            }
+            window.location = `/auth?${serialize(result)}`;
+        });
+</script>
+</body>
+</html>
