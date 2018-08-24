@@ -1400,14 +1400,19 @@ namespace SpotifyAPI.Web
         ///     default true. If true the playlist will be public, if false it will be private. To be able to
         ///     create private playlists, the user must have granted the playlist-modify-private scope.
         /// </param>
+        /// <param name="isCollaborative">If true the playlist will become collaborative and other users will be able to modify the playlist in their Spotify client.
+        /// Note: You can only set collaborative to true on non-public playlists.</param>
+        /// <param name="playlistDescription">Value for playlist description as displayed in Spotify Clients and in the Web API.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public FullPlaylist CreatePlaylist(string userId, string playlistName, bool isPublic = true)
+        public FullPlaylist CreatePlaylist(string userId, string playlistName, bool isPublic = true, bool isCollaborative = false, string playlistDescription = "")
         {
             JObject body = new JObject
             {
                 {"name", playlistName},
-                {"public", isPublic}
+                {"public", isPublic},
+                {"collaborative", isCollaborative},
+                {"description", playlistDescription}
             };
             return UploadData<FullPlaylist>(_builder.CreatePlaylist(userId, playlistName, isPublic), body.ToString(Formatting.None));
         }
@@ -1424,14 +1429,19 @@ namespace SpotifyAPI.Web
         ///     default true. If true the playlist will be public, if false it will be private. To be able to
         ///     create private playlists, the user must have granted the playlist-modify-private scope.
         /// </param>
+        /// <param name="isCollaborative">If true the playlist will become collaborative and other users will be able to modify the playlist in their Spotify client.
+        /// Note: You can only set collaborative to true on non-public playlists.</param>
+        /// <param name="playlistDescription">Value for playlist description as displayed in Spotify Clients and in the Web API.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public Task<FullPlaylist> CreatePlaylistAsync(string userId, string playlistName, bool isPublic = true)
+        public Task<FullPlaylist> CreatePlaylistAsync(string userId, string playlistName, bool isPublic = true, bool isCollaborative = false, string playlistDescription = "")
         {
             JObject body = new JObject
             {
                 {"name", playlistName},
-                {"public", isPublic}
+                {"public", isPublic},
+                {"collaborative", isCollaborative},
+                {"description", playlistDescription}
             };
             return UploadDataAsync<FullPlaylist>(_builder.CreatePlaylist(userId, playlistName, isPublic), body.ToString(Formatting.None));
         }
@@ -1443,15 +1453,22 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
         /// <param name="newName">The new name for the playlist, for example "My New Playlist Title".</param>
         /// <param name="newPublic">If true the playlist will be public, if false it will be private.</param>
+        /// <param name="newCollaborative">If true the playlist will become collaborative and other users will be able to modify the playlist in their Spotify client.
+        /// Note: You can only set collaborative to true on non-public playlists.</param>
+        /// <param name="newDescription">Value for playlist description as displayed in Spotify Clients and in the Web API.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ErrorResponse UpdatePlaylist(string userId, string playlistId, string newName = null, bool? newPublic = null)
+        public ErrorResponse UpdatePlaylist(string userId, string playlistId, string newName = null, bool? newPublic = null, bool? newCollaborative = null, string newDescription = null)
         {
             JObject body = new JObject();
             if (newName != null)
                 body.Add("name", newName);
             if (newPublic != null)
                 body.Add("public", newPublic);
+            if (newCollaborative != null)
+                body.Add("collaborative", newCollaborative);
+            if (newDescription != null)
+                body.Add("description", newDescription);
             return UploadData<ErrorResponse>(_builder.UpdatePlaylist(userId, playlistId), body.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
         }
 
@@ -1462,15 +1479,21 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
         /// <param name="newName">The new name for the playlist, for example "My New Playlist Title".</param>
         /// <param name="newPublic">If true the playlist will be public, if false it will be private.</param>
+        /// <param name="newCollaborative">If true the playlist will become collaborative and other users will be able to modify the playlist in their Spotify client. Note: You can only set collaborative to true on non-public playlists.</param>
+        /// <param name="newDescription">Value for playlist description as displayed in Spotify Clients and in the Web API.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public async Task<ErrorResponse> UpdatePlaylistAsync(string userId, string playlistId, string newName = null, bool? newPublic = null)
+        public async Task<ErrorResponse> UpdatePlaylistAsync(string userId, string playlistId, string newName = null, bool? newPublic = null, bool? newCollaborative = null, string newDescription = null)
         {
             JObject body = new JObject();
             if (newName != null)
                 body.Add("name", newName);
             if (newPublic != null)
                 body.Add("public", newPublic);
+            if (newCollaborative != null)
+                body.Add("collaborative", newCollaborative);
+            if (newDescription != null)
+                body.Add("description", newDescription);
             return (await UploadDataAsync<ErrorResponse>(_builder.UpdatePlaylist(userId, playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
         }
 
