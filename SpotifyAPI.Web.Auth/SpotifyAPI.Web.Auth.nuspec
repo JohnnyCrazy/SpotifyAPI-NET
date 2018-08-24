@@ -18,8 +18,8 @@
     <language />
     <tags>spotify api music .net c# spotify-client</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="11.0.2" />
       <dependency id="SpotifyAPI.Web" version="3.0.0" />
+      <dependency id="EmbedIO" version="1.15.0" />
     </dependencies>
   </metadata>
   <files>
