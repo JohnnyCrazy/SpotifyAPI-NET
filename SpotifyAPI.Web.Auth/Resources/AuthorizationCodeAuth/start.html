@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="css/bulma.min.css"/>
+    <style>
+        p {
+            font-size: 1.0rem;
+        }
+
+        .demo-image {
+            margin: 30px;
+            border: 20px solid #31BD5B;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="notification has-text-centered">
+        <h1 class="title is-1">Spotify Authentication</h1>
+    </div>
+    <div class="content">
+        <h2 class="title is-2">Introduction</h2>
+<!--        <p>
+            In order to use this app, you will need to follow the steps below.
+            You will create a Spotify Developer App, which allows applications like this to securely access your spotify data, like playlists or your currently playing track.
+            <p class="notification is-warning">
+                If this page looks similar, you may already have a Spotify Developer App created. In this case, you can skip to the bottom and input your <code>client_id</code> and <code>client_secret</code>
+            </p>
+        </p>
+        <h2 class="title is-2">1. Login at your Developer Dashboard</h2>
+        <p>
+            Visit <a href="https://developer.spotify.com/dashboard/" rel="nofollow noreferer" target="_blank">https://developer.spotify.com/dashboard/</a> and login with your Spotify Account.
+            <img class="demo-image" src="images/1.png" width="700" alt=""/>
+        </p>
+        <h2 class="title is-2">2. Create a new ClientID</h2>
+        <p>
+            Visit <a href="https://developer.spotify.com/dashboard/" rel="nofollow noreferer" target="_blank">https://developer.spotify.com/dashboard/</a> and login with your Spotify Account.
+            <img class="demo-image" src="images/2.png" width="700" alt=""/>
+        </p>-->
+        <form action="/" method="post" style="margin-bottom: 20px">
+            <div class="field">
+                <label class="label" for="clientId">Client ID</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="Client ID" name="clientId" id="clientId">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="secretId">Secret ID</label>
+                <div class="control">
+                    <input class="input" type="password" placeholder="Secret ID" name="secretId" id="secretId">
+                </div>
+            </div>
+            <input class="input is-hidden" hidden name="state" id="state"/>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const hash = window.location.hash.split("#")[1];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("state");
+        input.value = hash;
+    });
+</script>
+
+</body>
+</html>
