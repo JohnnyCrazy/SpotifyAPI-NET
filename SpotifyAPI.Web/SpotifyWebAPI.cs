@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
@@ -78,6 +78,11 @@ namespace SpotifyAPI.Web
         ///     Maximum number of tries for one failed request.
         /// </summary>
         public int RetryTimes { get; set; } = 10;
+
+        /// <summary>
+        ///     Whether a failure of type "Too Many Requests" should use up one of the allocated retry attempts.
+        /// </summary>
+        public bool TooManyRequestsConsumesARetry { get; set; } = false;
 
         /// <summary>
         ///     Error codes that will trigger auto-retry if <see cref="UseAutoRetry"/> is enabled.
@@ -2434,6 +2439,21 @@ namespace SpotifyAPI.Web
             return response.Item2;
         }
 
+        private bool TryGetTooManyRequests(ResponseInfo info, out int secondsToWait)
+        {
+            if (info.SpotifyStatusCode != SpotifyHttpStatusCode.TooManyRequests)
+            {
+                secondsToWait = -1;
+                return false;
+            }
+            if (!int.TryParse(info.Headers.Get("Retry-After"), out secondsToWait))
+            {
+                secondsToWait = -1;
+                return false;
+            }
+            return true;
+        }
+
         public async Task<T> DownloadDataAsync<T>(string url) where T : BasicModel
         {
             int triesLeft = RetryTimes + 1;
@@ -2442,15 +2462,29 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, T> response = null;
             do
             {
-                if (response != null) { await Task.Delay(RetryAfter).ConfigureAwait(false); }
+                if (response != null)
+                {
+                    int msToWait = RetryAfter;
+                    if (TryGetTooManyRequests(response.Item1, out var secondsToWait))
+                    {
+                        msToWait = secondsToWait * 1000;
+                    }
+                    await Task.Delay(RetryAfter).ConfigureAwait(false);
+                }
                 response = await DownloadDataAltAsync<T>(url).ConfigureAwait(false);
 
                 response.Item2.AddResponseInfo(response.Item1);
                 lastError = response.Item2.Error;
 
-                triesLeft -= 1;
+                if (TooManyRequestsConsumesARetry || !TryGetTooManyRequests(response.Item1, out var _))
+                {
+                    triesLeft -= 1;
+                }
 
-            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
+            } while (UseAutoRetry
+                && triesLeft > 0
+                && (TryGetTooManyRequests(response.Item1, out var _)
+                    || (lastError != null && RetryErrorCodes.Contains(lastError.Status))));
 
 
             return response.Item2;
