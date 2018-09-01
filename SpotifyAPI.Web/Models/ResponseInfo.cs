@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using SpotifyAPI.Web.Enums;
+using System.Net;
 
 namespace SpotifyAPI.Web.Models
 {
@@ -7,6 +8,8 @@ namespace SpotifyAPI.Web.Models
         public WebHeaderCollection Headers { get; set; }
 
         public HttpStatusCode StatusCode { get; set; }
+
+        public SpotifyHttpStatusCode SpotifyStatusCode { get; set; }
 
         public static readonly ResponseInfo Empty = new ResponseInfo();
     }

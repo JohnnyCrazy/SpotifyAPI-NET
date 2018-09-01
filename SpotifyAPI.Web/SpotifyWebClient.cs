@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Models;
+using SpotifyAPI.Web.Enums;
 
 namespace SpotifyAPI.Web
 {
@@ -47,6 +48,7 @@ namespace SpotifyAPI.Web
                     return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
                         StatusCode = response.StatusCode,
+                        SpotifyStatusCode = (SpotifyHttpStatusCode)response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
                 }
@@ -70,6 +72,7 @@ namespace SpotifyAPI.Web
                     return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
                         StatusCode = response.StatusCode,
+                        SpotifyStatusCode = (SpotifyHttpStatusCode)response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, await response.Content.ReadAsByteArrayAsync());
                 }
@@ -122,6 +125,7 @@ namespace SpotifyAPI.Web
                     return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
                         StatusCode = response.StatusCode,
+                        SpotifyStatusCode = (SpotifyHttpStatusCode)response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
                 }
@@ -150,6 +154,7 @@ namespace SpotifyAPI.Web
                     return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                     {
                         StatusCode = response.StatusCode,
+                        SpotifyStatusCode = (SpotifyHttpStatusCode)response.StatusCode,
                         Headers = ConvertHeaders(response.Headers)
                     }, await response.Content.ReadAsByteArrayAsync());
                 }
