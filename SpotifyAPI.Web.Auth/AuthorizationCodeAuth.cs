@@ -95,11 +95,7 @@ namespace SpotifyAPI.Web.Auth
                 Error = error
             }));
 
-#if NETSTANDARD2_0
             return context.StringResponseAsync("OK - This window can be closed now");
-#else
-            return context.StringResponseAsync("OK - This window can be closed now");
-#endif
         }
 
         [WebApiHandler(HttpVerbs.Post, "/")]
