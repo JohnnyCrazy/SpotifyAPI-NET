@@ -11,20 +11,20 @@ An API for the Spotify-Client and Spotify's Web API, written in .NET
 > Based on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.
 > The API also provides access to user-related data such as playlists and music saved in a “Your Music” library, subject to user’s authorization.
 
-**Spotify's *unofficial* Local API**
-> Do you ever wanted to control your local Spotify Client with some sort of API? Now you can! This API gives you full control over your spotify client.
-> You can get infos about the currently playing song, get its Album-Art, skip/pause and much more. It also features multiple Event-Interfaces.
-
 ### Docs and Usage
 
 More Information, Installation-Instructions, Examples and API-Reference can be found at [github.io/SpotifyAPI-Net/](http://johnnycrazy.github.io/SpotifyAPI-NET/)
 
 ### NuGet  
-You can add the API to your project via [nuget-package](https://www.nuget.org/packages/SpotifyAPI-NET/):  
+You can add the API to your project via [nuget-package](https://www.nuget.org/packages/SpotifyAPI.Web/):  
 ```
-Install-Package SpotifyAPI-NET
+Install-Package SpotifyAPI.Web
+Install-Package SpotifyAPI.Web.Auth
+
 //or
-Install-Package SpotifyAPI-Net -pre
+
+Install-Package SpotifyAPI.Web -pre
+Install-Package SpotifyAPI.Web.Auth -pre
 ```
 
 ### Example
