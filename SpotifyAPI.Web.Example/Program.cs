@@ -27,14 +27,19 @@ namespace SpotifyAPI.Web.Example
                 "Tip: If you want to supply your ClientID and SecretId beforehand, use env variables (SPOTIFY_CLIENT_ID and SPOTIFY_SECRET_ID)");
 
 
-            AuthorizationCodeAuth auth =
-                new AuthorizationCodeAuth(_clientId, _secretId, "http://localhost:4002", "http://localhost:4002",
-                    Scope.PlaylistReadPrivate | Scope.PlaylistReadCollaborative);
-            auth.AuthReceived += AuthOnAuthReceived;
+                        AuthorizationCodeAuth auth =
+                            new AuthorizationCodeAuth(_clientId, _secretId, "http://localhost:4002", "http://localhost:4002",
+                                Scope.PlaylistReadPrivate | Scope.PlaylistReadCollaborative);
+                        auth.AuthReceived += AuthOnAuthReceived;
+                        auth.Start();
+                        auth.OpenBrowser();
+
+/*            ImplictGrantAuth auth = new ImplictGrantAuth("26d287105e31491889f3cd293d85bfea", "http://localhost:4002", "http://localhost:4002");
             auth.Start();
-            auth.OpenBrowser();
+            auth.OpenBrowser();*/
 
             Console.ReadLine();
+            auth.Stop(0);
         }
 
         private static async void AuthOnAuthReceived(object sender, AuthorizationCode payload)

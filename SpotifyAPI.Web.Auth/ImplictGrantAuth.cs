@@ -1,4 +1,5 @@
-﻿using System.Net;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
@@ -18,20 +19,22 @@ namespace SpotifyAPI.Web.Auth
 
         protected override WebServer AdaptWebServer(WebServer webServer)
         {
-            return webServer.WithWebApiController<ImplictGrantAuthController>();
+            Console.WriteLine("Hello");
+            webServer.Module<WebApiModule>().RegisterController<ImplictGrantAuthController>();
+            return webServer;
         }
     }
 
     public class ImplictGrantAuthController : WebApiController
     {
-        [WebApiHandler(HttpVerbs.Get, "/auth")]
-        public Task<bool> GetAuth(WebServer server, HttpListenerContext context)
+        [WebApiHandler(HttpVerbs.Get, "/authe")]
+        public bool GetAuth(WebServer server, HttpListenerContext context)
         {
             string state = context.Request.QueryString["state"];
             SpotifyAuthServer<Token> auth = ImplictGrantAuth.GetByState(state);
             if (auth == null)
-                return context.StringResponseAsync(
-                    $"Failed - Unable to find auth request with state \"{state}\" - Please retry");
+                return true; /*context.StringResponseAsync(
+                    $"Failed - Unable to find auth request with state \"{state}\" - Please retry");*/
 
             Token token;
             string error = context.Request.QueryString["error"];
@@ -56,7 +59,8 @@ namespace SpotifyAPI.Web.Auth
             }
 
             Task.Factory.StartNew(() => auth?.TriggerAuth(token));
-            return context.StringResponseAsync("OK - This window can be closed now");
+            return true;
+            // return context.StringResponseAsync("OK - This window can be closed now");
         }
     }
 }

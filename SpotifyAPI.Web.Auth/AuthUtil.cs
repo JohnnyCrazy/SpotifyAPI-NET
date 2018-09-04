@@ -7,6 +7,7 @@ namespace SpotifyAPI.Web.Auth
     {
         public static void OpenBrowser(string url)
         {
+#if NETSTANDARD2_0
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 url = url.Replace("&", "^&");
@@ -24,6 +25,10 @@ namespace SpotifyAPI.Web.Auth
             {
                 // throw 
             }
+#else
+            url = url.Replace("&", "^&");
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}"));
+#endif
         }
     }
 }

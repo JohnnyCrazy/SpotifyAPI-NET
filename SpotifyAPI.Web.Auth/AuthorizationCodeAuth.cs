@@ -1,10 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SpotifyAPI.Web.Enums;
@@ -12,6 +9,13 @@ using SpotifyAPI.Web.Models;
 using Unosquare.Labs.EmbedIO;
 using Unosquare.Labs.EmbedIO.Constants;
 using Unosquare.Labs.EmbedIO.Modules;
+#if NETSTANDARD2_0
+using System.Net.Http;
+#endif
+#if NET46
+using System.Net.Http;
+using HttpListenerContext = Unosquare.Net.HttpListenerContext;
+#endif
 
 namespace SpotifyAPI.Web.Auth
 {
@@ -91,7 +95,11 @@ namespace SpotifyAPI.Web.Auth
                 Error = error
             }));
 
+#if NETSTANDARD2_0
             return context.StringResponseAsync("OK - This window can be closed now");
+#else
+            return context.StringResponseAsync("OK - This window can be closed now");
+#endif
         }
 
         [WebApiHandler(HttpVerbs.Post, "/")]
@@ -107,9 +115,7 @@ namespace SpotifyAPI.Web.Auth
             auth.SecretId = (string) formParams["secretId"];
 
             string uri = auth.GetUri();
-            context.Response.Redirect(uri);
-
-            return true;
+            return context.Redirect(uri, false);
         }
     }
 }

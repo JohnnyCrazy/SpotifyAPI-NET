@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using SpotifyAPI.Web.Enums;
 using Unosquare.Labs.EmbedIO;
+using Unosquare.Labs.EmbedIO.Constants;
 using Unosquare.Labs.EmbedIO.Modules;
 
 namespace SpotifyAPI.Web.Auth
@@ -20,6 +21,7 @@ namespace SpotifyAPI.Web.Auth
 
         private readonly string _folder;
         private readonly string _type;
+        private WebServer _server;
         protected CancellationTokenSource _serverSource;
 
         public delegate void OnAuthReceived(object sender, T payload);
@@ -41,10 +43,13 @@ namespace SpotifyAPI.Web.Auth
         {
             Instances.Add(State, this);
             _serverSource = new CancellationTokenSource();
-            WebServer server = AdaptWebServer(WebServer.Create(ServerUri));
-            server.RegisterModule(new ResourceFilesModule(typeof(ImplictGrantAuth).Assembly, $"SpotifyAPI.Web.Auth.Resources.{_folder}"));
+
+            _server = WebServer.Create(ServerUri, RoutingStrategy.Regex);
+            _server.RegisterModule(new WebApiModule());
+            AdaptWebServer(_server);
+            _server.RegisterModule(new ResourceFilesModule(typeof(ImplictGrantAuth).Assembly, $"SpotifyAPI.Web.Auth.Resources.{_folder}"));
 #pragma warning disable 4014
-            server.RunAsync(_serverSource.Token);
+            _server.RunAsync(_serverSource.Token);
 #pragma warning restore 4014
         }
 
