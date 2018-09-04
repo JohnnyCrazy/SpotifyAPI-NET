@@ -5,7 +5,7 @@ SpotifyAPI-NET
 [![Nuget](https://badge.fury.io/nu/SpotifyAPI-NET.svg)](https://www.nuget.org/packages/SpotifyAPI-NET/)
 [![Gitter](https://img.shields.io/gitter/room/SpotifyAPI-NET/Lobby.svg)](https://gitter.im/SpotifyAPI-NET/Lobby)
 
-An API for the Spotify-Client and Spotify's Web API, written in .NET  
+A Wrapper for Spotify's Web API, written in .NET  
 
 **Spotify's Web API** ([link](https://developer.spotify.com/web-api/))
 > Based on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.
