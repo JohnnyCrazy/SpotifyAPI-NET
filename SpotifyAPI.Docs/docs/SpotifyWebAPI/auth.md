@@ -12,11 +12,11 @@ After you created your Application, you will have following important values:
 >**Client_Secret** Never use this in one of your client-side apps!! Keep it secret!  
 >**Redirect URIs** Add "http://localhost", if you want full support for this API  
 
-Now you can start with the User-authentication, Spotify provides 3 ways:
+Now you can start with the User-authentication, Spotify provides 3 ways (4 if you consider different implementations):
 
 * [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth) (**Recommended**, no server-side code needed)  
 
-* [SecureAuthorizationCodeAuth](/SpotifyWebAPI/auth#secureauthorizationcodeauth) (**Recommended**, server-side code mandatory, the necessary code already exists however)
+* [SecureAuthorizationCodeAuth](/SpotifyWebAPI/auth#secureauthorizationcodeauth) (**Recommended**, server-side code mandatory, most secure method. The necessary code is shown here so you do not have to code it yourself.)
 
 * [AutorizationCodeAuth](/SpotifyWebAPI/auth#autorizationcodeauth) (Not recommended, server-side code needed, else it's unsecure)
 
@@ -102,23 +102,276 @@ static void auth_OnResponseReceivedEvent(Token token, string state, string error
 }
 ```
 
-##SecureAuthorizationCodeAuth
+## SecureAuthorizationCodeAuth
 
 This way uses server-side code or at least access to an exchange server, otherwise, compared to other
 methods, it is impossible to use.
 
-With this approach, you provide the URI to your desired exchange server to perform the client ID to
-authorization code exchange. The exchange server **must** return the authorization code via GET request
-to the callback URI.
+With this approach, you provide the URI/URL to your desired exchange server to perform all necessary
+requests to Spotify, as well as requests that return back to the "server URI".
 
-Advantages: The client ID and redirect URI are never exposed, which means your app **cannot**
-be spoofed by a malicious third party through implicit grant authorization. More importantly,
-your client secret is never exposed compared to other methods (excluding [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth)
+The exchange server **must** be able to:
+
+* Return the authorization code from Spotify API authenticate page via GET request to the "server URI".
+* Request the token response object via POST to the Spotify API token page.
+* Request a refreshed token response object via POST to the Spotify API token page.
+
+**The good news is that you do not need to code it yourself.**
+
+The advantages of this method are that the client ID and redirect URI are almost not exposed, which means
+your app **cannot** be spoofed by a malicious third party compared to implicit grant authorization. More importantly,
+your client secret is **never** exposed compared to other methods (excluding [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth)
 as it does not deal with a client secret).
 
-```c-sharp
+### Best way - using the SecureWebAPIFactory
+#### Way 1 - Asynchronous
+If placed inside a function marked as 'async', this will complete in the background when you call it but will not be
+immediately ready after the function has been called (because it will attempt to do other code in the mean time).
 
+```c#
+SecureWebAPIFactory webApiFactory;
+SpotifyWebAPI spotify;
+
+// You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually
+// refresh it later on. New WebAPIFactory objects cannot refresh a SpotifyWebAPI that they did not
+// give to you.
+webApiFactory = new SecureWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
+{
+    Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
+    AutoRefresh = true
+};
+webApiFactory.OnAuthSuccess += (sender, e) => authorized = true;
+
+try
+{
+    spotify = await webApiFactory.GetWebApiAsync();
+}
+catch (Exception ex)
+{
+    UpdateStatus($"Spotify failed to load: {ex.Message}");
+}
 ```
+
+#### Way 2 - Synchronous
+This will halt the program until your SpotifyWebAPI is available.
+
+```c#
+SecureWebAPIFactory webApiFactory;
+SpotifyWebAPI spotify;
+
+bool requestComplete = false;
+
+Task.Factory.StartNew(async () =>
+{
+    // You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually
+    // refresh it later on. New WebAPIFactory objects cannot refresh a SpotifyWebAPI that they did not
+    // give to you.
+    webApiFactory = new SecureWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
+    {
+        Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
+        AutoRefresh = true
+    };
+    webApiFactory.OnAuthSuccess += (sender, e) => authorized = true;
+
+    try
+    {
+        spotify = await webApiFactory.GetWebApiAsync();
+    }
+    catch (Exception ex)
+    {
+        UpdateStatus($"Spotify failed to load: {ex.Message}");
+    }
+
+    requestComplete = true;
+});
+
+while (!requestComplete) ;
+```
+
+### Verbose way - using the SecureAuthorizationCodeAuth class
+Since the SecureWebAPIFactory not only simplifies the whole process but offers additional functionality too
+(such as AutoRefresh and AuthSuccess AuthFailure events), use of this way is very verbose and is only
+recommended if you are having issues with SecureWebAPIFactory or need access to the tokens.
+
+```c#
+SecureAuthorizationCodeAuth auth = new SecureAuthorizationCodeAuth(
+    exchangeServerUri: "INSERT LINK TO YOUR index.php HERE",
+    serverUri: "http://localhost:4002",
+    scope: Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic
+);
+auth.AuthReceived += async (sender, response) =>
+{
+    lastToken = await auth.ExchangeCodeAsync(response.Code);
+
+    spotify = new SpotifyWebAPI()
+    {
+        TokenType = lastToken.TokenType,
+        AccessToken = lastToken.AccessToken
+    };
+
+    authenticated = true;
+    auth.Stop();
+};
+auth.OnAccessTokenExpired += async (sender, e) => spotify.AccessToken = (await auth.RefreshAuthAsync(lastToken.RefreshToken)).AccessToken;
+auth.Start();
+auth.OpenBrowser();
+```
+
+## Creating the Exchange Server
+To keep your client ID and redirect URI secure to an extent, and client secret secure in every circumstance,
+use of a php server and php code (server-side only code) is required.
+
+It should be noted that GitHub Pages does not support hosting php scripts. Hosting php scripts through it
+will cause the php to render as plain html, potentially compromising your client secret while doing
+absolutely nothing.
+
+This code should go inside your 'index.php' file on your php website server.
+
+```php
+<?php
+    define("CLIENT_ID", "INSERT YOUR CLIENT ID HERE");
+    define("SECRET", "INSERT YOUR CLIENT SECRET HERE");
+    define("REDIRECT_URI", "INSERT YOUR REDIRECT URL HERE");
+
+    function clean_request_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    // # Request Variables
+    // ## Get Access and Refresh Tokens
+    $grant_type = clean_request_input($_POST["grant_type"]);
+    $auth_code = clean_request_input($_POST["code"]);
+    // ### Get Refreshed Access Token
+    $refresh_token = clean_request_input($_POST["refresh_token"]);
+    // ## Get Authorization Code
+    $scope = clean_request_input($_GET["scope"]);
+    $state = clean_request_input($_GET["state"]);
+    $show_dialog = clean_request_input($_GET["show_dialog"]);
+
+    // Gets the token response JSON, which contains the access and refresh tokens.
+    //
+    // Documentation: https://developer.spotify.com/documentation/general/guides/authorization-guide/#2-have-your-application-request-refresh-and-access-tokens-spotify-returns-access-and-refresh-tokens
+    // Example response:
+    // {
+    //    "access_token": "NgCXRK...MzYjw",
+    //    "token_type": "Bearer",
+    //    "scope": "user-read-private user-read-email",
+    //    "expires_in": 3600,
+    //    "refresh_token": "NgAagA...Um_SHo"
+    // }
+    function get_token($auth_code)
+    {
+        $request = curl_init("https://accounts.spotify.com/api/token");
+        curl_setopt($request, CURLOPT_HTTPHEADER,
+        [
+            "Authorization: Basic ".base64_encode(CLIENT_ID.":".SECRET)
+        ]);
+        curl_setopt($request, CURLOPT_POST, true);
+        curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+        // It should be noted here that 'http_build_query' COULD be replaced with an array, but it will change the content type
+        // of the request to another one that it does not support.
+        curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query([
+            "grant_type" => "authorization_code",
+            "code" => $auth_code,
+            "redirect_uri" => REDIRECT_URI
+        ]));
+        $result = curl_exec($request);
+        // Spotify usually returns a neutral boilerplate message however, so this is very unlikely...
+        if (!$result)
+        {
+            trigger_error(curl_error($request));
+        }
+        curl_close($request);
+        return $result;
+    }
+
+    // Gets the token response JSON, which contains a refreshed access token, but no refresh token (as it would be unnecessary).
+    //
+    // Documentation: https://developer.spotify.com/documentation/general/guides/authorization-guide/#4-requesting-a-refreshed-access-token-spotify-returns-a-new-access-token-to-your-app
+    // Example response:
+    // {
+    //     "access_token": "NgA6ZcYI...ixn8bUQ",
+    //     "token_type": "Bearer",
+    //     "scope": "user-read-private user-read-email",
+    //     "expires_in": 3600
+    // }
+    function refresh_token($refresh_token)
+    {
+        $request = curl_init("https://accounts.spotify.com/api/token");
+        curl_setopt($request, CURLOPT_HTTPHEADER,
+        [
+            "Authorization: Basic ".base64_encode(CLIENT_ID.":".SECRET)
+        ]);
+        curl_setopt($request, CURLOPT_POST, true);
+        curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+        // It should be noted here that 'http_build_query' COULD be replaced with an array, but it will change the content type
+        // of the request to another one that it does not support.
+        curl_setopt($request, CURLOPT_POSTFIELDS, http_build_query([
+            "grant_type" => "refresh_token",
+            "refresh_token" => $refresh_token
+        ]));
+        $result = curl_exec($request);
+        // Spotify usually returns a neutral boilerplate message however, so this is very unlikely...
+        if (!$result)
+        {
+            trigger_error(curl_error($request));
+        }
+        curl_close($request);
+        return $result;
+    }
+
+    // Redirects the browser to perform a GET request to Spotify, obtaining the auth code.
+    function goto_auth_code($scope, $state, $show_dialog) {
+        header("Location: "."https://accounts.spotify.com/authorize/?".http_build_query(
+        [
+            "client_id" => CLIENT_ID,
+            "response_type" => "code",
+            "redirect_uri" => REDIRECT_URI,
+            "scope" => $scope,
+            "state" => $state,
+            "show_dialog" => $show_dialog
+        ]), true, 303);
+        die();
+    }
+
+    // By checking the grant type, we can choose to print out the context relevant json.
+    if ($grant_type === "authorization_code")
+    {
+        // This line prints out the JSON response to the page, allowing HttpClient to take the whole page as a response
+        // and begin parsing its JSON, to then go on to deserialize and so and so fourth...
+        echo get_token($auth_code);
+    }
+    else if ($grant_type === "refresh_token")
+    {
+        echo refresh_token($refresh_token);
+    }
+    else
+    {
+        goto_auth_code($scope, $state, $show_dialog);
+    }
+?>
+```
+
+Additionally, the code for the page where your redirect uri for Spotify goes should be this. Be sure
+you have whitelisted your redirect uri in the Spotify Developer Dashboard.
+
+```php
+<?php
+    header("Location: http://localhost:4002/?".http_build_query([
+        "code" => $_GET["code"],
+        "state" => $_GET["state"]
+    ]), true, 303);
+    die()
+?>
+```
+
+It should be noted that if you did not use the WebAPIFactory or you defined your own serverUri,
+you must change the areas in the php which refer to localhost:4002 as it will never reach
+your serverUri otherwise.
 
 ##AutorizationCodeAuth
 
