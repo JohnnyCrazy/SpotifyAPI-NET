@@ -16,9 +16,11 @@ Now you can start with the User-authentication, Spotify provides 3 ways:
 
 * [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth) (**Recommended**, no server-side code needed)  
 
-* [AutorizationCodeAuth](/SpotifyWebAPI/auth#autorizationcodeauth) (Not Recommended, Server-side code needed, else it's unsecure)
+* [SecureAuthorizationCodeAuth](/SpotifyWebAPI/auth#secureauthorizationcodeauth) (**Recommended**, server-side code mandatory, the necessary code already exists however)
 
-* [ClientCredentialsAuth](/SpotifyWebAPI/auth#clientcredentialsauth) (Not Recommended, Server-side code needed, else it's unsecure)  
+* [AutorizationCodeAuth](/SpotifyWebAPI/auth#autorizationcodeauth) (Not recommended, server-side code needed, else it's unsecure)
+
+* [ClientCredentialsAuth](/SpotifyWebAPI/auth#clientcredentialsauth) (Not recommended, server-side code needed, else it's unsecure)
 
 **Note:** I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth.
 When using ImplicitGrantAuth, another user could abuse the "localhost" RedirectUri by creating a "fake"-app which uses your ClientId.
@@ -98,6 +100,24 @@ static void auth_OnResponseReceivedEvent(Token token, string state, string error
     //stop the http server
     auth.StopHttpServer();
 }
+```
+
+##SecureAuthorizationCodeAuth
+
+This way uses server-side code or at least access to an exchange server, otherwise, compared to other
+methods, it is impossible to use.
+
+With this approach, you provide the URI to your desired exchange server to perform the client ID to
+authorization code exchange. The exchange server **must** return the authorization code via GET request
+to the callback URI.
+
+Advantages: The client ID and redirect URI are never exposed, which means your app **cannot**
+be spoofed by a malicious third party through implicit grant authorization. More importantly,
+your client secret is never exposed compared to other methods (excluding [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth)
+as it does not deal with a client secret).
+
+```c-sharp
+
 ```
 
 ##AutorizationCodeAuth
