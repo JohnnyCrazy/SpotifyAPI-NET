@@ -13,15 +13,12 @@ namespace SpotifyAPI.Web
     internal class SpotifyWebClient : IClient
     {
         public JsonSerializerSettings JsonSettings { get; set; }
-
-        public ProxyConfig ProxyConfig { get; set; }
-
         private readonly Encoding _encoding = Encoding.UTF8;
         private readonly HttpClient _client;
 
-        public SpotifyWebClient()
+        public SpotifyWebClient(ProxyConfig proxyConfig = null)
         {
-            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
+            HttpClientHandler clientHandler = CreateClientHandler(proxyConfig);
             _client = new HttpClient(clientHandler);
         }
 
