@@ -2001,11 +2001,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
-            int? offset = null)
+            int? offset = null, int positionMs = 0)
         {
             JObject ob = new JObject();
             if(!string.IsNullOrEmpty(contextUri))
@@ -2014,6 +2015,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if(offset != null)
                 ob.Add("offset", new JObject { { "position", offset } });
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadData<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
@@ -2023,11 +2026,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
-            int? offset = null)
+            int? offset = null, int positionMs = 0)
         {
             JObject ob = new JObject();
             if (!string.IsNullOrEmpty(contextUri))
@@ -2036,6 +2040,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if (offset != null)
                 ob.Add("offset", new JObject { { "position", offset } });
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadDataAsync<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
@@ -2045,11 +2051,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
-            string offset = "")
+            string offset = "", int positionMs = 0)
         {
             JObject ob = new JObject();
             if (!string.IsNullOrEmpty(contextUri))
@@ -2058,6 +2065,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if (!string.IsNullOrEmpty(offset))
                 ob.Add("offset", new JObject {{"uri", offset}});
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadData<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
@@ -2067,11 +2076,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
-            string offset = "")
+            string offset = "", int positionMs = 0)
         {
             JObject ob = new JObject();
             if (!string.IsNullOrEmpty(contextUri))
@@ -2080,6 +2090,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if (!string.IsNullOrEmpty(offset))
                 ob.Add("offset", new JObject { { "uri", offset } });
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadDataAsync<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
