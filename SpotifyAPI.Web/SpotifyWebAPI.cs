@@ -23,15 +23,14 @@ namespace SpotifyAPI.Web
         {
             _builder = new SpotifyWebBuilder();
             UseAuth = true;
-            WebClient = new SpotifyWebClient
+            WebClient = new SpotifyWebClient(proxyConfig)
             {
                 JsonSettings =
                     new JsonSerializerSettings
                     {
                         NullValueHandling = NullValueHandling.Ignore,
                         TypeNameHandling = TypeNameHandling.All
-                    },
-                ProxyConfig = proxyConfig
+                    }
             };
         }
 
