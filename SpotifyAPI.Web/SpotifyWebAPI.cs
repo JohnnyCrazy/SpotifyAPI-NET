@@ -2439,19 +2439,23 @@ namespace SpotifyAPI.Web
             return response.Item2;
         }
 
-        private bool TryGetTooManyRequests(ResponseInfo info, out int secondsToWait)
+        /// <summary>
+        ///     Retrieves whether request had a "TooManyRequests" error, and get the amount Spotify recommends waiting before another request.
+        /// </summary>
+        /// <param name="info">Info object to analyze.</param>
+        /// <returns>Seconds to wait before making another request.  -1 if no error.</returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        private int GetTooManyRequests(ResponseInfo info)
         {
             if (info.SpotifyStatusCode != SpotifyHttpStatusCode.TooManyRequests)
             {
-                secondsToWait = -1;
-                return false;
+                return -1;
             }
-            if (!int.TryParse(info.Headers.Get("Retry-After"), out secondsToWait))
+            if (!int.TryParse(info.Headers.Get("Retry-After"), out var secondsToWait))
             {
-                secondsToWait = -1;
-                return false;
+                return -1;
             }
-            return true;
+            return secondsToWait;
         }
 
         public async Task<T> DownloadDataAsync<T>(string url) where T : BasicModel
@@ -2465,25 +2469,26 @@ namespace SpotifyAPI.Web
                 if (response != null)
                 {
                     int msToWait = RetryAfter;
-                    if (TryGetTooManyRequests(response.Item1, out var secondsToWait))
+                    var secondsToWait = GetTooManyRequests(response.Item1);
+                    if (secondsToWait > 0)
                     {
                         msToWait = secondsToWait * 1000;
                     }
-                    await Task.Delay(RetryAfter).ConfigureAwait(false);
+                    await Task.Delay(msToWait).ConfigureAwait(false);
                 }
                 response = await DownloadDataAltAsync<T>(url).ConfigureAwait(false);
 
                 response.Item2.AddResponseInfo(response.Item1);
                 lastError = response.Item2.Error;
 
-                if (TooManyRequestsConsumesARetry || !TryGetTooManyRequests(response.Item1, out var _))
+                if (TooManyRequestsConsumesARetry || GetTooManyRequests(response.Item1) == -1)
                 {
                     triesLeft -= 1;
                 }
 
             } while (UseAutoRetry
                 && triesLeft > 0
-                && (TryGetTooManyRequests(response.Item1, out var _)
+                && (GetTooManyRequests(response.Item1) != -1
                     || (lastError != null && RetryErrorCodes.Contains(lastError.Status))));
 
 
