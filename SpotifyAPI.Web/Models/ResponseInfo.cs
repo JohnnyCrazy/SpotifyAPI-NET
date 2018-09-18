@@ -9,8 +9,6 @@ namespace SpotifyAPI.Web.Models
 
         public HttpStatusCode StatusCode { get; set; }
 
-        public SpotifyHttpStatusCode SpotifyStatusCode { get; set; }
-
         public static readonly ResponseInfo Empty = new ResponseInfo();
     }
 }

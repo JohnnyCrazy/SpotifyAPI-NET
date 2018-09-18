@@ -21,7 +21,5 @@ namespace SpotifyAPI.Web.Models
         public WebHeaderCollection Headers() => _info.Headers;
 
         public HttpStatusCode StatusCode() => _info.StatusCode;
-
-        public SpotifyHttpStatusCode SpotifyStatusCode() => _info.SpotifyStatusCode;
     }
 }

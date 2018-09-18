@@ -2447,7 +2447,8 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         private int GetTooManyRequests(ResponseInfo info)
         {
-            if (info.SpotifyStatusCode != SpotifyHttpStatusCode.TooManyRequests)
+            // 429 is "TooManyRequests" value specified in Spotify API
+            if (429 != (int)info.StatusCode) 
             {
                 return -1;
             }
