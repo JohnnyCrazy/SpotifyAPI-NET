@@ -1635,7 +1635,7 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Add one or more tracks to a user’s playlist.
+        ///     Add a track to a user’s playlist.
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
@@ -1649,7 +1649,7 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Add one or more tracks to a user’s playlist asynchronously.
+        ///     Add a track to a user’s playlist asynchronously.
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
