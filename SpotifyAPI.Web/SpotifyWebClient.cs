@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Models;
+using SpotifyAPI.Web.Enums;
 
 namespace SpotifyAPI.Web
 {
