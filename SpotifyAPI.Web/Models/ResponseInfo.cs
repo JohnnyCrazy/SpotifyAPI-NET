@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using SpotifyAPI.Web.Enums;
+using System.Net;
 
 namespace SpotifyAPI.Web.Models
 {
