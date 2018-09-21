@@ -6,7 +6,7 @@ using SpotifyAPI.Web.Models;
 
 namespace SpotifyAPI.Web.Example
 {
-    static class Program
+    internal static class Program
     {
         private static string _clientId = ""; //"";
         private static string _secretId = ""; //"";
@@ -14,11 +14,11 @@ namespace SpotifyAPI.Web.Example
         static void Main(string[] args)
         {
             _clientId = string.IsNullOrEmpty(_clientId)
-                ? System.Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID")
+                ? Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID")
                 : _clientId;
 
             _secretId = string.IsNullOrEmpty(_secretId)
-                ? System.Environment.GetEnvironmentVariable("SPOTIFY_SECRET_ID")
+                ? Environment.GetEnvironmentVariable("SPOTIFY_SECRET_ID")
                 : _secretId;
 
             Console.WriteLine("####### Spotify API Example #######");
@@ -34,10 +34,6 @@ namespace SpotifyAPI.Web.Example
                         auth.Start();
                         auth.OpenBrowser();
 
-/*            ImplictGrantAuth auth = new ImplictGrantAuth("26d287105e31491889f3cd293d85bfea", "http://localhost:4002", "http://localhost:4002");
-            auth.Start();
-            auth.OpenBrowser();*/
-
             Console.ReadLine();
             auth.Stop(0);
         }
@@ -48,15 +44,15 @@ namespace SpotifyAPI.Web.Example
             auth.Stop();
 
             Token token = await auth.ExchangeCode(payload.Code);
-            SpotifyWebAPI api = new SpotifyWebAPI()
+            SpotifyWebAPI api = new SpotifyWebAPI
             {
                 AccessToken = token.AccessToken,
                 TokenType = token.TokenType
             };
-            PrintUsefulDate(api);
+            PrintUsefulData(api);
         }
 
-        private static async void PrintUsefulDate(SpotifyWebAPI api)
+        private static async void PrintUsefulData(SpotifyWebAPI api)
         {
             PrivateProfile profile = await api.GetPrivateProfileAsync();
             string name = string.IsNullOrEmpty(profile.DisplayName) ? profile.Id : profile.DisplayName;

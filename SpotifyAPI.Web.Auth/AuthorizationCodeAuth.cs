@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -9,11 +10,8 @@ using SpotifyAPI.Web.Models;
 using Unosquare.Labs.EmbedIO;
 using Unosquare.Labs.EmbedIO.Constants;
 using Unosquare.Labs.EmbedIO.Modules;
-#if NETSTANDARD2_0
-using System.Net.Http;
-#endif
+using Unosquare.Swan;
 #if NET46
-using System.Net.Http;
 using HttpListenerContext = Unosquare.Net.HttpListenerContext;
 #endif
 
@@ -45,12 +43,32 @@ namespace SpotifyAPI.Web.Auth
             return ShouldRegisterNewApp() ? $"{RedirectUri}/start.html#{State}" : base.GetUri();
         }
 
-        protected override WebServer AdaptWebServer(WebServer webServer) => webServer.WithWebApiController<AuthorizationCodeAuthController>();
+        protected override WebServer AdaptWebServer(WebServer webServer)
+        {
+            return webServer.WithWebApiController<AuthorizationCodeAuthController>();
+        }
 
+        private string GetAuthHeader() => $"Basic {Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + SecretId))}";
+
+        public async Task<Token> RefreshToken(string refreshToken)
+        {
+            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("grant_type", "refresh_token"),
+                new KeyValuePair<string, string>("refresh_token", refreshToken)
+            };
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", GetAuthHeader());
+            HttpContent content = new FormUrlEncodedContent(args);
+
+            HttpResponseMessage resp = await client.PostAsync("https://accounts.spotify.com/api/token", content);
+            string msg = await resp.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<Token>(msg);
+        }
         public async Task<Token> ExchangeCode(string code)
         {
-            string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + SecretId));
-
             List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
@@ -59,7 +77,7 @@ namespace SpotifyAPI.Web.Auth
             };
 
             HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Authorization", $"Basic {auth}");
+            client.DefaultRequestHeaders.Add("Authorization", GetAuthHeader());
             HttpContent content = new FormUrlEncodedContent(args);
 
             HttpResponseMessage resp = await client.PostAsync("https://accounts.spotify.com/api/token", content);
