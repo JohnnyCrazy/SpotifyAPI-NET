@@ -31,5 +31,9 @@ namespace SpotifyAPI.Web.Models
 
         [JsonProperty("item")]
         public FullTrack Item { get; set; }
+
+        [JsonProperty("currently_playing_type")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public TrackType CurrentlyPlayingType { get; set; }
     }
 }
