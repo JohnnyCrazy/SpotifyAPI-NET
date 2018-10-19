@@ -35,6 +35,11 @@ namespace SpotifyAPI.Web.Auth
         string exchangeServerUri;
 
         /// <summary>
+        /// The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.
+        /// </summary>
+        public string HtmlResponse { get; set; } = "<script>window.close();</script>";
+
+        /// <summary>
         /// <para>
         /// A version of <see cref="AuthorizationCodeAuth"/> that does not store your client secret, client ID or redirect URI, enforcing a secure authorization flow. Requires an exchange server that will return the authorization code to its callback server via GET request.
         /// </para>
@@ -46,8 +51,14 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="serverUri">The URI to host the server at that your exchange server should return the authorization code to by GET request. (e.g. http://localhost:4002)</param>
         /// <param name="scope"></param>
         /// <param name="state">Stating none will randomly generate a state parameter.</param>
-        public SecureAuthorizationCodeAuth(string exchangeServerUri, string serverUri, Scope scope = Scope.None, string state = "") : base("code", "", "", serverUri, scope, state)
+        /// <param name="htmlResponse">The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.</param>
+        public SecureAuthorizationCodeAuth(string exchangeServerUri, string serverUri, Scope scope = Scope.None, string state = "", string htmlResponse = "") : base("code", "", "", serverUri, scope, state)
         {
+            if (htmlResponse != "")
+            {
+                HtmlResponse = htmlResponse;
+            }
+
             this.exchangeServerUri = exchangeServerUri;
         }
 
@@ -165,7 +176,8 @@ namespace SpotifyAPI.Web.Auth
                 Error = error
             }));
 
-            return context.HtmlResponseAsync("<script>window.close();</script>");
+            SecureAuthorizationCodeAuth secureAuth = (SecureAuthorizationCodeAuth)auth;
+            return context.HtmlResponseAsync(secureAuth.HtmlResponse);
         }
     }
 }

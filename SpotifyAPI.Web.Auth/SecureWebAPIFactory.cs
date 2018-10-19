@@ -31,7 +31,14 @@ namespace SpotifyAPI.Web.Auth
         /// The URI (or URL) of where a callback server to receive the auth code will be hosted. e.g. http://localhost:4002
         /// </summary>
         public string HostServerUri { get; set; }
-
+        /// <summary>
+        /// Opens the user's browser and visits the exchange server for you, triggering the key exchange. This should be true unless you want to handle the key exchange in a nicer way.
+        /// </summary>
+        public bool OpenBrowser { get; set; }
+        /// <summary>
+        /// The HTML to respond with when the callback server has been reached. By default, it is set to close the window on arrival.
+        /// </summary>
+        public string HtmlResponse { get; set; }
         /// <summary>
         /// Returns a SpotifyWebAPI using the SecureAuthorizationCodeAuth process. This will not work unless you implement an exchange server.
         /// <para/>
@@ -42,13 +49,20 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="hostServerUri">The URI (or URL) of where a callback server to receive the auth code will be hosted. e.g. http://localhost:4002</param>
         /// <param name="timeout">The maximum time in seconds to wait for a SpotifyWebAPI to be returned. The timeout is cancelled early regardless if an auth success or failure occured.</param>
         /// <param name="autoRefresh">Access provided by Spotify expires after 1 hour. If true, access will attempt to be silently (without opening a browser) refreshed automatically.</param>
-        public SecureWebAPIFactory(string exchangeServerUri, Scope scope = Scope.None, string hostServerUri = "http://localhost:4002", int timeout = 10, bool autoRefresh = false)
+        /// <param name="openBrowser">Opens the user's browser and visits the exchange server for you, triggering the key exchange. This should be true unless you want to handle the key exchange in a nicer way.</param>
+        /// <param name="htmlResponse">The HTML to respond with when the callback server has been reached. If none, it is set to close the window on arrival.</param>
+        public SecureWebAPIFactory(string exchangeServerUri, Scope scope = Scope.None, string hostServerUri = "http://localhost:4002", int timeout = 10, bool autoRefresh = false, bool openBrowser = true, string htmlResponse = "")
         {
             AutoRefresh = autoRefresh;
             Timeout = timeout;
             Scope = scope;
             ExchangeServerUri = exchangeServerUri;
             HostServerUri = hostServerUri;
+            OpenBrowser = openBrowser;
+            if (htmlResponse != "")
+            {
+                HtmlResponse = htmlResponse;
+            }
 
             OnAccessTokenExpired += async (sender, e) =>
             {
@@ -74,6 +88,12 @@ namespace SpotifyAPI.Web.Auth
         Token lastToken;
         SpotifyWebAPI lastWebApi;
         SecureAuthorizationCodeAuth lastAuth;
+
+        public class ExchangeReadyEventArgs : EventArgs
+        {
+            public string ExchangeUri { get; set; }
+        }
+        public event EventHandler<ExchangeReadyEventArgs> OnExchangeReady;
 
         /// <summary>
         /// Refreshes the access for a SpotifyWebAPI returned by this factory.
@@ -138,7 +158,8 @@ namespace SpotifyAPI.Web.Auth
                 lastAuth = new SecureAuthorizationCodeAuth(
                     exchangeServerUri: ExchangeServerUri,
                     serverUri: HostServerUri,
-                    scope: Scope);
+                    scope: Scope,
+                    htmlResponse: HtmlResponse);
                 lastAuth.AuthReceived += async (sender, response) =>
                 {
                     if (!string.IsNullOrEmpty(response.Error) || string.IsNullOrEmpty(response.Code))
@@ -174,7 +195,11 @@ namespace SpotifyAPI.Web.Auth
                 };
                 lastAuth.OnAccessTokenExpired += (sender, e) => OnAccessTokenExpired?.Invoke(sender, AccessTokenExpiredEventArgs.Empty);
                 lastAuth.Start();
-                lastAuth.OpenBrowser();
+                OnExchangeReady?.Invoke(this, new ExchangeReadyEventArgs { ExchangeUri = lastAuth.GetUri() });
+                if (OpenBrowser)
+                {
+                    lastAuth.OpenBrowser();
+                }
 
                 System.Timers.Timer timeout = new System.Timers.Timer
                 {
