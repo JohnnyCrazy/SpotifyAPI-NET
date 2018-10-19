@@ -55,7 +55,11 @@ namespace SpotifyAPI.Web.Auth
                 if (AutoRefresh)
                 {
                     Token token = await lastAuth.RefreshAuthAsync(lastToken.RefreshToken);
-                    if (token.HasError())
+                    if (token == null)
+                    {
+                        OnAuthFailure?.Invoke(this, new AuthFailureEventArgs($"Token not returned by server."));
+                    }
+                    else if (token.HasError())
                     {
                         OnAuthFailure?.Invoke(this, new AuthFailureEventArgs($"{token.Error} {token.ErrorDescription}"));
                     }
@@ -78,7 +82,10 @@ namespace SpotifyAPI.Web.Auth
         public async Task RefreshAuthAsync()
         {
             Token token = await lastAuth.RefreshAuthAsync(lastToken.RefreshToken);
-            lastWebApi.AccessToken = token.AccessToken;
+            if (token != null)
+            {
+                lastWebApi.AccessToken = token.AccessToken;
+            }
         }
 
         // By defining empty EventArgs objects, you can specify additional information later on as you see fit and it won't
@@ -142,6 +149,13 @@ namespace SpotifyAPI.Web.Auth
                     }
 
                     lastToken = await lastAuth.ExchangeCodeAsync(response.Code);
+
+                    if (lastToken == null)
+                    {
+                        OnAuthFailure?.Invoke(this, new AuthFailureEventArgs("Exchange token not returned by server."));
+                        currentlyAuthorizing = false;
+                        return;
+                    }
 
                     if (lastWebApi != null)
                     {

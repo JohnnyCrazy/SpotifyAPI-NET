@@ -82,8 +82,15 @@ namespace SpotifyAPI.Web.Auth
                     { "code", authorizationCode },
                     { "refresh_token", refreshToken }
                 });
-            var siteResponse = await httpClient.PostAsync(exchangeServerUri, content);
-            return JsonConvert.DeserializeObject<Token>(await siteResponse.Content.ReadAsStringAsync());
+            try
+            {
+                var siteResponse = await httpClient.PostAsync(exchangeServerUri, content);
+                return JsonConvert.DeserializeObject<Token>(await siteResponse.Content.ReadAsStringAsync());
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         System.Timers.Timer accessTokenExpireTimer;
@@ -114,7 +121,7 @@ namespace SpotifyAPI.Web.Auth
         public async Task<Token> ExchangeCodeAsync(string authorizationCode)
         {
             Token token = await GetToken("authorization_code", authorizationCode: authorizationCode);
-            if (!token.HasError())
+            if (token != null && !token.HasError())
             {
                 SetAccessExpireTimer(token);
             }
@@ -129,7 +136,7 @@ namespace SpotifyAPI.Web.Auth
         public async Task<Token> RefreshAuthAsync(string refreshToken)
         {
             Token token = await GetToken("refresh_token", refreshToken: refreshToken);
-            if (!token.HasError())
+            if (token != null && !token.HasError())
             {
                 SetAccessExpireTimer(token);
             }
