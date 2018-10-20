@@ -54,7 +54,7 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="htmlResponse">The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.</param>
         public SecureAuthorizationCodeAuth(string exchangeServerUri, string serverUri, Scope scope = Scope.None, string state = "", string htmlResponse = "") : base("code", "", "", serverUri, scope, state)
         {
-            if (htmlResponse != "")
+            if (!string.IsNullOrEmpty(htmlResponse))
             {
                 HtmlResponse = htmlResponse;
             }

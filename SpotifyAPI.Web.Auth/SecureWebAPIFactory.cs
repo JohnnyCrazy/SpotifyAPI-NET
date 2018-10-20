@@ -40,6 +40,10 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         public string HtmlResponse { get; set; }
         /// <summary>
+        /// Whether or not to show a dialog saying "Is this you?" during the initial key exchange. It should be noted that this would allow a user the opportunity to change accounts.
+        /// </summary>
+        public bool ShowDialog { get; set; }
+        /// <summary>
         /// Returns a SpotifyWebAPI using the SecureAuthorizationCodeAuth process. This will not work unless you implement an exchange server.
         /// <para/>
         /// For more information, see <see href="https://johnnycrazy.github.io/SpotifyAPI-NET/SpotifyWebAPI/auth/#secureauthorizationcodeauth"/> (the SecureAuthorizationCodeAuth page on the SpotifyAPI-Net documentation).
@@ -50,8 +54,7 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="timeout">The maximum time in seconds to wait for a SpotifyWebAPI to be returned. The timeout is cancelled early regardless if an auth success or failure occured.</param>
         /// <param name="autoRefresh">Access provided by Spotify expires after 1 hour. If true, access will attempt to be silently (without opening a browser) refreshed automatically.</param>
         /// <param name="openBrowser">Opens the user's browser and visits the exchange server for you, triggering the key exchange. This should be true unless you want to handle the key exchange in a nicer way.</param>
-        /// <param name="htmlResponse">The HTML to respond with when the callback server has been reached. If none, it is set to close the window on arrival.</param>
-        public SecureWebAPIFactory(string exchangeServerUri, Scope scope = Scope.None, string hostServerUri = "http://localhost:4002", int timeout = 10, bool autoRefresh = false, bool openBrowser = true, string htmlResponse = "")
+        public SecureWebAPIFactory(string exchangeServerUri, Scope scope = Scope.None, string hostServerUri = "http://localhost:4002", int timeout = 10, bool autoRefresh = false, bool openBrowser = true)
         {
             AutoRefresh = autoRefresh;
             Timeout = timeout;
@@ -59,10 +62,6 @@ namespace SpotifyAPI.Web.Auth
             ExchangeServerUri = exchangeServerUri;
             HostServerUri = hostServerUri;
             OpenBrowser = openBrowser;
-            if (htmlResponse != "")
-            {
-                HtmlResponse = htmlResponse;
-            }
 
             OnAccessTokenExpired += async (sender, e) =>
             {
@@ -159,7 +158,10 @@ namespace SpotifyAPI.Web.Auth
                     exchangeServerUri: ExchangeServerUri,
                     serverUri: HostServerUri,
                     scope: Scope,
-                    htmlResponse: HtmlResponse);
+                    htmlResponse: HtmlResponse)
+                {
+                    ShowDialog = ShowDialog
+                };
                 lastAuth.AuthReceived += async (sender, response) =>
                 {
                     if (!string.IsNullOrEmpty(response.Error) || string.IsNullOrEmpty(response.Code))
