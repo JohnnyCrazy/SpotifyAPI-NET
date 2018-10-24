@@ -39,10 +39,7 @@ namespace SpotifyAPI.Web
         {
             if (headers != null)
             {
-                foreach (KeyValuePair<string, string> headerPair in headers)
-                {
-                    _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                }
+                AddHeaders(headers);
             }
             using (HttpResponseMessage response = Task.Run(() => _client.GetAsync(url)).Result)
             {
@@ -58,10 +55,7 @@ namespace SpotifyAPI.Web
         {
             if (headers != null)
             {
-                foreach (KeyValuePair<string, string> headerPair in headers)
-                {
-                    _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                }
+                AddHeaders(headers);
             }
             using (HttpResponseMessage response = await _client.GetAsync(url).ConfigureAwait(false))
             {
@@ -101,10 +95,7 @@ namespace SpotifyAPI.Web
         {
             if (headers != null)
             {
-                foreach (KeyValuePair<string, string> headerPair in headers)
-                {
-                    _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                }
+                AddHeaders(headers);
             }
 
             HttpRequestMessage message = new HttpRequestMessage(new HttpMethod(method), url)
@@ -125,10 +116,7 @@ namespace SpotifyAPI.Web
         {
             if (headers != null)
             {
-                foreach (KeyValuePair<string, string> headerPair in headers)
-                {
-                    _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                }
+                AddHeaders(headers);
             }
 
             HttpRequestMessage message = new HttpRequestMessage(new HttpMethod(method), url)
@@ -174,6 +162,18 @@ namespace SpotifyAPI.Web
                 }
             }
             return newHeaders;
+        }
+
+        private void AddHeaders(Dictionary<string,string> headers)
+        {
+            foreach (KeyValuePair<string, string> headerPair in headers)
+            {
+                if (_client.DefaultRequestHeaders.Contains(headerPair.Key))
+                {
+                    _client.DefaultRequestHeaders.Remove(headerPair.Key);
+                }
+                _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
+            }
         }
 
         private static HttpClientHandler CreateClientHandler(ProxyConfig proxyConfig = null)
