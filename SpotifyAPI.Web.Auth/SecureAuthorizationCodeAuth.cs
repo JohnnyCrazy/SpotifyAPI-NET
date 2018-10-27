@@ -118,7 +118,7 @@ namespace SpotifyAPI.Web.Auth
             accessTokenExpireTimer = new System.Timers.Timer
             {
                 Enabled = true,
-                Interval = token.ExpiresIn,
+                Interval = token.ExpiresIn * 1000,
                 AutoReset = false
             };
             accessTokenExpireTimer.Elapsed += (sender, e) => OnAccessTokenExpired?.Invoke(this, EventArgs.Empty);

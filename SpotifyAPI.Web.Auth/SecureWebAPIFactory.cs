@@ -119,6 +119,9 @@ namespace SpotifyAPI.Web.Auth
             {
             }
         }
+        /// <summary>
+        /// When the authorization from Spotify expires.
+        /// </summary>
         public event EventHandler<AccessTokenExpiredEventArgs> OnAccessTokenExpired;
 
         public class AuthSuccessEventArgs : EventArgs
