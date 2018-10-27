@@ -83,14 +83,14 @@ namespace SpotifyAPI.Web.Auth
         /// Creates a HTTP request to obtain a token object.<para/>
         /// Parameter grantType can only be "refresh_token" or "authorization_code". authorizationCode and refreshToken are not mandatory, but at least one must be provided for your desired grant_type request otherwise an invalid response will be given and an exception is likely to be thrown.
         /// <para>
-        /// Will re-attempt on error or null <see cref="MAX_GET_TOKEN_RETRIES"/> times before finally returning null.
+        /// Will re-attempt on error, on null or on no access token <see cref="MAX_GET_TOKEN_RETRIES"/> times before finally returning null.
         /// </para>
         /// </summary>
         /// <param name="grantType">Can only be "refresh_token" or "authorization_code".</param>
         /// <param name="authorizationCode">This needs to be defined if "grantType" is "authorization_code".</param>
         /// <param name="refreshToken">This needs to be defined if "grantType" is "refresh_token".</param>
         /// <param name="currentRetries">Does not need to be defined. Used internally for retry attempt recursion.</param>
-        /// <returns></returns>
+        /// <returns>Attempts to return a full <see cref="Token"/>, but after retry attempts, may return a <see cref="Token"/> with no <see cref="Token.AccessToken"/>, or null.</returns>
         async Task<Token> GetToken(string grantType, string authorizationCode = "", string refreshToken = "", int currentRetries = 0)
         {
             var content = new FormUrlEncodedContent(new Dictionary<string, string>
@@ -104,7 +104,8 @@ namespace SpotifyAPI.Web.Auth
             {
                 var siteResponse = await httpClient.PostAsync(exchangeServerUri, content);
                 Token token = JsonConvert.DeserializeObject<Token>(await siteResponse.Content.ReadAsStringAsync());
-                if (!token.HasError())
+                // Don't need to check if it was null - if it is, it will resort to the catch block.
+                if (!token.HasError() && !string.IsNullOrEmpty(token.AccessToken))
                 {
                     return token;
                 }
@@ -153,7 +154,7 @@ namespace SpotifyAPI.Web.Auth
         public async Task<Token> ExchangeCodeAsync(string authorizationCode)
         {
             Token token = await GetToken("authorization_code", authorizationCode: authorizationCode);
-            if (token != null && !token.HasError())
+            if (token != null && !token.HasError() && !string.IsNullOrEmpty(token.AccessToken))
             {
                 SetAccessExpireTimer(token);
             }
@@ -168,7 +169,7 @@ namespace SpotifyAPI.Web.Auth
         public async Task<Token> RefreshAuthAsync(string refreshToken)
         {
             Token token = await GetToken("refresh_token", refreshToken: refreshToken);
-            if (token != null && !token.HasError())
+            if (token != null && !token.HasError() && !string.IsNullOrEmpty(token.AccessToken))
             {
                 SetAccessExpireTimer(token);
             }

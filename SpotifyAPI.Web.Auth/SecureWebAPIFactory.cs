@@ -67,20 +67,7 @@ namespace SpotifyAPI.Web.Auth
             {
                 if (AutoRefresh)
                 {
-                    Token token = await lastAuth.RefreshAuthAsync(lastToken.RefreshToken);
-                    if (token == null)
-                    {
-                        OnAuthFailure?.Invoke(this, new AuthFailureEventArgs($"Token not returned by server."));
-                    }
-                    else if (token.HasError())
-                    {
-                        OnAuthFailure?.Invoke(this, new AuthFailureEventArgs($"{token.Error} {token.ErrorDescription}"));
-                    }
-                    else
-                    {
-                        lastWebApi.AccessToken = token.AccessToken;
-                        OnAuthSuccess?.Invoke(this, new AuthSuccessEventArgs());
-                    }
+                    await RefreshAuthAsync();
                 }
             };
         }
@@ -105,9 +92,23 @@ namespace SpotifyAPI.Web.Auth
         public async Task RefreshAuthAsync()
         {
             Token token = await lastAuth.RefreshAuthAsync(lastToken.RefreshToken);
-            if (token != null)
+
+            if (token == null)
+            {
+                OnAuthFailure?.Invoke(this, new AuthFailureEventArgs($"Token not returned by server."));
+            }
+            else if (token.HasError())
+            {
+                OnAuthFailure?.Invoke(this, new AuthFailureEventArgs($"{token.Error} {token.ErrorDescription}"));
+            }
+            else if (string.IsNullOrEmpty(token.AccessToken))
+            {
+                OnAuthFailure?.Invoke(this, new AuthFailureEventArgs("Token had no access token attached."));
+            }
+            else
             {
                 lastWebApi.AccessToken = token.AccessToken;
+                OnAuthSuccess?.Invoke(this, new AuthSuccessEventArgs());
             }
         }
 
@@ -190,7 +191,7 @@ namespace SpotifyAPI.Web.Auth
 
                     lastToken = await lastAuth.ExchangeCodeAsync(response.Code);
 
-                    if (lastToken == null)
+                    if (lastToken == null || lastToken.HasError() || string.IsNullOrEmpty(lastToken.AccessToken))
                     {
                         // We only want one auth failure to be fired, if the request timed out then don't bother.
                         if (!timeout.Enabled) return;
