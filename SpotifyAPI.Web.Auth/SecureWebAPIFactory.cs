@@ -79,6 +79,7 @@ namespace SpotifyAPI.Web.Auth
                     else
                     {
                         lastWebApi.AccessToken = token.AccessToken;
+                        OnAuthSuccess?.Invoke(this, new AuthSuccessEventArgs());
                     }
                 }
             };
@@ -92,6 +93,9 @@ namespace SpotifyAPI.Web.Auth
         {
             public string ExchangeUri { get; set; }
         }
+        /// <summary>
+        /// When the URI to get an authorization code is ready to be used to be visited. Not required if <see cref="OpenBrowser"/> is true as the exchange URI will automatically be visited for you.
+        /// </summary>
         public event EventHandler<ExchangeReadyEventArgs> OnExchangeReady;
 
         /// <summary>
@@ -132,6 +136,9 @@ namespace SpotifyAPI.Web.Auth
             {
             }
         }
+        /// <summary>
+        /// When an authorization attempt succeeds and gains authorization.
+        /// </summary>
         public event EventHandler<AuthSuccessEventArgs> OnAuthSuccess;
 
         public class AuthFailureEventArgs : EventArgs
@@ -145,6 +152,9 @@ namespace SpotifyAPI.Web.Auth
                 Error = error;
             }
         }
+        /// <summary>
+        /// When an authorization attempt fails to gain authorization.
+        /// </summary>
         public event EventHandler<AuthFailureEventArgs> OnAuthFailure;
 
         /// <summary>
@@ -156,6 +166,7 @@ namespace SpotifyAPI.Web.Auth
             return await Task<SpotifyWebAPI>.Factory.StartNew(() =>
             {
                 bool currentlyAuthorizing = true;
+                System.Timers.Timer timeout = null;
 
                 lastAuth = new SecureAuthorizationCodeAuth(
                     exchangeServerUri: ExchangeServerUri,
@@ -169,6 +180,9 @@ namespace SpotifyAPI.Web.Auth
                 {
                     if (!string.IsNullOrEmpty(response.Error) || string.IsNullOrEmpty(response.Code))
                     {
+                        // We only want one auth failure to be fired, if the request timed out then don't bother.
+                        if (!timeout.Enabled) return;
+
                         OnAuthFailure?.Invoke(this, new AuthFailureEventArgs(response.Error));
                         currentlyAuthorizing = false;
                         return;
@@ -178,6 +192,9 @@ namespace SpotifyAPI.Web.Auth
 
                     if (lastToken == null)
                     {
+                        // We only want one auth failure to be fired, if the request timed out then don't bother.
+                        if (!timeout.Enabled) return;
+
                         OnAuthFailure?.Invoke(this, new AuthFailureEventArgs("Exchange token not returned by server."));
                         currentlyAuthorizing = false;
                         return;
@@ -206,7 +223,7 @@ namespace SpotifyAPI.Web.Auth
                     lastAuth.OpenBrowser();
                 }
 
-                System.Timers.Timer timeout = new System.Timers.Timer
+                timeout = new System.Timers.Timer
                 {
                     AutoReset = false,
                     Enabled = true,
@@ -214,6 +231,12 @@ namespace SpotifyAPI.Web.Auth
                 };
 
                 while (currentlyAuthorizing && timeout.Enabled) ;
+
+                // If a timeout occurred
+                if (lastWebApi == null && currentlyAuthorizing)
+                {
+                    OnAuthFailure?.Invoke(this, new AuthFailureEventArgs("Authorization request has timed out."));
+                }
 
                 return lastWebApi;
             });

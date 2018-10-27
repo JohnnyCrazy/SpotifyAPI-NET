@@ -77,15 +77,21 @@ namespace SpotifyAPI.Web.Auth
 
         static readonly HttpClient httpClient = new HttpClient();
 
+        const int MAX_GET_TOKEN_RETRIES = 10;
+
         /// <summary>
         /// Creates a HTTP request to obtain a token object.<para/>
         /// Parameter grantType can only be "refresh_token" or "authorization_code". authorizationCode and refreshToken are not mandatory, but at least one must be provided for your desired grant_type request otherwise an invalid response will be given and an exception is likely to be thrown.
+        /// <para>
+        /// Will re-attempt on error or null <see cref="MAX_GET_TOKEN_RETRIES"/> times before finally returning null.
+        /// </para>
         /// </summary>
         /// <param name="grantType">Can only be "refresh_token" or "authorization_code".</param>
         /// <param name="authorizationCode">This needs to be defined if "grantType" is "authorization_code".</param>
         /// <param name="refreshToken">This needs to be defined if "grantType" is "refresh_token".</param>
+        /// <param name="currentRetries">Does not need to be defined. Used internally for retry attempt recursion.</param>
         /// <returns></returns>
-        async Task<Token> GetToken(string grantType, string authorizationCode = "", string refreshToken = "")
+        async Task<Token> GetToken(string grantType, string authorizationCode = "", string refreshToken = "", int currentRetries = 0)
         {
             var content = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
@@ -93,14 +99,29 @@ namespace SpotifyAPI.Web.Auth
                     { "code", authorizationCode },
                     { "refresh_token", refreshToken }
                 });
+
             try
             {
                 var siteResponse = await httpClient.PostAsync(exchangeServerUri, content);
-                return JsonConvert.DeserializeObject<Token>(await siteResponse.Content.ReadAsStringAsync());
+                Token token = JsonConvert.DeserializeObject<Token>(await siteResponse.Content.ReadAsStringAsync());
+                if (!token.HasError())
+                {
+                    return token;
+                }
             }
-            catch
+            catch { }
+
+            if (currentRetries >= MAX_GET_TOKEN_RETRIES)
             {
                 return null;
+            }
+            else
+            {
+                currentRetries++;
+                // The reason I chose to implement the retries system this way is because a static or instance
+                // variable keeping track would inhibit parallelism i.e. using this function on multiple threads/tasks.
+                // It's not clear why someone would like to do that, but it's better to cater for all kinds of uses.
+                return await GetToken(grantType, authorizationCode, refreshToken, currentRetries);
             }
         }
 
