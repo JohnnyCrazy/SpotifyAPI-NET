@@ -6,8 +6,14 @@ namespace SpotifyAPI.Web.Models
 {
     public class SimpleAlbum : BasicModel
     {
+        [JsonProperty("album_group")]
+        public string AlbumGroup { get; set; }
+
         [JsonProperty("album_type")]
         public string AlbumType { get; set; }
+
+        [JsonProperty("artists")]
+        public List<SimpleArtist> Artists { get; set; }
 
         [JsonProperty("available_markets")]
         public List<string> AvailableMarkets { get; set; }
@@ -32,6 +38,9 @@ namespace SpotifyAPI.Web.Models
 
         [JsonProperty("release_date_precision")]
         public string ReleaseDatePrecision { get; set; }
+
+        [JsonProperty("restrictions")]
+        public Dictionary<string, string> Restrictions { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }

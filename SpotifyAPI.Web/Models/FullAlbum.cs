@@ -54,6 +54,9 @@ namespace SpotifyAPI.Web.Models
         [JsonProperty("tracks")]
         public Paging<SimpleTrack> Tracks { get; set; }
 
+        [JsonProperty("restrictions")]
+        public Dictionary<string, string> Restrictions { get; set; }
+
         [JsonProperty("type")]
         public string Type { get; set; }
 

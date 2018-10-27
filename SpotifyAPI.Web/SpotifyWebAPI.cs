@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
@@ -23,15 +23,14 @@ namespace SpotifyAPI.Web
         {
             _builder = new SpotifyWebBuilder();
             UseAuth = true;
-            WebClient = new SpotifyWebClient
+            WebClient = new SpotifyWebClient(proxyConfig)
             {
                 JsonSettings =
                     new JsonSerializerSettings
                     {
                         NullValueHandling = NullValueHandling.Ignore,
                         TypeNameHandling = TypeNameHandling.All
-                    },
-                ProxyConfig = proxyConfig
+                    }
             };
         }
 
@@ -78,6 +77,11 @@ namespace SpotifyAPI.Web
         ///     Maximum number of tries for one failed request.
         /// </summary>
         public int RetryTimes { get; set; } = 10;
+
+        /// <summary>
+        ///     Whether a failure of type "Too Many Requests" should use up one of the allocated retry attempts.
+        /// </summary>
+        public bool TooManyRequestsConsumesARetry { get; set; } = false;
 
         /// <summary>
         ///     Error codes that will trigger auto-retry if <see cref="UseAutoRetry"/> is enabled.
@@ -1569,7 +1573,7 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Remove one or more tracks from a user’s playlist.
+        ///     Remove a track from a user’s playlist.
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
@@ -1582,7 +1586,7 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Remove one or more tracks from a user’s playlist asynchronously.
+        ///     Remove a track from a user’s playlist asynchronously.
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
@@ -1631,7 +1635,7 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Add one or more tracks to a user’s playlist.
+        ///     Add a track to a user’s playlist.
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
@@ -1645,7 +1649,7 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Add one or more tracks to a user’s playlist asynchronously.
+        ///     Add a track to a user’s playlist asynchronously.
         /// </summary>
         /// <param name="userId">The user's Spotify user ID.</param>
         /// <param name="playlistId">The Spotify ID for the playlist.</param>
@@ -2001,11 +2005,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
-            int? offset = null)
+            int? offset = null, int positionMs = 0)
         {
             JObject ob = new JObject();
             if(!string.IsNullOrEmpty(contextUri))
@@ -2014,6 +2019,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if(offset != null)
                 ob.Add("offset", new JObject { { "position", offset } });
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadData<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
@@ -2023,11 +2030,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
-            int? offset = null)
+            int? offset = null, int positionMs = 0)
         {
             JObject ob = new JObject();
             if (!string.IsNullOrEmpty(contextUri))
@@ -2036,6 +2044,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if (offset != null)
                 ob.Add("offset", new JObject { { "position", offset } });
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadDataAsync<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
@@ -2045,11 +2055,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
-            string offset = "")
+            string offset = "", int positionMs = 0)
         {
             JObject ob = new JObject();
             if (!string.IsNullOrEmpty(contextUri))
@@ -2058,6 +2069,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if (!string.IsNullOrEmpty(offset))
                 ob.Add("offset", new JObject {{"uri", offset}});
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadData<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
@@ -2067,11 +2080,12 @@ namespace SpotifyAPI.Web
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
-        /// <param name="offset">Indicates from where in the context playback should start. 
+        /// <param name="offset">Indicates from where in the context playback should start.
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
         /// <returns></returns>
         public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
-            string offset = "")
+            string offset = "", int positionMs = 0)
         {
             JObject ob = new JObject();
             if (!string.IsNullOrEmpty(contextUri))
@@ -2080,6 +2094,8 @@ namespace SpotifyAPI.Web
                 ob.Add("uris", new JArray(uris));
             if (!string.IsNullOrEmpty(offset))
                 ob.Add("offset", new JObject { { "uri", offset } });
+            if (positionMs > 0)
+                ob.Add("position_ms", positionMs);
             return UploadDataAsync<ErrorResponse>(_builder.ResumePlayback(deviceId), ob.ToString(Formatting.None), "PUT");
         }
 
@@ -2434,6 +2450,26 @@ namespace SpotifyAPI.Web
             return response.Item2;
         }
 
+        /// <summary>
+        ///     Retrieves whether request had a "TooManyRequests" error, and get the amount Spotify recommends waiting before another request.
+        /// </summary>
+        /// <param name="info">Info object to analyze.</param>
+        /// <returns>Seconds to wait before making another request.  -1 if no error.</returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        private int GetTooManyRequests(ResponseInfo info)
+        {
+            // 429 is "TooManyRequests" value specified in Spotify API
+            if (429 != (int)info.StatusCode) 
+            {
+                return -1;
+            }
+            if (!int.TryParse(info.Headers.Get("Retry-After"), out var secondsToWait))
+            {
+                return -1;
+            }
+            return secondsToWait;
+        }
+
         public async Task<T> DownloadDataAsync<T>(string url) where T : BasicModel
         {
             int triesLeft = RetryTimes + 1;
@@ -2442,15 +2478,30 @@ namespace SpotifyAPI.Web
             Tuple<ResponseInfo, T> response = null;
             do
             {
-                if (response != null) { await Task.Delay(RetryAfter).ConfigureAwait(false); }
+                if (response != null)
+                {
+                    int msToWait = RetryAfter;
+                    var secondsToWait = GetTooManyRequests(response.Item1);
+                    if (secondsToWait > 0)
+                    {
+                        msToWait = secondsToWait * 1000;
+                    }
+                    await Task.Delay(msToWait).ConfigureAwait(false);
+                }
                 response = await DownloadDataAltAsync<T>(url).ConfigureAwait(false);
 
                 response.Item2.AddResponseInfo(response.Item1);
                 lastError = response.Item2.Error;
 
-                triesLeft -= 1;
+                if (TooManyRequestsConsumesARetry || GetTooManyRequests(response.Item1) == -1)
+                {
+                    triesLeft -= 1;
+                }
 
-            } while (UseAutoRetry && triesLeft > 0 && lastError != null && RetryErrorCodes.Contains(lastError.Status));
+            } while (UseAutoRetry
+                && triesLeft > 0
+                && (GetTooManyRequests(response.Item1) != -1
+                    || (lastError != null && RetryErrorCodes.Contains(lastError.Status))));
 
 
             return response.Item2;

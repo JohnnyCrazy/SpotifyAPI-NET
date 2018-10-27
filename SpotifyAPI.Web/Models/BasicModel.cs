@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SpotifyAPI.Web.Enums;
 using System;
 using System.Net;
 

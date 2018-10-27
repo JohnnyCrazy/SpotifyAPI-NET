@@ -2,7 +2,8 @@ SpotifyAPI-NET
 ===
 
 [![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
-[![Nuget](https://badge.fury.io/nu/SpotifyAPI-NET.svg)](https://www.nuget.org/packages/SpotifyAPI-NET/)
+[![Nuget SpotifyAPI.Web](https://badge.fury.io/nu/SpotifyAPI.Web.svg)](https://www.nuget.org/packages/SpotifyAPI.Web/)
+[![Nuget SpotifyAPI.Web.Auth](https://badge.fury.io/nu/SpotifyAPI.Web.Auth.svg)](https://www.nuget.org/packages/SpotifyAPI.Web.Auth/)
 [![Gitter](https://img.shields.io/gitter/room/SpotifyAPI-NET/Lobby.svg)](https://gitter.im/SpotifyAPI-NET/Lobby)
 
 A Wrapper for Spotify's Web API, written in .NET  
@@ -12,6 +13,8 @@ A Wrapper for Spotify's Web API, written in .NET
 > The API also provides access to user-related data such as playlists and music saved in a “Your Music” library, subject to user’s authorization.
 
 ### Docs and Usage
+
+> Docs are currently outdated and are being worked on. Please refer to the example Project for a rough overview.
 
 More Information, Installation-Instructions, Examples and API-Reference can be found at [github.io/SpotifyAPI-Net/](http://johnnycrazy.github.io/SpotifyAPI-NET/)
 
@@ -26,12 +29,6 @@ Install-Package SpotifyAPI.Web.Auth
 Install-Package SpotifyAPI.Web -pre
 Install-Package SpotifyAPI.Web.Auth -pre
 ```
-
-### Example
-
-| SpotifyLocalAPI Example   | SpotifyWebAPI Example     |
-| :------------- | :------------- |
-| ![WebExample](http://i.imgur.com/Vo0lMk8.png) | ![LocalExample](http://i.imgur.com/E8Ba7Qm.png) |
 
 ### Donations
 

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -7,16 +7,21 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Models;
+using SpotifyAPI.Web.Enums;
 
 namespace SpotifyAPI.Web
 {
     internal class SpotifyWebClient : IClient
     {
         public JsonSerializerSettings JsonSettings { get; set; }
-
-        public ProxyConfig ProxyConfig { get; set; }
-
         private readonly Encoding _encoding = Encoding.UTF8;
+        private readonly HttpClient _client;
+
+        public SpotifyWebClient(ProxyConfig proxyConfig = null)
+        {
+            HttpClientHandler clientHandler = CreateClientHandler(proxyConfig);
+            _client = new HttpClient(clientHandler);
+        }
 
         public Tuple<ResponseInfo, string> Download(string url, Dictionary<string, string> headers = null)
         {
@@ -32,47 +37,33 @@ namespace SpotifyAPI.Web
 
         public Tuple<ResponseInfo, byte[]> DownloadRaw(string url, Dictionary<string, string> headers = null)
         {
-            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
-            using (HttpClient client = new HttpClient(clientHandler))
+            if (headers != null)
             {
-                if (headers != null)
+                AddHeaders(headers);
+            }
+            using (HttpResponseMessage response = Task.Run(() => _client.GetAsync(url)).Result)
+            {
+                return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                 {
-                    foreach (KeyValuePair<string, string> headerPair in headers)
-                    {
-                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                    }
-                }
-                using (HttpResponseMessage response = Task.Run(() => client.GetAsync(url)).Result)
-                {
-                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
-                    {
-                        StatusCode = response.StatusCode,
-                        Headers = ConvertHeaders(response.Headers)
-                    }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
-                }
+                    StatusCode = response.StatusCode,
+                    Headers = ConvertHeaders(response.Headers)
+                }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
             }
         }
 
         public async Task<Tuple<ResponseInfo, byte[]>> DownloadRawAsync(string url, Dictionary<string, string> headers = null)
         {
-            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
-            using (HttpClient client = new HttpClient(clientHandler))
+            if (headers != null)
             {
-                if (headers != null)
+                AddHeaders(headers);
+            }
+            using (HttpResponseMessage response = await _client.GetAsync(url).ConfigureAwait(false))
+            {
+                return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                 {
-                    foreach (KeyValuePair<string, string> headerPair in headers)
-                    {
-                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                    }
-                }
-                using (HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(false))
-                {
-                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
-                    {
-                        StatusCode = response.StatusCode,
-                        Headers = ConvertHeaders(response.Headers)
-                    }, await response.Content.ReadAsByteArrayAsync());
-                }
+                    StatusCode = response.StatusCode,
+                    Headers = ConvertHeaders(response.Headers)
+                }, await response.Content.ReadAsByteArrayAsync());
             }
         }
 
@@ -102,57 +93,43 @@ namespace SpotifyAPI.Web
 
         public Tuple<ResponseInfo, byte[]> UploadRaw(string url, string body, string method, Dictionary<string, string> headers = null)
         {
-            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
-            using (HttpClient client = new HttpClient(clientHandler))
+            if (headers != null)
             {
-                if (headers != null)
-                {
-                    foreach (KeyValuePair<string, string> headerPair in headers)
-                    {
-                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                    }
-                }
+                AddHeaders(headers);
+            }
 
-                HttpRequestMessage message = new HttpRequestMessage(new HttpMethod(method), url)
+            HttpRequestMessage message = new HttpRequestMessage(new HttpMethod(method), url)
+            {
+                Content = new StringContent(body, _encoding)
+            };
+            using (HttpResponseMessage response = Task.Run(() => _client.SendAsync(message)).Result)
+            {
+                return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                 {
-                    Content = new StringContent(body, _encoding)
-                };
-                using (HttpResponseMessage response = Task.Run(() => client.SendAsync(message)).Result)
-                {
-                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
-                    {
-                        StatusCode = response.StatusCode,
-                        Headers = ConvertHeaders(response.Headers)
-                    }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
-                }
+                    StatusCode = response.StatusCode,
+                    Headers = ConvertHeaders(response.Headers)
+                }, Task.Run(() => response.Content.ReadAsByteArrayAsync()).Result);
             }
         }
 
         public async Task<Tuple<ResponseInfo, byte[]>> UploadRawAsync(string url, string body, string method, Dictionary<string, string> headers = null)
         {
-            HttpClientHandler clientHandler = CreateClientHandler(ProxyConfig);
-            using (HttpClient client = new HttpClient(clientHandler))
+            if (headers != null)
             {
-                if (headers != null)
-                {
-                    foreach (KeyValuePair<string, string> headerPair in headers)
-                    {
-                        client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
-                    }
-                }
+                AddHeaders(headers);
+            }
 
-                HttpRequestMessage message = new HttpRequestMessage(new HttpMethod(method), url)
+            HttpRequestMessage message = new HttpRequestMessage(new HttpMethod(method), url)
+            {
+                Content = new StringContent(body, _encoding)
+            };
+            using (HttpResponseMessage response = await _client.SendAsync(message))
+            {
+                return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
                 {
-                    Content = new StringContent(body, _encoding)
-                };
-                using (HttpResponseMessage response = await client.SendAsync(message))
-                {
-                    return new Tuple<ResponseInfo, byte[]>(new ResponseInfo
-                    {
-                        StatusCode = response.StatusCode,
-                        Headers = ConvertHeaders(response.Headers)
-                    }, await response.Content.ReadAsByteArrayAsync());
-                }
+                    StatusCode = response.StatusCode,
+                    Headers = ConvertHeaders(response.Headers)
+                }, await response.Content.ReadAsByteArrayAsync());
             }
         }
 
@@ -170,6 +147,7 @@ namespace SpotifyAPI.Web
 
         public void Dispose()
         {
+            _client.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -184,6 +162,15 @@ namespace SpotifyAPI.Web
                 }
             }
             return newHeaders;
+        }
+
+        private void AddHeaders(Dictionary<string,string> headers)
+        {
+            _client.DefaultRequestHeaders.Clear();
+            foreach (KeyValuePair<string, string> headerPair in headers)
+            {
+                _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
+            }
         }
 
         private static HttpClientHandler CreateClientHandler(ProxyConfig proxyConfig = null)

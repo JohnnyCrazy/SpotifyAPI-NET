@@ -39,6 +39,9 @@ namespace SpotifyAPI.Web.Models
         [JsonProperty("track_number")]
         public int TrackNumber { get; set; }
 
+        [JsonProperty("restrictions")]
+        public Dictionary<string, string> Restrictions { get; set; }
+
         [JsonProperty("type")]
         public string Type { get; set; }
 
