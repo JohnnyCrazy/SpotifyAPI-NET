@@ -77,13 +77,18 @@ namespace SpotifyAPI.Web.Auth
 
         static readonly HttpClient httpClient = new HttpClient();
 
-        const int MAX_GET_TOKEN_RETRIES = 10;
+        /// <summary>
+        /// The maximum amount of times to retry getting a token.
+        /// <para/>
+        /// A token get is attempted every time you <see cref="RefreshAuthAsync(string)"/> and <see cref="ExchangeCodeAsync(string)"/>.
+        /// </summary>
+        public int MaxGetTokenRetries { get; set; } = 10;
 
         /// <summary>
         /// Creates a HTTP request to obtain a token object.<para/>
         /// Parameter grantType can only be "refresh_token" or "authorization_code". authorizationCode and refreshToken are not mandatory, but at least one must be provided for your desired grant_type request otherwise an invalid response will be given and an exception is likely to be thrown.
         /// <para>
-        /// Will re-attempt on error, on null or on no access token <see cref="MAX_GET_TOKEN_RETRIES"/> times before finally returning null.
+        /// Will re-attempt on error, on null or on no access token <see cref="MaxGetTokenRetries"/> times before finally returning null.
         /// </para>
         /// </summary>
         /// <param name="grantType">Can only be "refresh_token" or "authorization_code".</param>
@@ -112,7 +117,7 @@ namespace SpotifyAPI.Web.Auth
             }
             catch { }
 
-            if (currentRetries >= MAX_GET_TOKEN_RETRIES)
+            if (currentRetries >= MaxGetTokenRetries)
             {
                 return null;
             }

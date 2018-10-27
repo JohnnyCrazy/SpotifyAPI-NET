@@ -44,6 +44,12 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         public bool ShowDialog { get; set; }
         /// <summary>
+        /// The maximum amount of times to retry getting a token.
+        /// <para/>
+        /// A token get is attempted every time you <see cref="GetWebApiAsync"/> and <see cref="RefreshAuthAsync"/>. Increasing this may improve how often these actions succeed - although it won't solve any underlying problems causing a get token failure.
+        /// </summary>
+        public int MaxGetTokenRetries { get; set; } = 10;
+        /// <summary>
         /// Returns a SpotifyWebAPI using the SecureAuthorizationCodeAuth process. This will not work unless you implement an exchange server.
         /// <para/>
         /// For more information, see <see href="https://johnnycrazy.github.io/SpotifyAPI-NET/SpotifyWebAPI/auth/#secureauthorizationcodeauth"/> (the SecureAuthorizationCodeAuth page on the SpotifyAPI-Net documentation).
@@ -175,7 +181,8 @@ namespace SpotifyAPI.Web.Auth
                     scope: Scope,
                     htmlResponse: HtmlResponse)
                 {
-                    ShowDialog = ShowDialog
+                    ShowDialog = ShowDialog,
+                    MaxGetTokenRetries = MaxGetTokenRetries
                 };
                 lastAuth.AuthReceived += async (sender, response) =>
                 {
