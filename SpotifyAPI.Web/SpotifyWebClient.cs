@@ -166,12 +166,9 @@ namespace SpotifyAPI.Web
 
         private void AddHeaders(Dictionary<string,string> headers)
         {
+            _client.DefaultRequestHeaders.Clear();
             foreach (KeyValuePair<string, string> headerPair in headers)
             {
-                if (_client.DefaultRequestHeaders.Contains(headerPair.Key))
-                {
-                    _client.DefaultRequestHeaders.Remove(headerPair.Key);
-                }
                 _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
             }
         }
