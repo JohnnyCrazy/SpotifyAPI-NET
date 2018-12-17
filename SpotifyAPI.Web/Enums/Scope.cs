@@ -55,8 +55,11 @@ namespace SpotifyAPI.Web.Enums
 
         [String("user-modify-playback-state")]
         UserModifyPlaybackState = 65536,
-        
+
         [String("user-read-currently-playing")]
-        UserReadCurrentlyPlaying = 131072
+        UserReadCurrentlyPlaying = 131072,
+
+        [String("app-remote-control")]
+        AppRemoteControl = 262144
     }
 }
