@@ -28,12 +28,7 @@ namespace SpotifyAPI.Web.Example
             AuthorizationCodeAuth auth =
                 new AuthorizationCodeAuth(_clientId, _secretId, "http://localhost:4002", "http://localhost:4002",
                     Scope.PlaylistReadPrivate | Scope.PlaylistReadCollaborative);
-            auth.AuthReceived += async (sender, payload) =>
-            {
-                auth.Stop();
-                Token token = await auth.ExchangeCode(payload.Code);
-                SpotifyWebAPI api = new SpotifyWebAPI() {TokenType = token.TokenType, AccessToken = token.AccessToken};
-            };
+            auth.AuthReceived += AuthOnAuthReceived;
             auth.Start();
             auth.OpenBrowser();
 
