@@ -2,7 +2,7 @@
 
 > Get Spotify catalog information for multiple tracks based on their Spotify IDs.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -22,7 +22,7 @@ severalTracks.Tracks.ForEach(track => Console.WriteLine(track.Name));
 
 > Get Spotify catalog information for a single track identified by its unique Spotify ID.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -42,7 +42,7 @@ Console.WriteLine(track.Name);
 
 > Get a detailed audio analysis for a single track identified by its unique Spotify ID.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
