@@ -24,11 +24,19 @@ namespace SpotifyAPI.Web.Example
             Console.WriteLine("This example uses AuthorizationCodeAuth.");
             Console.WriteLine(
                 "Tip: If you want to supply your ClientID and SecretId beforehand, use env variables (SPOTIFY_CLIENT_ID and SPOTIFY_SECRET_ID)");
-            
-            CredentialsAuth auth = new CredentialsAuth(_clientId, _secretId);
-            Token token = await auth.GetToken();
-            SpotifyWebAPI api = new SpotifyWebAPI() { TokenType = token.TokenType, AccessToken = token.AccessToken};
-            
+
+            AuthorizationCodeAuth auth =
+                new AuthorizationCodeAuth(_clientId, _secretId, "http://localhost:4002", "http://localhost:4002",
+                    Scope.PlaylistReadPrivate | Scope.PlaylistReadCollaborative);
+            auth.AuthReceived += async (sender, payload) =>
+            {
+                auth.Stop();
+                Token token = await auth.ExchangeCode(payload.Code);
+                SpotifyWebAPI api = new SpotifyWebAPI() {TokenType = token.TokenType, AccessToken = token.AccessToken};
+            };
+            auth.Start();
+            auth.OpenBrowser();
+
             Console.ReadLine();
             auth.Stop(0);
         }
