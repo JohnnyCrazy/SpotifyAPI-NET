@@ -14,7 +14,7 @@ This project, written in C#/.NET, provides 2 libraries for an easier usage of th
 **SpotifyAPI.Web.Auth**
 > A library providing C# implementations of the 3 supported Authentication modes, including `ImplicitGrantAuth`, `AuthorizationCodeAuth` and `CredentialsAuth`
 
----
+--- 
 
 ## Installing
 

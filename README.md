@@ -12,9 +12,13 @@ A Wrapper for Spotify's Web API, written in .NET
 > Based on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.
 > The API also provides access to user-related data such as playlists and music saved in a “Your Music” library, subject to user’s authorization.
 
-### Docs and Usage
+**SpotifyAPI.Web**
+> A wrapper around Spotify's Web API, providing sync and async methods to query all possible endpoints. Results are returned as typed class instances, allowing property-based access.
 
-> Docs are currently outdated and are being worked on. Please refer to the example Project for a rough overview.
+**SpotifyAPI.Web.Auth**
+> A library providing C# implementations of the 3 supported Authentication modes, including `ImplicitGrantAuth`, `AuthorizationCodeAuth` and `CredentialsAuth`
+
+### Docs and Usage
 
 More Information, Installation-Instructions, Examples and API-Reference can be found at [github.io/SpotifyAPI-Net/](http://johnnycrazy.github.io/SpotifyAPI-NET/)
 
@@ -28,6 +32,27 @@ Install-Package SpotifyAPI.Web.Auth
 
 Install-Package SpotifyAPI.Web -pre
 Install-Package SpotifyAPI.Web.Auth -pre
+```
+
+### Example
+
+```c#
+using SpotifyAPI.Web.Enums;
+using SpotifyAPI.Web.Models;
+
+public static async void Example()
+{
+  SpotifyWebAPI api = new SpotifyWebAPI
+  {
+      AccessToken = "XX?X?X",
+      TokenType = "Bearer"
+  };
+  
+  PrivateProfile profile = await api.GetPrivateProfileAsync();
+  if(!profile.HasError()) {
+    Console.WriteLine(profile.DisplayName);
+  }
+}
 ```
 
 ### Donations
