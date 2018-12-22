@@ -56,7 +56,7 @@
             
             
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyAPI.Web <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -65,10 +65,6 @@
                     
                         <li >
                             <a href="../examples/">Examples</a>
-                        </li>
-                    
-                        <li >
-                            <a href="../auth/">Authentication</a>
                         </li>
                     
                         <li >
@@ -129,7 +125,7 @@
             
             
                 <li >
-                    <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
+                    <a href="../auth/">SpotifyAPI.Web.Auth</a>
                 </li>
             
             
@@ -206,7 +202,7 @@
 <blockquote>
 <p>Save one or more tracks to the current user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -236,7 +232,7 @@ if(!response.HasError())
 <blockquote>
 <p>Save one track to the current user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -266,7 +262,7 @@ if(!response.HasError())
 <blockquote>
 <p>Get a list of the songs saved in the current Spotify user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -305,7 +301,7 @@ savedTracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
 <blockquote>
 <p>Remove one or more tracks from the current user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -335,7 +331,7 @@ if(!response.HasError())
 <blockquote>
 <p>Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -365,7 +361,7 @@ if(tracksSaved.List[0])
 <blockquote>
 <p>Save one or more albums to the current user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -395,7 +391,7 @@ if(!response.HasError())
 <blockquote>
 <p>Save one album to the current user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -425,7 +421,7 @@ if(!response.HasError())
 <blockquote>
 <p>Get a list of the albums saved in the current Spotify user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -464,7 +460,7 @@ savedAlbums.Items.ForEach(album =&gt; Console.WriteLine(album.Album.Name));
 <blockquote>
 <p>Remove one or more albums from the current user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -494,7 +490,7 @@ if(!response.HasError())
 <blockquote>
 <p>Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>

@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Authentication - SpotifyAPI-NET</title>
+	<title>SpotifyAPI.Web.Auth - SpotifyAPI-NET</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -55,8 +55,8 @@
             
             
             
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyAPI.Web <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -65,10 +65,6 @@
                     
                         <li >
                             <a href="../examples/">Examples</a>
-                        </li>
-                    
-                        <li class="active">
-                            <a href="./">Authentication</a>
                         </li>
                     
                         <li >
@@ -128,8 +124,8 @@
             
             
             
-                <li >
-                    <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
+                <li class="active">
+                    <a href="./">SpotifyAPI.Web.Auth</a>
                 </li>
             
             
@@ -139,12 +135,12 @@
             <ul class="nav navbar-nav navbar-right">
                 
                 <li >
-                    <a rel="next" href="../examples/">
+                    <a rel="next" href="../util/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li >
-                    <a rel="prev" href="../proxy/">
+                <li class="disabled">
+                    <a rel="prev" >
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -169,6 +165,8 @@
     
         <li class="main active"><a href="#auth-methods">Auth-Methods</a></li>
         
+            <li><a href="#notes">Notes</a></li>
+        
             <li><a href="#implicitgrantauth">ImplicitGrantAuth</a></li>
         
             <li><a href="#autorizationcodeauth">AutorizationCodeAuth</a></li>
@@ -176,191 +174,89 @@
             <li><a href="#clientcredentialsauth">ClientCredentialsAuth</a></li>
         
     
-        <li class="main "><a href="#scopes">Scopes</a></li>
-        
-    
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
 <h1 id="auth-methods">Auth-Methods</h1>
-<p>Before you can use the Web API full functional, you need the user to authenticate your Application.<br />
+<p>Before you can use the Web API full functional, you need the user to authenticate your Application.
 If you want to know more, you can read to the whole auth-process <a href="https://developer.spotify.com/web-api/authorization-guide/">here</a>.</p>
-<p>Before you start, you need to create a Application at Spotify: <a href="https://developer.spotify.com/my-applications/#!/applications">Your Applications</a></p>
+<p>Before you start, install <code>SpotifyAPI.Web.Auth</code> and create an application at Spotify: <a href="https://developer.spotify.com/my-applications/#!/applications">Your Applications</a></p>
 <hr />
-<p>After you created your Application, you will have following important values:  </p>
+<p>After you created your Application, you will have following important values:</p>
 <blockquote>
-<p><strong>Client_Id</strong> This is your client_id, you don't have to hide it<br />
-<strong>Client_Secret</strong> Never use this in one of your client-side apps!! Keep it secret!<br />
-<strong>Redirect URIs</strong> Add "http://localhost", if you want full support for this API  </p>
+<p><strong>Client_Id</strong>: This is your client_id, you don't have to hide it
+<strong>Client_Secret</strong>: Never use this in one of your client-side apps!! Keep it secret!
+<strong>Redirect URIs</strong>: Add "http://localhost", if you want full support for this API</p>
 </blockquote>
 <p>Now you can start with the User-authentication, Spotify provides 3 ways:</p>
 <ul>
 <li>
-<p><a href="../../SpotifyWebAPI/auth#implicitgrantauth">ImplicitGrantAuth</a> (<strong>Recommended</strong>, no server-side code needed)  </p>
+<p><a href="../../SpotifyWebAPI/auth#implicitgrantauth">ImplicitGrantAuth</a></p>
 </li>
 <li>
-<p><a href="../../SpotifyWebAPI/auth#autorizationcodeauth">AutorizationCodeAuth</a> (Not Recommended, Server-side code needed, else it's unsecure)</p>
+<p><a href="../../SpotifyWebAPI/auth#autorizationcodeauth">AutorizationCodeAuth</a></p>
 </li>
 <li>
-<p><a href="../../SpotifyWebAPI/auth#clientcredentialsauth">ClientCredentialsAuth</a> (Not Recommended, Server-side code needed, else it's unsecure)  </p>
+<p><a href="../../SpotifyWebAPI/auth#clientcredentialsauth">ClientCredentialsAuth</a></p>
 </li>
 </ul>
-<p><strong>Note:</strong> I would recommend a little PHP Script, which will exchange the Keys using AutorizationCodeAuth.
-When using ImplicitGrantAuth, another user could abuse the "localhost" RedirectUri by creating a "fake"-app which uses your ClientId.</p>
+<h2 id="notes">Notes</h2>
+<p>Generally, if you're developing a 100% client-side application, no auth mechanism is totally secure. <code>AutorizationCodeAuth</code> and <code>ClientCredentialsAuth</code> require your clients to know the <code>client_secret</code>, which should be kept secret. For <code>ImplicitGrantAuth</code> to work, <code>http://localhost</code> needs to be added to the redirect uris of your spotify application. Since <code>localhost</code> is not a controlled domain by you, everybody is able to generate API-Keys. However, it is still the best option of all 3.</p>
 <p>Overview:
 <img alt="Overview" src="http://i.imgur.com/uf3ahTl.png" /></p>
-<p>After implementing one of the provided auth-methods, you can start doing requests with the token you get from one of the auth-methods</p>
+<p>After implementing one of the provided auth-methods, you can start doing requests with the token you get from one of the auth-methods.</p>
 <h2 id="implicitgrantauth">ImplicitGrantAuth</h2>
-<p>This way is <strong>recommended</strong> and the only auth-process, which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.
-You won't be able to refresh the token. If you want to use the internal Http server, please add "http://localhost" to your application redirects.</p>
-<p>More info: <a href="https://developer.spotify.com/web-api/authorization-guide/#implicit_grant_flow">here</a></p>
-<p>For this kind of authentication, there is also a <code>WebAPIFactory</code>, it's easier to use and uses an async method:</p>
-<pre><code>static async void Main(string[] args)
+<p>With this approach, you directly get a Token object after the user authed your application.
+You won't be able to refresh the token. If you want to use the internal Http server, make sure the redirect URI is in your spotify application redirects.</p>
+<p>More info: <a href="https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow">here</a></p>
+<pre><code class="c#">static async void Main(string[] args)
 {
-  WebAPIFactory webApiFactory = new WebAPIFactory(
-       &quot;http://localhost&quot;,
-       8000,
-       &quot;XXXXXXXXXXXXXXXX&quot;,
-       Scope.UserReadPrivate,
-       TimeSpan.FromSeconds(20)
-  );
-
-  try
-  {
-    //This will open the user's browser and returns once
-    //the user is authorized.
-    _spotify = await webApiFactory.GetWebApi();
-  }
-  catch (Exception ex)
-  {
-     MessageBox.Show(ex.Message);
-  }
-
-  if (_spotify == null)
-     return;
-}
-</code></pre>
-
-<p>The old way:</p>
-<pre><code>static ImplicitGrantAuth auth;
-static void Main(string[] args)
-{
-    //Create the auth object
-    auth = new ImplicitGrantAuth()
+    ImplicitGrantAuth auth =
+        new ImplicitGrantAuth(_clientId, &quot;http://localhost:4002&quot;, &quot;http://localhost:4002&quot;, Scope.UserReadPrivate);
+    auth.AuthReceived += async (sender, payload) =&gt;
     {
-        //Your client Id
-        ClientId = &quot;XXXXXXXXXXXXXXXX&quot;,
-        //Set this to localhost if you want to use the built-in HTTP Server
-        RedirectUri = &quot;http://localhost&quot;,
-        //How many permissions we need?
-        Scope = Scope.UserReadPrivate,
+        auth.Stop(); // `sender` is also the auth instance
+        SpotifyWebAPI api = new SpotifyWebAPI() {TokenType = payload.TokenType, AccessToken = payload.AccessToken};
+        // Do requests with API client
     };
-    //Start the internal http server
-    auth.StartHttpServer();
-    //When we got our response
-    auth.OnResponseReceivedEvent += auth_OnResponseReceivedEvent;
-    //Start
-    auth.DoAuth();
-}
-
-static void auth_OnResponseReceivedEvent(Token token, string state, string error)
-{
-    var spotify = new SpotifyWebApiClass()
-    {
-        TokenType = token.TokenType,
-        AccessToken = token.AccessToken
-    };
-    //We can now make calls with the token object
-
-    //stop the http server
-    auth.StopHttpServer();
+    auth.Start(); // Starts an internal HTTP Server
+    auth.OpenBrowser();
 }
 </code></pre>
 
 <h2 id="autorizationcodeauth">AutorizationCodeAuth</h2>
-<p>This way is <strong>not recommended</strong> and requires server-side code to run securely.<br />
-With this approach, you first get a code which you need to trade against the access-token.<br />
-In this exchange you need to provide your Client-Secret and because of that it's not recommended.<br />
-(But you can e.g exchange to codes via a PHP Script)<br />
+<p>This way is <strong>not recommended</strong> and requires server-side code to run securely.
+With this approach, you first get a code which you need to trade against the access-token.
+In this exchange you need to provide your Client-Secret and because of that it's not recommended.
 A good thing about this method: You can always refresh your token, without having the user to auth it again</p>
-<p>More info: <a href="https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow">here</a></p>
-<pre><code>static AutorizationCodeAuth auth;
-static void Main(string[] args)
+<p>More info: <a href="https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow">here</a></p>
+<pre><code class="c#">static async void Main(string[] args)
 {
-    //Create the auth object
-    auth = new AutorizationCodeAuth()
+    AuthorizationCodeAuth auth =
+        new AuthorizationCodeAuth(_clientId, _secretId, &quot;http://localhost:4002&quot;, &quot;http://localhost:4002&quot;,
+            Scope.PlaylistReadPrivate | Scope.PlaylistReadCollaborative);
+    auth.AuthReceived += async (sender, payload) =&gt;
     {
-        //Your client Id
-        ClientId = &quot;XXXXXXXXXXXXXXX&quot;,
-        //Set this to localhost if you want to use the built-in HTTP Server
-        RedirectUri = &quot;http://localhost&quot;,
-        //How many permissions we need?
-        Scope = Scope.UserReadPrivate,
+        auth.Stop();
+        Token token = await auth.ExchangeCode(payload.Code);
+        SpotifyWebAPI api = new SpotifyWebAPI() {TokenType = token.TokenType, AccessToken = token.AccessToken};
+        // Do requests with API client
     };
-    //This will be called, if the user cancled/accept the auth-request
-    auth.OnResponseReceivedEvent += auth_OnResponseReceivedEvent;
-    //a local HTTP Server will be started (Needed for the response)
-    auth.StartHttpServer();
-    //This will open the spotify auth-page. The user can decline/accept the request
-    auth.DoAuth();
-
-    Thread.Sleep(60000);
-    auth.StopHttpServer();
-    Console.WriteLine(&quot;Too long, didnt respond, exiting now...&quot;);
-}
-
-private static void auth_OnResponseReceivedEvent(AutorizationCodeAuthResponse response)
-{
-
-    //NEVER DO THIS! You would need to provide the ClientSecret.
-    //You would need to do it e.g via a PHP-Script.
-    Token token = auth.ExchangeAuthCode(response.Code, &quot;XXXXXXXXXXX&quot;);
-
-    var spotify = new SpotifyWebApiClass()
-    {
-        TokenType = token.TokenType,
-        AccessToken = token.AccessToken
-    };
-
-    //With the token object, you can now make API calls
-
-    //Stop the HTTP Server, done.
-    auth.StopHttpServer();
+    auth.Start(); // Starts an internal HTTP Server
+    auth.OpenBrowser();
 }
 </code></pre>
 
 <h2 id="clientcredentialsauth">ClientCredentialsAuth</h2>
-<p>This way is <strong>not recommended</strong> and requires server-side code to run securely.<br />
-With this approach, you make a POST Request with a base64 encoded string (consists of ClientId + ClientSecret). You will directly get the token (Without a local HTTP Server), but it will expire and can't be refreshed.<br />
-If you want to use it securely, you would need to do it all server-side.<br />
+<p>With this approach, you make a POST Request with a base64 encoded string (consists of ClientId + ClientSecret). You will directly get the token (Without a local HTTP Server), but it will expire and can't be refreshed.
+If you want to use it securely, you would need to do it all server-side.
 <strong>NOTE:</strong> You will only be able to query non-user-related information e.g search for a Track.</p>
-<p>More info: <a href="https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow">here</a></p>
-<pre><code>static ClientCredentialsAuth auth;
-static void Main(string[] args)
-{
-    //Create the auth object
-    auth = new ClientCredentialsAuth()
-    {
-        //Your client Id
-        ClientId = &quot;XXXXXXXXXXXXXXX&quot;,
-        //Your client secret UNSECURE!!
-        ClientSecret = &quot;XXXXXXXXXXXX&quot;,
-        //How many permissions we need?
-        Scope = Scope.UserReadPrivate,
-    };
-    //With this token object, we now can make calls
-    Token token = auth.DoAuth();
-    var spotify = new SpotifyWebApiClass()
-    {
-        TokenType = token.TokenType,
-        AccessToken = token.AccessToken,
-        UseAuth = false
-    };
-}
-</code></pre>
-
-<h1 id="scopes">Scopes</h1></div>
+<p>More info: <a href="https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow">here</a></p>
+<pre><code class="c#">CredentialsAuth auth = new CredentialsAuth(_clientId, _secretId);
+Token token = await auth.GetToken();
+SpotifyWebAPI api = new SpotifyWebAPI() {TokenType = token.TokenType, AccessToken = token.AccessToken};
+</code></pre></div>
         </div>
 
         

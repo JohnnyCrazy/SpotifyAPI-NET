@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="API Docs for SpotifyAPI-NET">
+        <meta name="description" content="API Docs for SpotifyAPI.Web and SpotifyAPI.Web.Auth">
         <meta name="author" content="JohnnyCrazy">
         
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -56,7 +56,7 @@
             
             
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyAPI.Web <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -65,10 +65,6 @@
                     
                         <li >
                             <a href="SpotifyWebAPI/examples/">Examples</a>
-                        </li>
-                    
-                        <li >
-                            <a href="SpotifyWebAPI/auth/">Authentication</a>
                         </li>
                     
                         <li >
@@ -129,7 +125,7 @@
             
             
                 <li >
-                    <a href="SpotifyLocalAPI/">SpotifyLocalAPI</a>
+                    <a href="SpotifyWebAPI/auth/">SpotifyAPI.Web.Auth</a>
                 </li>
             
             
@@ -182,31 +178,32 @@
 
 <h1 id="spotifyapi-net-documentation">SpotifyAPI-NET Documentation</h1>
 <h2 id="about">About</h2>
-<p>This Library, written in C#/.NET, combines two independent SpotifyAPIs into one.</p>
+<p>This project, written in C#/.NET, provides 2 libraries for an easier usage of the Spotify Web API</p>
 <p><strong>Spotify's Web API</strong> (<a href="https://developer.spotify.com/web-api/">link</a>)</p>
 <blockquote>
 <p>Based on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.
 The API also provides access to user-related data such as playlists and music saved in a “Your Music” library, subject to user’s authorization.</p>
 </blockquote>
-<p><strong>Spotify's <em>unofficial</em> Local API</strong></p>
+<p><strong>SpotifyAPI.Web</strong></p>
 <blockquote>
-<p>Do you ever wanted to control your local Spotify Client with some sort of API? Now you can! This API gives you full control over your spotify client.
-You can get infos about the currently playing song, get its Album-Art, skip/pause and much more. It also features multiple Event-Interfaces.</p>
+<p>A wrapper around Spotify's Web API, providing sync and async methods to query all possible endpoints. Results are returned as typed class instances, allowing property-based access.</p>
 </blockquote>
-<p>Both combined can be used for any kind of application.</p>
+<p><strong>SpotifyAPI.Web.Auth</strong></p>
+<blockquote>
+<p>A library providing C# implementations of the 3 supported Authentication modes, including <code>ImplicitGrantAuth</code>, <code>AuthorizationCodeAuth</code> and <code>CredentialsAuth</code></p>
+</blockquote>
 <hr />
 <h2 id="installing">Installing</h2>
 <ul>
 <li>Via NuGet Package:</li>
 </ul>
-<pre><code class="cs">Install-Package SpotifyAPI-NET
-//or
-Install-Package SpotifyAPI-NET -pre
+<pre><code class="cs">Install-Package SpotifyAPI.Web
+Install-Package SpotifyAPI.Web.Auth
 </code></pre>
 
 <ul>
 <li>Download the latest binaries on the <a href="https://github.com/JohnnyCrazy/SpotifyAPI-NET/releases">GitHub Release Page</a> and add it to your Project</li>
-<li>Clone the Repo and build the project on your local machine.</li>
+<li>Clone the Repo and build the project yourself.</li>
 </ul>
 <hr />
 <h2 id="projects">Projects</h2>
@@ -216,7 +213,7 @@ Install-Package SpotifyAPI-NET -pre
 </blockquote>
 <h3 id="toastify-by-aleab"><a href="https://github.com/aleab/toastify">Toastify</a> by <a href="https://github.com/aleab">@aleab</a></h3>
 <blockquote>
-<p>Toastify adds global hotkeys and toast notifications to Spotify  </p>
+<p>Toastify adds global hotkeys and toast notifications to Spotify</p>
 <p><em>Forked from <a href="https://github.com/nachmore/toastify">nachmore/toastify</a></em></p>
 </blockquote>
 <h3 id="spotify-oculus-by-captainmorgs"><a href="https://github.com/CaptainMorgs/spotify-oculus-release">Spotify Oculus</a> by <a href="https://github.com/CaptainMorgs">@CaptainMorgs</a></h3>

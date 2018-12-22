@@ -56,7 +56,7 @@
             
             
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyAPI.Web <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -65,10 +65,6 @@
                     
                         <li >
                             <a href="../examples/">Examples</a>
-                        </li>
-                    
-                        <li >
-                            <a href="../auth/">Authentication</a>
                         </li>
                     
                         <li >
@@ -129,7 +125,7 @@
             
             
                 <li >
-                    <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
+                    <a href="../auth/">SpotifyAPI.Web.Auth</a>
                 </li>
             
             
@@ -209,7 +205,7 @@
 <blockquote>
 <p>Get a list of the playlists owned or followed by a Spotify user.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -248,7 +244,7 @@ userPlaylists.Items.ForEach(playlist =&gt; playlist.Owner.DisplayName) //Who is 
 <blockquote>
 <p>Get a playlist owned by a Spotify user.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -292,7 +288,7 @@ playlist.Tracks.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
 <blockquote>
 <p>Get full details of the tracks of a playlist owned by a Spotify user.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -346,7 +342,7 @@ playlist.Items.ForEach(track =&gt; Console.WriteLine(track.Track.Name));
 <blockquote>
 <p>Create a playlist for a Spotify user. (The playlist will be empty until you add tracks.)</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -386,7 +382,7 @@ if(!playlist.HasError())
 <blockquote>
 <p>Change a playlist’s name and public/private state. (The user must, of course, own the playlist.)</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -431,7 +427,7 @@ if(!response.HasError())
 <blockquote>
 <p>Replace all the tracks in a playlist, overwriting its existing tracks. This powerful request can be useful for replacing tracks, re-ordering existing tracks, or clearing the playlist.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -471,7 +467,7 @@ if(!response.HasError())
 <blockquote>
 <p>Remove one or more tracks from a user’s playlist.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -520,7 +516,7 @@ ErrorResponse playlist = _spotify.RemovePlaylistTracks(&quot;1122095781&quot;, &
 <blockquote>
 <p>Remove one or more tracks from a user’s playlist.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -561,7 +557,7 @@ ErrorResponse response = _spotify.RemovePlaylistTrack(&quot;1122095781&quot;, &q
 <blockquote>
 <p>Add one or more tracks to a user’s playlist.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -606,7 +602,7 @@ if(!response.HasError())
 <blockquote>
 <p>Add one or more tracks to a user’s playlist.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -652,7 +648,7 @@ if(!response.HasError())
 <p>Reorder a track or a group of tracks in a playlist.
 More Info: <a href="https://developer.spotify.com/web-api/reorder-playlists-tracks/">Reorder-Playlist</a></p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>

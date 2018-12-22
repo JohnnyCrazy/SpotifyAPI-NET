@@ -56,7 +56,7 @@
             
             
                 <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyWebAPI <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SpotifyAPI.Web <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         <li >
@@ -65,10 +65,6 @@
                     
                         <li >
                             <a href="../examples/">Examples</a>
-                        </li>
-                    
-                        <li >
-                            <a href="../auth/">Authentication</a>
                         </li>
                     
                         <li >
@@ -129,7 +125,7 @@
             
             
                 <li >
-                    <a href="../../SpotifyLocalAPI/">SpotifyLocalAPI</a>
+                    <a href="../auth/">SpotifyAPI.Web.Auth</a>
                 </li>
             
             
@@ -190,7 +186,7 @@
 <blockquote>
 <p>Get Spotify catalog information for a single artist identified by their unique Spotify ID.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -218,7 +214,7 @@ Console.WriteLine()
 <blockquote>
 <p>Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -246,7 +242,7 @@ Console.WriteLine(artists.Artists[0].Name);
 <blockquote>
 <p>Get Spotify catalog information about an artist's top tracks by country.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -279,7 +275,7 @@ Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
 <blockquote>
 <p>Get Spotify catalog information about an artist's albums. Optional parameters can be specified in the query string to filter and sort the response.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
@@ -327,7 +323,7 @@ albums.Items.ForEach(album =&gt; Console.WriteLine(album.Name));
 <blockquote>
 <p>Get Spotify catalog information for several artists based on their Spotify IDs.</p>
 </blockquote>
-<p><strong>Paramters</strong>  </p>
+<p><strong>Parameters</strong>  </p>
 <table>
 <thead>
 <tr>
