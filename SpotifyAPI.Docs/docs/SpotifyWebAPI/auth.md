@@ -187,7 +187,7 @@ auth.OpenBrowser();
 ### Token Swap Endpoint
 To keep your client secret completely secure and your client ID and redirect URI as secure as possible, use of a web server (such as a php website) is required.
 
-To use this method, an external HTTP Server that you will need to create needs to be able to supply the following HTTP Endpoints to your application:
+To use this method, an external HTTP Server (that you may need to create) needs to be able to supply the following HTTP Endpoints to your application:
 
 `/swap` - Swaps out an `authorization_code` with an `access_token` and `refresh_token` - The following parameters are required in the JSON POST Body:
 - `grant_type` (set to `"authorization_code"`)
@@ -200,7 +200,7 @@ To use this method, an external HTTP Server that you will need to create needs t
 
 The following open-source token swap endpoint code can be used for your website:
 - [rollersteaam/spotify-token-swap-php](https://github.com/rollersteaam/spotify-token-swap-php)
-- [simontaen/SpotifyTokenSwap]()
+- [simontaen/SpotifyTokenSwap](https://github.com/simontaen/SpotifyTokenSwap)
 
 #### Remarks
 It should be noted that GitHub Pages does not support hosting php scripts. Hosting php scripts through it will cause the php to render as plain HTML, potentially compromising your client secret while doing absolutely nothing.
