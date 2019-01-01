@@ -13,7 +13,7 @@ namespace SpotifyAPI.Web.Auth
     public class TokenSwapWebAPIFactory
     {
         /// <summary>
-        /// Access provided by Spotify expires after 1 hour. If true, access will attempt to be silently (without opening a browser) refreshed automatically.
+        /// Access provided by Spotify expires after 1 hour. If true, <see cref="TokenSwapAuth"/> will time the access tokens, and access will attempt to be silently (without opening a browser) refreshed automatically.
         /// </summary>
         public bool AutoRefresh { get; set; }
         /// <summary>
@@ -127,7 +127,7 @@ namespace SpotifyAPI.Web.Auth
             }
         }
         /// <summary>
-        /// When the authorization from Spotify expires.
+        /// When the authorization from Spotify expires. This will only occur if <see cref="AutoRefresh"/> is true.
         /// </summary>
         public event EventHandler<AccessTokenExpiredEventArgs> OnAccessTokenExpired;
 
@@ -195,7 +195,8 @@ namespace SpotifyAPI.Web.Auth
                     htmlResponse: HtmlResponse)
                 {
                     ShowDialog = ShowDialog,
-                    MaxGetTokenRetries = MaxGetTokenRetries
+                    MaxGetTokenRetries = MaxGetTokenRetries,
+                    TimeAccessExpiry = AutoRefresh
                 };
                 lastAuth.AuthReceived += async (sender, response) =>
                 {

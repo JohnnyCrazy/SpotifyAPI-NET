@@ -35,6 +35,10 @@ namespace SpotifyAPI.Web.Auth
         /// The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.
         /// </summary>
         public string HtmlResponse { get; set; } = "<script>window.close();</script>";
+        /// <summary>
+        /// If true, will time how long it takes for access to expire. On expiry, the <see cref="OnAccessTokenExpired"/> event fires.
+        /// </summary>
+        public bool TimeAccessExpiry { get; set; }
 
         /// <param name="exchangeServerUri">The URI to an exchange server that will perform the key exchange.</param>
         /// <param name="serverUri">The URI to host the server at that your exchange server should return the authorization code to by GET request. (e.g. http://localhost:4002)</param>
@@ -121,10 +125,19 @@ namespace SpotifyAPI.Web.Auth
         }
 
         System.Timers.Timer accessTokenExpireTimer;
+        /// <summary>
+        /// When Spotify authorization has expired. Will only trigger if <see cref="TimeAccessExpiry"/> is true.
+        /// </summary>
         public event EventHandler OnAccessTokenExpired;
 
+        /// <summary>
+        /// If <see cref="TimeAccessExpiry"/> is true, sets a timer for how long access will take to expire.
+        /// </summary>
+        /// <param name="token"></param>
         void SetAccessExpireTimer(Token token)
         {
+            if (!TimeAccessExpiry) return;
+
             if (accessTokenExpireTimer != null)
             {
                 accessTokenExpireTimer.Stop();
