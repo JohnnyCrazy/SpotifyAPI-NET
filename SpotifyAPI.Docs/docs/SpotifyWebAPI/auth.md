@@ -123,71 +123,39 @@ as it does not deal with a client secret). This means
 your Spotify app **cannot** be spoofed by a malicious third party.
 
 ### Using TokenSwapWebAPIFactory
-#### Way 1 - Asynchronous
-If placed inside a function marked as 'async', this will complete in the background when you call it but will not be
-immediately ready after the function has been called (because it will attempt to do other code in the mean time).
+The TokenSwapWebAPIFactory will create and configure a SpotifyWebAPI object for you.
+
+It does this through the method GetWebApiAsync **asynchronously**, which means it will not halt execution of your program while obtaining it for you. If you would like to halt execution, which is **synchronous**, use `GetWebApiAsync().Result` without using **await**.
 
 ```c#
 TokenSwapWebAPIFactory webApiFactory;
 SpotifyWebAPI spotify;
 
-// You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually
-// refresh it later on. New WebAPIFactory objects cannot refresh a SpotifyWebAPI that they did not
-// give to you.
+// You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually refresh it later on. New WebAPIFactory objects cannot refresh SpotifyWebAPI object that they did not give to you.
 webApiFactory = new TokenSwapWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
 {
     Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
     AutoRefresh = true
 };
-webApiFactory.OnAuthSuccess += (sender, e) => authorized = true;
+// You may want to react to being able to use the Spotify service.
+// webApiFactory.OnAuthSuccess += (sender, e) => authorized = true;
+// You may want to react to your user's access expiring.
+// webApiFactory.OnAccessTokenExpired += (sender, e) => authorized = false;
 
 try
 {
     spotify = await webApiFactory.GetWebApiAsync();
+    // Synchronous way:
+    // spotify = webApiFactory.GetWebApiAsync().Result;
 }
 catch (Exception ex)
 {
-    UpdateStatus($"Spotify failed to load: {ex.Message}");
+    // Example way to handle error reporting gracefully with your SpotifyWebAPI wrapper
+    // UpdateStatus($"Spotify failed to load: {ex.Message}");
 }
 ```
 
-#### Way 2 - Synchronous
-This will halt the program until your SpotifyWebAPI is available.
-
-```c#
-TokenSwapWebAPIFactory webApiFactory;
-SpotifyWebAPI spotify;
-
-bool requestComplete = false;
-
-Task.Factory.StartNew(async () =>
-{
-    // You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually
-    // refresh it later on. New WebAPIFactory objects cannot refresh a SpotifyWebAPI that they did not
-    // give to you.
-    webApiFactory = new TokenSwapWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
-    {
-        Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
-        AutoRefresh = true
-    };
-    webApiFactory.OnAuthSuccess += (sender, e) => authorized = true;
-
-    try
-    {
-        spotify = await webApiFactory.GetWebApiAsync();
-    }
-    catch (Exception ex)
-    {
-        UpdateStatus($"Spotify failed to load: {ex.Message}");
-    }
-
-    requestComplete = true;
-});
-
-while (!requestComplete) ;
-```
-
-### Verbose way - using the TokenSwapAuth class
+### Using TokenSwapAuth class
 Since the TokenSwapWebAPIFactory not only simplifies the whole process but offers additional functionality too
 (such as AutoRefresh and AuthSuccess AuthFailure events), use of this way is very verbose and is only
 recommended if you are having issues with TokenSwapWebAPIFactory or need access to the tokens.
@@ -372,7 +340,7 @@ It should be noted that if you did not use the WebAPIFactory or you defined your
 you must change the areas in the php which refer to localhost:4002 as it will never reach
 your serverUri otherwise.
 
-##AutorizationCodeAuth
+## AutorizationCodeAuth
 
 This way is **not recommended** and requires server-side code to run securely.  
 With this approach, you first get a code which you need to trade against the access-token.  
@@ -428,7 +396,7 @@ private static void auth_OnResponseReceivedEvent(AutorizationCodeAuthResponse re
 }
 ```
 
-##ClientCredentialsAuth
+## ClientCredentialsAuth
 
 This way is **not recommended** and requires server-side code to run securely.  
 With this approach, you make a POST Request with a base64 encoded string (consists of ClientId + ClientSecret). You will directly get the token (Without a local HTTP Server), but it will expire and can't be refreshed.  
