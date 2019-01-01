@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using SpotifyAPI.Web.Enums;
@@ -44,10 +45,10 @@ namespace SpotifyAPI.Web.Auth
             Instances.Add(State, this);
             _serverSource = new CancellationTokenSource();
 
-            _server = WebServer.Create(ServerUri, RoutingStrategy.Regex);
+            _server = WebServer.Create(ServerUri);
             _server.RegisterModule(new WebApiModule());
             AdaptWebServer(_server);
-            _server.RegisterModule(new ResourceFilesModule(typeof(T).Assembly, $"SpotifyAPI.Web.Auth.Resources.{_folder}"));
+            _server.RegisterModule(new ResourceFilesModule(Assembly.GetExecutingAssembly(), $"SpotifyAPI.Web.Auth.Resources.{_folder}"));
 #pragma warning disable 4014
             _server.RunAsync(_serverSource.Token);
 #pragma warning restore 4014
@@ -88,6 +89,6 @@ namespace SpotifyAPI.Web.Auth
             return Instances.TryGetValue(state, out SpotifyAuthServer<T> auth) ? auth : null;
         }
 
-        protected abstract WebServer AdaptWebServer(WebServer webServer);
+        protected abstract void AdaptWebServer(WebServer webServer);
     }
 }

@@ -1,7 +1,7 @@
 ## GetDevices
 > Get information about a user’s available devices.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -18,7 +18,7 @@ devices.Devices.ForEach(device => Console.WriteLine(device.Name));
 ## GetPlayback
 > Get information about the user’s current playback state, including track, track progress, and active device.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -37,7 +37,7 @@ if(contex.Item != null)
 ## GetPlayingTrack
 > Get the object currently being played on the user’s Spotify account.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -58,7 +58,7 @@ if(contex.Item != null)
 ## TransferPlayback
 > Transfer playback to a new device and determine if it should start playing.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -76,7 +76,7 @@ ErrorResponse error = _spotify.TransferPlayback("XXXX-XXXX-XXXX-XXXX");
 ## ResumePlayback
 > Start a new context or resume current playback on the user’s active device.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -96,7 +96,7 @@ ErrorResponse error = _spotify.ResumePlayback(uris: new List<string> { "spotify:
 ## PausePlayback
 > Pause playback on the user’s account.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -113,7 +113,7 @@ ErrorResponse error = _spotify.PausePlayback();
 ## SkipPlaybackToNext
 > Skips to next track in the user’s queue.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -132,7 +132,7 @@ ErrorResponse error = _spotify.SkipPlaybackToNext();
 Note that this will ALWAYS skip to the previous track, regardless of the current track’s progress.
 Returning to the start of the current track should be performed using the https://api.spotify.com/v1/me/player/seek endpoint.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -149,7 +149,7 @@ ErrorResponse error = _spotify.SkipPlaybackToPrevious();
 ## SeekPlayback
 > Seeks to the given position in the user’s currently playing track.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -167,7 +167,7 @@ ErrorResponse error = _spotify.SeekPlayback(50);
 ## SetRepeatMode
 > Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -185,7 +185,7 @@ ErrorResponse error = _spotify.SetRepeatMode(RepeatState.Track);
 ## SetVolume
 > Set the volume for the user’s current playback device.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -203,7 +203,7 @@ ErrorResponse error = _spotify.SetVolume(50);
 ## SetShuffle
 > Toggle shuffle on or off for user’s playback.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|

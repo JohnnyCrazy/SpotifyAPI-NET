@@ -2,7 +2,7 @@
 
 > Get Spotify catalog information for a single artist identified by their unique Spotify ID.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -20,7 +20,7 @@ Console.WriteLine()
 ##GetRelatedArtists
 > Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community's listening history.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -38,7 +38,7 @@ Console.WriteLine(artists.Artists[0].Name);
 ##GetArtistsTopTracks
 > Get Spotify catalog information about an artist's top tracks by country.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -57,7 +57,7 @@ Console.WriteLine(tracks.Tracks.Count); //How many tracks did we get?
 ##GetArtistsAlbums
 > Get Spotify catalog information about an artist's albums. Optional parameters can be specified in the query string to filter and sort the response.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -79,7 +79,7 @@ albums.Items.ForEach(album => Console.WriteLine(album.Name));
 ##GetSeveralArtists
 > Get Spotify catalog information for several artists based on their Spotify IDs.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|

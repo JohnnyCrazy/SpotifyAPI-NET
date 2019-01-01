@@ -2,7 +2,7 @@
 <span class="label label-warning">AUTH REQUIRED</span>
 > Save one or more tracks to the current user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -22,7 +22,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Save one track to the current user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -42,7 +42,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a list of the songs saved in the current Spotify user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -63,7 +63,7 @@ savedTracks.Items.ForEach(track => Console.WriteLine(track.Track.Name));
 <span class="label label-warning">AUTH REQUIRED</span>
 > Remove one or more tracks from the current user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -83,7 +83,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -103,7 +103,7 @@ if(tracksSaved.List[0])
 <span class="label label-warning">AUTH REQUIRED</span>
 > Save one or more albums to the current user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -123,7 +123,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Save one album to the current user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -143,7 +143,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a list of the albums saved in the current Spotify user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -164,7 +164,7 @@ savedAlbums.Items.ForEach(album => Console.WriteLine(album.Album.Name));
 <span class="label label-warning">AUTH REQUIRED</span>
 > Remove one or more albums from the current user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -184,7 +184,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|

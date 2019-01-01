@@ -2,7 +2,7 @@
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a list of the playlists owned or followed by a Spotify user.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -23,7 +23,7 @@ userPlaylists.Items.ForEach(playlist => playlist.Owner.DisplayName) //Who is the
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a playlist owned by a Spotify user.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -45,7 +45,7 @@ playlist.Tracks.Items.ForEach(track => Console.WriteLine(track.Track.Name));
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get full details of the tracks of a playlist owned by a Spotify user.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -69,7 +69,7 @@ playlist.Items.ForEach(track => Console.WriteLine(track.Track.Name));
 <span class="label label-warning">AUTH REQUIRED</span>
 > Create a playlist for a Spotify user. (The playlist will be empty until you add tracks.)
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -91,7 +91,7 @@ if(!playlist.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Change a playlist’s name and public/private state. (The user must, of course, own the playlist.)
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -114,7 +114,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Replace all the tracks in a playlist, overwriting its existing tracks. This powerful request can be useful for replacing tracks, re-ordering existing tracks, or clearing the playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -136,7 +136,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Remove one or more tracks from a user’s playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -167,7 +167,7 @@ ErrorResponse playlist = _spotify.RemovePlaylistTracks("1122095781", "1TtEejT1y4
 <span class="label label-warning">AUTH REQUIRED</span>
 > Remove one or more tracks from a user’s playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -191,7 +191,7 @@ ErrorResponse response = _spotify.RemovePlaylistTrack("1122095781", "1TtEejT1y4D
 <span class="label label-warning">AUTH REQUIRED</span>
 > Add one or more tracks to a user’s playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -214,7 +214,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Add one or more tracks to a user’s playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -238,7 +238,7 @@ if(!response.HasError())
 > Reorder a track or a group of tracks in a playlist.
 > More Info: [Reorder-Playlist](https://developer.spotify.com/web-api/reorder-playlists-tracks/)
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|

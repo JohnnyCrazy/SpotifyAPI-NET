@@ -1,7 +1,7 @@
 ##GetAlbumTracks
 > Get Spotify catalog information about an album's tracks. Optional parameters can be used to limit the number of tracks returned.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -24,7 +24,7 @@ Console.WriteLine(tracks.Total.ToString()) //Display total album track count
 ##GetAlbum
 > Get Spotify catalog information for a single album.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -43,7 +43,7 @@ Console.WriteLine(album.Name + "| Popularity: " + album.Popularity); //Display n
 ##GetSeveralAlbums
 > Get Spotify catalog information for multiple albums identified by their Spotify IDs.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|

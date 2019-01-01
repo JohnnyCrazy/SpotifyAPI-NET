@@ -2,7 +2,7 @@
 <span class="label label-warning">AUTH REQUIRED</span>
 > Add the current user as a follower of one or more artists or other Spotify users.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -23,7 +23,7 @@ ErrorResponse response = _spotify.Follow(FollowType.User, "1122095781");
 <span class="label label-warning">AUTH REQUIRED</span>
 > Remove the current user as a follower of one or more artists or other Spotify users.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -44,7 +44,7 @@ ErrorResponse response = _spotify.Unfollow(FollowType.User, "1122095781");
 <span class="label label-warning">AUTH REQUIRED</span>
 > Check to see if the current user is following one or more artists or other Spotify users.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -65,7 +65,7 @@ Console.WriteLine(response.List[0] ? "Yis!" : "No :(");
 <span class="label label-warning">AUTH REQUIRED</span>
 > Add the current user as a follower of a playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -87,7 +87,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Remove the current user as a follower of a playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -108,7 +108,7 @@ if(!response.HasError())
 <span class="label label-warning">AUTH REQUIRED</span>
 > Check to see if one or more Spotify users are following a specified playlist.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|

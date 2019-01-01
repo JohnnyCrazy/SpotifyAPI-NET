@@ -2,7 +2,7 @@
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get detailed profile information about the current user (including the current user’s username).
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -21,7 +21,7 @@ Console.WriteLine(user.DisplayName);
 
 > Get public profile information about a Spotify user.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
