@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 namespace SpotifyAPI.Web.Auth
 {
     /// <summary>
-    /// Returns a SpotifyWebAPI using the SecureAuthorizationCodeAuth process.
-    /// <para/>
-    /// For more information, see <see href="https://johnnycrazy.github.io/SpotifyAPI-NET/SpotifyWebAPI/auth/#secureauthorizationcodeauth"/> (the SecureAuthorizationCodeAuth page on the SpotifyAPI-Net documentation).
+    /// Returns a <see cref="SpotifyWebAPI"/> using the TokenSwapAuth process.
     /// </summary>
-    public class SecureWebAPIFactory
+    public class TokenSwapWebAPIFactory
     {
         /// <summary>
         /// Access provided by Spotify expires after 1 hour. If true, access will attempt to be silently (without opening a browser) refreshed automatically.
@@ -50,9 +48,7 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         public int MaxGetTokenRetries { get; set; } = 10;
         /// <summary>
-        /// Returns a SpotifyWebAPI using the SecureAuthorizationCodeAuth process. This will not work unless you implement an exchange server.
-        /// <para/>
-        /// For more information, see <see href="https://johnnycrazy.github.io/SpotifyAPI-NET/SpotifyWebAPI/auth/#secureauthorizationcodeauth"/> (the SecureAuthorizationCodeAuth page on the SpotifyAPI-Net documentation).
+        /// Returns a SpotifyWebAPI using the TokenSwapAuth process.
         /// </summary>
         /// <param name="exchangeServerUri">The URI (or URL) of the exchange server which exchanges the auth code for access and refresh tokens.</param>
         /// <param name="scope"></param>
@@ -60,7 +56,7 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="timeout">The maximum time in seconds to wait for a SpotifyWebAPI to be returned. The timeout is cancelled early regardless if an auth success or failure occured.</param>
         /// <param name="autoRefresh">Access provided by Spotify expires after 1 hour. If true, access will attempt to be silently (without opening a browser) refreshed automatically.</param>
         /// <param name="openBrowser">Opens the user's browser and visits the exchange server for you, triggering the key exchange. This should be true unless you want to handle the key exchange in a nicer way.</param>
-        public SecureWebAPIFactory(string exchangeServerUri, Scope scope = Scope.None, string hostServerUri = "http://localhost:4002", int timeout = 10, bool autoRefresh = false, bool openBrowser = true)
+        public TokenSwapWebAPIFactory(string exchangeServerUri, Scope scope = Scope.None, string hostServerUri = "http://localhost:4002", int timeout = 10, bool autoRefresh = false, bool openBrowser = true)
         {
             AutoRefresh = autoRefresh;
             Timeout = timeout;
@@ -80,7 +76,7 @@ namespace SpotifyAPI.Web.Auth
 
         Token lastToken;
         SpotifyWebAPI lastWebApi;
-        SecureAuthorizationCodeAuth lastAuth;
+        TokenSwapAuth lastAuth;
 
         public class ExchangeReadyEventArgs : EventArgs
         {
@@ -192,7 +188,7 @@ namespace SpotifyAPI.Web.Auth
                 // Cancel any ongoing get web API requests
                 CancelGetWebApiRequest();
 
-                lastAuth = new SecureAuthorizationCodeAuth(
+                lastAuth = new TokenSwapAuth(
                     exchangeServerUri: ExchangeServerUri,
                     serverUri: HostServerUri,
                     scope: Scope,

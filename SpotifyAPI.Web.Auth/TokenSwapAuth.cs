@@ -24,13 +24,10 @@ namespace SpotifyAPI.Web.Auth
     /// A version of <see cref="AuthorizationCodeAuth"/> that does not store your client secret, client ID or redirect URI, enforcing a secure authorization flow. Requires an exchange server that will return the authorization code to its callback server via GET request.
     /// </para>
     /// <para>
-    /// It's recommended that you use <see cref="SecureWebAPIFactory"/> if you would like to use the SecureAuthorizationCodeAuth method.
-    /// </para>
-    /// <para>
-    /// If you are unsure what the exchange server is or how to make one, see <see href="https://johnnycrazy.github.io/SpotifyAPI-NET/SpotifyWebAPI/auth/#secureauthorizationcodeauth"/> (the SecureAuthorizationCodeAuth page on the SpotifyAPI-NET documentation).
+    /// It's recommended that you use <see cref="TokenSwapWebAPIFactory"/> if you would like to use the TokenSwap method.
     /// </para>
     /// </summary>
-    public class SecureAuthorizationCodeAuth : SpotifyAuthServer<AuthorizationCode>
+    public class TokenSwapAuth : SpotifyAuthServer<AuthorizationCode>
     {
         string exchangeServerUri;
 
@@ -39,20 +36,12 @@ namespace SpotifyAPI.Web.Auth
         /// </summary>
         public string HtmlResponse { get; set; } = "<script>window.close();</script>";
 
-        /// <summary>
-        /// <para>
-        /// A version of <see cref="AuthorizationCodeAuth"/> that does not store your client secret, client ID or redirect URI, enforcing a secure authorization flow. Requires an exchange server that will return the authorization code to its callback server via GET request.
-        /// </para>
-        /// <para>
-        /// If you are unsure what the exchange server is or how to make one, see <see href="https://johnnycrazy.github.io/SpotifyAPI-NET/SpotifyWebAPI/auth/#secureauthorizationcodeauth"/> (the SecureAuthorizationCodeAuth page on the SpotifyAPI-NET documentation).
-        /// </para>
-        /// </summary>
         /// <param name="exchangeServerUri">The URI to an exchange server that will perform the key exchange.</param>
         /// <param name="serverUri">The URI to host the server at that your exchange server should return the authorization code to by GET request. (e.g. http://localhost:4002)</param>
         /// <param name="scope"></param>
         /// <param name="state">Stating none will randomly generate a state parameter.</param>
         /// <param name="htmlResponse">The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.</param>
-        public SecureAuthorizationCodeAuth(string exchangeServerUri, string serverUri, Scope scope = Scope.None, string state = "", string htmlResponse = "") : base("code", "", "", serverUri, scope, state)
+        public TokenSwapAuth(string exchangeServerUri, string serverUri, Scope scope = Scope.None, string state = "", string htmlResponse = "") : base("code", "", "", serverUri, scope, state)
         {
             if (!string.IsNullOrEmpty(htmlResponse))
             {
@@ -62,7 +51,7 @@ namespace SpotifyAPI.Web.Auth
             this.exchangeServerUri = exchangeServerUri;
         }
 
-        protected override WebServer AdaptWebServer(WebServer webServer) => webServer.WithWebApiController<SecureAuthorizationCodeAuthController>();
+        protected override WebServer AdaptWebServer(WebServer webServer) => webServer.WithWebApiController<TokenSwapAuthController>();
 
         public override string GetUri()
         {
@@ -182,13 +171,13 @@ namespace SpotifyAPI.Web.Auth
         }
     }
 
-    internal class SecureAuthorizationCodeAuthController : WebApiController
+    internal class TokenSwapAuthController : WebApiController
     {
         [WebApiHandler(HttpVerbs.Get, "/")]
         public Task<bool> GetEmpty(WebServer server, HttpListenerContext context)
         {
             string state = context.Request.QueryString["state"];
-            SecureAuthorizationCodeAuth.Instances.TryGetValue(state, out SpotifyAuthServer<AuthorizationCode> auth);
+            TokenSwapAuth.Instances.TryGetValue(state, out SpotifyAuthServer<AuthorizationCode> auth);
 
             string code = null;
             string error = context.Request.QueryString["error"];
@@ -203,8 +192,8 @@ namespace SpotifyAPI.Web.Auth
                 Error = error
             }));
 
-            SecureAuthorizationCodeAuth secureAuth = (SecureAuthorizationCodeAuth)auth;
-            return context.HtmlResponseAsync(secureAuth.HtmlResponse);
+            TokenSwapAuth tokenSwapAuth = (TokenSwapAuth)auth;
+            return context.HtmlResponseAsync(tokenSwapAuth.HtmlResponse);
         }
     }
 }
