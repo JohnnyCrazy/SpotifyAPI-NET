@@ -12,11 +12,11 @@ After you created your Application, you will have following important values:
 >**Client_Secret** Never use this in one of your client-side apps!! Keep it secret!  
 >**Redirect URIs** Add "http://localhost", if you want full support for this API  
 
-Now you can start with the User-authentication, Spotify provides 3 ways (4 if you consider different implementations):
+Now you can start with the user-authentication, Spotify provides 3 ways (4 if you consider different implementations):
 
 * [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth) (**Recommended**, no server-side code needed)  
 
-* [SecureAuthorizationCodeAuth](/SpotifyWebAPI/auth#secureauthorizationcodeauth) (**Recommended**, server-side code mandatory, most secure method. The necessary code is shown here so you do not have to code it yourself.)
+* [TokenSwapAuth](/SpotifyWebAPI/auth#tokenswapauth) (**Recommended**, server-side code mandatory, most secure method. The necessary code is shown here so you do not have to code it yourself.)
 
 * [AutorizationCodeAuth](/SpotifyWebAPI/auth#autorizationcodeauth) (Not recommended, server-side code needed, else it's unsecure)
 
@@ -30,9 +30,9 @@ Overview:
 
 After implementing one of the provided auth-methods, you can start doing requests with the token you get from one of the auth-methods
 
-##ImplicitGrantAuth
+## ImplicitGrantAuth
 
-This way is **recommended** and the only auth-process, which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.
+This way is **recommended** and the only auth-process which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.
 You won't be able to refresh the token. If you want to use the internal Http server, please add "http://localhost" to your application redirects.
 
 More info: [here](https://developer.spotify.com/web-api/authorization-guide/#implicit_grant_flow)
@@ -102,7 +102,7 @@ static void auth_OnResponseReceivedEvent(Token token, string state, string error
 }
 ```
 
-## SecureAuthorizationCodeAuth
+## TokenSwapAuth
 
 This way uses server-side code or at least access to an exchange server, otherwise, compared to other
 methods, it is impossible to use.
@@ -118,24 +118,23 @@ The exchange server **must** be able to:
 
 **The good news is that you do not need to code it yourself.**
 
-The advantages of this method are that the client ID and redirect URI are almost not exposed, which means
-your app **cannot** be spoofed by a malicious third party compared to implicit grant authorization. More importantly,
-your client secret is **never** exposed compared to other methods (excluding [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth)
-as it does not deal with a client secret).
+The advantages of this method are that the client ID and redirect URI are very well hidden and almost unexposed, but more importantly, your client secret is **never** exposed and is completely hidden compared to other methods (excluding [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth)
+as it does not deal with a client secret). This means
+your Spotify app **cannot** be spoofed by a malicious third party.
 
-### Best way - using the SecureWebAPIFactory
+### Using TokenSwapWebAPIFactory
 #### Way 1 - Asynchronous
 If placed inside a function marked as 'async', this will complete in the background when you call it but will not be
 immediately ready after the function has been called (because it will attempt to do other code in the mean time).
 
 ```c#
-SecureWebAPIFactory webApiFactory;
+TokenSwapWebAPIFactory webApiFactory;
 SpotifyWebAPI spotify;
 
 // You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually
 // refresh it later on. New WebAPIFactory objects cannot refresh a SpotifyWebAPI that they did not
 // give to you.
-webApiFactory = new SecureWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
+webApiFactory = new TokenSwapWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
 {
     Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
     AutoRefresh = true
@@ -156,7 +155,7 @@ catch (Exception ex)
 This will halt the program until your SpotifyWebAPI is available.
 
 ```c#
-SecureWebAPIFactory webApiFactory;
+TokenSwapWebAPIFactory webApiFactory;
 SpotifyWebAPI spotify;
 
 bool requestComplete = false;
@@ -166,7 +165,7 @@ Task.Factory.StartNew(async () =>
     // You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually
     // refresh it later on. New WebAPIFactory objects cannot refresh a SpotifyWebAPI that they did not
     // give to you.
-    webApiFactory = new SecureWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
+    webApiFactory = new TokenSwapWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
     {
         Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
         AutoRefresh = true
@@ -188,13 +187,13 @@ Task.Factory.StartNew(async () =>
 while (!requestComplete) ;
 ```
 
-### Verbose way - using the SecureAuthorizationCodeAuth class
-Since the SecureWebAPIFactory not only simplifies the whole process but offers additional functionality too
+### Verbose way - using the TokenSwapAuth class
+Since the TokenSwapWebAPIFactory not only simplifies the whole process but offers additional functionality too
 (such as AutoRefresh and AuthSuccess AuthFailure events), use of this way is very verbose and is only
-recommended if you are having issues with SecureWebAPIFactory or need access to the tokens.
+recommended if you are having issues with TokenSwapWebAPIFactory or need access to the tokens.
 
 ```c#
-SecureAuthorizationCodeAuth auth = new SecureAuthorizationCodeAuth(
+TokenSwapAuth auth = new TokenSwapAuth(
     exchangeServerUri: "INSERT LINK TO YOUR index.php HERE",
     serverUri: "http://localhost:4002",
     scope: Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic
@@ -217,7 +216,7 @@ auth.Start();
 auth.OpenBrowser();
 ```
 
-## Creating the Exchange Server
+### Creating the Exchange Server
 To keep your client ID and redirect URI secure to an extent, and client secret secure in every circumstance,
 use of a php server and php code (server-side only code) is required.
 
