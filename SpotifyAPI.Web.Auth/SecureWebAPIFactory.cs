@@ -69,11 +69,11 @@ namespace SpotifyAPI.Web.Auth
             HostServerUri = hostServerUri;
             OpenBrowser = openBrowser;
 
-            OnAccessTokenExpired += (sender, e) =>
+            OnAccessTokenExpired += async (sender, e) =>
             {
                 if (AutoRefresh)
                 {
-                    RefreshAuthAsync();
+                    await RefreshAuthAsync();
                 }
             };
         }
