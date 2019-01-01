@@ -2,10 +2,9 @@ site_name: 'SpotifyAPI-NET'
 theme_dir: 'mytheme'
 pages:
   - 'Home': 'index.md'
-  - 'SpotifyWebAPI':
+  - 'SpotifyAPI.Web':
     - 'Getting started': 'SpotifyWebAPI/gettingstarted.md'
     - 'Examples': 'SpotifyWebAPI/examples.md'
-    - 'Authentication': 'SpotifyWebAPI/auth.md'
     - 'Proxy': 'SpotifyWebAPI/proxy.md'
     - '- Albums': 'SpotifyWebAPI/albums.md'
     - '- Artists': 'SpotifyWebAPI/artists.md'
@@ -19,10 +18,10 @@ pages:
     - '- Search': 'SpotifyWebAPI/search.md'
     - '- Tracks': 'SpotifyWebAPI/tracks.md'
     - '- Util': 'SpotifyWebAPI/util.md'
-  - 'SpotifyLocalAPI': 'SpotifyLocalAPI/index.md'
+  - 'SpotifyAPI.Web.Auth': 'SpotifyWebAPI/auth.md'
 repo_url: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET'
 site_author: 'JohnnyCrazy'
-site_description: 'API Docs for SpotifyAPI-NET'
+site_description: 'API Docs for SpotifyAPI.Web and SpotifyAPI.Web.Auth'
 extra_javascript:
   - 'highlight.js'
 markdown_extensions:

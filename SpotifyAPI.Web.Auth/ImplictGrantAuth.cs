@@ -24,32 +24,30 @@ namespace SpotifyAPI.Web.Auth
             ClientId = clientId;
         }
 
-        protected override WebServer AdaptWebServer(WebServer webServer)
+        protected override void AdaptWebServer(WebServer webServer)
         {
-            Console.WriteLine("Hello");
             webServer.Module<WebApiModule>().RegisterController<ImplictGrantAuthController>();
-            return webServer;
         }
     }
 
     public class ImplictGrantAuthController : WebApiController
     {
         [WebApiHandler(HttpVerbs.Get, "/auth")]
-        public Task<bool> GetAuth(WebServer server, HttpListenerContext context)
+        public Task<bool> GetAuth()
         {
-            string state = context.Request.QueryString["state"];
+            string state = Request.QueryString["state"];
             SpotifyAuthServer<Token> auth = ImplictGrantAuth.GetByState(state);
             if (auth == null)
-                return context.StringResponseAsync(
+                return this.StringResponseAsync(
                     $"Failed - Unable to find auth request with state \"{state}\" - Please retry");
 
             Token token;
-            string error = context.Request.QueryString["error"];
+            string error = Request.QueryString["error"];
             if (error == null)
             {
-                string accessToken = context.Request.QueryString["access_token"];
-                string tokenType = context.Request.QueryString["token_type"];
-                string expiresIn = context.Request.QueryString["expires_in"];
+                string accessToken = Request.QueryString["access_token"];
+                string tokenType = Request.QueryString["token_type"];
+                string expiresIn = Request.QueryString["expires_in"];
                 token = new Token
                 {
                     AccessToken = accessToken,
@@ -66,7 +64,11 @@ namespace SpotifyAPI.Web.Auth
             }
 
             Task.Factory.StartNew(() => auth.TriggerAuth(token));
-            return context.StringResponseAsync("OK - This window can be closed now");
+            return this.StringResponseAsync("OK - This window can be closed now");
+        }
+
+        public ImplictGrantAuthController(IHttpContext context) : base(context)
+        {
         }
     }
 }

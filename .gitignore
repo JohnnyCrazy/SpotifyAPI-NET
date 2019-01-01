@@ -111,3 +111,6 @@ UpgradeLog*.XML
 # NuGet
 /packages/
 *.nupkg
+
+# Idea jetbrains
+.idea/

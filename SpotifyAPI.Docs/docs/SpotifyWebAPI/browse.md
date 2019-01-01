@@ -2,7 +2,7 @@
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a list of Spotify featured playlists (shown, for example, on a Spotify player’s “Browse” tab).
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -26,7 +26,7 @@ playlists.Playlists.Items.ForEach(playlist => Console.WriteLine(playlist.Name));
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -47,7 +47,7 @@ newAlbums.Albums.Items.ForEach(album => Console.WriteLine(album.Name));
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a list of categories used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -69,7 +69,7 @@ categoryList.Categories.Items.ForEach(category => Console.WriteLine(category.Nam
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a single category used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
@@ -90,7 +90,7 @@ Console.WriteLine(cat.Name);
 <span class="label label-warning">AUTH REQUIRED</span>
 > Get a list of Spotify playlists tagged with a particular category.
 
-**Paramters**  
+**Parameters**  
 
 |Name|Description|Example|
 |--------------|-------------------------|-------------------------|
