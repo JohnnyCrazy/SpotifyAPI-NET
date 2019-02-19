@@ -2,8 +2,6 @@ SpotifyAPI-NET
 ===
 
 [![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
-[![Nuget SpotifyAPI.Web](https://badge.fury.io/nu/SpotifyAPI.Web.svg)](https://www.nuget.org/packages/SpotifyAPI.Web/)
-[![Nuget SpotifyAPI.Web.Auth](https://badge.fury.io/nu/SpotifyAPI.Web.Auth.svg)](https://www.nuget.org/packages/SpotifyAPI.Web.Auth/)
 [![Gitter](https://img.shields.io/gitter/room/SpotifyAPI-NET/Lobby.svg)](https://gitter.im/SpotifyAPI-NET/Lobby)
 
 A Wrapper for Spotify's Web API, written in .NET  
@@ -12,10 +10,10 @@ A Wrapper for Spotify's Web API, written in .NET
 > Based on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.
 > The API also provides access to user-related data such as playlists and music saved in a “Your Music” library, subject to user’s authorization.
 
-**SpotifyAPI.Web**
+**SpotifyAPI.Web** [![Nuget SpotifyAPI.Web](https://badge.fury.io/nu/SpotifyAPI.Web.svg)](https://www.nuget.org/packages/SpotifyAPI.Web/)
 > A wrapper around Spotify's Web API, providing sync and async methods to query all possible endpoints. Results are returned as typed class instances, allowing property-based access.
 
-**SpotifyAPI.Web.Auth**
+**SpotifyAPI.Web.Auth** [![Nuget SpotifyAPI.Web.Auth](https://badge.fury.io/nu/SpotifyAPI.Web.Auth.svg)](https://www.nuget.org/packages/SpotifyAPI.Web.Auth/)
 > A library providing C# implementations of the 3 supported Authentication modes, including `ImplicitGrantAuth`, `AuthorizationCodeAuth` and `CredentialsAuth`
 
 ### Docs and Usage
