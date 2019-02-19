@@ -113,9 +113,9 @@ namespace SpotifyAPI.Web.Auth
         }
 
         [WebApiHandler(HttpVerbs.Post, "/")]
-        public bool PostValues()
+        public async Task<bool> PostValues()
         {
-            Dictionary<string, object> formParams = this.RequestFormDataDictionary();
+            Dictionary<string, object> formParams = await this.RequestFormDataDictionaryAsync();
 
             string state = (string) formParams["state"];
             AuthorizationCodeAuth.Instances.TryGetValue(state, out SpotifyAuthServer<AuthorizationCode> authServer);

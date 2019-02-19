@@ -11,14 +11,14 @@
     <projectUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      Authorization Flows for the Spotify's Web API, written in .NET
+      An API for Spotify's Web API, written in .NET
 
       For more infos, visit https://github.com/JohnnyCrazy/SpotifyAPI-NET
     </description>
     <language />
     <tags>spotify api music .net c# spotify-client</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="11.0.2" />
+      <dependency id="Newtonsoft.Json" version="12.0.1" />
     </dependencies>
   </metadata>
   <files>

@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EmbedIO" Version="2.1.1" />
+    <PackageReference Include="EmbedIO" Version="2.2.7" />
   </ItemGroup>
 
   <ItemGroup>

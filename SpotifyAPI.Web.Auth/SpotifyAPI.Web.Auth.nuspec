@@ -11,7 +11,7 @@
     <projectUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
-      An API for Spotify's Web API, written in .NET
+      Authorization Flows for the Spotify's Web API, written in .NET
 
       For more infos, visit https://github.com/JohnnyCrazy/SpotifyAPI-NET
     </description>
@@ -19,7 +19,7 @@
     <tags>spotify api music .net c# spotify-client</tags>
     <dependencies>
       <dependency id="SpotifyAPI.Web" version="3.0.0" />
-      <dependency id="EmbedIO" version="1.15.0" />
+      <dependency id="EmbedIO" version="2.2.7" />
     </dependencies>
   </metadata>
   <files>
