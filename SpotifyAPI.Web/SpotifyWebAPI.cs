@@ -1506,11 +1506,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public ErrorResponse UploadPlaylistImage(string userId, string playlistId, string base64EncodedJpgImage)
         {
-            JObject body = new JObject
-            {
-                base64EncodedJpgImage
-            };
-            return UploadData<ErrorResponse>(_builder.UpdatePlaylist(userId, playlistId), body.ToString(Formatting.None), "PUT") ?? new ErrorResponse();
+            return UploadData<ErrorResponse>(_builder.UploadPlaylistImage(userId, playlistId), base64EncodedJpgImage, "PUT") ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1523,11 +1519,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public async Task<ErrorResponse> UploadPlaylistImageAsync(string userId, string playlistId, string base64EncodedJpgImage)
         {
-            JObject body = new JObject
-            {
-                base64EncodedJpgImage
-            };
-            return (await UploadDataAsync<ErrorResponse>(_builder.UpdatePlaylist(userId, playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return (await UploadDataAsync<ErrorResponse>(_builder.UploadPlaylistImage(userId, playlistId), base64EncodedJpgImage, "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
         }
 
         /// <summary>
