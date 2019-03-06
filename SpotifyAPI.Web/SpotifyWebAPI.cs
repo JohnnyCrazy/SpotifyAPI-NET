@@ -1497,6 +1497,56 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
+        ///     Change a playlist’s name and public/private state. (The user must, of course, own the playlist.)
+        /// </summary>
+        /// <param name="userId">The user's Spotify user ID.</param>
+        /// <param name="playlistId">The Spotify ID for the playlist.</param>
+        /// <param name="base64EncodedJpgImage">The image as a base64 encoded string</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public ErrorResponse UploadPlaylistImage(string userId, string playlistId, string base64EncodedJpgImage)
+        {
+            return UploadData<ErrorResponse>(_builder.UploadPlaylistImage(userId, playlistId), base64EncodedJpgImage, "PUT") ?? new ErrorResponse();
+        }
+
+        /// <summary>
+        ///     Change a playlist’s name and public/private state asynchronously. (The user must, of course, own the playlist.)
+        /// </summary>
+        /// <param name="userId">The user's Spotify user ID.</param>
+        /// <param name="playlistId">The Spotify ID for the playlist.</param>
+        /// <param name="base64EncodedJpgImage">The image as a base64 encoded string</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<ErrorResponse> UploadPlaylistImageAsync(string userId, string playlistId, string base64EncodedJpgImage)
+        {
+            return (await UploadDataAsync<ErrorResponse>(_builder.UploadPlaylistImage(userId, playlistId), base64EncodedJpgImage, "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+        }
+
+        /// <summary>
+        ///     Change a playlist’s name and public/private state. (The user must, of course, own the playlist.)
+        /// </summary>
+        /// <param name="playlistId">The Spotify ID for the playlist.</param>
+        /// <param name="base64EncodedJpgImage">The image as a base64 encoded string</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public ErrorResponse UploadPlaylistImage(string playlistId, string base64EncodedJpgImage)
+        {
+            return UploadData<ErrorResponse>(_builder.UploadPlaylistImage(playlistId), base64EncodedJpgImage, "PUT") ?? new ErrorResponse();
+        }
+
+        /// <summary>
+        ///     Change a playlist’s name and public/private state asynchronously. (The user must, of course, own the playlist.)
+        /// </summary>
+        /// <param name="playlistId">The Spotify ID for the playlist.</param>
+        /// <param name="base64EncodedJpgImage">The image as a base64 encoded string</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public async Task<ErrorResponse> UploadPlaylistImageAsync(string playlistId, string base64EncodedJpgImage)
+        {
+            return (await UploadDataAsync<ErrorResponse>(_builder.UploadPlaylistImage(playlistId), base64EncodedJpgImage, "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+        }
+
+        /// <summary>
         ///     Replace all the tracks in a playlist, overwriting its existing tracks. This powerful request can be useful for
         ///     replacing tracks, re-ordering existing tracks, or clearing the playlist.
         /// </summary>

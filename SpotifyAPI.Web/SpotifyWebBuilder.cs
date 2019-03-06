@@ -763,6 +763,29 @@ namespace SpotifyAPI.Web
             return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
         }
 
+        /// <summary>
+        ///     Upload an image for a playlist.
+        /// </summary>
+        /// <param name="userId">The user's Spotify user ID.</param>
+        /// <param name="playlistId">The Spotify ID for the playlist.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string UploadPlaylistImage(string userId, string playlistId)
+        {
+            return $"{APIBase}/users/{userId}/playlists/{playlistId}/images";
+        }
+
+        /// <summary>
+        ///     Upload an image for a playlist.
+        /// </summary>
+        /// <param name="playlistId">The Spotify ID for the playlist.</param>
+        /// <returns></returns>
+        /// <remarks>AUTH NEEDED</remarks>
+        public string UploadPlaylistImage(string playlistId)
+        {
+            return $"{APIBase}/playlists/{playlistId}/images";
+        }
+
         #endregion Playlists
 
         #region Profiles
