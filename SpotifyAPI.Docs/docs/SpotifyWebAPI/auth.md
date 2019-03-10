@@ -145,6 +145,7 @@ To use this method, an external HTTP Server (that you may need to create) needs 
 - `grant_type` (set to `"authorization_code"`)
 - `code` (the `authorization_code`)
 - `redirect_uri`
+- - **Important** The page that the redirect URI links to must return the authorization code json to your `serverUri` (default is 'http://localhost:4002') but to the folder 'auth', like this: 'http://localhost:4002/auth'.
 
 `/refresh` - Refreshes an `access_token` - The following parameters are required in the JSON POST Body:
 - `grant_type` (set to `"refresh_token"`)

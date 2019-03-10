@@ -55,7 +55,10 @@ namespace SpotifyAPI.Web.Auth
             this.exchangeServerUri = exchangeServerUri;
         }
 
-        protected override WebServer AdaptWebServer(WebServer webServer) => webServer.WithWebApiController<TokenSwapAuthController>();
+        protected override void AdaptWebServer(WebServer webServer)
+        {
+            webServer.Module<WebApiModule>().RegisterController<TokenSwapAuthController>();
+        }
 
         public override string GetUri()
         {
@@ -186,17 +189,21 @@ namespace SpotifyAPI.Web.Auth
 
     internal class TokenSwapAuthController : WebApiController
     {
-        [WebApiHandler(HttpVerbs.Get, "/")]
-        public Task<bool> GetEmpty(WebServer server, HttpListenerContext context)
+        public TokenSwapAuthController(IHttpContext context) : base(context)
         {
-            string state = context.Request.QueryString["state"];
-            TokenSwapAuth.Instances.TryGetValue(state, out SpotifyAuthServer<AuthorizationCode> auth);
+        }
+
+        [WebApiHandler(HttpVerbs.Get, "/auth")]
+        public Task<bool> GetAuth()
+        {
+            string state = Request.QueryString["state"];
+            SpotifyAuthServer<AuthorizationCode> auth = TokenSwapAuth.GetByState(state);
 
             string code = null;
-            string error = context.Request.QueryString["error"];
+            string error = Request.QueryString["error"];
             if (error == null)
             {
-                code = context.Request.QueryString["code"];
+                code = Request.QueryString["code"];
             }
 
             Task.Factory.StartNew(() => auth?.TriggerAuth(new AuthorizationCode
@@ -204,9 +211,7 @@ namespace SpotifyAPI.Web.Auth
                 Code = code,
                 Error = error
             }));
-
-            TokenSwapAuth tokenSwapAuth = (TokenSwapAuth)auth;
-            return context.HtmlResponseAsync(tokenSwapAuth.HtmlResponse);
+            return this.StringResponseAsync(((TokenSwapAuth)auth).HtmlResponse);
         }
     }
 }

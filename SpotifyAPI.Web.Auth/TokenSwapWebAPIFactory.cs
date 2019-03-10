@@ -13,9 +13,13 @@ namespace SpotifyAPI.Web.Auth
     public class TokenSwapWebAPIFactory
     {
         /// <summary>
-        /// Access provided by Spotify expires after 1 hour. If true, <see cref="TokenSwapAuth"/> will time the access tokens, and access will attempt to be silently (without opening a browser) refreshed automatically.
+        /// Access provided by Spotify expires after 1 hour. If true, <see cref="TokenSwapAuth"/> will time the access tokens, and access will attempt to be silently (without opening a browser) refreshed automatically. This will not make <see cref="OnAccessTokenExpired"/> fire, see <see cref="TimeAccessExpiry"/> for that.
         /// </summary>
         public bool AutoRefresh { get; set; }
+        /// <summary>
+        /// If true when calling <see cref="GetWebApiAsync"/>, will time how long it takes for access to Spotify to expire. The event <see cref="OnAccessTokenExpired"/> fires when the timer elapses.
+        /// </summary>
+        public bool TimeAccessExpiry { get; set; }
         /// <summary>
         /// The maximum time in seconds to wait for a SpotifyWebAPI to be returned. The timeout is cancelled early regardless if an auth success or failure occured.
         /// </summary>
@@ -196,7 +200,7 @@ namespace SpotifyAPI.Web.Auth
                 {
                     ShowDialog = ShowDialog,
                     MaxGetTokenRetries = MaxGetTokenRetries,
-                    TimeAccessExpiry = AutoRefresh
+                    TimeAccessExpiry = AutoRefresh || TimeAccessExpiry
                 };
                 lastAuth.AuthReceived += async (sender, response) =>
                 {
@@ -237,7 +241,18 @@ namespace SpotifyAPI.Web.Auth
                     OnAuthSuccess?.Invoke(this, AuthSuccessEventArgs.Empty);
                     currentlyAuthorizing = false;
                 };
-                lastAuth.OnAccessTokenExpired += (sender, e) => OnAccessTokenExpired?.Invoke(sender, AccessTokenExpiredEventArgs.Empty);
+                lastAuth.OnAccessTokenExpired += async (sender, e) =>
+                {
+                    if (TimeAccessExpiry)
+                    {
+                        OnAccessTokenExpired?.Invoke(sender, AccessTokenExpiredEventArgs.Empty);
+                    }
+
+                    if (AutoRefresh)
+                    {
+                        await RefreshAuthAsync();
+                    }
+                };
                 lastAuth.Start();
                 OnExchangeReady?.Invoke(this, new ExchangeReadyEventArgs { ExchangeUri = lastAuth.GetUri() });
                 if (OpenBrowser)
