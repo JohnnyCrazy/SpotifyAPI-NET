@@ -10,6 +10,7 @@ namespace SpotifyAPI.Web.Example
         private static string _clientId = ""; //"";
         private static string _secretId = ""; //"";
 
+        // ReSharper disable once UnusedParameter.Local
         static void Main(string[] args)
         {
             _clientId = string.IsNullOrEmpty(_clientId)

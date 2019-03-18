@@ -647,8 +647,8 @@ namespace SpotifyAPI.Web
             {
                 {"ids", new JArray(ids)}
             };
-            return (await UploadDataAsync<ErrorResponse>(_builder.Follow(followType),
-                    ob.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.Follow(followType),
+                       ob.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -704,7 +704,7 @@ namespace SpotifyAPI.Web
             {
                 {"ids", new JArray(ids)}
             };
-            return (await UploadDataAsync<ErrorResponse>(_builder.Unfollow(followType), ob.ToString(Formatting.None), "DELETE").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.Unfollow(followType), ob.ToString(Formatting.None), "DELETE").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
 
-            var url = _builder.IsFollowing(followType, ids);
+            string url = _builder.IsFollowing(followType, ids);
             return DownloadList<bool>(url);
         }
 
@@ -761,7 +761,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowing");
 
-            var url = _builder.IsFollowing(followType, ids);
+            string url = _builder.IsFollowing(followType, ids);
             return DownloadListAsync<bool>(url);
         }
 
@@ -872,7 +872,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
 
-            var url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
+            string url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
             return DownloadList<bool>(url);
         }
 
@@ -889,7 +889,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
 
-            var url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
+            string url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
             return DownloadListAsync<bool>(url);
         }
 
@@ -944,7 +944,7 @@ namespace SpotifyAPI.Web
         public async Task<ErrorResponse> SaveTracksAsync(List<string> ids)
         {
             JArray array = new JArray(ids);
-            return (await UploadDataAsync<ErrorResponse>(_builder.SaveTracks(), array.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.SaveTracks(), array.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1020,7 +1020,7 @@ namespace SpotifyAPI.Web
         public async Task<ErrorResponse> RemoveSavedTracksAsync(List<string> ids)
         {
             JArray array = new JArray(ids);
-            return (await UploadDataAsync<ErrorResponse>(_builder.RemoveSavedTracks(), array.ToString(Formatting.None), "DELETE").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.RemoveSavedTracks(), array.ToString(Formatting.None), "DELETE").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1034,7 +1034,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
 
-            var url = _builder.CheckSavedTracks(ids);
+            string url = _builder.CheckSavedTracks(ids);
             return DownloadList<bool>(url);
         }
 
@@ -1048,7 +1048,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
-            var url = _builder.CheckSavedTracks(ids);
+            string url = _builder.CheckSavedTracks(ids);
             return DownloadListAsync<bool>(url);
         }
 
@@ -1073,7 +1073,7 @@ namespace SpotifyAPI.Web
         public async Task<ErrorResponse> SaveAlbumsAsync(List<string> ids)
         {
             JArray array = new JArray(ids);
-            return (await UploadDataAsync<ErrorResponse>(_builder.SaveAlbums(), array.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.SaveAlbums(), array.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1149,7 +1149,7 @@ namespace SpotifyAPI.Web
         public async Task<ErrorResponse> RemoveSavedAlbumsAsync(List<string> ids)
         {
             JArray array = new JArray(ids);
-            return (await UploadDataAsync<ErrorResponse>(_builder.RemoveSavedAlbums(), array.ToString(Formatting.None), "DELETE").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.RemoveSavedAlbums(), array.ToString(Formatting.None), "DELETE").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1163,7 +1163,7 @@ namespace SpotifyAPI.Web
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedTracks");
 
-            var url = _builder.CheckSavedAlbums(ids);
+            string url = _builder.CheckSavedAlbums(ids);
             return DownloadList<bool>(url);
         }
 
@@ -1177,7 +1177,7 @@ namespace SpotifyAPI.Web
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for CheckSavedAlbumsAsync");
-            var url = _builder.CheckSavedAlbums(ids);
+            string url = _builder.CheckSavedAlbums(ids);
             return DownloadListAsync<bool>(url);
         }
 
@@ -1601,7 +1601,7 @@ namespace SpotifyAPI.Web
                 body.Add("collaborative", newCollaborative);
             if (newDescription != null)
                 body.Add("description", newDescription);
-            return (await UploadDataAsync<ErrorResponse>(_builder.UpdatePlaylist(userId, playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.UpdatePlaylist(userId, playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
         
         /// <summary>
@@ -1625,7 +1625,7 @@ namespace SpotifyAPI.Web
                 body.Add("collaborative", newCollaborative);
             if (newDescription != null)
                 body.Add("description", newDescription);
-            return (await UploadDataAsync<ErrorResponse>(_builder.UpdatePlaylist(playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.UpdatePlaylist(playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1651,7 +1651,7 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public async Task<ErrorResponse> UploadPlaylistImageAsync(string userId, string playlistId, string base64EncodedJpgImage)
         {
-            return (await UploadDataAsync<ErrorResponse>(_builder.UploadPlaylistImage(userId, playlistId), base64EncodedJpgImage, "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.UploadPlaylistImage(userId, playlistId), base64EncodedJpgImage, "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1675,8 +1675,8 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public async Task<ErrorResponse> UploadPlaylistImageAsync(string playlistId, string base64EncodedJpgImage)
         {
-            return (await UploadDataAsync<ErrorResponse>(_builder.UploadPlaylistImage(playlistId),
-                       base64EncodedJpgImage, "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.UploadPlaylistImage(playlistId),
+                       base64EncodedJpgImage, "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1731,7 +1731,7 @@ namespace SpotifyAPI.Web
             {
                 {"uris", new JArray(uris.Take(100))}
             };
-            return await (UploadDataAsync<ErrorResponse>(_builder.ReplacePlaylistTracks(userId, playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.ReplacePlaylistTracks(userId, playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1748,7 +1748,7 @@ namespace SpotifyAPI.Web
             {
                 {"uris", new JArray(uris.Take(100))}
             };
-            return await (UploadDataAsync<ErrorResponse>(_builder.ReplacePlaylistTracks(playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.ReplacePlaylistTracks(playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1809,7 +1809,7 @@ namespace SpotifyAPI.Web
             {
                 {"tracks", JArray.FromObject(uris.Take(100))}
             };
-            return await (UploadDataAsync<ErrorResponse>(_builder.RemovePlaylistTracks(userId, playlistId, uris), body.ToString(Formatting.None), "DELETE").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.RemovePlaylistTracks(userId, playlistId, uris), body.ToString(Formatting.None), "DELETE").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1828,7 +1828,7 @@ namespace SpotifyAPI.Web
             {
                 {"tracks", JArray.FromObject(uris.Take(100))}
             };
-            return await (UploadDataAsync<ErrorResponse>(_builder.RemovePlaylistTracks(playlistId, uris), body.ToString(Formatting.None), "DELETE").ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.RemovePlaylistTracks(playlistId, uris), body.ToString(Formatting.None), "DELETE").ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1935,7 +1935,7 @@ namespace SpotifyAPI.Web
             {
                 {"uris", JArray.FromObject(uris.Take(100))}
             };
-            return await (UploadDataAsync<ErrorResponse>(_builder.AddPlaylistTracks(userId, playlistId, uris, position), body.ToString(Formatting.None)).ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.AddPlaylistTracks(userId, playlistId, uris, position), body.ToString(Formatting.None)).ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -1952,7 +1952,7 @@ namespace SpotifyAPI.Web
             {
                 {"uris", JArray.FromObject(uris.Take(100))}
             };
-            return await (UploadDataAsync<ErrorResponse>(_builder.AddPlaylistTracks(playlistId, uris, position), body.ToString(Formatting.None)).ConfigureAwait(false)) ?? new ErrorResponse();
+            return await UploadDataAsync<ErrorResponse>(_builder.AddPlaylistTracks(playlistId, uris, position), body.ToString(Formatting.None)).ConfigureAwait(false) ?? new ErrorResponse();
         }
 
         /// <summary>
@@ -2370,7 +2370,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public ErrorResponse TransferPlayback(List<string> deviceIds, bool play = false)
         {
-            JObject ob = new JObject()
+            JObject ob = new JObject
             {
                 { "play", play },
                 { "device_ids", new JArray(deviceIds) }
@@ -2390,7 +2390,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public Task<ErrorResponse> TransferPlaybackAsync(List<string> deviceIds, bool play = false)
         {
-            JObject ob = new JObject()
+            JObject ob = new JObject
             {
                 { "play", play },
                 { "device_ids", new JArray(deviceIds) }
@@ -2405,8 +2405,8 @@ namespace SpotifyAPI.Web
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
         /// <param name="offset">Indicates from where in the context playback should start.
-        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// <returns></returns>
         public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
             int? offset = null, int positionMs = 0)
@@ -2430,8 +2430,8 @@ namespace SpotifyAPI.Web
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
         /// <param name="offset">Indicates from where in the context playback should start.
-        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// <returns></returns>
         public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
             int? offset = null, int positionMs = 0)
@@ -2455,8 +2455,8 @@ namespace SpotifyAPI.Web
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
         /// <param name="offset">Indicates from where in the context playback should start.
-        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// <returns></returns>
         public ErrorResponse ResumePlayback(string deviceId = "", string contextUri = "", List<string> uris = null,
             string offset = "", int positionMs = 0)
@@ -2480,8 +2480,8 @@ namespace SpotifyAPI.Web
         /// <param name="contextUri">Spotify URI of the context to play.</param>
         /// <param name="uris">A JSON array of the Spotify track URIs to play.</param>
         /// <param name="offset">Indicates from where in the context playback should start.
-        /// <param name="positionMs">The starting time to seek the track to</param>
         /// Only available when context_uri corresponds to an album or playlist object, or when the uris parameter is used.</param>
+        /// <param name="positionMs">The starting time to seek the track to</param>
         /// <returns></returns>
         public Task<ErrorResponse> ResumePlaybackAsync(string deviceId = "", string contextUri = "", List<string> uris = null,
             string offset = "", int positionMs = 0)
@@ -2862,7 +2862,7 @@ namespace SpotifyAPI.Web
             {
                 return -1;
             }
-            if (!int.TryParse(info.Headers.Get("Retry-After"), out var secondsToWait))
+            if (!int.TryParse(info.Headers.Get("Retry-After"), out int secondsToWait))
             {
                 return -1;
             }
@@ -2880,7 +2880,7 @@ namespace SpotifyAPI.Web
                 if (response != null)
                 {
                     int msToWait = RetryAfter;
-                    var secondsToWait = GetTooManyRequests(response.Item1);
+                    int secondsToWait = GetTooManyRequests(response.Item1);
                     if (secondsToWait > 0)
                     {
                         msToWait = secondsToWait * 1000;
@@ -2900,7 +2900,7 @@ namespace SpotifyAPI.Web
             } while (UseAutoRetry
                 && triesLeft > 0
                 && (GetTooManyRequests(response.Item1) != -1
-                    || (lastError != null && RetryErrorCodes.Contains(lastError.Status))));
+                    || lastError != null && RetryErrorCodes.Contains(lastError.Status)));
 
 
             return response.Item2;

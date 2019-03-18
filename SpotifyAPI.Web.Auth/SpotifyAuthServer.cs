@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading;
 using SpotifyAPI.Web.Enums;
 using Unosquare.Labs.EmbedIO;
-using Unosquare.Labs.EmbedIO.Constants;
 using Unosquare.Labs.EmbedIO.Modules;
 
 namespace SpotifyAPI.Web.Auth

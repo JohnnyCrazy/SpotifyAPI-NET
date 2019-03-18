@@ -21,7 +21,7 @@ namespace SpotifyAPI.Web.Tests
         public void SetUp()
         {
             _mock = new Mock<IClient>();
-            _spotify = new SpotifyWebAPI()
+            _spotify = new SpotifyWebAPI
             {
                 WebClient = _mock.Object,
                 UseAuth = false

@@ -1,24 +1,15 @@
-using System;
-using System.Net;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using Unosquare.Labs.EmbedIO;
 using Unosquare.Labs.EmbedIO.Constants;
 using Unosquare.Labs.EmbedIO.Modules;
-#if NETSTANDARD2_0
-using System.Net.Http;
-#endif
-#if NET46
-using System.Net.Http;
-using HttpListenerContext = Unosquare.Net.HttpListenerContext;
-#endif
 
 namespace SpotifyAPI.Web.Auth
 {
-    public class ImplictGrantAuth : SpotifyAuthServer<Token>
+    public class ImplicitGrantAuth : SpotifyAuthServer<Token>
     {
-        public ImplictGrantAuth(string clientId, string redirectUri, string serverUri, Scope scope = Scope.None, string state = "") :
+        public ImplicitGrantAuth(string clientId, string redirectUri, string serverUri, Scope scope = Scope.None, string state = "") :
             base("token", "ImplicitGrantAuth", redirectUri, serverUri, scope, state)
         {
             ClientId = clientId;
@@ -26,17 +17,17 @@ namespace SpotifyAPI.Web.Auth
 
         protected override void AdaptWebServer(WebServer webServer)
         {
-            webServer.Module<WebApiModule>().RegisterController<ImplictGrantAuthController>();
+            webServer.Module<WebApiModule>().RegisterController<ImplicitGrantAuthController>();
         }
     }
 
-    public class ImplictGrantAuthController : WebApiController
+    public class ImplicitGrantAuthController : WebApiController
     {
         [WebApiHandler(HttpVerbs.Get, "/auth")]
         public Task<bool> GetAuth()
         {
             string state = Request.QueryString["state"];
-            SpotifyAuthServer<Token> auth = ImplictGrantAuth.GetByState(state);
+            SpotifyAuthServer<Token> auth = ImplicitGrantAuth.GetByState(state);
             if (auth == null)
                 return this.StringResponseAsync(
                     $"Failed - Unable to find auth request with state \"{state}\" - Please retry");
@@ -57,7 +48,7 @@ namespace SpotifyAPI.Web.Auth
             }
             else
             {
-                token = new Token()
+                token = new Token
                 {
                     Error = error
                 };
@@ -67,7 +58,7 @@ namespace SpotifyAPI.Web.Auth
             return this.StringResponseAsync("OK - This window can be closed now");
         }
 
-        public ImplictGrantAuthController(IHttpContext context) : base(context)
+        public ImplicitGrantAuthController(IHttpContext context) : base(context)
         {
         }
     }

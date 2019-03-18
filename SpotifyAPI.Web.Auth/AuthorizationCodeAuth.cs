@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +47,7 @@ namespace SpotifyAPI.Web.Auth
 
         public async Task<Token> RefreshToken(string refreshToken)
         {
-            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>()
+            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "refresh_token"),
                 new KeyValuePair<string, string>("refresh_token", refreshToken)
@@ -65,7 +64,7 @@ namespace SpotifyAPI.Web.Auth
         }
         public async Task<Token> ExchangeCode(string code)
         {
-            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>()
+            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
                 new KeyValuePair<string, string>("code", code),

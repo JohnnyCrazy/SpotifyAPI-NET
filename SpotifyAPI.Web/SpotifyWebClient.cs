@@ -7,7 +7,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Models;
-using SpotifyAPI.Web.Enums;
 
 namespace SpotifyAPI.Web
 {
@@ -211,14 +210,12 @@ namespace SpotifyAPI.Web
                 UseProxy = false
             };
 
-            if (!string.IsNullOrWhiteSpace(proxyConfig?.Host))
-            {
-                WebProxy proxy = proxyConfig.CreateWebProxy();
-                clientHandler.UseProxy = true;
-                clientHandler.Proxy = proxy;
-                clientHandler.UseDefaultCredentials = proxy.UseDefaultCredentials;
-                clientHandler.PreAuthenticate = proxy.UseDefaultCredentials;
-            }
+            if (string.IsNullOrWhiteSpace(proxyConfig?.Host)) return clientHandler;
+            WebProxy proxy = proxyConfig.CreateWebProxy();
+            clientHandler.UseProxy = true;
+            clientHandler.Proxy = proxy;
+            clientHandler.UseDefaultCredentials = proxy.UseDefaultCredentials;
+            clientHandler.PreAuthenticate = proxy.UseDefaultCredentials;
 
             return clientHandler;
         }

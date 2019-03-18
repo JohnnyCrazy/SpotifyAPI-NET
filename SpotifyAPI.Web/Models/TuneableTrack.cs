@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web.Models
 {
@@ -61,10 +57,9 @@ namespace SpotifyAPI.Web.Models
                 string name = info.GetCustomAttribute<StringAttribute>()?.Text;
                 if(name == null || value == null)
                     continue;
-                if (value is float)
-                    urlParams.Add($"{prefix}_{name}={((float)value).ToString(CultureInfo.InvariantCulture)}");
-                else
-                    urlParams.Add($"{prefix}_{name}={value}");
+                urlParams.Add(value is float valueAsFloat
+                    ? $"{prefix}_{name}={valueAsFloat.ToString(CultureInfo.InvariantCulture)}"
+                    : $"{prefix}_{name}={value}");
             }
             if (urlParams.Count > 0)
                 return "&" + string.Join("&", urlParams);

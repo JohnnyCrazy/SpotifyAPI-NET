@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 namespace SpotifyAPI.Web.Models
@@ -19,7 +18,7 @@ namespace SpotifyAPI.Web.Models
         public int DurationMs { get; set; }
 
         [JsonProperty("explicit")]
-        public Boolean Explicit { get; set; }
+        public bool Explicit { get; set; }
 
         [JsonProperty("external_urls")]
         public Dictionary<string, string> ExternUrls { get; set; }

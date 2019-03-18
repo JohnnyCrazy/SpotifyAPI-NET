@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ namespace SpotifyAPI.Web.Auth
         {
             string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes(ClientId + ":" + ClientSecret));
 
-            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>()
+            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "client_credentials")
             };

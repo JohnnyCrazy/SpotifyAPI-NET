@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 namespace SpotifyAPI.Web.Models
@@ -7,7 +6,7 @@ namespace SpotifyAPI.Web.Models
     public class SimplePlaylist : BasicModel
     {
         [JsonProperty("collaborative")]
-        public Boolean Collaborative { get; set; }
+        public bool Collaborative { get; set; }
 
         [JsonProperty("external_urls")]
         public Dictionary<string, string> ExternalUrls { get; set; }
@@ -28,7 +27,7 @@ namespace SpotifyAPI.Web.Models
         public PublicProfile Owner { get; set; }
 
         [JsonProperty("public")]
-        public Boolean Public { get; set; }
+        public bool Public { get; set; }
 
         [JsonProperty("snapshot_id")]
         public string SnapshotId { get; set; }

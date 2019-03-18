@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace SpotifyAPI
+namespace SpotifyAPI.Web
 {
     public class ProxyConfig
     {
@@ -65,11 +65,11 @@ namespace SpotifyAPI
                 BypassProxyOnLocal = BypassProxyOnLocal
             };
 
-            if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
-            {
-                proxy.UseDefaultCredentials = false;
-                proxy.Credentials = new NetworkCredential(Username, Password);
-            }
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password)) 
+                return proxy;
+            
+            proxy.UseDefaultCredentials = false;
+            proxy.Credentials = new NetworkCredential(Username, Password);
 
             return proxy;
         }

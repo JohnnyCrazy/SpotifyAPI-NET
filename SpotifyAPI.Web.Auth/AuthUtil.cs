@@ -21,10 +21,6 @@ namespace SpotifyAPI.Web.Auth
             {
                 Process.Start("open", url);
             }
-            else
-            {
-                // throw 
-            }
 #else
             url = url.Replace("&", "^&");
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}"));

@@ -60,7 +60,7 @@ namespace SpotifyAPI.Web.Models
         public FullTrack Track { get; set; }
 
         [JsonProperty("is_local")]
-        public Boolean IsLocal { get; set; }
+        public bool IsLocal { get; set; }
     }
 
     public class DeleteTrackUri
@@ -84,7 +84,7 @@ namespace SpotifyAPI.Web.Models
 
         public bool ShouldSerializePositions()
         {
-            return (Positions.Count > 0);
+            return Positions.Count > 0;
         }
     }
 

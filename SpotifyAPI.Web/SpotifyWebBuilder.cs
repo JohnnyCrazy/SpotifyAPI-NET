@@ -70,9 +70,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string GetAlbum(string id, string market = "")
         {
-            if (string.IsNullOrEmpty(market))
-                return $"{APIBase}/albums/{id}";
-            return $"{APIBase}/albums/{id}?market={market}";
+            return string.IsNullOrEmpty(market) ? $"{APIBase}/albums/{id}" : $"{APIBase}/albums/{id}?market={market}";
         }
 
         /// <summary>
@@ -83,9 +81,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string GetSeveralAlbums(List<string> ids, string market = "")
         {
-            if (string.IsNullOrEmpty(market))
-                return $"{APIBase}/albums?ids={string.Join(",", ids.Take(20))}";
-            return $"{APIBase}/albums?market={market}&ids={string.Join(",", ids.Take(20))}";
+            return string.IsNullOrEmpty(market)
+                ? $"{APIBase}/albums?ids={string.Join(",", ids.Take(20))}"
+                : $"{APIBase}/albums?market={market}&ids={string.Join(",", ids.Take(20))}";
         }
 
         #endregion Albums
@@ -734,7 +732,7 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string CreatePlaylist(string userId, string playlistName, Boolean isPublic = true)
+        public string CreatePlaylist(string userId, string playlistName, bool isPublic = true)
         {
             return $"{APIBase}/users/{userId}/playlists";
         }
@@ -829,9 +827,9 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string AddPlaylistTracks(string userId, string playlistId, List<string> uris, int? position = null)
         {
-            if (position == null)
-                return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks";
-            return $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks?position={position}";
+            return position == null
+                ? $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks"
+                : $"{APIBase}/users/{userId}/playlists/{playlistId}/tracks?position={position}";
         }
 
         /// <summary>
@@ -844,9 +842,9 @@ namespace SpotifyAPI.Web
         /// <remarks>AUTH NEEDED</remarks>
         public string AddPlaylistTracks(string playlistId, List<string> uris, int? position = null)
         {
-            if (position == null)
-                return $"{APIBase}/playlists/{playlistId}/tracks";
-            return $"{APIBase}/playlists/{playlistId}/tracks?position={position}";
+            return position == null
+                ? $"{APIBase}/playlists/{playlistId}/tracks"
+                : $"{APIBase}/playlists/{playlistId}/tracks?position={position}";
         }
 
         /// <summary>
@@ -931,9 +929,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string GetSeveralTracks(List<string> ids, string market = "")
         {
-            if (string.IsNullOrEmpty(market))
-                return $"{APIBase}/tracks?ids={string.Join(",", ids.Take(50))}";
-            return $"{APIBase}/tracks?market={market}&ids={string.Join(",", ids.Take(50))}";
+            return string.IsNullOrEmpty(market)
+                ? $"{APIBase}/tracks?ids={string.Join(",", ids.Take(50))}"
+                : $"{APIBase}/tracks?market={market}&ids={string.Join(",", ids.Take(50))}";
         }
 
         /// <summary>
@@ -944,9 +942,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string GetTrack(string id, string market = "")
         {
-            if (string.IsNullOrEmpty(market))
-                return $"{APIBase}/tracks/{id}";
-            return $"{APIBase}/tracks/{id}?market={market}";
+            return string.IsNullOrEmpty(market) ? $"{APIBase}/tracks/{id}" : $"{APIBase}/tracks/{id}?market={market}";
         }
 
         /// <summary>
@@ -1002,9 +998,7 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string GetPlayback(string market = "")
         {
-            if (string.IsNullOrEmpty(market))
-                return $"{APIBase}/me/player";
-            return $"{APIBase}/me/player?market={market}";
+            return string.IsNullOrEmpty(market) ? $"{APIBase}/me/player" : $"{APIBase}/me/player?market={market}";
         }
 
         /// <summary>
@@ -1014,9 +1008,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string GetPlayingTrack(string market = "")
         {
-            if (string.IsNullOrEmpty(market))
-                return $"{APIBase}/me/player/currently-playing";
-            return $"{APIBase}/me/player/currently-playing?market={market}";
+            return string.IsNullOrEmpty(market)
+                ? $"{APIBase}/me/player/currently-playing"
+                : $"{APIBase}/me/player/currently-playing?market={market}";
         }
 
         /// <summary>
@@ -1035,9 +1029,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string ResumePlayback(string deviceId = "")
         {
-            if(string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/play";
-            return $"{APIBase}/me/player/play?device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/play"
+                : $"{APIBase}/me/player/play?device_id={deviceId}";
         }
 
         /// <summary>
@@ -1047,9 +1041,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string PausePlayback(string deviceId = "")
         {
-            if (string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/pause";
-            return $"{APIBase}/me/player/pause?device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/pause"
+                : $"{APIBase}/me/player/pause?device_id={deviceId}";
         }
 
         /// <summary>
@@ -1059,9 +1053,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string SkipPlaybackToNext(string deviceId = "")
         {
-            if (string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/next";
-            return $"{APIBase}/me/player/next?device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/next"
+                : $"{APIBase}/me/player/next?device_id={deviceId}";
         }
 
         /// <summary>
@@ -1073,9 +1067,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string SkipPlaybackToPrevious(string deviceId = "")
         {
-            if (string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/previous";
-            return $"{APIBase}/me/player/previous?device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/previous"
+                : $"{APIBase}/me/player/previous?device_id={deviceId}";
         }
 
         /// <summary>
@@ -1087,9 +1081,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string SeekPlayback(int positionMs, string deviceId = "")
         {
-            if (string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/seek?position_ms={positionMs}";
-            return $"{APIBase}/me/player/seek?position_ms={positionMs}&device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/seek?position_ms={positionMs}"
+                : $"{APIBase}/me/player/seek?position_ms={positionMs}&device_id={deviceId}";
         }
 
         /// <summary>
@@ -1100,9 +1094,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string SetRepeatMode(RepeatState repeatState, string deviceId = "")
         {
-            if (string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/repeat?state={repeatState.GetStringAttribute()}";
-            return $"{APIBase}/me/player/repeat?state={repeatState.GetStringAttribute()}&device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/repeat?state={repeatState.GetStringAttribute()}"
+                : $"{APIBase}/me/player/repeat?state={repeatState.GetStringAttribute()}&device_id={deviceId}";
         }
 
         /// <summary>
@@ -1113,9 +1107,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string SetVolume(int volumePercent, string deviceId = "")
         {
-            if (string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/volume?volume_percent={volumePercent}";
-            return $"{APIBase}/me/player/volume?volume_percent={volumePercent}&device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/volume?volume_percent={volumePercent}"
+                : $"{APIBase}/me/player/volume?volume_percent={volumePercent}&device_id={deviceId}";
         }
 
         /// <summary>
@@ -1126,9 +1120,9 @@ namespace SpotifyAPI.Web
         /// <returns></returns>
         public string SetShuffle(bool shuffle, string deviceId = "")
         {
-            if (string.IsNullOrEmpty(deviceId))
-                return $"{APIBase}/me/player/shuffle?state={shuffle}";
-            return $"{APIBase}/me/player/shuffle?state={shuffle}&device_id={deviceId}";
+            return string.IsNullOrEmpty(deviceId)
+                ? $"{APIBase}/me/player/shuffle?state={shuffle}"
+                : $"{APIBase}/me/player/shuffle?state={shuffle}&device_id={deviceId}";
         }
         #endregion
     }

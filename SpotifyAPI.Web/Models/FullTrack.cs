@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 namespace SpotifyAPI.Web.Models
@@ -22,7 +21,7 @@ namespace SpotifyAPI.Web.Models
         public int DurationMs { get; set; }
 
         [JsonProperty("explicit")]
-        public Boolean Explicit { get; set; }
+        public bool Explicit { get; set; }
 
         [JsonProperty("external_ids")]
         public Dictionary<string, string> ExternalIds { get; set; }
@@ -61,7 +60,7 @@ namespace SpotifyAPI.Web.Models
         ///     Only filled when the "market"-parameter was supplied!
         /// </summary>
         [JsonProperty("is_playable")]
-        public Boolean? IsPlayable { get; set; }
+        public bool? IsPlayable { get; set; }
 
         /// <summary>
         ///     Only filled when the "market"-parameter was supplied!
