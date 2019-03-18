@@ -169,6 +169,8 @@
         
             <li><a href="#implicitgrantauth">ImplicitGrantAuth</a></li>
         
+            <li><a href="#tokenswapauth">TokenSwapAuth</a></li>
+        
             <li><a href="#autorizationcodeauth">AutorizationCodeAuth</a></li>
         
             <li><a href="#clientcredentialsauth">ClientCredentialsAuth</a></li>
@@ -189,16 +191,19 @@ If you want to know more, you can read to the whole auth-process <a href="https:
 <strong>Client_Secret</strong>: Never use this in one of your client-side apps!! Keep it secret!
 <strong>Redirect URIs</strong>: Add "http://localhost", if you want full support for this API</p>
 </blockquote>
-<p>Now you can start with the User-authentication, Spotify provides 3 ways:</p>
+<p>Now you can start with the user-authentication, Spotify provides 3 ways (4 if you consider different implementations):</p>
 <ul>
 <li>
 <p><a href="../../SpotifyWebAPI/auth#implicitgrantauth">ImplicitGrantAuth</a></p>
 </li>
 <li>
-<p><a href="../../SpotifyWebAPI/auth#autorizationcodeauth">AutorizationCodeAuth</a></p>
+<p><a href="../../SpotifyWebAPI/auth#tokenswapauth">TokenSwapAuth</a> (<strong>Recommended</strong>, server-side code mandatory, most secure method. The necessary code is shown here so you do not have to code it yourself.)</p>
 </li>
 <li>
-<p><a href="../../SpotifyWebAPI/auth#clientcredentialsauth">ClientCredentialsAuth</a></p>
+<p><a href="../../SpotifyWebAPI/auth#autorizationcodeauth">AutorizationCodeAuth</a> (Not recommended, server-side code needed, else it's unsecure)</p>
+</li>
+<li>
+<p><a href="../../SpotifyWebAPI/auth#clientcredentialsauth">ClientCredentialsAuth</a> (Not recommended, server-side code needed, else it's unsecure)</p>
 </li>
 </ul>
 <h2 id="notes">Notes</h2>
@@ -207,8 +212,8 @@ If you want to know more, you can read to the whole auth-process <a href="https:
 <img alt="Overview" src="http://i.imgur.com/uf3ahTl.png" /></p>
 <p>After implementing one of the provided auth-methods, you can start doing requests with the token you get from one of the auth-methods.</p>
 <h2 id="implicitgrantauth">ImplicitGrantAuth</h2>
-<p>With this approach, you directly get a Token object after the user authed your application.
-You won't be able to refresh the token. If you want to use the internal Http server, make sure the redirect URI is in your spotify application redirects.</p>
+<p>This way is <strong>recommended</strong> and the only auth-process which does not need a server-side exchange of keys. With this approach, you directly get a Token object after the user authed your application.
+You won't be able to refresh the token. If you want to use the internal Http server, please add "http://localhost" to your application redirects.</p>
 <p>More info: <a href="https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow">here</a></p>
 <pre><code class="c#">static async void Main(string[] args)
 {
@@ -225,6 +230,96 @@ You won't be able to refresh the token. If you want to use the internal Http ser
 }
 </code></pre>
 
+<h2 id="tokenswapauth">TokenSwapAuth</h2>
+<p>This way uses server-side code or at least access to an exchange server, otherwise, compared to other
+methods, it is impossible to use.</p>
+<p>With this approach, you provide the URI/URL to your desired exchange server to perform all necessary
+requests to Spotify, as well as requests that return back to the "server URI".</p>
+<p>The exchange server <strong>must</strong> be able to:</p>
+<ul>
+<li>Return the authorization code from Spotify API authenticate page via GET request to the "server URI".</li>
+<li>Request the token response object via POST to the Spotify API token page.</li>
+<li>Request a refreshed token response object via POST to the Spotify API token page.</li>
+</ul>
+<p><strong>The good news is that you do not need to code it yourself.</strong></p>
+<p>The advantages of this method are that the client ID and redirect URI are very well hidden and almost unexposed, but more importantly, your client secret is <strong>never</strong> exposed and is completely hidden compared to other methods (excluding <a href="../../SpotifyWebAPI/auth#implicitgrantauth">ImplicitGrantAuth</a>
+as it does not deal with a client secret). This means
+your Spotify app <strong>cannot</strong> be spoofed by a malicious third party.</p>
+<h3 id="using-tokenswapwebapifactory">Using TokenSwapWebAPIFactory</h3>
+<p>The TokenSwapWebAPIFactory will create and configure a SpotifyWebAPI object for you.</p>
+<p>It does this through the method GetWebApiAsync <strong>asynchronously</strong>, which means it will not halt execution of your program while obtaining it for you. If you would like to halt execution, which is <strong>synchronous</strong>, use <code>GetWebApiAsync().Result</code> without using <strong>await</strong>.</p>
+<pre><code class="c#">TokenSwapWebAPIFactory webApiFactory;
+SpotifyWebAPI spotify;
+
+// You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually refresh it later on. New WebAPIFactory objects cannot refresh SpotifyWebAPI object that they did not give to you.
+webApiFactory = new TokenSwapWebAPIFactory(&quot;INSERT LINK TO YOUR index.php HERE&quot;)
+{
+    Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
+    AutoRefresh = true
+};
+// You may want to react to being able to use the Spotify service.
+// webApiFactory.OnAuthSuccess += (sender, e) =&gt; authorized = true;
+// You may want to react to your user's access expiring.
+// webApiFactory.OnAccessTokenExpired += (sender, e) =&gt; authorized = false;
+
+try
+{
+    spotify = await webApiFactory.GetWebApiAsync();
+    // Synchronous way:
+    // spotify = webApiFactory.GetWebApiAsync().Result;
+}
+catch (Exception ex)
+{
+    // Example way to handle error reporting gracefully with your SpotifyWebAPI wrapper
+    // UpdateStatus($&quot;Spotify failed to load: {ex.Message}&quot;);
+}
+</code></pre>
+
+<h3 id="using-tokenswapauth">Using TokenSwapAuth</h3>
+<p>Since the TokenSwapWebAPIFactory not only simplifies the whole process but offers additional functionality too
+(such as AutoRefresh and AuthSuccess AuthFailure events), use of this way is very verbose and is only
+recommended if you are having issues with TokenSwapWebAPIFactory or need access to the tokens.</p>
+<pre><code class="c#">TokenSwapAuth auth = new TokenSwapAuth(
+    exchangeServerUri: &quot;INSERT LINK TO YOUR index.php HERE&quot;,
+    serverUri: &quot;http://localhost:4002&quot;,
+    scope: Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic
+);
+auth.AuthReceived += async (sender, response) =&gt;
+{
+    lastToken = await auth.ExchangeCodeAsync(response.Code);
+
+    spotify = new SpotifyWebAPI()
+    {
+        TokenType = lastToken.TokenType,
+        AccessToken = lastToken.AccessToken
+    };
+
+    authenticated = true;
+    auth.Stop();
+};
+auth.OnAccessTokenExpired += async (sender, e) =&gt; spotify.AccessToken = (await auth.RefreshAuthAsync(lastToken.RefreshToken)).AccessToken;
+auth.Start();
+auth.OpenBrowser();
+</code></pre>
+
+<h3 id="token-swap-endpoint">Token Swap Endpoint</h3>
+<p>To keep your client secret completely secure and your client ID and redirect URI as secure as possible, use of a web server (such as a php website) is required.</p>
+<p>To use this method, an external HTTP Server (that you may need to create) needs to be able to supply the following HTTP Endpoints to your application:</p>
+<p><code>/swap</code> - Swaps out an <code>authorization_code</code> with an <code>access_token</code> and <code>refresh_token</code> - The following parameters are required in the JSON POST Body:
+- <code>grant_type</code> (set to <code>"authorization_code"</code>)
+- <code>code</code> (the <code>authorization_code</code>)
+- <code>redirect_uri</code>
+- - <strong>Important</strong> The page that the redirect URI links to must return the authorization code json to your <code>serverUri</code> (default is 'http://localhost:4002') but to the folder 'auth', like this: 'http://localhost:4002/auth'.</p>
+<p><code>/refresh</code> - Refreshes an <code>access_token</code> - The following parameters are required in the JSON POST Body:
+- <code>grant_type</code> (set to <code>"refresh_token"</code>)
+- <code>refresh_token</code></p>
+<p>The following open-source token swap endpoint code can be used for your website:
+- <a href="https://github.com/rollersteaam/spotify-token-swap-php">rollersteaam/spotify-token-swap-php</a>
+- <a href="https://github.com/simontaen/SpotifyTokenSwap">simontaen/SpotifyTokenSwap</a></p>
+<h4 id="remarks">Remarks</h4>
+<p>It should be noted that GitHub Pages does not support hosting php scripts. Hosting php scripts through it will cause the php to render as plain HTML, potentially compromising your client secret while doing absolutely nothing.</p>
+<p>Be sure you have whitelisted your redirect uri in the Spotify Developer Dashboard otherwise the authorization will always fail.</p>
+<p>If you did not use the WebAPIFactory or you provided a <code>serverUri</code> different from its default, you must make sure your redirect uri's script at your endpoint will properly redirect to your <code>serverUri</code> (such as changing the areas which refer to <code>localhost:4002</code> if you had changed <code>serverUri</code> from its default), otherwise it will never reach your new <code>serverUri</code>.</p>
 <h2 id="autorizationcodeauth">AutorizationCodeAuth</h2>
 <p>This way is <strong>not recommended</strong> and requires server-side code to run securely.
 With this approach, you first get a code which you need to trade against the access-token.
