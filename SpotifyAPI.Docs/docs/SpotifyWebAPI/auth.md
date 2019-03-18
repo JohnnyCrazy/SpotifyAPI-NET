@@ -86,7 +86,7 @@ SpotifyWebAPI spotify;
 // You should store a reference to WebAPIFactory if you are using AutoRefresh or want to manually refresh it later on. New WebAPIFactory objects cannot refresh SpotifyWebAPI object that they did not give to you.
 webApiFactory = new TokenSwapWebAPIFactory("INSERT LINK TO YOUR index.php HERE")
 {
-    Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic,
+    Scope = Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate,
     AutoRefresh = true
 };
 // You may want to react to being able to use the Spotify service.
@@ -116,7 +116,7 @@ recommended if you are having issues with TokenSwapWebAPIFactory or need access 
 TokenSwapAuth auth = new TokenSwapAuth(
     exchangeServerUri: "INSERT LINK TO YOUR index.php HERE",
     serverUri: "http://localhost:4002",
-    scope: Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate | Scope.UserLibraryRead | Scope.UserReadPrivate | Scope.UserFollowRead | Scope.UserReadBirthdate | Scope.UserTopRead | Scope.PlaylistReadCollaborative | Scope.UserReadRecentlyPlayed | Scope.UserReadPlaybackState | Scope.UserModifyPlaybackState | Scope.PlaylistModifyPublic
+    scope: Scope.UserReadPrivate | Scope.UserReadEmail | Scope.PlaylistReadPrivate
 );
 auth.AuthReceived += async (sender, response) =>
 {
