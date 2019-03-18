@@ -5,6 +5,7 @@ using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -118,6 +119,36 @@ namespace SpotifyAPI.Web
         public Task<SearchItem> SearchItemsAsync(string q, SearchType type, int limit = 20, int offset = 0, string market = "")
         {
             return DownloadDataAsync<SearchItem>(_builder.SearchItems(q, type, limit, offset, market));
+        }
+        
+        /// <summary>
+        ///     Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.
+        /// </summary>
+        /// <param name="q">The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues. (properly escaped)</param>
+        /// <param name="type">A list of item types to search across.</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first result to return. Default: 0</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code or the string from_token.</param>
+        /// <returns></returns>
+        public SearchItem SearchItemsEscaped(string q, SearchType type, int limit = 20, int offset = 0, string market = "")
+        {
+            string escapedQuery = WebUtility.UrlEncode(q);
+            return DownloadData<SearchItem>(_builder.SearchItems(escapedQuery, type, limit, offset, market));
+        }
+
+        /// <summary>
+        ///     Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string asynchronously.
+        /// </summary>
+        /// <param name="q">The search query's keywords (and optional field filters and operators), for example q=roadhouse+blues. (properly escaped)</param>
+        /// <param name="type">A list of item types to search across.</param>
+        /// <param name="limit">The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+        /// <param name="offset">The index of the first result to return. Default: 0</param>
+        /// <param name="market">An ISO 3166-1 alpha-2 country code or the string from_token.</param>
+        /// <returns></returns>
+        public Task<SearchItem> SearchItemsEscapedAsync(string q, SearchType type, int limit = 20, int offset = 0, string market = "")
+        {
+            string escapedQuery = WebUtility.UrlEncode(q);
+            return DownloadDataAsync<SearchItem>(_builder.SearchItems(escapedQuery, type, limit, offset, market));
         }
 
         #endregion Search
