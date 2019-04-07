@@ -211,7 +211,7 @@ namespace SpotifyAPI.Web.Auth
                 Code = code,
                 Error = error
             }));
-            return this.StringResponseAsync(((TokenSwapAuth)auth).HtmlResponse);
+            return this.HtmlResponseAsync(((TokenSwapAuth)auth).HtmlResponse);
         }
     }
 }
