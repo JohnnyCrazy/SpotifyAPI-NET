@@ -114,3 +114,5 @@ UpgradeLog*.XML
 
 # Idea jetbrains
 .idea/
+
+.vscode
