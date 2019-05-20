@@ -120,7 +120,7 @@ namespace SpotifyAPI.Web
         {
             return DownloadDataAsync<SearchItem>(_builder.SearchItems(q, type, limit, offset, market));
         }
-        
+
         /// <summary>
         ///     Get Spotify catalog information about artists, albums, tracks or playlists that match a keyword string.
         /// </summary>
@@ -542,7 +542,7 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Create a playlist-style listening experience based on seed artists, tracks and genres.
         /// </summary>
-        /// <param name="artistSeed">A comma separated list of Spotify IDs for seed artists. 
+        /// <param name="artistSeed">A comma separated list of Spotify IDs for seed artists.
         /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
         /// </param>
         /// <param name="genreSeed">A comma separated list of any genres in the set of available genre seeds.
@@ -570,7 +570,7 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Create a playlist-style listening experience based on seed artists, tracks and genres asynchronously.
         /// </summary>
-        /// <param name="artistSeed">A comma separated list of Spotify IDs for seed artists. 
+        /// <param name="artistSeed">A comma separated list of Spotify IDs for seed artists.
         /// Up to 5 seed values may be provided in any combination of seed_artists, seed_tracks and seed_genres.
         /// </param>
         /// <param name="genreSeed">A comma separated list of any genres in the set of available genre seeds.
@@ -1219,8 +1219,8 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Get the current user’s top tracks based on calculated affinity.
         /// </summary>
-        /// <param name="timeRange">Over what time frame the affinities are computed. 
-        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// <param name="timeRange">Over what time frame the affinities are computed.
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available),
         /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
         /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
         /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
@@ -1234,8 +1234,8 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Get the current user’s top tracks based on calculated affinity asynchronously.
         /// </summary>
-        /// <param name="timeRange">Over what time frame the affinities are computed. 
-        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// <param name="timeRange">Over what time frame the affinities are computed.
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available),
         /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
         /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
         /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
@@ -1249,8 +1249,8 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Get the current user’s top artists based on calculated affinity.
         /// </summary>
-        /// <param name="timeRange">Over what time frame the affinities are computed. 
-        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// <param name="timeRange">Over what time frame the affinities are computed.
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available),
         /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
         /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
         /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
@@ -1264,8 +1264,8 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Get the current user’s top artists based on calculated affinity asynchronously.
         /// </summary>
-        /// <param name="timeRange">Over what time frame the affinities are computed. 
-        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available), 
+        /// <param name="timeRange">Over what time frame the affinities are computed.
+        /// Valid values: long_term (calculated from several years of data and including all new data as it becomes available),
         /// medium_term (approximately last 6 months), short_term (approximately last 4 weeks). </param>
         /// <param name="limit">The number of entities to return. Default: 20. Minimum: 1. Maximum: 50</param>
         /// <param name="offest">The index of the first entity to return. Default: 0 (i.e., the first track). Use with limit to get the next set of entities.</param>
@@ -1634,7 +1634,7 @@ namespace SpotifyAPI.Web
                 body.Add("description", newDescription);
             return await UploadDataAsync<ErrorResponse>(_builder.UpdatePlaylist(userId, playlistId), body.ToString(Formatting.None), "PUT").ConfigureAwait(false) ?? new ErrorResponse();
         }
-        
+
         /// <summary>
         ///     Change a playlist’s name and public/private state asynchronously. (The user must, of course, own the playlist.)
         /// </summary>
@@ -2390,7 +2390,7 @@ namespace SpotifyAPI.Web
             new List<string> { deviceId }, play);
 
         /// <summary>
-        ///     Transfer playback to a new device and determine if it should start playing. 
+        ///     Transfer playback to a new device and determine if it should start playing.
         ///     NOTE: Although an array is accepted, only a single device_id is currently supported. Supplying more than one will return 400 Bad Request
         /// </summary>
         /// <param name="deviceIds">A array containing the ID of the device on which playback should be started/transferred.</param>
@@ -2410,7 +2410,7 @@ namespace SpotifyAPI.Web
         }
 
         /// <summary>
-        ///     Transfer playback to a new device and determine if it should start playing. 
+        ///     Transfer playback to a new device and determine if it should start playing.
         ///     NOTE: Although an array is accepted, only a single device_id is currently supported. Supplying more than one will return 400 Bad Request
         /// </summary>
         /// <param name="deviceIds">A array containing the ID of the device on which playback should be started/transferred.</param>
@@ -2596,7 +2596,7 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Seeks to the given position in the user’s currently playing track.
         /// </summary>
-        /// <param name="positionMs">The position in milliseconds to seek to. Must be a positive number. 
+        /// <param name="positionMs">The position in milliseconds to seek to. Must be a positive number.
         /// Passing in a position that is greater than the length of the track will cause the player to start playing the next song.</param>
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <returns></returns>
@@ -2608,7 +2608,7 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Seeks to the given position in the user’s currently playing track.
         /// </summary>
-        /// <param name="positionMs">The position in milliseconds to seek to. Must be a positive number. 
+        /// <param name="positionMs">The position in milliseconds to seek to. Must be a positive number.
         /// Passing in a position that is greater than the length of the track will cause the player to start playing the next song.</param>
         /// <param name="deviceId">The id of the device this command is targeting. If not supplied, the user's currently active device is the target.</param>
         /// <returns></returns>
@@ -2694,9 +2694,21 @@ namespace SpotifyAPI.Web
             return DownloadData<TOut>(paging.Next);
         }
 
+        public TOut GetNextPage<TOut, TIn>(CursorPaging<TIn> paging) where TOut : BasicModel
+        {
+            if (!paging.HasNext())
+                throw new InvalidOperationException("This CursorPaging-Object has no Next-Page");
+            return DownloadData<TOut>(paging.Next);
+        }
+
         public Paging<T> GetNextPage<T>(Paging<T> paging)
         {
             return GetNextPage<Paging<T>, T>(paging);
+        }
+
+        public CursorPaging<T> GetNextPage<T>(CursorPaging<T> paging)
+        {
+            return GetNextPage<CursorPaging<T>, T>(paging);
         }
 
         public Task<TOut> GetNextPageAsync<TOut, TIn>(Paging<TIn> paging) where TOut : BasicModel
@@ -2706,9 +2718,21 @@ namespace SpotifyAPI.Web
             return DownloadDataAsync<TOut>(paging.Next);
         }
 
+        public Task<TOut> GetNextPageAsync<TOut, TIn>(CursorPaging<TIn> paging) where TOut : BasicModel
+        {
+            if (!paging.HasNext())
+                throw new InvalidOperationException("This Paging-Object has no Next-Page");
+            return DownloadDataAsync<TOut>(paging.Next);
+        }
+
         public Task<Paging<T>> GetNextPageAsync<T>(Paging<T> paging)
         {
             return GetNextPageAsync<Paging<T>, T>(paging);
+        }
+
+        public Task<CursorPaging<T>> GetNextPageAsync<T>(CursorPaging<T> paging)
+        {
+            return GetNextPageAsync<CursorPaging<T>, T>(paging);
         }
 
         public TOut GetPreviousPage<TOut, TIn>(Paging<TIn> paging) where TOut : BasicModel
@@ -2789,7 +2813,7 @@ namespace SpotifyAPI.Web
                 };
             }
             else
-            { 
+            {
                 ret = new ListResponse<T>
                 {
                     List = null,
@@ -2889,7 +2913,7 @@ namespace SpotifyAPI.Web
         private int GetTooManyRequests(ResponseInfo info)
         {
             // 429 is "TooManyRequests" value specified in Spotify API
-            if (429 != (int)info.StatusCode) 
+            if (429 != (int)info.StatusCode)
             {
                 return -1;
             }
