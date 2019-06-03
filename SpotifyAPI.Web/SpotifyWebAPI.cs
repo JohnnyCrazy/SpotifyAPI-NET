@@ -29,8 +29,7 @@ namespace SpotifyAPI.Web
                 JsonSettings =
                     new JsonSerializerSettings
                     {
-                        NullValueHandling = NullValueHandling.Ignore,
-                        TypeNameHandling = TypeNameHandling.All
+                        NullValueHandling = NullValueHandling.Ignore
                     }
             };
         }
