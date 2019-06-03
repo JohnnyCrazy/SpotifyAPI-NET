@@ -108,13 +108,13 @@ namespace SpotifyAPI.Web.Auth
                 Error = error
             }));
             
-            return this.StringResponseAsync("OK - This window can be closed now");
+            return HttpContext.HtmlResponseAsync("<html><script type=\"text/javascript\">window.close();</script>OK - This window can be closed now</html>");
         }
 
         [WebApiHandler(HttpVerbs.Post, "/")]
         public async Task<bool> PostValues()
         {
-            Dictionary<string, object> formParams = await this.RequestFormDataDictionaryAsync();
+            Dictionary<string, object> formParams = await HttpContext.RequestFormDataDictionaryAsync();
 
             string state = (string) formParams["state"];
             AuthorizationCodeAuth.Instances.TryGetValue(state, out SpotifyAuthServer<AuthorizationCode> authServer);
@@ -124,7 +124,7 @@ namespace SpotifyAPI.Web.Auth
             auth.SecretId = (string) formParams["secretId"];
 
             string uri = auth.GetUri();
-            return this.Redirect(uri, false);
+            return HttpContext.Redirect(uri, false);
         }
 
         public AuthorizationCodeAuthController(IHttpContext context) : base(context)

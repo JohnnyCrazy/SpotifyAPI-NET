@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Enums;
@@ -9,13 +8,7 @@ using Unosquare.Labs.EmbedIO.Constants;
 using Unosquare.Labs.EmbedIO.Modules;
 using SpotifyAPI.Web.Models;
 using Newtonsoft.Json;
-#if NETSTANDARD2_0
 using System.Net.Http;
-#endif
-#if NET46
-using System.Net.Http;
-using HttpListenerContext = Unosquare.Net.HttpListenerContext;
-#endif
 
 namespace SpotifyAPI.Web.Auth
 {
@@ -211,7 +204,7 @@ namespace SpotifyAPI.Web.Auth
                 Code = code,
                 Error = error
             }));
-            return this.HtmlResponseAsync(((TokenSwapAuth)auth).HtmlResponse);
+            return HttpContext.HtmlResponseAsync(((TokenSwapAuth)auth).HtmlResponse);
         }
     }
 }
