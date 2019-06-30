@@ -25,7 +25,5 @@
   <files>
     <file src="bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.dll" target="lib\netstandard2.0\SpotifyAPI.Web.Auth.dll" />
     <file src="bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.xml" target="lib\netstandard2.0\SpotifyAPI.Web.Auth.xml" />
-    <file src="bin\Release\net462\SpotifyAPI.Web.Auth.dll" target="lib\net46\SpotifyAPI.Web.Auth.dll" />
-    <file src="bin\Release\net462\SpotifyAPI.Web.Auth.xml" target="lib\net46\SpotifyAPI.Web.Auth.xml" />
   </files>
 </package>
