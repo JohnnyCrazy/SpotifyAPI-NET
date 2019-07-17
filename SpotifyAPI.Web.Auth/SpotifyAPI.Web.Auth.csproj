@@ -1,7 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    
+    <PackageId>SpotifyAPI.Web.Auth</PackageId>
+    <Title>SpotifyAPI.Web.Auth</Title>
+    <Authors>Jonas Dellinger</Authors>
+    <PackageLicenseUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Description>
+      Authorization Flows for the Spotify's Web API, written in .NET
+
+      For more infos, visit https://github.com/JohnnyCrazy/SpotifyAPI-NET
+    </Description>
+    <PackageTags>
+      spotify api music .net c# spotify-client
+    </PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,13 +27,15 @@
     <DocumentationFile>bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.xml</DocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
-
+    
   <ItemGroup>
-    <PackageReference Include="EmbedIO" Version="2.9.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj" />
+    <PackageReference Include="EmbedIO" Version="2.9.1">
+      <PrivateAssets>None</PrivateAssets>
+    </PackageReference>
+    <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj">
+      <SpecificVersion>False</SpecificVersion>
+      <PrivateAssets>None</PrivateAssets>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

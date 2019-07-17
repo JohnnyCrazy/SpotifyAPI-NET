@@ -1,7 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <PackageId>SpotifyAPI.Web</PackageId>
+    <Title>SpotifyAPI.Web</Title>
+    <Authors>Jonas Dellinger</Authors>
+    <PackageLicenseUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Description>
+      An API for Spotify's Web API, written in .NET
+
+      For more infos, visit https://github.com/JohnnyCrazy/SpotifyAPI-NET
+    </Description>
+    <PackageTags>
+      spotify api music .net c# spotify-client
+    </PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,12 +29,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2">
+      <PrivateAssets>None</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-  </ItemGroup>
-
 </Project>
