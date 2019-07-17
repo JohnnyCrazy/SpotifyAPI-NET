@@ -15,6 +15,8 @@ namespace SpotifyAPI.Web.Auth
     public class AuthorizationCodeAuth : SpotifyAuthServer<AuthorizationCode>
     {
         public string SecretId { get; set; }
+        
+        public ProxyConfig ProxyConfig { get; set; }
 
         public AuthorizationCodeAuth(string redirectUri, string serverUri, Scope scope = Scope.None, string state = "")
             : base("code", "AuthorizationCodeAuth", redirectUri, serverUri, scope, state)
@@ -53,7 +55,8 @@ namespace SpotifyAPI.Web.Auth
                 new KeyValuePair<string, string>("refresh_token", refreshToken)
             };
 
-            HttpClient client = new HttpClient();
+            HttpClientHandler handler = ProxyConfig.CreateClientHandler(ProxyConfig);
+            HttpClient client = new HttpClient(handler);
             client.DefaultRequestHeaders.Add("Authorization", GetAuthHeader());
             HttpContent content = new FormUrlEncodedContent(args);
 

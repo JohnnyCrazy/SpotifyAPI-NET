@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
 
 namespace SpotifyAPI.Web
 {
@@ -72,6 +73,25 @@ namespace SpotifyAPI.Web
             proxy.Credentials = new NetworkCredential(Username, Password);
 
             return proxy;
+        }
+        
+        public static HttpClientHandler CreateClientHandler(ProxyConfig proxyConfig = null)
+        {
+            HttpClientHandler clientHandler = new HttpClientHandler
+            {
+                PreAuthenticate = false,
+                UseDefaultCredentials = true,
+                UseProxy = false
+            };
+
+            if (string.IsNullOrWhiteSpace(proxyConfig?.Host)) return clientHandler;
+            WebProxy proxy = proxyConfig.CreateWebProxy();
+            clientHandler.UseProxy = true;
+            clientHandler.Proxy = proxy;
+            clientHandler.UseDefaultCredentials = proxy.UseDefaultCredentials;
+            clientHandler.PreAuthenticate = proxy.UseDefaultCredentials;
+
+            return clientHandler;
         }
     }
 }

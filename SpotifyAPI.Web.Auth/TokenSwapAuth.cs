@@ -22,30 +22,34 @@ namespace SpotifyAPI.Web.Auth
     /// </summary>
     public class TokenSwapAuth : SpotifyAuthServer<AuthorizationCode>
     {
-        string exchangeServerUri;
+        readonly string _exchangeServerUri;
 
         /// <summary>
         /// The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.
         /// </summary>
         public string HtmlResponse { get; set; } = "<script>window.close();</script>";
+
         /// <summary>
         /// If true, will time how long it takes for access to expire. On expiry, the <see cref="OnAccessTokenExpired"/> event fires.
         /// </summary>
         public bool TimeAccessExpiry { get; set; }
+
+        public ProxyConfig ProxyConfig { get; set; }
 
         /// <param name="exchangeServerUri">The URI to an exchange server that will perform the key exchange.</param>
         /// <param name="serverUri">The URI to host the server at that your exchange server should return the authorization code to by GET request. (e.g. http://localhost:4002)</param>
         /// <param name="scope"></param>
         /// <param name="state">Stating none will randomly generate a state parameter.</param>
         /// <param name="htmlResponse">The HTML to respond with when the callback server (serverUri) is reached. The default value will close the window on arrival.</param>
-        public TokenSwapAuth(string exchangeServerUri, string serverUri, Scope scope = Scope.None, string state = "", string htmlResponse = "") : base("code", "", "", serverUri, scope, state)
+        public TokenSwapAuth(string exchangeServerUri, string serverUri, Scope scope = Scope.None, string state = "",
+            string htmlResponse = "") : base("code", "", "", serverUri, scope, state)
         {
             if (!string.IsNullOrEmpty(htmlResponse))
             {
                 HtmlResponse = htmlResponse;
             }
 
-            this.exchangeServerUri = exchangeServerUri;
+            _exchangeServerUri = exchangeServerUri;
         }
 
         protected override void AdaptWebServer(WebServer webServer)
@@ -55,7 +59,7 @@ namespace SpotifyAPI.Web.Auth
 
         public override string GetUri()
         {
-            StringBuilder builder = new StringBuilder(exchangeServerUri);
+            StringBuilder builder = new StringBuilder(_exchangeServerUri);
             builder.Append("?");
             builder.Append("response_type=code");
             builder.Append("&state=" + State);
@@ -63,8 +67,6 @@ namespace SpotifyAPI.Web.Auth
             builder.Append("&show_dialog=" + ShowDialog);
             return Uri.EscapeUriString(builder.ToString());
         }
-
-        static readonly HttpClient httpClient = new HttpClient();
 
         /// <summary>
         /// The maximum amount of times to retry getting a token.
@@ -85,18 +87,22 @@ namespace SpotifyAPI.Web.Auth
         /// <param name="refreshToken">This needs to be defined if "grantType" is "refresh_token".</param>
         /// <param name="currentRetries">Does not need to be defined. Used internally for retry attempt recursion.</param>
         /// <returns>Attempts to return a full <see cref="Token"/>, but after retry attempts, may return a <see cref="Token"/> with no <see cref="Token.AccessToken"/>, or null.</returns>
-        async Task<Token> GetToken(string grantType, string authorizationCode = "", string refreshToken = "", int currentRetries = 0)
+        async Task<Token> GetToken(string grantType, string authorizationCode = "", string refreshToken = "",
+            int currentRetries = 0)
         {
-            var content = new FormUrlEncodedContent(new Dictionary<string, string>
-                {
-                    { "grant_type", grantType },
-                    { "code", authorizationCode },
-                    { "refresh_token", refreshToken }
-                });
+            FormUrlEncodedContent content = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                {"grant_type", grantType},
+                {"code", authorizationCode},
+                {"refresh_token", refreshToken}
+            });
 
             try
             {
-                var siteResponse = await httpClient.PostAsync(exchangeServerUri, content);
+                HttpClientHandler handler = ProxyConfig.CreateClientHandler(ProxyConfig);
+                HttpClient client = new HttpClient(handler);
+                HttpResponseMessage siteResponse = await client.PostAsync(_exchangeServerUri, content);
+
                 Token token = JsonConvert.DeserializeObject<Token>(await siteResponse.Content.ReadAsStringAsync());
                 // Don't need to check if it was null - if it is, it will resort to the catch block.
                 if (!token.HasError() && !string.IsNullOrEmpty(token.AccessToken))
@@ -104,7 +110,9 @@ namespace SpotifyAPI.Web.Auth
                     return token;
                 }
             }
-            catch { }
+            catch
+            {
+            }
 
             if (currentRetries >= MaxGetTokenRetries)
             {
@@ -120,7 +128,8 @@ namespace SpotifyAPI.Web.Auth
             }
         }
 
-        System.Timers.Timer accessTokenExpireTimer;
+        System.Timers.Timer _accessTokenExpireTimer;
+
         /// <summary>
         /// When Spotify authorization has expired. Will only trigger if <see cref="TimeAccessExpiry"/> is true.
         /// </summary>
@@ -134,19 +143,19 @@ namespace SpotifyAPI.Web.Auth
         {
             if (!TimeAccessExpiry) return;
 
-            if (accessTokenExpireTimer != null)
+            if (_accessTokenExpireTimer != null)
             {
-                accessTokenExpireTimer.Stop();
-                accessTokenExpireTimer.Dispose();
+                _accessTokenExpireTimer.Stop();
+                _accessTokenExpireTimer.Dispose();
             }
 
-            accessTokenExpireTimer = new System.Timers.Timer
+            _accessTokenExpireTimer = new System.Timers.Timer
             {
                 Enabled = true,
                 Interval = token.ExpiresIn * 1000,
                 AutoReset = false
             };
-            accessTokenExpireTimer.Elapsed += (sender, e) => OnAccessTokenExpired?.Invoke(this, EventArgs.Empty);
+            _accessTokenExpireTimer.Elapsed += (sender, e) => OnAccessTokenExpired?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -161,6 +170,7 @@ namespace SpotifyAPI.Web.Auth
             {
                 SetAccessExpireTimer(token);
             }
+
             return token;
         }
 
@@ -176,6 +186,7 @@ namespace SpotifyAPI.Web.Auth
             {
                 SetAccessExpireTimer(token);
             }
+
             return token;
         }
     }
@@ -204,7 +215,7 @@ namespace SpotifyAPI.Web.Auth
                 Code = code,
                 Error = error
             }));
-            return HttpContext.HtmlResponseAsync(((TokenSwapAuth)auth).HtmlResponse);
+            return HttpContext.HtmlResponseAsync(((TokenSwapAuth) auth).HtmlResponse);
         }
     }
 }

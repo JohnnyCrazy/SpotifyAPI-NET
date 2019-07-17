@@ -20,7 +20,7 @@ namespace SpotifyAPI.Web
 
         public SpotifyWebClient(ProxyConfig proxyConfig = null)
         {
-            HttpClientHandler clientHandler = CreateClientHandler(proxyConfig);
+            HttpClientHandler clientHandler = ProxyConfig.CreateClientHandler(proxyConfig);
             _client = new HttpClient(clientHandler);
         }
 
@@ -199,25 +199,6 @@ namespace SpotifyAPI.Web
             {
                 _client.DefaultRequestHeaders.TryAddWithoutValidation(headerPair.Key, headerPair.Value);
             }
-        }
-
-        private static HttpClientHandler CreateClientHandler(ProxyConfig proxyConfig = null)
-        {
-            HttpClientHandler clientHandler = new HttpClientHandler
-            {
-                PreAuthenticate = false,
-                UseDefaultCredentials = true,
-                UseProxy = false
-            };
-
-            if (string.IsNullOrWhiteSpace(proxyConfig?.Host)) return clientHandler;
-            WebProxy proxy = proxyConfig.CreateWebProxy();
-            clientHandler.UseProxy = true;
-            clientHandler.Proxy = proxy;
-            clientHandler.UseDefaultCredentials = proxy.UseDefaultCredentials;
-            clientHandler.PreAuthenticate = proxy.UseDefaultCredentials;
-
-            return clientHandler;
         }
     }
 }
