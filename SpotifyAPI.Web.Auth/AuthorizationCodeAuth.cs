@@ -55,16 +55,9 @@ namespace SpotifyAPI.Web.Auth
                 new KeyValuePair<string, string>("refresh_token", refreshToken)
             };
 
-            HttpClientHandler handler = ProxyConfig.CreateClientHandler(ProxyConfig);
-            HttpClient client = new HttpClient(handler);
-            client.DefaultRequestHeaders.Add("Authorization", GetAuthHeader());
-            HttpContent content = new FormUrlEncodedContent(args);
-
-            HttpResponseMessage resp = await client.PostAsync("https://accounts.spotify.com/api/token", content);
-            string msg = await resp.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<Token>(msg);
+            return await GetToken(args);
         }
+
         public async Task<Token> ExchangeCode(string code)
         {
             List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>
@@ -74,7 +67,13 @@ namespace SpotifyAPI.Web.Auth
                 new KeyValuePair<string, string>("redirect_uri", RedirectUri)
             };
 
-            HttpClient client = new HttpClient();
+            return await GetToken(args);
+        }
+
+        private async Task<Token> GetToken(IEnumerable<KeyValuePair<string, string>> args)
+        {
+            HttpClientHandler handler = ProxyConfig.CreateClientHandler(ProxyConfig);
+            HttpClient client = new HttpClient(handler);
             client.DefaultRequestHeaders.Add("Authorization", GetAuthHeader());
             HttpContent content = new FormUrlEncodedContent(args);
 
