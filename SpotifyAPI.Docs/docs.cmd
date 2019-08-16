@@ -1,10 +1,11 @@
 if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" (
   if "%APPVEYOR_REPO_BRANCH%" == "master" (
     echo Building docs...
-    pip install "mkdocs<=0.16.3"
+    powershell Install-Product node $env:NODEJS_VERSION
 
     cd ./SpotifyAPI.Docs
-    mkdocs build --clean
+    yarn
+    yarn run build
 
     mkdir deploy
     cd deploy
@@ -15,7 +16,7 @@ if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" (
     git clone --quiet --branch=gh-pages https://%GH_TOKEN%@github.com/JohnnyCrazy/SpotifyAPI-NET gh-pages
     cd gh-pages
     git rm -qrf .
-    xcopy ..\..\site .\ /s /e /y
+    xcopy ..\..\docs\.vuepress\dist .\ /s /e /y
     git add -A
     git commit -m "Built docs | AppVeyor Build %APPVEYOR_BUILD_NUMBER%"
     git push -fq origin gh-pages

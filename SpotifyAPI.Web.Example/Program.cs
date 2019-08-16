@@ -35,12 +35,17 @@ namespace SpotifyAPI.Web.Example
 
             Console.ReadLine();
             auth.Stop(0);
+            
+            
+
         }
 
         private static async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
         {
             AuthorizationCodeAuth auth = (AuthorizationCodeAuth) sender;
             auth.Stop();
+            
+            
 
             Token token = await auth.ExchangeCode(payload.Code);
             SpotifyWebAPI api = new SpotifyWebAPI
@@ -52,7 +57,7 @@ namespace SpotifyAPI.Web.Example
         }
 
         private static async void PrintUsefulData(SpotifyWebAPI api)
-        {
+        { 
             PrivateProfile profile = await api.GetPrivateProfileAsync();
             string name = string.IsNullOrEmpty(profile.DisplayName) ? profile.Id : profile.DisplayName;
             Console.WriteLine($"Hello there, {name}!");

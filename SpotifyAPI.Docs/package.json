@@ -1,0 +1,16 @@
+{
+  "name": "SpotifyAPI.Docs",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/JohnnyCrazy/SpotifyAPI-NET",
+  "author": "Jonas Dellinger",
+  "license": "CUSTOM",
+  "private": true,
+  "devDependencies": {
+    "vuepress": "^1.0.3"
+  },
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  }
+}
