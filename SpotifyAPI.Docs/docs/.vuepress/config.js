@@ -1,6 +1,7 @@
 module.exports = {
   title: 'SpotifyAPI-NET',
-  description: ':sound: An API for the Spotify-Client and the Spotify Web API, written in C#/.NET',
+  base: '/SpotifyAPI-NET/',
+  description: '🔉 An API for the Spotify-Client and the Spotify Web API, written in C#/.NET',
   themeConfig: {
     repo: 'JohnnyCrazy/SpotifyAPI-NET',
     repoLabel: '🚀 GitHub',
