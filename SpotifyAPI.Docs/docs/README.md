@@ -40,7 +40,7 @@ Install-Package SpotifyAPI.Web.Auth
 
 > Display and control songs from the Windows taskbar
 
-### [rocksmith-custom-song-toolkit](https://github.com/catara/rocksmith-custom-song-toolkit) by [@dsafa](https://github.com/catara)
+### [rocksmith-custom-song-toolkit](https://github.com/catara/rocksmith-custom-song-toolkit) by [@catara](https://github.com/catara)
 
 > MASS Manipulation of Rocksmith DLC Library
 
