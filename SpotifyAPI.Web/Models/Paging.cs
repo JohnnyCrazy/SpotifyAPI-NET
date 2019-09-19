@@ -33,7 +33,7 @@ namespace SpotifyAPI.Web.Models
 
         public bool HasPreviousPage()
         {
-            return Next != null;
+            return Previous != null;
         }
     }
 }
