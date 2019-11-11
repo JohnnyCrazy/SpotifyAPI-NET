@@ -37,3 +37,19 @@ static async void Main(string[] args)
     auth.OpenBrowser();
 }
 ```
+
+## Token Refresh
+
+Once the `AccessToken` is expired, you can use your `RefreshToken` to get a new one. 
+In this procedure, no HTTP Server is needed in the background and a single HTTP Request is made.
+
+```csharp
+// Auth code from above
+
+if(token.IsExpired())
+{
+  Token newToken = await auth.RefreshToken(token.RefreshToken);
+  api.AccessToken = newToken.AccessToken
+  api.TokenType = newToken.TokenType
+}
+```

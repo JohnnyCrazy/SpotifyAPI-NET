@@ -20,9 +20,9 @@ Now you can start with the user-authentication, Spotify provides 3 ways (4 if yo
 
 * [TokenSwapAuth](/auth/token_swap.md) (**Recommended**, server-side code mandatory, most secure method. The necessary code is shown here so you do not have to code it yourself.)
 
-* [AutorizationCodeAuth](/auth/autorization_code.md) (Not recommended, server-side code needed, else it's unsecure)
+* [AutorizationCodeAuth](/auth/authorization_code.md) (Not recommended, server-side code needed, else it's unsecure)
 
-* [ClientCredentialsAuth](/auth/client_credentials_auth.md) (Not recommended, server-side code needed, else it's unsecure)
+* [ClientCredentialsAuth](/auth/client_credentials.md) (Not recommended, server-side code needed, else it's unsecure)
 
 Overview:
 ![Overview](http://i.imgur.com/uf3ahTl.png)
