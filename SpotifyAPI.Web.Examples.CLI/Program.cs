@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 
-namespace SpotifyAPI.Web.Example
+namespace SpotifyAPI.Web.Examples.CLI
 {
     internal static class Program
     {
@@ -11,7 +12,7 @@ namespace SpotifyAPI.Web.Example
         private static string _secretId = ""; //"";
 
         // ReSharper disable once UnusedParameter.Local
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             _clientId = string.IsNullOrEmpty(_clientId)
                 ? Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID")
@@ -26,7 +27,7 @@ namespace SpotifyAPI.Web.Example
             Console.WriteLine(
                 "Tip: If you want to supply your ClientID and SecretId beforehand, use env variables (SPOTIFY_CLIENT_ID and SPOTIFY_SECRET_ID)");
 
-            AuthorizationCodeAuth auth =
+            var auth =
                 new AuthorizationCodeAuth(_clientId, _secretId, "http://localhost:4002", "http://localhost:4002",
                     Scope.PlaylistReadPrivate | Scope.PlaylistReadCollaborative);
             auth.AuthReceived += AuthOnAuthReceived;
@@ -42,38 +43,35 @@ namespace SpotifyAPI.Web.Example
 
         private static async void AuthOnAuthReceived(object sender, AuthorizationCode payload)
         {
-            AuthorizationCodeAuth auth = (AuthorizationCodeAuth) sender;
+            var auth = (AuthorizationCodeAuth) sender;
             auth.Stop();
-            
-            
 
             Token token = await auth.ExchangeCode(payload.Code);
-            SpotifyWebAPI api = new SpotifyWebAPI
+            var api = new SpotifyWebAPI
             {
                 AccessToken = token.AccessToken,
                 TokenType = token.TokenType
             };
-            PrintUsefulData(api);
+            await PrintUsefulData(api);
         }
 
-        private static async void PrintUsefulData(SpotifyWebAPI api)
+        private static async Task PrintAllPlaylistTracks(SpotifyWebAPI api, Paging<SimplePlaylist> playlists)
+        {
+            if (playlists.Items == null) return;
+            
+            playlists.Items.ForEach(playlist => Console.WriteLine($"- {playlist.Name}"));
+            if(playlists.HasNextPage())
+                await PrintAllPlaylistTracks(api, await api.GetNextPageAsync(playlists));
+        }
+
+        private static async Task PrintUsefulData(SpotifyWebAPI api)
         { 
             PrivateProfile profile = await api.GetPrivateProfileAsync();
             string name = string.IsNullOrEmpty(profile.DisplayName) ? profile.Id : profile.DisplayName;
             Console.WriteLine($"Hello there, {name}!");
 
             Console.WriteLine("Your playlists:");
-            Paging<SimplePlaylist> playlists = await api.GetUserPlaylistsAsync(profile.Id);
-            do
-            {
-                playlists.Items.ForEach(playlist =>
-                {
-                    Console.WriteLine($"- {playlist.Name}");
-                });
-                playlists = await api.GetNextPageAsync(playlists);
-            } while (playlists.HasNextPage());
-
-
+            await PrintAllPlaylistTracks(api, api.GetUserPlaylists(profile.Id));
         }
     }
 }
