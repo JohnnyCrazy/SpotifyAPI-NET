@@ -23,11 +23,7 @@ namespace SpotifyAPI.Web.Examples.ASP
             services.AddControllersWithViews();
 
             services.AddAuthentication(o => o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/signin";
-                    options.LogoutPath = "/signout";
-                })
+                .AddCookie()
                 .AddSpotify(options =>
                 {
                     var scopes = Scope.UserLibraryRead;
