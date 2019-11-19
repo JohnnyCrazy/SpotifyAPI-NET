@@ -1,39 +1,15 @@
-﻿ @model HomeModel
- @using System.Security.Claims 
- @using Microsoft.AspNetCore.Authentication
- @{
+﻿@model IndexModel
+@{
     ViewData["Title"] = "Home Page";
- }
- 
-  <h2>Some Playlists (first 20)</h2>
- 
-  @if (Model.Playlists != null && !Model.Playlists.HasError())
- {
-     <dl>
-         @foreach (var playlist in Model.Playlists.Items)
-         {
-             <dt>@playlist.Name</dt>
-             <dd>@(playlist.Owner.DisplayName ?? playlist.Owner.Id)</dd>
-         }
-     </dl>
- }
+}
 
- <h2>HttpContext.User.Claims</h2>
+<div class="text-center">
+    You have @Model.SavedTracks.Total saved tracks in your library! Here are 50 of them:
 
-<dl>
-    @foreach (Claim claim in User.Claims)
-    {
-        <dt>@claim.Type</dt>
-        <dd>@claim.Value</dd>
-    }
-</dl>
-
-<h2>AuthenticationProperties</h2>
-
- <dl>
-     @foreach (var prop in (await Context.AuthenticateAsync()).Properties.Items)
-     {
-         <dt>@prop.Key</dt>
-         <dd>@prop.Value</dd>
-     }
- </dl>
+    <ul>
+      @foreach (var item in Model.SavedTracks.Items)
+      {
+        <li>@item.Track.Name</li>
+      }
+    </ul>
+</div>

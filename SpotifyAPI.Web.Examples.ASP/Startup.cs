@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using EnvironmentName = Microsoft.AspNetCore.Hosting.EnvironmentName;
+using SpotifyAPI.Web.Enums;
 
 namespace SpotifyAPI.Web.Examples.ASP
 {
     public class Startup
     {
-        private const string CookieScheme = "YourSchemeName";
-        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,25 +20,24 @@ namespace SpotifyAPI.Web.Examples.ASP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            
-            services
-                .AddAuthentication(CookieScheme) // Sets the default scheme to cookies
-                .AddCookie(CookieScheme, options =>
+            services.AddControllersWithViews();
+
+            services.AddAuthentication(o => o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
                 {
-                    options.LoginPath = "/auth/login";
+                    options.LoginPath = "/signin";
+                    options.LogoutPath = "/signout";
+                })
+                .AddSpotify(options =>
+                {
+                    var scopes = Scope.UserLibraryRead;
+                    options.Scope.Add(scopes.GetStringAttribute(","));
+
+                    options.SaveTokens = true;
+                    options.ClientId = Configuration["client_id"];
+                    options.ClientSecret = Configuration["client_secret"];
+                    options.CallbackPath = "/callback";
                 });
-
-
-
-            services
-                .AddMvc(options => options.EnableEndpointRouting = false)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,23 +49,23 @@ namespace SpotifyAPI.Web.Examples.ASP
             }
             else
             {
-                app.UseHttpsRedirection();
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-                app.UseHttpsRedirection();
             }
-
-            
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+
+            app.UseRouting();
 
             app.UseAuthentication();
-            app.UseMvc(routes =>
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -2,10 +2,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <UserSecretsId>52b27bb1-dc8f-4151-8ad6-b6efdb8edbb7</UserSecretsId>
+    <UserSecretsId>201e6943-a5b3-473c-b1da-a579b36ca283</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SpotifyAPI.Web.Auth\SpotifyAPI.Web.Auth.csproj" />
+    <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="3.0.0" />
   </ItemGroup>
 </Project>

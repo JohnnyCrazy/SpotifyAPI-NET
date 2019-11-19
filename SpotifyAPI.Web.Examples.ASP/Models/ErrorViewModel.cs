@@ -7,7 +7,5 @@ namespace SpotifyAPI.Web.Examples.ASP.Models
         public string RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-        
-        public string Message { get; set; }
     }
 }
