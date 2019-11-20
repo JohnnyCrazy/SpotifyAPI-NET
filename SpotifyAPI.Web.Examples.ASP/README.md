@@ -6,8 +6,10 @@ This project provides an example ASP .NET Core Web Application, which utilizes `
 
 Most of the important configuration is inside of `Startup.cs`. It reads the `client_id` and `client_secret` from the configration store, so make sure you run the following commands in the project directory:
 
-`dotnet user-secrets set client_secret YOUR_CLIENT_SECRET`
-`dotnet user-secrets set client_id YOUR_CLIENT_ID`
+```
+dotnet user-secrets set client_secret YOUR_CLIENT_SECRET
+dotnet user-secrets set client_id YOUR_CLIENT_ID
+```
 
 Also, it specifies the callback URL (`/callback`). This has to be registered in your Spotify App Settings (`http://localhost:5000/callback`)
 
