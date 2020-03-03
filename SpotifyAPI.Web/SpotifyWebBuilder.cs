@@ -396,45 +396,38 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Add the current user as a follower of a playlist.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">
         ///     The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private
         ///     status, as long as you know its playlist ID.
         /// </param>
-        /// <param name="showPublic">
-        ///     If true the playlist will be included in user's public playlists, if false it will remain
-        ///     private.
-        /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string FollowPlaylist(string ownerId, string playlistId, bool showPublic = true)
+        public string FollowPlaylist(string playlistId)
         {
-            return $"{APIBase}/users/{ownerId}/playlists/{playlistId}/followers";
+            return $"{APIBase}/playlists/{playlistId}/followers";
         }
 
         /// <summary>
         ///     Remove the current user as a follower of a playlist.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string UnfollowPlaylist(string ownerId, string playlistId)
+        public string UnfollowPlaylist(string playlistId)
         {
-            return $"{APIBase}/users/{ownerId}/playlists/{playlistId}/followers";
+            return $"{APIBase}/playlists/{playlistId}/followers";
         }
 
         /// <summary>
         ///     Check to see if one or more Spotify users are following a specified playlist.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist.</param>
         /// <param name="ids">A list of Spotify User IDs</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public string IsFollowingPlaylist(string ownerId, string playlistId, List<string> ids)
+        public string IsFollowingPlaylist(string playlistId, List<string> ids)
         {
-            return $"{APIBase}/users/{ownerId}/playlists/{playlistId}/followers/contains?ids={string.Join(",", ids)}";
+            return $"{APIBase}/playlists/{playlistId}/followers/contains?ids={string.Join(",", ids)}";
         }
 
         #endregion Follow
