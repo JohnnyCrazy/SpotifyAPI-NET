@@ -822,7 +822,6 @@ namespace SpotifyAPI.Web
         /// <summary>
         ///     Add the current user as a follower of a playlist.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">
         ///     The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private
         ///     status, as long as you know its playlist ID.
@@ -839,13 +838,12 @@ namespace SpotifyAPI.Web
             {
                 {"public", showPublic}
             };
-            return UploadData<ErrorResponse>(_builder.FollowPlaylist(ownerId, playlistId, showPublic), body.ToString(Formatting.None), "PUT");
+            return UploadData<ErrorResponse>(_builder.FollowPlaylist(playlistId), body.ToString(Formatting.None), "PUT");
         }
 
         /// <summary>
         ///     Add the current user as a follower of a playlist asynchronously.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">
         ///     The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private
         ///     status, as long as you know its playlist ID.
@@ -856,25 +854,24 @@ namespace SpotifyAPI.Web
         /// </param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public Task<ErrorResponse> FollowPlaylistAsync(string ownerId, string playlistId, bool showPublic = true)
+        public Task<ErrorResponse> FollowPlaylistAsync(string playlistId, bool showPublic = true)
         {
             JObject body = new JObject
             {
                 {"public", showPublic}
             };
-            return UploadDataAsync<ErrorResponse>(_builder.FollowPlaylist(ownerId, playlistId, showPublic), body.ToString(Formatting.None), "PUT");
+            return UploadDataAsync<ErrorResponse>(_builder.FollowPlaylist(playlistId), body.ToString(Formatting.None), "PUT");
         }
 
         /// <summary>
         ///     Remove the current user as a follower of a playlist.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ErrorResponse UnfollowPlaylist(string ownerId, string playlistId)
+        public ErrorResponse UnfollowPlaylist(string playlistId)
         {
-            return UploadData<ErrorResponse>(_builder.UnfollowPlaylist(ownerId, playlistId), "", "DELETE");
+            return UploadData<ErrorResponse>(_builder.UnfollowPlaylist(playlistId), "", "DELETE");
         }
 
         /// <summary>
@@ -884,69 +881,65 @@ namespace SpotifyAPI.Web
         /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public Task<ErrorResponse> UnfollowPlaylistAsync(string ownerId, string playlistId)
+        public Task<ErrorResponse> UnfollowPlaylistAsync(string playlistId)
         {
-            return UploadDataAsync<ErrorResponse>(_builder.UnfollowPlaylist(ownerId, playlistId), "", "DELETE");
+            return UploadDataAsync<ErrorResponse>(_builder.UnfollowPlaylist(playlistId), "", "DELETE");
         }
 
         /// <summary>
         ///     Check to see if one or more Spotify users are following a specified playlist.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist.</param>
         /// <param name="ids">A list of Spotify User IDs</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<bool> IsFollowingPlaylist(string ownerId, string playlistId, List<string> ids)
+        public ListResponse<bool> IsFollowingPlaylist(string playlistId, List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
 
-            string url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
+            string url = _builder.IsFollowingPlaylist(playlistId, ids);
             return DownloadList<bool>(url);
         }
 
         /// <summary>
         ///     Check to see if one or more Spotify users are following a specified playlist asynchronously.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist.</param>
         /// <param name="ids">A list of Spotify User IDs</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public Task<ListResponse<bool>> IsFollowingPlaylistAsync(string ownerId, string playlistId, List<string> ids)
+        public Task<ListResponse<bool>> IsFollowingPlaylistAsync(string playlistId, List<string> ids)
         {
             if (!UseAuth)
                 throw new InvalidOperationException("Auth is required for IsFollowingPlaylist");
 
-            string url = _builder.IsFollowingPlaylist(ownerId, playlistId, ids);
+            string url = _builder.IsFollowingPlaylist(playlistId, ids);
             return DownloadListAsync<bool>(url);
         }
 
         /// <summary>
         ///     Check to see if one or more Spotify users are following a specified playlist.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist.</param>
         /// <param name="id">A Spotify User ID</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public ListResponse<bool> IsFollowingPlaylist(string ownerId, string playlistId, string id)
+        public ListResponse<bool> IsFollowingPlaylist( string playlistId, string id)
         {
-            return IsFollowingPlaylist(ownerId, playlistId, new List<string> { id });
+            return IsFollowingPlaylist(playlistId, new List<string> { id });
         }
 
         /// <summary>
         ///     Check to see if one or more Spotify users are following a specified playlist asynchronously.
         /// </summary>
-        /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
         /// <param name="playlistId">The Spotify ID of the playlist.</param>
         /// <param name="id">A Spotify User ID</param>
         /// <returns></returns>
         /// <remarks>AUTH NEEDED</remarks>
-        public Task<ListResponse<bool>> IsFollowingPlaylistAsync(string ownerId, string playlistId, string id)
+        public Task<ListResponse<bool>> IsFollowingPlaylistAsync(string playlistId, string id)
         {
-            return IsFollowingPlaylistAsync(ownerId, playlistId, new List<string> { id });
+            return IsFollowingPlaylistAsync( playlistId, new List<string> { id });
         }
 
         #endregion Follow
