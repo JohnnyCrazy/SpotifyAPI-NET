@@ -217,3 +217,21 @@ ErrorResponse error = _spotify.SetVolume(50);
 ```csharp
 ErrorResponse error = _spotify.SetShuffle(false);
 ```
+
+---
+
+## AddToQueue
+> Add an Item to the User's Playback Queue. BETA.
+
+**Parameters**
+
+|Name|Description|Example|
+|--------------|-------------------------|-------------------------|
+|uri|The uri of the item to add to the queue. Must be a track or an episode uri.| `spotify:track:7zrCVKp6x0AtolOsn2iMif`
+|[deviceId]| The id of the device this command is targeting. If not supplied, the user's currently active device is the target. | `"XXXX-XXXX-XXXX-XXXX"`
+
+**Usage**
+
+```csharp
+ErrorResponse error = _spotify.AddToQueue("spotify:track:7zrCVKp6x0AtolOsn2iMif");
+```
