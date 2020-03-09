@@ -1,23 +1,23 @@
-﻿using Newtonsoft.Json;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web.Models
 {
-    public abstract class BasicModel
-    {
-        [JsonProperty("error")]
-        public Error Error { get; set; }
+  public abstract class BasicModel
+  {
+    [JsonProperty("error")]
+    public Error Error { get; set; }
 
-        private ResponseInfo _info;
+    private ResponseInfo _info;
 
-        public bool HasError() => Error != null;
+    public bool HasError() => Error != null;
 
-        internal void AddResponseInfo(ResponseInfo info) => _info = info;
+    internal void AddResponseInfo(ResponseInfo info) => _info = info;
 
-        public string Header(string key) => _info.Headers?.Get(key);
+    public string Header(string key) => _info.Headers?.Get(key);
 
-        public WebHeaderCollection Headers() => _info.Headers;
+    public WebHeaderCollection Headers() => _info.Headers;
 
-        public HttpStatusCode StatusCode() => _info.StatusCode;
-    }
+    public HttpStatusCode StatusCode() => _info.StatusCode;
+  }
 }

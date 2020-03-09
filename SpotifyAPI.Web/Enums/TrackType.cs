@@ -1,20 +1,20 @@
-﻿using System;
+using System;
 
 namespace SpotifyAPI.Web.Enums
 {
-    [Flags]
-    public enum TrackType
-    {
-        [String("track")]
-        Track = 1,
+  [Flags]
+  public enum TrackType
+  {
+    [String("track")]
+    Track = 1,
 
-        [String("episode")]
-        Episode = 2,
+    [String("episode")]
+    Episode = 2,
 
-        [String("ad")]
-        Ad = 4,
+    [String("ad")]
+    Ad = 4,
 
-        [String("unknown")]
-        Unknown = 8
-    }
+    [String("unknown")]
+    Unknown = 8
+  }
 }

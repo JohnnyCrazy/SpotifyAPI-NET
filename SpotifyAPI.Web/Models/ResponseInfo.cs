@@ -1,13 +1,13 @@
-﻿using System.Net;
+using System.Net;
 
 namespace SpotifyAPI.Web.Models
 {
-    public class ResponseInfo
-    {
-        public WebHeaderCollection Headers { get; set; }
+  public class ResponseInfo
+  {
+    public WebHeaderCollection Headers { get; set; }
 
-        public HttpStatusCode StatusCode { get; set; }
+    public HttpStatusCode StatusCode { get; set; }
 
-        public static readonly ResponseInfo Empty = new ResponseInfo();
-    }
+    public static readonly ResponseInfo Empty = new ResponseInfo();
+  }
 }
