@@ -7,7 +7,7 @@
   "license": "CUSTOM",
   "private": true,
   "devDependencies": {
-    "vuepress": "^1.2.0"
+    "vuepress": "^1.4.0"
   },
   "scripts": {
     "dev": "vuepress dev docs",
