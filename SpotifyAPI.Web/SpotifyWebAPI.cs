@@ -27,7 +27,7 @@ namespace SpotifyAPI.Web
         JsonSettings =
         new JsonSerializerSettings
         {
-        NullValueHandling = NullValueHandling.Ignore
+          NullValueHandling = NullValueHandling.Ignore
         }
       };
     }
@@ -83,7 +83,7 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///     Error codes that will trigger auto-retry if <see cref="UseAutoRetry"/> is enabled.
     /// </summary>
-    public IEnumerable<int> RetryErrorCodes { get; set; } = new [] { 500, 502, 503 };
+    public IEnumerable<int> RetryErrorCodes { get; set; } = new[] { 500, 502, 503 };
 
     #endregion Configuration
 
@@ -2873,7 +2873,7 @@ namespace SpotifyAPI.Web
     private int GetTooManyRequests(ResponseInfo info)
     {
       // 429 is "TooManyRequests" value specified in Spotify API
-      if (429 != (int) info.StatusCode)
+      if (429 != (int)info.StatusCode)
       {
         return -1;
       }
