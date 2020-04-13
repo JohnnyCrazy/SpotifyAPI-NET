@@ -5,6 +5,9 @@ namespace SpotifyAPI.Web.Models
 {
   public class SimpleTrack : BasicModel
   {
+    [JsonProperty("album")]
+    public SimpleAlbum Album { get; set; }
+
     [JsonProperty("artists")]
     public List<SimpleArtist> Artists { get; set; }
 
@@ -19,6 +22,9 @@ namespace SpotifyAPI.Web.Models
 
     [JsonProperty("explicit")]
     public bool Explicit { get; set; }
+       
+    [JsonProperty("external_ids")]
+    public Dictionary<string, string> ExternIds { get; set; }
 
     [JsonProperty("external_urls")]
     public Dictionary<string, string> ExternUrls { get; set; }
@@ -29,8 +35,17 @@ namespace SpotifyAPI.Web.Models
     [JsonProperty("id")]
     public string Id { get; set; }
 
+    [JsonProperty("is_playable")]
+    public bool IsPlayable { get; set; }
+
+    [JsonProperty("linked_from")]
+    public TrackLink LinkedFrom { get; set; }
+        
     [JsonProperty("name")]
     public string Name { get; set; }
+
+    [JsonProperty("popularity")]
+    public int Popularity { get; set; }
 
     [JsonProperty("preview_url")]
     public string PreviewUrl { get; set; }

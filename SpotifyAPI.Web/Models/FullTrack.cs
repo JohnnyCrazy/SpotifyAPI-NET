@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using SpotifyAPI.Web.Enums;
 using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web.Models
 {
-  public class FullTrack : BasicModel
+  public class FullTrack : BasicModel, IItem
   {
+    public TrackType ItemType => TrackType.Track;
+
     [JsonProperty("album")]
     public SimpleAlbum Album { get; set; }
 

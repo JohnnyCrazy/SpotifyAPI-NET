@@ -613,6 +613,54 @@ namespace SpotifyAPI.Web
 
     #endregion Browse
 
+    #region Episode
+    /// <summary>
+    ///    Get Spotify catalog information for a single episode identified by its unique Spotify ID.
+    /// </summary>
+    /// <param name="id">The Spotify ID for the episode.</param>
+    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+    /// <returns></returns>
+    public FullEpisode GetEpisode(string id, string market = "")
+    {
+        return DownloadData<FullEpisode>(_builder.GetEpisode(id, market));
+    }
+    /// <summary>
+    ///    Get Spotify catalog information for a single episode identified by its unique Spotify ID.
+    /// </summary>
+    /// <param name="id">The Spotify ID for the episode.</param>
+    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+    /// <returns></returns>
+    public Task<FullEpisode> GetEpisodeAsync(string id, string market = "")
+    {
+        return DownloadDataAsync<FullEpisode>(_builder.GetEpisode(id, market));
+    }
+
+    /// <summary>
+    ///    Get Spotify catalog information for multiple episodes based on their Spotify IDs.
+    /// </summary>
+    /// <param name="ids">A comma-separated list of the Spotify IDs for the episodes. Maximum: 50 IDs.</param>
+    /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code. If a country code is specified, only shows and episodes that are available in that market will be returned. If a valid user access token is specified in the request header, the country associated with the user account will take priority over this parameter. Note: If neither market or user country are provided, the content is considered unavailable for the client.Users can view the country that is associated with their account in the account settings.</param>
+    /// <returns></returns>
+    public ListResponse<FullEpisode> GetEpisodes(string id, string market = "")
+   {
+       return DownloadList<FullEpisode>(_builder.GetEpisode(id, market));
+   }
+
+    /// <summary>
+    ///    Get Spotify catalog information for multiple episodes based on their Spotify IDs.
+    /// </summary>
+    /// <param name="ids">A comma-separated list of the Spotify IDs for the episodes. Maximum: 50 IDs.</param>
+    /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code. If a country code is specified, only shows and episodes that are available in that market will be returned. If a valid user access token is specified in the request header, the country associated with the user account will take priority over this parameter. Note: If neither market or user country are provided, the content is considered unavailable for the client.Users can view the country that is associated with their account in the account settings.</param>
+    /// <returns></returns>
+    public Task<ListResponse<FullEpisode>> GetEpisodesAsync(string id, string market = "")
+    {
+        return DownloadListAsync<FullEpisode>(_builder.GetEpisode(id, market));
+    }
+
+   
+
+    #endregion Episode
+
     #region Follow
 
     /// <summary>
@@ -624,7 +672,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     /// <remarks>AUTH NEEDED</remarks>
     public FollowedArtists GetFollowedArtists(FollowType followType, int limit = 20, string after = "")
-    {
+{
       if (!UseAuth)
         throw new InvalidOperationException("Auth is required for GetFollowedArtists");
       return DownloadData<FollowedArtists>(_builder.GetFollowedArtists(limit, after));
@@ -2135,6 +2183,112 @@ namespace SpotifyAPI.Web
     }
 
     #endregion Profiles
+
+    #region Shows
+
+    /// <summary>
+    ///    Get Spotify catalog information for a single show identified by its unique Spotify ID.
+    /// </summary>
+    /// <param name="id">The Spotify ID for the show.</param>
+    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+    /// <returns></returns>
+    public SimpleShow GetShow(string id, string market = "")
+    {
+            return DownloadData<SimpleShow>(_builder.GetShow(RemovePrefix(id), market));
+    }
+
+    /// <summary>
+    ///    Get Spotify catalog information for a single show identified by its unique Spotify ID.
+    /// </summary>
+    /// <param name="id">The Spotify ID for the show.</param>
+    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+    /// <returns></returns>
+    public Task<SimpleShow> GetShowAsync(string id, string market = "")
+    {
+        return DownloadDataAsync<SimpleShow>(_builder.GetShow(RemovePrefix(id), market));
+    }
+
+
+    /// <summary>
+    ///    Get Spotify catalog information for multiple shows based on their Spotify IDs.
+    /// </summary>
+    /// <param name="ids">A comma-separated list of the Spotify IDs for the shows. Maximum: 50 IDs.</param>
+    /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code. If a country code is specified, only shows and episodes that are available in that market will be returned. If a valid user access token is specified in the request header, the country associated with the user account will take priority over this parameter. Note: If neither market or user country are provided, the content is considered unavailable for the client.Users can view the country that is associated with their account in the account settings.</param>
+    /// <returns></returns>
+    public Task<SeveralShows> GetShowsAsync(List<string> ids, string market = "")
+    {
+            return DownloadDataAsync<SeveralShows>(_builder.GetShows(RemovePrefix(ids), market));
+    }
+
+    /// <summary>
+    ///    Get Spotify catalog information for multiple shows based on their Spotify IDs.
+    /// </summary>
+    /// <param name="ids">A comma-separated list of the Spotify IDs for the shows. Maximum: 50 IDs.</param>
+    /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code. If a country code is specified, only shows and episodes that are available in that market will be returned. If a valid user access token is specified in the request header, the country associated with the user account will take priority over this parameter. Note: If neither market or user country are provided, the content is considered unavailable for the client.Users can view the country that is associated with their account in the account settings.</param>
+    /// <returns></returns>
+    public SeveralShows GetShows(List<string> ids, string market = "")
+    {
+        return DownloadData<SeveralShows>(_builder.GetShows(RemovePrefix(ids), market));
+    }
+
+    List<string> RemovePrefix(List<string> uris)
+    {
+        List<string> fixed_uris = new List<string>();
+        foreach (var uri in uris)
+        {
+            fixed_uris.Add(RemovePrefix(uri));
+        }
+        return fixed_uris;
+    }
+
+    string RemovePrefix(string uri)
+        {
+            if (uri.Contains("spotify:show:"))
+            {
+                return uri.Replace("spotify:show:", "");
+            } else if (uri.Contains("spotify:track:"))
+            {
+                return uri.Replace("spotify:track:", "");
+            }
+            else if (uri.Contains("spotify:album:"))
+            {
+                return uri.Replace("spotify:album:", "");
+            }
+            else if (uri.Contains("spotify:episode:"))
+            {
+                return uri.Replace("spotify:episode:", "");
+            }
+            else
+                return uri;
+        }
+
+    /// <summary>
+    ///    Get Spotify catalog information about an show’s episodes. Optional parameters can be used to limit the number of episodes returned.
+    /// </summary>
+    /// <param name="id">A list of the Spotify IDs for the tracks. Maximum: 50 IDs.</param>
+    /// <param name="limit">The maximum number of episodes to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+    /// <param name="offset">The index of the first episode to return. Default: 0 (the first object). Use with limit to get the next set of episodes.</param>
+    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+    /// <returns></returns>
+    public Paging<SimpleEpisode> GetShowEpisodes(string id, int limit = 20, int offset = 0, string market = "")
+    {        
+        return DownloadData<Paging<SimpleEpisode>>(_builder.GetShowEpisodes(RemovePrefix(id), limit, offset, market));
+    }
+
+    /// <summary>
+    ///    Get Spotify catalog information about an show’s episodes. Optional parameters can be used to limit the number of episodes returned.
+    /// </summary>
+    /// <param name="id">A list of the Spotify IDs for the tracks. Maximum: 50 IDs.</param>
+    /// <param name="limit">The maximum number of episodes to return. Default: 20. Minimum: 1. Maximum: 50.</param>
+    /// <param name="offset">The index of the first episode to return. Default: 0 (the first object). Use with limit to get the next set of episodes.</param>
+    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+    /// <returns></returns>
+    public Task<Paging<FullEpisode>> GetShowEpisodesAsync(string id, int limit = 20, int offset = 0, string market = "")
+    {
+        return DownloadDataAsync<Paging<FullEpisode>>(_builder.GetShowEpisodes(RemovePrefix(id), limit, offset, market));
+    }
+
+    #endregion Shows
 
     #region Tracks
 
