@@ -56,7 +56,8 @@ namespace SpotifyAPI.Web.Models
     public PublicProfile AddedBy { get; set; }
 
     [JsonProperty("track")]
-    public FullTrack Track { get; set; }
+    [JsonConverter(typeof(PlaylistTrackConverter))]
+    public IItem Track { get; set; }
 
     [JsonProperty("is_local")]
     public bool IsLocal { get; set; }

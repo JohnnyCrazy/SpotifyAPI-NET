@@ -2269,6 +2269,10 @@ namespace SpotifyAPI.Web
             {
                 return uri.Replace("spotify:episode:", "");
             }
+            else if (uri.Contains("spotify:playlist:"))
+            {
+                return uri.Replace("spotify:playlist:", "");
+            }
             else
                 return uri;
         }

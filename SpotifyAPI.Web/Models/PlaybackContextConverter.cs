@@ -20,13 +20,16 @@ namespace SpotifyAPI.Web.Models
             // Create an instance of MyClass, and set property as per "isFoo".
             var obj = new PlaybackContext();
 
-            if (token["currently_playing_type"].Value<string>() == "track")
+            if (token["currently_playing_type"] != null)
             {
-                obj.Item = new FullTrack();
-            }
-            else if (token["currently_playing_type"].Value<string>() == "episode")
-            {
-                obj.Item = new FullEpisode();
+                if (token["currently_playing_type"].Value<string>() == "track")
+                {
+                    obj.Item = new FullTrack();
+                }
+                else if (token["currently_playing_type"].Value<string>() == "episode")
+                {
+                    obj.Item = new FullEpisode();
+                }
             }
 
             // Populate properties

@@ -761,9 +761,10 @@ namespace SpotifyAPI.Web
     /// <param name="limit">The maximum number of tracks to return. Default: 100. Minimum: 1. Maximum: 100.</param>
     /// <param name="offset">The index of the first object to return. Default: 0 (i.e., the first object)</param>
     /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
+    /// <param name="additional_types">A comma-separated list of item types that your client supports besides the default track type. Valid types are: track and episode. An unsupported type in the response is expected to be represented as null value in the item field. Note: This parameter was introduced to allow existing clients to maintain their current behaviour and might be deprecated in the future. In addition to providing this parameter, make sure that your client properly handles cases of new types in the future by checking against the currently_playing_type field..</param>
     /// <returns></returns>
     /// <remarks>AUTH NEEDED</remarks>
-    public string GetPlaylistTracks(string playlistId, string fields = "", int limit = 100, int offset = 0, string market = "")
+    public string GetPlaylistTracks(string playlistId, string fields = "", int limit = 100, int offset = 0, string market = "", string additional_types = "track,episode")
     {
       limit = Math.Min(limit, 100);
       StringBuilder builder = new StringBuilder(APIBase + "/playlists/" + playlistId + "/tracks");
@@ -771,7 +772,13 @@ namespace SpotifyAPI.Web
       builder.Append("&limit=" + limit);
       builder.Append("&offset=" + offset);
       if (!string.IsNullOrEmpty(market))
-        builder.Append("&market=" + market);
+      {
+          builder.Append("&market=" + market);
+      }
+      if (!string.IsNullOrEmpty(additional_types))
+      {
+          builder.Append("&additional_types=" + additional_types);
+      }
       return builder.ToString();
     }
 
