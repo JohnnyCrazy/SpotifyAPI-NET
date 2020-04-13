@@ -2194,7 +2194,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public SimpleShow GetShow(string id, string market = "")
     {
-            return DownloadData<SimpleShow>(_builder.GetShow(RemovePrefix(id), market));
+            return DownloadData<SimpleShow>(_builder.GetShow(id, market));
     }
 
     /// <summary>
@@ -2205,7 +2205,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Task<SimpleShow> GetShowAsync(string id, string market = "")
     {
-        return DownloadDataAsync<SimpleShow>(_builder.GetShow(RemovePrefix(id), market));
+        return DownloadDataAsync<SimpleShow>(_builder.GetShow(id, market));
     }
 
 
@@ -2217,7 +2217,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Task<SeveralShows> GetShowsAsync(List<string> ids, string market = "")
     {
-            return DownloadDataAsync<SeveralShows>(_builder.GetShows(RemovePrefix(ids), market));
+            return DownloadDataAsync<SeveralShows>(_builder.GetShows(ids, market));
     }
 
     /// <summary>
@@ -2228,10 +2228,15 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public SeveralShows GetShows(List<string> ids, string market = "")
     {
-        return DownloadData<SeveralShows>(_builder.GetShows(RemovePrefix(ids), market));
+        return DownloadData<SeveralShows>(_builder.GetShows(ids, market));
     }
 
-    List<string> RemovePrefix(List<string> uris)
+    /// <summary>
+    ///    A Helper function that removes the spotify:XXX: prefix for several uris.
+    /// </summary>
+    /// <param name="uris">A list of full spotify uris</param>
+    /// <returns>A list of uris without the spotify prefix.</returns>
+    public List<string> RemovePrefix(List<string> uris)
     {
         List<string> fixed_uris = new List<string>();
         foreach (var uri in uris)
@@ -2241,7 +2246,13 @@ namespace SpotifyAPI.Web
         return fixed_uris;
     }
 
-    string RemovePrefix(string uri)
+    /// <summary>
+    ///    A Helper function that removes the spotify:XXX: prefix for a single uri.
+    /// </summary>
+    /// <param name="uri">A spotify uri (e.g.,spotify:XXX:YYY). </param>
+    /// <returns>Uri without the prefix (e.g. YYY).</returns>
+ 
+    public string RemovePrefix(string uri)
         {
             if (uri.Contains("spotify:show:"))
             {
@@ -2272,7 +2283,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Paging<SimpleEpisode> GetShowEpisodes(string id, int limit = 20, int offset = 0, string market = "")
     {        
-        return DownloadData<Paging<SimpleEpisode>>(_builder.GetShowEpisodes(RemovePrefix(id), limit, offset, market));
+        return DownloadData<Paging<SimpleEpisode>>(_builder.GetShowEpisodes(id, limit, offset, market));
     }
 
     /// <summary>
@@ -2285,7 +2296,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Task<Paging<FullEpisode>> GetShowEpisodesAsync(string id, int limit = 20, int offset = 0, string market = "")
     {
-        return DownloadDataAsync<Paging<FullEpisode>>(_builder.GetShowEpisodes(RemovePrefix(id), limit, offset, market));
+        return DownloadDataAsync<Paging<FullEpisode>>(_builder.GetShowEpisodes(id, limit, offset, market));
     }
 
     #endregion Shows
