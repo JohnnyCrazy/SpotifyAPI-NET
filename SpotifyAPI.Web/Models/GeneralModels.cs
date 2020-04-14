@@ -2,9 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using SpotifyAPI.Web.Converters;
 
 namespace SpotifyAPI.Web.Models
 {
+  public interface ITyped
+  {
+    [JsonProperty("type")]
+    string Type { get; set; }
+  }
+
   public class Image
   {
     [JsonProperty("url")]
@@ -57,7 +64,7 @@ namespace SpotifyAPI.Web.Models
 
     [JsonProperty("track")]
     [JsonConverter(typeof(PlaylistTrackConverter))]
-    public IItem Track { get; set; }
+    public ITyped Track { get; set; }
 
     [JsonProperty("is_local")]
     public bool IsLocal { get; set; }

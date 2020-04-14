@@ -622,7 +622,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public FullEpisode GetEpisode(string id, string market = "")
     {
-        return DownloadData<FullEpisode>(_builder.GetEpisode(id, market));
+      return DownloadData<FullEpisode>(_builder.GetEpisode(id, market));
     }
     /// <summary>
     ///    Get Spotify catalog information for a single episode identified by its unique Spotify ID.
@@ -632,32 +632,32 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Task<FullEpisode> GetEpisodeAsync(string id, string market = "")
     {
-        return DownloadDataAsync<FullEpisode>(_builder.GetEpisode(id, market));
+      return DownloadDataAsync<FullEpisode>(_builder.GetEpisode(id, market));
     }
 
     /// <summary>
     ///    Get Spotify catalog information for multiple episodes based on their Spotify IDs.
     /// </summary>
-    /// <param name="ids">A comma-separated list of the Spotify IDs for the episodes. Maximum: 50 IDs.</param>
+    /// <param name="id">A Spotify ID for the episodes.</param>
     /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code. If a country code is specified, only shows and episodes that are available in that market will be returned. If a valid user access token is specified in the request header, the country associated with the user account will take priority over this parameter. Note: If neither market or user country are provided, the content is considered unavailable for the client.Users can view the country that is associated with their account in the account settings.</param>
     /// <returns></returns>
     public ListResponse<FullEpisode> GetEpisodes(string id, string market = "")
-   {
-       return DownloadList<FullEpisode>(_builder.GetEpisode(id, market));
-   }
+    {
+      return DownloadList<FullEpisode>(_builder.GetEpisode(id, market));
+    }
 
     /// <summary>
     ///    Get Spotify catalog information for multiple episodes based on their Spotify IDs.
     /// </summary>
-    /// <param name="ids">A comma-separated list of the Spotify IDs for the episodes. Maximum: 50 IDs.</param>
+    /// <param name="id">A Spotify IDs for the episode.</param>
     /// <param name="market">Optional. An ISO 3166-1 alpha-2 country code. If a country code is specified, only shows and episodes that are available in that market will be returned. If a valid user access token is specified in the request header, the country associated with the user account will take priority over this parameter. Note: If neither market or user country are provided, the content is considered unavailable for the client.Users can view the country that is associated with their account in the account settings.</param>
     /// <returns></returns>
     public Task<ListResponse<FullEpisode>> GetEpisodesAsync(string id, string market = "")
     {
-        return DownloadListAsync<FullEpisode>(_builder.GetEpisode(id, market));
+      return DownloadListAsync<FullEpisode>(_builder.GetEpisode(id, market));
     }
 
-   
+
 
     #endregion Episode
 
@@ -672,7 +672,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     /// <remarks>AUTH NEEDED</remarks>
     public FollowedArtists GetFollowedArtists(FollowType followType, int limit = 20, string after = "")
-{
+    {
       if (!UseAuth)
         throw new InvalidOperationException("Auth is required for GetFollowedArtists");
       return DownloadData<FollowedArtists>(_builder.GetFollowedArtists(limit, after));
@@ -914,7 +914,6 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///     Remove the current user as a follower of a playlist asynchronously.
     /// </summary>
-    /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
     /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
     /// <returns></returns>
     /// <remarks>AUTH NEEDED</remarks>
@@ -1370,26 +1369,6 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///     Get a playlist owned by a Spotify user.
     /// </summary>
-    /// <param name="userId">The user's Spotify user ID.</param>
-    /// <param name="playlistId">The Spotify ID for the playlist.</param>
-    /// <param name="fields">
-    ///     Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are
-    ///     returned.
-    /// </param>
-    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
-    /// <returns></returns>
-    /// <remarks>AUTH NEEDED</remarks>
-    [Obsolete("Calling GetPlaylist with a userId is deprecated, remove the parameter")]
-    public FullPlaylist GetPlaylist(string userId, string playlistId, string fields = "", string market = "")
-    {
-      if (!UseAuth)
-        throw new InvalidOperationException("Auth is required for GetPlaylist");
-      return DownloadData<FullPlaylist>(_builder.GetPlaylist(userId, playlistId, fields, market));
-    }
-
-    /// <summary>
-    ///     Get a playlist owned by a Spotify user.
-    /// </summary>
     /// <param name="playlistId">The Spotify ID for the playlist.</param>
     /// <param name="fields">
     ///     Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are
@@ -1403,26 +1382,6 @@ namespace SpotifyAPI.Web
       if (!UseAuth)
         throw new InvalidOperationException("Auth is required for GetPlaylist");
       return DownloadData<FullPlaylist>(_builder.GetPlaylist(playlistId, fields, market));
-    }
-
-    /// <summary>
-    ///     Get a playlist owned by a Spotify user asynchronously.
-    /// </summary>
-    /// <param name="userId">The user's Spotify user ID.</param>
-    /// <param name="playlistId">The Spotify ID for the playlist.</param>
-    /// <param name="fields">
-    ///     Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are
-    ///     returned.
-    /// </param>
-    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
-    /// <returns></returns>
-    /// <remarks>AUTH NEEDED</remarks>
-    [Obsolete("Calling GetPlaylist with a userId is deprecated, remove the parameter")]
-    public Task<FullPlaylist> GetPlaylistAsync(string userId, string playlistId, string fields = "", string market = "")
-    {
-      if (!UseAuth)
-        throw new InvalidOperationException("Auth is required for GetPlaylist");
-      return DownloadDataAsync<FullPlaylist>(_builder.GetPlaylist(userId, playlistId, fields, market));
     }
 
     /// <summary>
@@ -1462,7 +1421,7 @@ namespace SpotifyAPI.Web
     {
       if (!UseAuth)
         throw new InvalidOperationException("Auth is required for GetPlaylistTracks");
-      return DownloadData<Paging<PlaylistTrack>>(_builder.GetPlaylistTracks(userId, playlistId, fields, limit, offset, market));
+      return DownloadData<Paging<PlaylistTrack>>(_builder.GetPlaylistTracks(playlistId, fields, limit, offset, market));
     }
 
     /// <summary>
@@ -1504,7 +1463,7 @@ namespace SpotifyAPI.Web
     {
       if (!UseAuth)
         throw new InvalidOperationException("Auth is required for GetPlaylistTracks");
-      return DownloadDataAsync<Paging<PlaylistTrack>>(_builder.GetPlaylistTracks(userId, playlistId, fields, limit, offset, market));
+      return DownloadDataAsync<Paging<PlaylistTrack>>(_builder.GetPlaylistTracks(playlistId, fields, limit, offset, market));
     }
 
     /// <summary>
@@ -2194,7 +2153,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public SimpleShow GetShow(string id, string market = "")
     {
-            return DownloadData<SimpleShow>(_builder.GetShow(id, market));
+      return DownloadData<SimpleShow>(_builder.GetShow(id, market));
     }
 
     /// <summary>
@@ -2205,7 +2164,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Task<SimpleShow> GetShowAsync(string id, string market = "")
     {
-        return DownloadDataAsync<SimpleShow>(_builder.GetShow(id, market));
+      return DownloadDataAsync<SimpleShow>(_builder.GetShow(id, market));
     }
 
 
@@ -2217,7 +2176,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Task<SeveralShows> GetShowsAsync(List<string> ids, string market = "")
     {
-            return DownloadDataAsync<SeveralShows>(_builder.GetShows(ids, market));
+      return DownloadDataAsync<SeveralShows>(_builder.GetShows(ids, market));
     }
 
     /// <summary>
@@ -2228,7 +2187,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public SeveralShows GetShows(List<string> ids, string market = "")
     {
-        return DownloadData<SeveralShows>(_builder.GetShows(ids, market));
+      return DownloadData<SeveralShows>(_builder.GetShows(ids, market));
     }
 
     /// <summary>
@@ -2238,12 +2197,12 @@ namespace SpotifyAPI.Web
     /// <returns>A list of uris without the spotify prefix.</returns>
     public List<string> RemovePrefix(List<string> uris)
     {
-        List<string> fixed_uris = new List<string>();
-        foreach (var uri in uris)
-        {
-            fixed_uris.Add(RemovePrefix(uri));
-        }
-        return fixed_uris;
+      List<string> fixed_uris = new List<string>();
+      foreach (var uri in uris)
+      {
+        fixed_uris.Add(RemovePrefix(uri));
+      }
+      return fixed_uris;
     }
 
     /// <summary>
@@ -2251,31 +2210,32 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name="uri">A spotify uri (e.g.,spotify:XXX:YYY). </param>
     /// <returns>Uri without the prefix (e.g. YYY).</returns>
- 
+
     public string RemovePrefix(string uri)
-        {
-            if (uri.Contains("spotify:show:"))
-            {
-                return uri.Replace("spotify:show:", "");
-            } else if (uri.Contains("spotify:track:"))
-            {
-                return uri.Replace("spotify:track:", "");
-            }
-            else if (uri.Contains("spotify:album:"))
-            {
-                return uri.Replace("spotify:album:", "");
-            }
-            else if (uri.Contains("spotify:episode:"))
-            {
-                return uri.Replace("spotify:episode:", "");
-            }
-            else if (uri.Contains("spotify:playlist:"))
-            {
-                return uri.Replace("spotify:playlist:", "");
-            }
-            else
-                return uri;
-        }
+    {
+      if (uri.Contains("spotify:show:"))
+      {
+        return uri.Replace("spotify:show:", "");
+      }
+      else if (uri.Contains("spotify:track:"))
+      {
+        return uri.Replace("spotify:track:", "");
+      }
+      else if (uri.Contains("spotify:album:"))
+      {
+        return uri.Replace("spotify:album:", "");
+      }
+      else if (uri.Contains("spotify:episode:"))
+      {
+        return uri.Replace("spotify:episode:", "");
+      }
+      else if (uri.Contains("spotify:playlist:"))
+      {
+        return uri.Replace("spotify:playlist:", "");
+      }
+      else
+        return uri;
+    }
 
     /// <summary>
     ///    Get Spotify catalog information about an show’s episodes. Optional parameters can be used to limit the number of episodes returned.
@@ -2286,8 +2246,8 @@ namespace SpotifyAPI.Web
     /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
     /// <returns></returns>
     public Paging<SimpleEpisode> GetShowEpisodes(string id, int limit = 20, int offset = 0, string market = "")
-    {        
-        return DownloadData<Paging<SimpleEpisode>>(_builder.GetShowEpisodes(id, limit, offset, market));
+    {
+      return DownloadData<Paging<SimpleEpisode>>(_builder.GetShowEpisodes(id, limit, offset, market));
     }
 
     /// <summary>
@@ -2300,7 +2260,7 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public Task<Paging<FullEpisode>> GetShowEpisodesAsync(string id, int limit = 20, int offset = 0, string market = "")
     {
-        return DownloadDataAsync<Paging<FullEpisode>>(_builder.GetShowEpisodes(id, limit, offset, market));
+      return DownloadDataAsync<Paging<FullEpisode>>(_builder.GetShowEpisodes(id, limit, offset, market));
     }
 
     #endregion Shows

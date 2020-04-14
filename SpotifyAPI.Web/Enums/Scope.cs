@@ -68,5 +68,5 @@ namespace SpotifyAPI.Web.Enums
     [String("user-read-playback-position")]
     UserReadPlaybackPosition = 1048576
 
-    }
+  }
 }

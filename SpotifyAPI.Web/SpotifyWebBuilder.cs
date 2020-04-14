@@ -350,9 +350,9 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public string GetEpisode(string id, string market = "")
     {
-        return string.IsNullOrEmpty(market) ?
-            $"{APIBase}/episodes/{id}" :
-            $"{APIBase}/episodes?market={market}&id={id}";
+      return string.IsNullOrEmpty(market) ?
+          $"{APIBase}/episodes/{id}" :
+          $"{APIBase}/episodes?market={market}&id={id}";
     }
 
     /// <summary>
@@ -363,9 +363,9 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public string GetEpisodes(List<string> ids, string market = "")
     {
-        return string.IsNullOrEmpty(market) ?
-            $"{APIBase}/episodes?ids={string.Join(",", ids.Take(50))}" :
-        $"{APIBase}/episodes?market={market}&ids={string.Join(",", ids.Take(50))}";
+      return string.IsNullOrEmpty(market) ?
+          $"{APIBase}/episodes?ids={string.Join(",", ids.Take(50))}" :
+      $"{APIBase}/episodes?market={market}&ids={string.Join(",", ids.Take(50))}";
     }
     #endregion Episode
 
@@ -584,7 +584,7 @@ namespace SpotifyAPI.Web
     /// <remarks>AUTH NEEDED (user-library-modify)</remarks>
     public string CheckSubscribedShows(List<string> ids)
     {
-        return $"{APIBase}/me/shows/contains?ids={string.Join(",", ids.Take(50))}";
+      return $"{APIBase}/me/shows/contains?ids={string.Join(",", ids.Take(50))}";
     }
 
     /// <summary>
@@ -595,7 +595,7 @@ namespace SpotifyAPI.Web
     /// <remarks>AUTH NEEDED (user-library-modify)</remarks>
     public string UnsubscribeShows(List<string> ids)
     {
-        return $"{APIBase}/me/shows?ids={string.Join(",", ids.Take(50))}";
+      return $"{APIBase}/me/shows?ids={string.Join(",", ids.Take(50))}";
     }
 
     #endregion Library
@@ -686,7 +686,6 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///     Get a playlist owned by a Spotify user.
     /// </summary>
-    /// <param name="userId">The user's Spotify user ID.</param>
     /// <param name="playlistId">The Spotify ID for the playlist.</param>
     /// <param name="fields">
     ///     Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are
@@ -695,58 +694,14 @@ namespace SpotifyAPI.Web
     /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
     /// <returns></returns>
     /// <remarks>AUTH NEEDED</remarks>
-    public string GetPlaylist(string userId, string playlistId, string fields = "", string market = "")
-    {
-      StringBuilder builder = new StringBuilder(APIBase + "/users/" + userId + "/playlists/" + playlistId);
-      builder.Append("?fields=" + fields);
-      if (!string.IsNullOrEmpty(market))
-        builder.Append("&market=" + market);
-      return builder.ToString();
-    }
-
-    /// <summary>
-    ///     Get a playlist owned by a Spotify user.
-    /// </summary>
-    /// <param name="playlistId">The Spotify ID for the playlist.</param>
-    /// <param name="fields">
-    ///     Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are
-    ///     returned.
-    /// </param>
-    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
-    /// <returns></returns>
-    /// <remarks>AUTH NEEDED</remarks>
-    public string GetPlaylist(string playlistId, string fields = "", string market = "")
+    public string GetPlaylist(string playlistId, string fields = "", string market = "", string additionalTypes = "track,episode")
     {
       StringBuilder builder = new StringBuilder(APIBase + "/playlists/" + playlistId);
       builder.Append("?fields=" + fields);
       if (!string.IsNullOrEmpty(market))
         builder.Append("&market=" + market);
-      return builder.ToString();
-    }
-
-    /// <summary>
-    ///     Get full details of the tracks of a playlist owned by a Spotify user.
-    /// </summary>
-    /// <param name="userId">The user's Spotify user ID.</param>
-    /// <param name="playlistId">The Spotify ID for the playlist.</param>
-    /// <param name="fields">
-    ///     Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are
-    ///     returned.
-    /// </param>
-    /// <param name="limit">The maximum number of tracks to return. Default: 100. Minimum: 1. Maximum: 100.</param>
-    /// <param name="offset">The index of the first object to return. Default: 0 (i.e., the first object)</param>
-    /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
-    /// <returns></returns>
-    /// <remarks>AUTH NEEDED</remarks>
-    public string GetPlaylistTracks(string userId, string playlistId, string fields = "", int limit = 100, int offset = 0, string market = "")
-    {
-      limit = Math.Min(limit, 100);
-      StringBuilder builder = new StringBuilder(APIBase + "/users/" + userId + "/playlists/" + playlistId + "/tracks");
-      builder.Append("?fields=" + fields);
-      builder.Append("&limit=" + limit);
-      builder.Append("&offset=" + offset);
-      if (!string.IsNullOrEmpty(market))
-        builder.Append("&market=" + market);
+      if (!string.IsNullOrEmpty(additionalTypes))
+        builder.Append("&additional_types=" + additionalTypes);
       return builder.ToString();
     }
 
@@ -773,11 +728,11 @@ namespace SpotifyAPI.Web
       builder.Append("&offset=" + offset);
       if (!string.IsNullOrEmpty(market))
       {
-          builder.Append("&market=" + market);
+        builder.Append("&market=" + market);
       }
       if (!string.IsNullOrEmpty(additional_types))
       {
-          builder.Append("&additional_types=" + additional_types);
+        builder.Append("&additional_types=" + additional_types);
       }
       return builder.ToString();
     }
@@ -993,9 +948,9 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public string GetShow(string id, string market = "")
     {
-        return string.IsNullOrEmpty(market) ?
-            $"{APIBase}/shows/{id}" :
-            $"{APIBase}/shows?market={market}&id={id}";
+      return string.IsNullOrEmpty(market) ?
+          $"{APIBase}/shows/{id}" :
+          $"{APIBase}/shows?market={market}&id={id}";
     }
 
     /// <summary>
@@ -1006,9 +961,9 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public string GetShows(List<string> ids, string market = "")
     {
-        return string.IsNullOrEmpty(market) ?
-            $"{APIBase}/shows?ids={string.Join(",", ids.Take(50))}"  :
-        $"{APIBase}/shows?market={market}&ids={string.Join(",", ids.Take(50))}";
+      return string.IsNullOrEmpty(market) ?
+          $"{APIBase}/shows?ids={string.Join(",", ids.Take(50))}" :
+      $"{APIBase}/shows?market={market}&ids={string.Join(",", ids.Take(50))}";
     }
 
     /// <summary>
@@ -1021,9 +976,9 @@ namespace SpotifyAPI.Web
     /// <returns></returns>
     public string GetShowEpisodes(string id, int limit = 20, int offset = 0, string market = "")
     {
-        return string.IsNullOrEmpty(market) ?
-            $"{APIBase}/shows/{id}/episodes?offset={offset}&limit={limit}" :
-            $"{APIBase}/shows/{id}/episodes?market={market}&offset={offset}&limit={limit}";
+      return string.IsNullOrEmpty(market) ?
+          $"{APIBase}/shows/{id}/episodes?offset={offset}&limit={limit}" :
+          $"{APIBase}/shows/{id}/episodes?market={market}&offset={offset}&limit={limit}";
     }
 
     #endregion Shows
@@ -1038,7 +993,7 @@ namespace SpotifyAPI.Web
     /// <param name="ids">A list of the Spotify IDs for the tracks. Maximum: 50 IDs.</param>
     /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
     /// <returns></returns>
-        public string GetSeveralTracks(List<string> ids, string market = "")
+    public string GetSeveralTracks(List<string> ids, string market = "")
     {
       return string.IsNullOrEmpty(market) ?
         $"{APIBase}/tracks?ids={string.Join(",", ids.Take(50))}" :
@@ -1119,7 +1074,7 @@ namespace SpotifyAPI.Web
     /// <param name="market">An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to apply Track Relinking.</param>
     /// <param name="additional_types">A comma-separated list of item types that your client supports besides the default track type. Valid types are: track and episode. An unsupported type in the response is expected to be represented as null value in the item field. Note: This parameter was introduced to allow existing clients to maintain their current behaviour and might be deprecated in the future. In addition to providing this parameter, make sure that your client properly handles cases of new types in the future by checking against the currently_playing_type field..</param>
     /// <returns></returns>
-    public string GetPlayingTrack(string market = "", string additional_types= "track,episode")
+    public string GetPlayingTrack(string market = "", string additional_types = "track,episode")
     {
       return string.IsNullOrEmpty(market) ?
         $"{APIBase}/me/player/currently-playing?additional_types={additional_types}" :
