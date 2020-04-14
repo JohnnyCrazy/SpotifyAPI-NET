@@ -15,5 +15,11 @@ namespace SpotifyAPI.Web.Models
 
     [JsonProperty("playlists")]
     public Paging<SimplePlaylist> Playlists { get; set; }
+
+    [JsonProperty("shows")]
+    public Paging<SimpleShow> Shows { get; set; }
+
+    [JsonProperty("episodes")]
+    public Paging<SimpleEpisode> Episodes { get; set; }
   }
 }
