@@ -2,7 +2,6 @@ SpotifyAPI-NET
 ===
 
 [![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
-[![Gitter](https://img.shields.io/gitter/room/SpotifyAPI-NET/Lobby.svg)](https://gitter.im/SpotifyAPI-NET/Lobby)
 
 A Wrapper for Spotify's Web API, written in .NET  
 
