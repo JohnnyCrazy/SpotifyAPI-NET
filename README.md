@@ -45,9 +45,9 @@ public static async void Example()
       TokenType = "Bearer"
   };
   
-  PrivateProfile profile = await api.GetPrivateProfileAsync();
-  if(!profile.HasError()) {
-    Console.WriteLine(profile.DisplayName);
+  FullTrack track = await api.GetTrackAsync("1eV81a6H4xDdpi8r2C4tQT");
+  if(!track.HasError()) {
+    Console.WriteLine(track.Name);
   }
 }
 ```
