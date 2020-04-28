@@ -16,7 +16,7 @@ namespace SpotifyAPI.Web
     private readonly Encoding _encoding = Encoding.UTF8;
     private readonly HttpClient _client;
 
-    private const string UnknownErrorJson = "{\"error\": { \"status\": 0, \"message\": \"SpotifyAPI.Web - Unkown Spotify Error\" }}";
+    private const string UnknownErrorJson = "{\"error\": { \"status\": 0, \"message\": \"{0}\" }}";
 
     public SpotifyWebClient(ProxyConfig proxyConfig = null)
     {
@@ -75,9 +75,9 @@ namespace SpotifyAPI.Web
       {
         return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
       }
-      catch (JsonException)
+      catch (JsonException error)
       {
-        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(UnknownErrorJson, JsonSettings));
+        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(string.Format(UnknownErrorJson, error.Message), JsonSettings));
       }
     }
 
@@ -88,9 +88,9 @@ namespace SpotifyAPI.Web
       {
         return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
       }
-      catch (JsonException)
+      catch (JsonException error)
       {
-        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(UnknownErrorJson, JsonSettings));
+        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(string.Format(UnknownErrorJson, error.Message), JsonSettings));
       }
     }
 
@@ -155,9 +155,9 @@ namespace SpotifyAPI.Web
       {
         return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
       }
-      catch (JsonException)
+      catch (JsonException error)
       {
-        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(UnknownErrorJson, JsonSettings));
+        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(string.Format(UnknownErrorJson, error.Message), JsonSettings));
       }
     }
 
@@ -168,9 +168,9 @@ namespace SpotifyAPI.Web
       {
         return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(response.Item2, JsonSettings));
       }
-      catch (JsonException)
+      catch (JsonException error)
       {
-        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(UnknownErrorJson, JsonSettings));
+        return new Tuple<ResponseInfo, T>(response.Item1, JsonConvert.DeserializeObject<T>(string.Format(UnknownErrorJson, error.Message), JsonSettings));
       }
     }
 
