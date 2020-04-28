@@ -10,23 +10,11 @@ namespace SpotifyAPI.Web.Models
     [JsonProperty("duration")]
     public double Duration { get; set; }
 
-    [JsonProperty("sample_md5")]
-    public string SampleMD5 { get; set; }
-
-    [JsonProperty("offset_seconds")]
-    public double OffsetSeconds { get; set; }
-
-    [JsonProperty("window_seconds")]
-    public double WindowSeconds { get; set; }
-
     [JsonProperty("analysis_sample_rate")]
-    public int AnalysisSampleRate { get; set; }
+    public float AnalysisSampleRate { get; set; }
 
     [JsonProperty("analysis_channels")]
     public int AnalysisChannels { get; set; }
-
-    [JsonProperty("end_of_fade_in")]
-    public double EndOfFadeIn { get; set; }
 
     [JsonProperty("start_of_fade_out")]
     public double StartOfFadeOut { get; set; }

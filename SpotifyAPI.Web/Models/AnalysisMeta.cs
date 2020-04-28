@@ -4,14 +4,11 @@ namespace SpotifyAPI.Web.Models
 {
   public class AnalysisMeta
   {
-    [JsonProperty("analyzer_platform")]
+    [JsonProperty("analyzer_version")]
     public string AnalyzerVersion { get; set; }
 
     [JsonProperty("platform")]
     public string Platform { get; set; }
-
-    [JsonProperty("status_code")]
-    public int StatusCode { get; set; }
 
     [JsonProperty("detailed_status")]
     public string DetailedStatus { get; set; }
