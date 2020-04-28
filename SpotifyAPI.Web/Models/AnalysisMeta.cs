@@ -10,6 +10,9 @@ namespace SpotifyAPI.Web.Models
     [JsonProperty("platform")]
     public string Platform { get; set; }
 
+    [JsonProperty("status_code")]
+    public int StatusCode { get; set; }
+
     [JsonProperty("detailed_status")]
     public string DetailedStatus { get; set; }
 
