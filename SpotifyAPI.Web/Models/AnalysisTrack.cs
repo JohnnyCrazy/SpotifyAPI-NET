@@ -20,7 +20,7 @@ namespace SpotifyAPI.Web.Models
     public double WindowSeconds { get; set; }
 
     [JsonProperty("analysis_sample_rate")]
-    public int AnalysisSampleRate { get; set; }
+    public float AnalysisSampleRate { get; set; }
 
     [JsonProperty("analysis_channels")]
     public int AnalysisChannels { get; set; }
