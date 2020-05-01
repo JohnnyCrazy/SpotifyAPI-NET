@@ -1,0 +1,18 @@
+{
+  "model": {
+    "scope": "csharp",
+    "prefix": "model",
+    "body": [
+      "namespace SpotifyAPI.Web",
+      "{",
+      "  public class $1",
+      "  {",
+      "     public ${2:string} ${3:Name} { get; set; }",
+      "",
+      "     $4",
+      "  }",
+      "}"
+    ],
+    "description": "Creates a new model"
+  }
+}

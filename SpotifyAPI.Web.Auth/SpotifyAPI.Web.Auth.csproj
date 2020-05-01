@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+
     <PackageId>SpotifyAPI.Web.Auth</PackageId>
     <Title>SpotifyAPI.Web.Auth</Title>
     <Authors>Jonas Dellinger</Authors>
@@ -27,7 +27,7 @@
     <DocumentationFile>bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.xml</DocumentationFile>
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
-    
+
   <ItemGroup>
     <PackageReference Include="EmbedIO" Version="2.9.2">
       <PrivateAssets>None</PrivateAssets>
