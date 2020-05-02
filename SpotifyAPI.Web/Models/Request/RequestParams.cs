@@ -11,7 +11,7 @@ namespace SpotifyAPI.Web
       // Make sure everything is okay before building query params
       Ensure();
 
-      var queryProps = GetType().GetProperties()
+      var queryProps = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
         .Where(prop => prop.GetCustomAttributes(typeof(QueryParamAttribute), true).Length > 0);
 
       var queryParams = new Dictionary<string, string>();
@@ -36,7 +36,7 @@ namespace SpotifyAPI.Web
 
   public class QueryParamAttribute : Attribute
   {
-    public string Key { get; set; }
+    public string Key { get; }
 
     public QueryParamAttribute() { }
     public QueryParamAttribute(string key)

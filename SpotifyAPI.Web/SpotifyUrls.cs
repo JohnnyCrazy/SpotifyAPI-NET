@@ -23,6 +23,8 @@ namespace SpotifyAPI.Web
 
     public static Uri NewReleases() => EUri($"browse/new-releases");
 
+    public static Uri FeaturedPlaylists() => EUri($"browse/featured-playlists");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }

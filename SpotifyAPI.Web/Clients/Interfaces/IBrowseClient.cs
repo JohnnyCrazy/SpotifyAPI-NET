@@ -18,5 +18,8 @@ namespace SpotifyAPI.Web
 
     Task<NewReleasesResponse> GetNewReleases();
     Task<NewReleasesResponse> GetNewReleases(NewReleasesRequest request);
+
+    Task<FeaturedPlaylistsResponse> GetFeaturedPlaylists();
+    Task<FeaturedPlaylistsResponse> GetFeaturedPlaylists(FeaturedPlaylistsRequest request);
   }
 }
