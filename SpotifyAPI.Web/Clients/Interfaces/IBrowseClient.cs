@@ -14,5 +14,9 @@ namespace SpotifyAPI.Web
     Task<CategoryPlaylistsResponse> GetCategoryPlaylists(string categoryId, CategoriesPlaylistsRequest request);
 
     Task<RecommendationsResponse> GetRecommendations(RecommendationsRequest request);
+    Task<RecommendationGenresResponse> GetRecommendationGenres();
+
+    Task<NewReleasesResponse> GetNewReleases();
+    Task<NewReleasesResponse> GetNewReleases(NewReleasesRequest request);
   }
 }

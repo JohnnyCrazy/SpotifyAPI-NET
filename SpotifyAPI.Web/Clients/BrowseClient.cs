@@ -58,5 +58,22 @@ namespace SpotifyAPI.Web
 
       return API.Get<RecommendationsResponse>(URLs.Recommendations(), request.BuildQueryParams());
     }
+
+    public Task<RecommendationGenresResponse> GetRecommendationGenres()
+    {
+      return API.Get<RecommendationGenresResponse>(URLs.Recommendations());
+    }
+
+    public Task<NewReleasesResponse> GetNewReleases()
+    {
+      return API.Get<NewReleasesResponse>(URLs.NewReleases());
+    }
+
+    public Task<NewReleasesResponse> GetNewReleases(NewReleasesRequest request)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<NewReleasesResponse>(URLs.NewReleases(), request.BuildQueryParams());
+    }
   }
 }

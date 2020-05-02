@@ -19,6 +19,10 @@ namespace SpotifyAPI.Web
 
     public static Uri Recommendations() => EUri($"recommendations");
 
+    public static Uri RecommendationGenres() => EUri($"recommendations/available-genre-seeds");
+
+    public static Uri NewReleases() => EUri($"browse/new-releases");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }
