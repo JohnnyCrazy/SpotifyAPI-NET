@@ -17,10 +17,16 @@ namespace SpotifyAPI.Web
       _apiConnector = config.CreateAPIConnector();
       UserProfile = new UserProfileClient(_apiConnector);
       Browse = new BrowseClient(_apiConnector);
+      Shows = new ShowsClient(_apiConnector);
+      Playlists = new PlaylistsClient(_apiConnector);
     }
 
     public IUserProfileClient UserProfile { get; }
 
     public IBrowseClient Browse { get; }
+
+    public IShowsClient Shows { get; }
+
+    public IPlaylistsClient Playlists { get; }
   }
 }

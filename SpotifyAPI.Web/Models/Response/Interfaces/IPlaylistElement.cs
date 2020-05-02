@@ -3,15 +3,15 @@ using Newtonsoft.Json.Converters;
 
 namespace SpotifyAPI.Web
 {
-  public enum ElementType
+  public enum ItemType
   {
     Track,
     Episode
   }
 
-  public interface IPlaylistElement
+  public interface IPlaylistItem
   {
     [JsonConverter(typeof(StringEnumConverter))]
-    public ElementType Type { get; set; }
+    public ItemType Type { get; set; }
   }
 }

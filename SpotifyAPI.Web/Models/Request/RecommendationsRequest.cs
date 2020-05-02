@@ -31,7 +31,7 @@ namespace SpotifyAPI.Web
     public Dictionary<string, string> Max { get; set; }
     public Dictionary<string, string> Target { get; set; }
 
-    protected override void Ensure()
+    protected override void CustomEnsure()
     {
       if (string.IsNullOrEmpty(SeedTracks) && string.IsNullOrEmpty(SeedGenres) && string.IsNullOrEmpty(SeedArtists))
       {

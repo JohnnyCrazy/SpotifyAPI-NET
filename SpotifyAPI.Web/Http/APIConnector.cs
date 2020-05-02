@@ -135,11 +135,14 @@ namespace SpotifyAPI.Web.Http
       _jsonSerializer.SerializeRequest(request);
       await _authenticator.Apply(request).ConfigureAwait(false);
       IResponse response = await _httpClient.DoRequest(request).ConfigureAwait(false);
-      response = await _retryHandler?.HandleRetry(request, response, async (newRequest) =>
+      if (_retryHandler != null)
       {
-        await _authenticator.Apply(newRequest).ConfigureAwait(false);
-        return await _httpClient.DoRequest(request).ConfigureAwait(false);
-      });
+        response = await _retryHandler?.HandleRetry(request, response, async (newRequest) =>
+        {
+          await _authenticator.Apply(newRequest).ConfigureAwait(false);
+          return await _httpClient.DoRequest(request).ConfigureAwait(false);
+        });
+      }
       ProcessErrors(response);
 
       IAPIResponse<T> apiResponse = _jsonSerializer.DeserializeResponse<T>(response);

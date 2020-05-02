@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace SpotifyAPI.Web
 {
-  public class FullTrack : IPlaylistElement
+  public class FullTrack : IPlaylistItem
   {
     public SimpleAlbum Album { get; set; }
     public List<SimpleArtist> Artists { get; set; }
@@ -21,7 +23,9 @@ namespace SpotifyAPI.Web
     public int Popularity { get; set; }
     public string PreviewUrl { get; set; }
     public int TrackNumber { get; set; }
-    public ElementType Type { get; set; }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public ItemType Type { get; set; }
     public string Uri { get; set; }
     public bool IsLocal { get; set; }
   }

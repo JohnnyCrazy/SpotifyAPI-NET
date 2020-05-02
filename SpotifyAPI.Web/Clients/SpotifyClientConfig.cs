@@ -38,11 +38,11 @@ namespace SpotifyAPI.Web
 
     internal IAPIConnector CreateAPIConnector()
     {
-      Ensure.PropertyNotNull(BaseAddress, nameof(BaseAddress));
-      Ensure.PropertyNotNull(Authenticator, nameof(Authenticator),
+      Ensure.ArgumentNotNull(BaseAddress, nameof(BaseAddress));
+      Ensure.ArgumentNotNull(Authenticator, nameof(Authenticator),
         ". Use WithToken or WithAuthenticator to specify a authentication");
-      Ensure.PropertyNotNull(JSONSerializer, nameof(JSONSerializer));
-      Ensure.PropertyNotNull(HTTPClient, nameof(HTTPClient));
+      Ensure.ArgumentNotNull(JSONSerializer, nameof(JSONSerializer));
+      Ensure.ArgumentNotNull(HTTPClient, nameof(HTTPClient));
 
       return new APIConnector(BaseAddress, Authenticator, JSONSerializer, HTTPClient, RetryHandler);
     }

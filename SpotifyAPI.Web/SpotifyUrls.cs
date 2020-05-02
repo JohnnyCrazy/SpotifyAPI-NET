@@ -25,6 +25,14 @@ namespace SpotifyAPI.Web
 
     public static Uri FeaturedPlaylists() => EUri($"browse/featured-playlists");
 
+    public static Uri Show(string showId) => EUri($"shows/{showId}");
+
+    public static Uri Shows() => EUri($"shows");
+
+    public static Uri ShowEpisodes(string showId) => EUri($"shows/{showId}/episodes");
+
+    public static Uri PlaylistTracks(string playlistId) => EUri($"playlists/{playlistId}/tracks");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }

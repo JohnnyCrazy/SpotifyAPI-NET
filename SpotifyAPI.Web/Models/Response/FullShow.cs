@@ -2,11 +2,12 @@ using System.Collections.Generic;
 
 namespace SpotifyAPI.Web
 {
-  public class SimpleShow
+  public class FullShow
   {
     public List<string> AvailableMarkets { get; set; }
     public List<Copyright> Copyrights { get; set; }
     public string Description { get; set; }
+    public Paging<SimpleEpisode> Episodes { get; set; }
     public bool Explicit { get; set; }
     public Dictionary<string, string> ExternalUrls { get; set; }
     public string Href { get; set; }

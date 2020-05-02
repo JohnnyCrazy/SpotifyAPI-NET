@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace SpotifyAPI.Web
 {
@@ -17,7 +19,9 @@ namespace SpotifyAPI.Web
     public string Name { get; set; }
     public string PreviewUrl { get; set; }
     public int TrackNumber { get; set; }
-    public ElementType Type { get; set; }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public ItemType Type { get; set; }
     public string Uri { get; set; }
   }
 }

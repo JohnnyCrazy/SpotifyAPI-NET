@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SpotifyAPI.Web
 {
@@ -12,14 +14,15 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name = "value">The argument value to check</param>
     /// <param name = "name">The name of the argument</param>
-    public static void ArgumentNotNull(object value, string name)
+    /// <param name = "additional">Additional Exception Text</param>
+    public static void ArgumentNotNull(object value, string name, string additional = null)
     {
       if (value != null)
       {
         return;
       }
 
-      throw new ArgumentNullException(name);
+      throw new ArgumentNullException($"{name}{additional}");
     }
 
     /// <summary>
@@ -37,14 +40,14 @@ namespace SpotifyAPI.Web
       throw new ArgumentException("String is empty or null", name);
     }
 
-    public static void PropertyNotNull(object value, string name, string additional = null)
+    public static void ArgumentNotNullOrEmptyList<T>(List<T> value, string name)
     {
-      if (value != null)
+      if (value != null && value.Any())
       {
         return;
       }
 
-      throw new InvalidOperationException($"The property {name} is null{additional}");
+      throw new ArgumentException("List is empty or null", name);
     }
   }
 }
