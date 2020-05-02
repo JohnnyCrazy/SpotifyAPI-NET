@@ -57,7 +57,9 @@ namespace SpotifyAPI.Web
     public WebProxy CreateWebProxy()
     {
       if (!IsValid())
+      {
         return null;
+      }
 
       WebProxy proxy = new WebProxy
       {
@@ -67,7 +69,9 @@ namespace SpotifyAPI.Web
       };
 
       if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+      {
         return proxy;
+      }
 
       proxy.UseDefaultCredentials = false;
       proxy.Credentials = new NetworkCredential(Username, Password);
@@ -79,12 +83,16 @@ namespace SpotifyAPI.Web
     {
       HttpClientHandler clientHandler = new HttpClientHandler
       {
-      PreAuthenticate = false,
-      UseDefaultCredentials = true,
-      UseProxy = false
+        PreAuthenticate = false,
+        UseDefaultCredentials = true,
+        UseProxy = false
       };
 
-      if (string.IsNullOrWhiteSpace(proxyConfig?.Host)) return clientHandler;
+      if (string.IsNullOrWhiteSpace(proxyConfig?.Host))
+      {
+        return clientHandler;
+      }
+
       WebProxy proxy = proxyConfig.CreateWebProxy();
       clientHandler.UseProxy = true;
       clientHandler.Proxy = proxy;

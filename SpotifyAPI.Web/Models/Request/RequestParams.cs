@@ -8,22 +8,30 @@ namespace SpotifyAPI.Web
   {
     public Dictionary<string, string> BuildQueryParams()
     {
-      var queryProps = this.GetType().GetProperties()
+      // Make sure everything is okay before building query params
+      Ensure();
+
+      var queryProps = GetType().GetProperties()
         .Where(prop => prop.GetCustomAttributes(typeof(QueryParamAttribute), true).Length > 0);
 
       var queryParams = new Dictionary<string, string>();
       foreach (var prop in queryProps)
       {
         var attribute = prop.GetCustomAttribute(typeof(QueryParamAttribute)) as QueryParamAttribute;
-        var value = prop.GetValue(this);
+        object value = prop.GetValue(this);
         if (value != null)
         {
           queryParams.Add(attribute.Key ?? prop.Name, value.ToString());
         }
       }
 
+      AddCustomQueryParams(queryParams);
+
       return queryParams;
     }
+
+    protected virtual void Ensure() { }
+    protected virtual void AddCustomQueryParams(Dictionary<string, string> queryParams) { }
   }
 
   public class QueryParamAttribute : Attribute

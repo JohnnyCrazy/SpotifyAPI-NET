@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web.Http
 {
-  class TokenHeaderAuthenticator : IAuthenticator
+  public class TokenHeaderAuthenticator : IAuthenticator
   {
     public TokenHeaderAuthenticator(string token, string tokenType)
     {

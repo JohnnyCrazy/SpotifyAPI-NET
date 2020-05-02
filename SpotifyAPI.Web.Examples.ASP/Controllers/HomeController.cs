@@ -10,18 +10,18 @@ namespace SpotifyAPI.Web.Examples.ASP.Controllers
   [Authorize(AuthenticationSchemes = "Spotify")]
   public class HomeController : Controller
   {
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-      var accessToken = await HttpContext.GetTokenAsync("Spotify", "access_token");
-      SpotifyWebAPI api = new SpotifyWebAPI
-      {
-        AccessToken = accessToken,
-        TokenType = "Bearer"
-      };
+      // var accessToken = await HttpContext.GetTokenAsync("Spotify", "access_token");
+      // SpotifyWebAPI api = new SpotifyWebAPI
+      // {
+      //   AccessToken = accessToken,
+      //   TokenType = "Bearer"
+      // };
 
-      var savedTracks = await api.GetSavedTracksAsync(50);
+      // var savedTracks = await api.GetSavedTracksAsync(50);
 
-      return View(new IndexModel { SavedTracks = savedTracks });
+      return View(new IndexModel { SavedTracks = null });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace SpotifyAPI.Web.Http
 {
-  class Request : IRequest
+  public class Request : IRequest
   {
     public Request()
     {
@@ -21,8 +21,6 @@ namespace SpotifyAPI.Web.Http
     public IDictionary<string, string> Parameters { get; set; }
 
     public HttpMethod Method { get; set; }
-
-    public string ContentType { get; set; }
 
     public object Body { get; set; }
   }

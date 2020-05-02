@@ -31,8 +31,10 @@ namespace SpotifyAPI.Web
       var queryString = String.Join("&", newParameters.Select((parameter) => $"{parameter.Key}={parameter.Value}"));
       var query = string.IsNullOrEmpty(queryString) ? null : $"?{queryString}";
 
-      var uriBuilder = new UriBuilder(uri);
-      uriBuilder.Query = query;
+      var uriBuilder = new UriBuilder(uri)
+      {
+        Query = query
+      };
 
       return uriBuilder.Uri;
     }

@@ -14,7 +14,10 @@ namespace SpotifyAPI.Web
     /// <param name = "name">The name of the argument</param>
     public static void ArgumentNotNull(object value, string name)
     {
-      if (value != null) return;
+      if (value != null)
+      {
+        return;
+      }
 
       throw new ArgumentNullException(name);
     }
@@ -26,9 +29,22 @@ namespace SpotifyAPI.Web
     /// <param name = "name">The name of the argument</param>
     public static void ArgumentNotNullOrEmptyString(string value, string name)
     {
-      if (!string.IsNullOrEmpty(value)) return;
+      if (!string.IsNullOrEmpty(value))
+      {
+        return;
+      }
 
       throw new ArgumentException("String is empty or null", name);
+    }
+
+    public static void PropertyNotNull(object value, string name, string additional = null)
+    {
+      if (value != null)
+      {
+        return;
+      }
+
+      throw new InvalidOperationException($"The property {name} is null{additional}");
     }
   }
 }

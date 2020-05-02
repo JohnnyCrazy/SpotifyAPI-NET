@@ -8,10 +8,10 @@ namespace SpotifyAPI.Web.Http
 {
   public class APIConnector : IAPIConnector
   {
-    private Uri _baseAddress;
-    private IAuthenticator _authenticator;
-    private IJSONSerializer _jsonSerializer;
-    private IHTTPClient _httpClient;
+    private readonly Uri _baseAddress;
+    private readonly IAuthenticator _authenticator;
+    private readonly IJSONSerializer _jsonSerializer;
+    private readonly IHTTPClient _httpClient;
 
     public APIConnector(Uri baseAddress, IAuthenticator authenticator) :
       this(baseAddress, authenticator, new NewtonsoftJSONSerializer(), new NetHttpClient())
@@ -119,10 +119,10 @@ namespace SpotifyAPI.Web.Http
       var request = new Request
       {
         BaseAddress = _baseAddress,
-        ContentType = "application/json",
         Parameters = parameters,
         Endpoint = uri,
-        Method = method
+        Method = method,
+        Body = body
       };
 
       _jsonSerializer.SerializeRequest(request);
@@ -143,13 +143,11 @@ namespace SpotifyAPI.Web.Http
         return;
       }
 
-      switch (response.StatusCode)
+      throw response.StatusCode switch
       {
-        case HttpStatusCode.Unauthorized:
-          throw new APIUnauthorizedException(response);
-        default:
-          throw new APIException(response);
-      }
+        HttpStatusCode.Unauthorized => new APIUnauthorizedException(response),
+        _ => new APIException(response),
+      };
     }
   }
 }

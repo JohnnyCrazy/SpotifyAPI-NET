@@ -13,12 +13,10 @@ namespace SpotifyAPI.Web
 
     public object GetFormat(Type formatType)
     {
-      if (formatType == typeof(ICustomFormatter))
-        return _formatter;
-      return null;
+      return formatType == typeof(ICustomFormatter) ? _formatter : null;
     }
 
-    class URIParameterFormatter : ICustomFormatter
+    public class URIParameterFormatter : ICustomFormatter
     {
       public string Format(string format, object arg, IFormatProvider formatProvider)
       {

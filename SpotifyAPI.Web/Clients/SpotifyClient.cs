@@ -4,21 +4,17 @@ namespace SpotifyAPI.Web
 {
   public class SpotifyClient : ISpotifyClient
   {
-    private IAPIConnector _apiConnector;
+    private readonly IAPIConnector _apiConnector;
 
     public SpotifyClient(string token, string tokenType = "Bearer") :
-      this(new TokenHeaderAuthenticator(token, tokenType))
+      this(SpotifyClientConfig.CreateDefault(token, tokenType))
     { }
 
-    public SpotifyClient(IAuthenticator authenticator) :
-      this(new APIConnector(SpotifyUrls.API_V1, authenticator))
-    { }
-
-    public SpotifyClient(IAPIConnector apiConnector)
+    public SpotifyClient(SpotifyClientConfig config)
     {
-      Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
+      Ensure.ArgumentNotNull(config, nameof(config));
 
-      _apiConnector = apiConnector;
+      _apiConnector = config.CreateAPIConnector();
       UserProfile = new UserProfileClient(_apiConnector);
       Browse = new BrowseClient(_apiConnector);
     }

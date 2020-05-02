@@ -19,7 +19,7 @@ namespace SpotifyAPI.Web
     public string ReleaseDatePrecision { get; set; }
     public ResumePoint ResumePoint { get; set; }
     public SimpleShow Show { get; set; }
-    public PlaylistElementType Type { get; set; }
+    public ElementType Type { get; set; }
     public string Uri { get; set; }
   }
 }

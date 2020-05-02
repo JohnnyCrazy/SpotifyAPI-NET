@@ -8,7 +8,7 @@ namespace SpotifyAPI.Web.Http
 {
   public class NetHttpClient : IHTTPClient
   {
-    private HttpClient _httpClient;
+    private readonly HttpClient _httpClient;
 
     public NetHttpClient()
     {
@@ -19,14 +19,12 @@ namespace SpotifyAPI.Web.Http
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      using (HttpRequestMessage requestMsg = BuildRequestMessage(request))
-      {
-        var responseMsg = await _httpClient
-          .SendAsync(requestMsg, HttpCompletionOption.ResponseContentRead)
-          .ConfigureAwait(false);
+      using HttpRequestMessage requestMsg = BuildRequestMessage(request);
+      var responseMsg = await _httpClient
+        .SendAsync(requestMsg, HttpCompletionOption.ResponseContentRead)
+        .ConfigureAwait(false);
 
-        return await BuildResponse(responseMsg).ConfigureAwait(false);
-      }
+      return await BuildResponse(responseMsg).ConfigureAwait(false);
     }
 
     private async Task<IResponse> BuildResponse(HttpResponseMessage responseMsg)
@@ -34,19 +32,17 @@ namespace SpotifyAPI.Web.Http
       Ensure.ArgumentNotNull(responseMsg, nameof(responseMsg));
 
       // We only support text stuff for now
-      using (var content = responseMsg.Content)
-      {
-        var headers = responseMsg.Headers.ToDictionary(header => header.Key, header => header.Value.First());
-        var body = await responseMsg.Content.ReadAsStringAsync().ConfigureAwait(false);
-        var contentType = content.Headers?.ContentType?.MediaType;
+      using var content = responseMsg.Content;
+      var headers = responseMsg.Headers.ToDictionary(header => header.Key, header => header.Value.First());
+      var body = await responseMsg.Content.ReadAsStringAsync().ConfigureAwait(false);
+      var contentType = content.Headers?.ContentType?.MediaType;
 
-        return new Response(headers)
-        {
-          ContentType = contentType,
-          StatusCode = responseMsg.StatusCode,
-          Body = body
-        };
-      }
+      return new Response(headers)
+      {
+        ContentType = contentType,
+        StatusCode = responseMsg.StatusCode,
+        Body = body
+      };
     }
 
     private HttpRequestMessage BuildRequestMessage(IRequest request)

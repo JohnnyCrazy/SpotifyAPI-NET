@@ -5,6 +5,6 @@ namespace SpotifyAPI.Web.Examples.ASP.Models
 {
   public class IndexModel
   {
-    public Paging<SavedTrack> SavedTracks;
+    public Paging<object> SavedTracks;
   }
 }

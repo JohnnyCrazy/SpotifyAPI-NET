@@ -1,6 +1,6 @@
 namespace SpotifyAPI.Web
 {
-  interface ISpotifyClient
+  public interface ISpotifyClient
   {
     IUserProfileClient UserProfile { get; }
 

@@ -51,5 +51,12 @@ namespace SpotifyAPI.Web
 
       return API.Get<CategoryPlaylistsResponse>(URLs.CategoryPlaylists(categoryId), request.BuildQueryParams());
     }
+
+    public Task<RecommendationsResponse> GetRecommendations(RecommendationsRequest request)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<RecommendationsResponse>(URLs.Recommendations(), request.BuildQueryParams());
+    }
   }
 }

@@ -14,7 +14,7 @@ namespace SpotifyAPI.Web.Tests
 
       var user = "wizzler";
       var formatter = new URIParameterFormatProvider();
-      Func<FormattableString, string> func = (FormattableString str) => str.ToString(formatter);
+      string func(FormattableString str) => str.ToString(formatter);
 
       Assert.AreEqual(expected, func($"/users/{user}"));
     }
@@ -26,7 +26,7 @@ namespace SpotifyAPI.Web.Tests
 
       var user = "  wizzler";
       var formatter = new URIParameterFormatProvider();
-      Func<FormattableString, string> func = (FormattableString str) => str.ToString(formatter);
+      string func(FormattableString str) => str.ToString(formatter);
 
       Assert.AreEqual(expected, func($"/users/{user}"));
     }

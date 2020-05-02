@@ -9,7 +9,7 @@ namespace SpotifyAPI.Web.Http
 {
   public class NewtonsoftJSONSerializer : IJSONSerializer
   {
-    JsonSerializerSettings _serializerSettings;
+    private readonly JsonSerializerSettings _serializerSettings;
 
     public NewtonsoftJSONSerializer()
     {

@@ -2,20 +2,20 @@ using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace SpotifyAPI.Web.Tests
+namespace SpotifyAPI.Web
 {
   [TestFixture]
-  public class Test
+  public class Testing
   {
+
     [Test]
-    public async Task Testing()
+    public async Task TestingYo()
     {
-      var token = "";
+      var config = SpotifyClientConfig.CreateDefault("BQAODnY4uqYj_KCddlDm10KLPDZSpZhVUtMDjdh1zfG-xd5pAV3htRjnaGfO7ob92HHzNP05a-4mDnts337gdnZlRtjrDPnuWNFx75diY540H0cD1bS9UzI5cfO27N2O6lmzKb_jAYTaRoqPKHoG93KGiXxwg4vblGKSBY1vIloP");
+      var spotify = new SpotifyClient(config);
 
-      var spotify = new SpotifyClient(token);
-
-      var categories = await spotify.Browse.GetCategories();
-      var playlists = await spotify.Browse.GetCategoryPlaylists(categories.Categories.Items[0].Id);
+      var playlists = await spotify.Browse.GetCategoryPlaylists("toplists", new CategoriesPlaylistsRequest() { Offset = 1 });
+      Console.WriteLine(playlists.Playlists.Items[0].Name);
     }
   }
 }

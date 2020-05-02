@@ -16,7 +16,7 @@ namespace SpotifyAPI.Web
     public string MediaType { get; set; }
     public string Name { get; set; }
     public string Publisher { get; set; }
-    public string Type { get; set; }
+    public ElementType Type { get; set; }
     public string Uri { get; set; }
   }
 }

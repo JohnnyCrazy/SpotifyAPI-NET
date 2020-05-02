@@ -12,5 +12,7 @@ namespace SpotifyAPI.Web
 
     Task<CategoryPlaylistsResponse> GetCategoryPlaylists(string categoryId);
     Task<CategoryPlaylistsResponse> GetCategoryPlaylists(string categoryId, CategoriesPlaylistsRequest request);
+
+    Task<RecommendationsResponse> GetRecommendations(RecommendationsRequest request);
   }
 }

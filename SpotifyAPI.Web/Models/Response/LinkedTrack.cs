@@ -7,6 +7,6 @@ namespace SpotifyAPI.Web
     public string Href { get; set; }
     public string Id { get; set; }
     public string Type { get; set; }
-    public string uri { get; set; }
+    public string Uri { get; set; }
   }
 }
