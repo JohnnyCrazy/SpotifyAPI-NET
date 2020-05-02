@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SpotifyAPI.Web.Enums;
 
 namespace SpotifyAPI.Web.Examples.ASP
 {
@@ -26,8 +25,8 @@ namespace SpotifyAPI.Web.Examples.ASP
         .AddCookie()
         .AddSpotify(options =>
         {
-          var scopes = Scope.UserLibraryRead | Scope.UserModifyPlaybackState;
-          options.Scope.Add(scopes.GetStringAttribute(","));
+          // var scopes = Scope.UserLibraryRead | Scope.UserModifyPlaybackState;
+          // options.Scope.Add(scopes.GetStringAttribute(","));
 
           options.SaveTokens = true;
           options.ClientId = Configuration["client_id"];

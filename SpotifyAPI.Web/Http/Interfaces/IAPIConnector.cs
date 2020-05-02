@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web.Http
@@ -26,6 +27,8 @@ namespace SpotifyAPI.Web.Http
     Task<T> Delete<T>(Uri uri);
     Task<T> Delete<T>(Uri uri, IDictionary<string, string> parameters);
     Task<T> Delete<T>(Uri uri, IDictionary<string, string> parameters, object body);
+
+    Task<T> SendAPIRequest<T>(Uri uri, HttpMethod method, IDictionary<string, string> parameters = null, object body = null);
 
     void SetRequestTimeout(TimeSpan timeout);
   }
