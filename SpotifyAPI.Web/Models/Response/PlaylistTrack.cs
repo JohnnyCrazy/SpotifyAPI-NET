@@ -3,12 +3,13 @@ using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web
 {
-  public class PlaylistTrack
+  public class PlaylistTrack<T>
   {
     public DateTime? AddedAt { get; set; }
     public PublicUser AddedBy { get; set; }
     public bool IsLocal { get; set; }
+
     [JsonConverter(typeof(PlaylistElementConverter))]
-    public IPlaylistItem Track { get; set; }
+    public T Track { get; set; }
   }
 }

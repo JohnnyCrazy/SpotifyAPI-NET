@@ -1,3 +1,4 @@
+using System.Text;
 using System;
 using System.IO;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace SpotifyAPI.Web.Http
           requestMsg.Content = body;
           break;
         case string body:
-          requestMsg.Content = new StringContent(body);
+          requestMsg.Content = new StringContent(body, Encoding.UTF8, "application/json");
           break;
         case Stream body:
           requestMsg.Content = new StreamContent(body);

@@ -4,6 +4,10 @@ namespace SpotifyAPI.Web
 {
   public class ShowsRequest : RequestParams
   {
+    public ShowsRequest(List<string> ids)
+    {
+      Ids = ids;
+    }
     [QueryParam("ids")]
     public List<string> Ids { get; set; }
 

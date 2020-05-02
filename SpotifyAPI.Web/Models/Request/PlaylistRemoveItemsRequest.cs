@@ -5,6 +5,11 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistRemoveItemsRequest : RequestParams
   {
+    public PlaylistRemoveItemsRequest(List<Item> tracks)
+    {
+      Tracks = tracks;
+    }
+
     [BodyParam("tracks")]
     public List<Item> Tracks { get; set; }
     [BodyParam("snapshot_id")]
