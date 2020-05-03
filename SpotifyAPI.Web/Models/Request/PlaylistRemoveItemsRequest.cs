@@ -5,13 +5,9 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistRemoveItemsRequest : RequestParams
   {
-    public PlaylistRemoveItemsRequest(List<Item> tracks)
-    {
-      Tracks = tracks;
-    }
-
     [BodyParam("tracks")]
     public List<Item> Tracks { get; set; }
+
     [BodyParam("snapshot_id")]
     public string SnapshotId { get; set; }
 
@@ -26,8 +22,12 @@ namespace SpotifyAPI.Web
       {
         Uri = uri;
       }
+
       [JsonProperty("uri")]
       public string Uri { get; set; }
+
+      [JsonProperty("positions", NullValueHandling = NullValueHandling.Ignore)]
+      public List<int> Positions { get; set; }
     }
   }
 }

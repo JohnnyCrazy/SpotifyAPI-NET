@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace SpotifyAPI.Web
@@ -6,7 +7,7 @@ namespace SpotifyAPI.Web
   {
     public PlaylistGetItemsRequest()
     {
-      AdditionalTypes = new List<string>() { "track", "episode" };
+      AdditionalTypes = AdditionalType.All;
     }
 
     [QueryParam("fields")]
@@ -26,6 +27,16 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <value></value>
     [QueryParam("additional_types")]
-    public List<string> AdditionalTypes { get; set; }
+    public AdditionalType AdditionalTypes { get; set; }
+
+    [Flags]
+    public enum AdditionalType
+    {
+      [String("track")]
+      Track = 0,
+      [String("episode")]
+      Episode = 1,
+      All = Track | Episode
+    }
   }
 }

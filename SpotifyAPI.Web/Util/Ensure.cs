@@ -14,15 +14,14 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name = "value">The argument value to check</param>
     /// <param name = "name">The name of the argument</param>
-    /// <param name = "additional">Additional Exception Text</param>
-    public static void ArgumentNotNull(object value, string name, string additional = null)
+    public static void ArgumentNotNull(object value, string name)
     {
       if (value != null)
       {
         return;
       }
 
-      throw new ArgumentNullException($"{name}{additional}");
+      throw new ArgumentNullException(name);
     }
 
     /// <summary>

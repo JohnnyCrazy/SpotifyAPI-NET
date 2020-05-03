@@ -47,9 +47,30 @@ namespace SpotifyAPI.Web
         {
           if (value is List<string>)
           {
-            List<string> list = value as List<string>;
+            var list = value as List<string>;
             var str = string.Join(",", list);
             queryParams.Add(attribute.Key ?? prop.Name, str);
+          }
+          else if (value is Enum)
+          {
+            var valueAsEnum = value as Enum;
+            var enumType = valueAsEnum.GetType();
+            var valueList = new List<string>();
+
+            foreach (Enum enumVal in Enum.GetValues(valueAsEnum.GetType()))
+            {
+              if (valueAsEnum.HasFlag(enumVal))
+              {
+                if (enumType
+                  .GetMember(enumVal.ToString())[0]
+                  .GetCustomAttributes(typeof(StringAttribute))
+                  .FirstOrDefault() is StringAttribute stringAttr)
+                {
+                  valueList.Add(stringAttr.Value);
+                }
+              }
+            }
+            queryParams.Add(attribute.Key ?? prop.Name, string.Join(",", valueList));
           }
           else
           {

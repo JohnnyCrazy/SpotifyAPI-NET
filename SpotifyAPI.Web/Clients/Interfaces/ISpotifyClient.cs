@@ -9,5 +9,7 @@ namespace SpotifyAPI.Web
     IShowsClient Shows { get; }
 
     IPlaylistsClient Playlists { get; }
+
+    ISearchClient Search { get; }
   }
 }
