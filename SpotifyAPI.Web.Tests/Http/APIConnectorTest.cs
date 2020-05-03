@@ -41,7 +41,8 @@ namespace SpotifyAPI.Web.Tests
         authenticator.Object,
         serializer.Object,
         httpClient.Object,
-        retryHandler.Object
+        retryHandler.Object,
+        null
       );
       await apiConnector.SendAPIRequest<string>(new Uri("/me", UriKind.Relative), HttpMethod.Get);
 
@@ -82,7 +83,8 @@ namespace SpotifyAPI.Web.Tests
         authenticator.Object,
         serializer.Object,
         httpClient.Object,
-        retryHandler.Object
+        retryHandler.Object,
+        null
       );
       await apiConnector.SendAPIRequest<string>(new Uri("/me", UriKind.Relative), HttpMethod.Get);
 

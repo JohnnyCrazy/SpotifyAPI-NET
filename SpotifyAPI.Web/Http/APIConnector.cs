@@ -13,22 +13,25 @@ namespace SpotifyAPI.Web.Http
     private readonly IJSONSerializer _jsonSerializer;
     private readonly IHTTPClient _httpClient;
     private readonly IRetryHandler _retryHandler;
+    private readonly IHTTPLogger _httpLogger;
 
     public APIConnector(Uri baseAddress, IAuthenticator authenticator) :
-      this(baseAddress, authenticator, new NewtonsoftJSONSerializer(), new NetHttpClient(), null)
+      this(baseAddress, authenticator, new NewtonsoftJSONSerializer(), new NetHttpClient(), null, null)
     { }
     public APIConnector(
       Uri baseAddress,
       IAuthenticator authenticator,
       IJSONSerializer jsonSerializer,
       IHTTPClient httpClient,
-      IRetryHandler retryHandler)
+      IRetryHandler retryHandler,
+      IHTTPLogger httpLogger)
     {
       _baseAddress = baseAddress;
       _authenticator = authenticator;
       _jsonSerializer = jsonSerializer;
       _httpClient = httpClient;
       _retryHandler = retryHandler;
+      _httpLogger = httpLogger;
     }
 
     public Task<T> Delete<T>(Uri uri)
@@ -159,13 +162,17 @@ namespace SpotifyAPI.Web.Http
     private async Task<IResponse> DoRequest(IRequest request)
     {
       await _authenticator.Apply(request).ConfigureAwait(false);
+      _httpLogger?.OnRequest(request);
       IResponse response = await _httpClient.DoRequest(request).ConfigureAwait(false);
+      _httpLogger?.OnResponse(response);
       if (_retryHandler != null)
       {
         response = await _retryHandler?.HandleRetry(request, response, async (newRequest) =>
         {
           await _authenticator.Apply(newRequest).ConfigureAwait(false);
-          return await _httpClient.DoRequest(request).ConfigureAwait(false);
+          var newResponse = await _httpClient.DoRequest(request).ConfigureAwait(false);
+          _httpLogger?.OnResponse(newResponse);
+          return newResponse;
         });
       }
       ProcessErrors(response);

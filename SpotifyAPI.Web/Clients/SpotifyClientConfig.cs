@@ -9,6 +9,7 @@ namespace SpotifyAPI.Web
     public IAuthenticator Authenticator { get; }
     public IJSONSerializer JSONSerializer { get; }
     public IHTTPClient HTTPClient { get; }
+    public IHTTPLogger HTTPLogger { get; }
     public IRetryHandler RetryHandler { get; }
 
     /// <summary>
@@ -21,12 +22,14 @@ namespace SpotifyAPI.Web
     /// <param name="jsonSerializer"></param>
     /// <param name="httpClient"></param>
     /// <param name="retryHandler"></param>
+    /// <param name="httpLogger"></param>
     public SpotifyClientConfig(
       Uri baseAddress,
       IAuthenticator authenticator,
       IJSONSerializer jsonSerializer,
       IHTTPClient httpClient,
-      IRetryHandler retryHandler
+      IRetryHandler retryHandler,
+      IHTTPLogger httpLogger
     )
     {
       BaseAddress = baseAddress;
@@ -34,6 +37,7 @@ namespace SpotifyAPI.Web
       JSONSerializer = jsonSerializer;
       HTTPClient = httpClient;
       RetryHandler = retryHandler;
+      HTTPLogger = httpLogger;
     }
 
     internal IAPIConnector CreateAPIConnector()
@@ -44,7 +48,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(JSONSerializer, nameof(JSONSerializer));
       Ensure.ArgumentNotNull(HTTPClient, nameof(HTTPClient));
 
-      return new APIConnector(BaseAddress, Authenticator, JSONSerializer, HTTPClient, RetryHandler);
+      return new APIConnector(BaseAddress, Authenticator, JSONSerializer, HTTPClient, RetryHandler, HTTPLogger);
     }
 
     public SpotifyClientConfig WithToken(string token, string tokenType = "Bearer")
@@ -56,12 +60,17 @@ namespace SpotifyAPI.Web
 
     public SpotifyClientConfig WithRetryHandler(IRetryHandler retryHandler)
     {
-      return new SpotifyClientConfig(BaseAddress, Authenticator, JSONSerializer, HTTPClient, retryHandler);
+      return new SpotifyClientConfig(BaseAddress, Authenticator, JSONSerializer, HTTPClient, retryHandler, HTTPLogger);
     }
 
     public SpotifyClientConfig WithAuthenticator(IAuthenticator authenticator)
     {
-      return new SpotifyClientConfig(BaseAddress, authenticator, JSONSerializer, HTTPClient, RetryHandler);
+      return new SpotifyClientConfig(BaseAddress, authenticator, JSONSerializer, HTTPClient, RetryHandler, HTTPLogger);
+    }
+
+    public SpotifyClientConfig WithHTTPLogger(IHTTPLogger httpLogger)
+    {
+      return new SpotifyClientConfig(BaseAddress, Authenticator, JSONSerializer, HTTPClient, RetryHandler, httpLogger);
     }
 
     public static SpotifyClientConfig CreateDefault(string token, string tokenType = "Bearer")
@@ -87,6 +96,7 @@ namespace SpotifyAPI.Web
         authenticator,
         new NewtonsoftJSONSerializer(),
         new NetHttpClient(),
+        null,
         null
       );
     }
