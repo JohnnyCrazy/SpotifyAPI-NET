@@ -117,5 +117,14 @@ namespace SpotifyAPI.Web
 
       return API.Get<Paging<SimplePlaylist>>(URLs.CurrentUserPlaylists(), request.BuildQueryParams());
     }
+
+    public async Task<bool> ChangeDetails(string playlistId, PlaylistChangeDetailsRequest request)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Put(URLs.Playlist(playlistId), null, request.BuildBodyParams());
+      return statusCode == HttpStatusCode.OK;
+    }
   }
 }

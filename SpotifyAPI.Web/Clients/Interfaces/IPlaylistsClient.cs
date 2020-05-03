@@ -27,5 +27,7 @@ namespace SpotifyAPI.Web
 
     Task<Paging<SimplePlaylist>> CurrentUsers();
     Task<Paging<SimplePlaylist>> CurrentUsers(PlaylistCurrentUsersRequest request);
+
+    Task<bool> ChangeDetails(string playlistId, PlaylistChangeDetailsRequest request);
   }
 }
