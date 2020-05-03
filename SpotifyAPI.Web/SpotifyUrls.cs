@@ -37,6 +37,10 @@ namespace SpotifyAPI.Web
 
     public static Uri PlaylistImages(string playlistId) => EUri($"playlists/{playlistId}/images");
 
+    public static Uri Playlist(string playlistId) => EUri($"playlists/{playlistId}");
+
+    public static Uri CurrentUserPlaylists() => EUri($"me/playlists");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }

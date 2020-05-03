@@ -4,6 +4,11 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistGetItemsRequest : RequestParams
   {
+    public PlaylistGetItemsRequest()
+    {
+      AdditionalTypes = new List<string>() { "track", "episode" };
+    }
+
     [QueryParam("fields")]
     public List<string> Fields { get; set; }
 
@@ -16,6 +21,10 @@ namespace SpotifyAPI.Web
     [QueryParam("market")]
     public string Market { get; set; }
 
+    /// <summary>
+    ///   This is set to `"track", "episode"` by default.
+    /// </summary>
+    /// <value></value>
     [QueryParam("additional_types")]
     public List<string> AdditionalTypes { get; set; }
   }

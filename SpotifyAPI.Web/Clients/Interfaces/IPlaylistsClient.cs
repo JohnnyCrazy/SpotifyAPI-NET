@@ -15,7 +15,17 @@ namespace SpotifyAPI.Web
     Task<FullPlaylist> Create(string userId, PlaylistCreateRequest request);
 
     Task<bool> UploadCover(string playlistId, string base64JpgData);
-
     Task<List<Image>> GetCovers(string playlistId);
+
+    Task<Paging<SimplePlaylist>> GetUsers(string userId);
+    Task<Paging<SimplePlaylist>> GetUsers(string userId, PlaylistGetUsersRequest request);
+
+    Task<FullPlaylist> Get(string playlistId);
+    Task<FullPlaylist> Get(string playlistId, PlaylistGetRequest request);
+
+    Task<bool> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request);
+
+    Task<Paging<SimplePlaylist>> CurrentUsers();
+    Task<Paging<SimplePlaylist>> CurrentUsers(PlaylistCurrentUsersRequest request);
   }
 }

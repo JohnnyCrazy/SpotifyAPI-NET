@@ -24,6 +24,7 @@ namespace SpotifyAPI.Web.Http
     Task<T> Put<T>(Uri uri);
     Task<T> Put<T>(Uri uri, IDictionary<string, string> parameters);
     Task<T> Put<T>(Uri uri, IDictionary<string, string> parameters, object body);
+    Task<HttpStatusCode> Put(Uri uri, IDictionary<string, string> parameters, object body);
     Task<HttpStatusCode> PutRaw(Uri uri, IDictionary<string, string> parameters, object body);
 
     Task<T> Delete<T>(Uri uri);

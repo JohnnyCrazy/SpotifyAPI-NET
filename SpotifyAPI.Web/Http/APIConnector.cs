@@ -108,6 +108,14 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Put, parameters, body);
     }
 
+    public async Task<HttpStatusCode> Put(Uri uri, IDictionary<string, string> parameters, object body)
+    {
+      Ensure.ArgumentNotNull(uri, nameof(uri));
+
+      var response = await SendAPIRequestDetailed(uri, HttpMethod.Put, parameters, body);
+      return response.StatusCode;
+    }
+
     public async Task<HttpStatusCode> PutRaw(Uri uri, IDictionary<string, string> parameters, object body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
@@ -141,14 +149,14 @@ namespace SpotifyAPI.Web.Http
       };
     }
 
-    private async Task<IAPIResponse<T>> SendSerializedRequest<T>(IRequest request)
+    private async Task<IAPIResponse<T>> DoSerializedRequest<T>(IRequest request)
     {
       _jsonSerializer.SerializeRequest(request);
-      var response = await SendRequest(request);
+      var response = await DoRequest(request);
       return _jsonSerializer.DeserializeResponse<T>(response);
     }
 
-    private async Task<IResponse> SendRequest(IRequest request)
+    private async Task<IResponse> DoRequest(IRequest request)
     {
       await _authenticator.Apply(request).ConfigureAwait(false);
       IResponse response = await _httpClient.DoRequest(request).ConfigureAwait(false);
@@ -172,7 +180,7 @@ namespace SpotifyAPI.Web.Http
       )
     {
       var request = CreateRequest(uri, method, parameters, body);
-      return SendRequest(request);
+      return DoRequest(request);
     }
 
     public async Task<T> SendAPIRequest<T>(
@@ -183,8 +191,20 @@ namespace SpotifyAPI.Web.Http
       )
     {
       var request = CreateRequest(uri, method, parameters, body);
-      IAPIResponse<T> apiResponse = await SendSerializedRequest<T>(request);
+      IAPIResponse<T> apiResponse = await DoSerializedRequest<T>(request);
       return apiResponse.Body;
+    }
+
+    public async Task<IResponse> SendAPIRequestDetailed(
+        Uri uri,
+        HttpMethod method,
+        IDictionary<string, string> parameters = null,
+        object body = null
+      )
+    {
+      var request = CreateRequest(uri, method, parameters, body);
+      var response = await DoSerializedRequest<object>(request);
+      return response.Response;
     }
 
     private void ProcessErrors(IResponse response)

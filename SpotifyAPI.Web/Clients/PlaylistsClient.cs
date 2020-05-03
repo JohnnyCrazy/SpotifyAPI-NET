@@ -29,8 +29,9 @@ namespace SpotifyAPI.Web
     public Task<Paging<PlaylistTrack<IPlaylistItem>>> GetItems(string playlistId)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      var request = new PlaylistGetItemsRequest();
 
-      return API.Get<Paging<PlaylistTrack<IPlaylistItem>>>(URLs.PlaylistTracks(playlistId));
+      return API.Get<Paging<PlaylistTrack<IPlaylistItem>>>(URLs.PlaylistTracks(playlistId), request.BuildQueryParams());
     }
 
     public Task<Paging<PlaylistTrack<IPlaylistItem>>> GetItems(string playlistId, PlaylistGetItemsRequest request)
@@ -54,8 +55,8 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNullOrEmptyString(base64Jpg, nameof(base64Jpg));
 
-      var response = await API.PutRaw(URLs.PlaylistImages(playlistId), null, base64Jpg);
-      return response == HttpStatusCode.Accepted;
+      var statusCode = await API.PutRaw(URLs.PlaylistImages(playlistId), null, base64Jpg);
+      return statusCode == HttpStatusCode.Accepted;
     }
 
     public Task<List<Image>> GetCovers(string playlistId)
@@ -63,6 +64,58 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
 
       return API.Get<List<Image>>(URLs.PlaylistImages(playlistId));
+    }
+
+    public Task<Paging<SimplePlaylist>> GetUsers(string userId)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(userId, nameof(userId));
+
+      return API.Get<Paging<SimplePlaylist>>(URLs.UserPlaylists(userId));
+    }
+
+    public Task<Paging<SimplePlaylist>> GetUsers(string userId, PlaylistGetUsersRequest request)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(userId, nameof(userId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<Paging<SimplePlaylist>>(URLs.UserPlaylists(userId), request.BuildQueryParams());
+    }
+
+    public Task<FullPlaylist> Get(string playlistId)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      var request = new PlaylistGetRequest(); // We need some defaults
+
+      return API.Get<FullPlaylist>(URLs.Playlist(playlistId), request.BuildQueryParams());
+    }
+
+    public Task<FullPlaylist> Get(string playlistId, PlaylistGetRequest request)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<FullPlaylist>(URLs.Playlist(playlistId), request.BuildQueryParams());
+    }
+
+    public async Task<bool> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Put(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams());
+      return statusCode == HttpStatusCode.Created;
+    }
+
+    public Task<Paging<SimplePlaylist>> CurrentUsers()
+    {
+      return API.Get<Paging<SimplePlaylist>>(URLs.CurrentUserPlaylists());
+    }
+
+    public Task<Paging<SimplePlaylist>> CurrentUsers(PlaylistCurrentUsersRequest request)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<Paging<SimplePlaylist>>(URLs.CurrentUserPlaylists(), request.BuildQueryParams());
     }
   }
 }
