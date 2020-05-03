@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using URLs = SpotifyAPI.Web.SpotifyUrls;
@@ -45,6 +47,22 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       return API.Post<FullPlaylist>(URLs.UserPlaylists(userId), null, request.BuildBodyParams());
+    }
+
+    public async Task<bool> UploadCover(string playlistId, string base64Jpg)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNullOrEmptyString(base64Jpg, nameof(base64Jpg));
+
+      var response = await API.PutRaw(URLs.PlaylistImages(playlistId), null, base64Jpg);
+      return response == HttpStatusCode.Accepted;
+    }
+
+    public Task<List<Image>> GetCovers(string playlistId)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+
+      return API.Get<List<Image>>(URLs.PlaylistImages(playlistId));
     }
   }
 }

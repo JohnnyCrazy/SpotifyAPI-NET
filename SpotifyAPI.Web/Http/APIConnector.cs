@@ -108,22 +108,30 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Put, parameters, body);
     }
 
+    public async Task<HttpStatusCode> PutRaw(Uri uri, IDictionary<string, string> parameters, object body)
+    {
+      Ensure.ArgumentNotNull(uri, nameof(uri));
+
+      var response = await SendRawRequest(uri, HttpMethod.Put, parameters, body);
+      return response.StatusCode;
+    }
+
     public void SetRequestTimeout(TimeSpan timeout)
     {
       _httpClient.SetRequestTimeout(timeout);
     }
 
-    public async Task<T> SendAPIRequest<T>(
+    private IRequest CreateRequest(
         Uri uri,
         HttpMethod method,
-        IDictionary<string, string> parameters = null,
-        object body = null
+        IDictionary<string, string> parameters,
+        object body
       )
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
       Ensure.ArgumentNotNull(method, nameof(method));
 
-      var request = new Request
+      return new Request
       {
         BaseAddress = _baseAddress,
         Parameters = parameters,
@@ -131,8 +139,17 @@ namespace SpotifyAPI.Web.Http
         Method = method,
         Body = body
       };
+    }
 
+    private async Task<IAPIResponse<T>> SendSerializedRequest<T>(IRequest request)
+    {
       _jsonSerializer.SerializeRequest(request);
+      var response = await SendRequest(request);
+      return _jsonSerializer.DeserializeResponse<T>(response);
+    }
+
+    private async Task<IResponse> SendRequest(IRequest request)
+    {
       await _authenticator.Apply(request).ConfigureAwait(false);
       IResponse response = await _httpClient.DoRequest(request).ConfigureAwait(false);
       if (_retryHandler != null)
@@ -144,8 +161,29 @@ namespace SpotifyAPI.Web.Http
         });
       }
       ProcessErrors(response);
+      return response;
+    }
 
-      IAPIResponse<T> apiResponse = _jsonSerializer.DeserializeResponse<T>(response);
+    public Task<IResponse> SendRawRequest(
+        Uri uri,
+        HttpMethod method,
+        IDictionary<string, string> parameters = null,
+        object body = null
+      )
+    {
+      var request = CreateRequest(uri, method, parameters, body);
+      return SendRequest(request);
+    }
+
+    public async Task<T> SendAPIRequest<T>(
+        Uri uri,
+        HttpMethod method,
+        IDictionary<string, string> parameters = null,
+        object body = null
+      )
+    {
+      var request = CreateRequest(uri, method, parameters, body);
+      IAPIResponse<T> apiResponse = await SendSerializedRequest<T>(request);
       return apiResponse.Body;
     }
 

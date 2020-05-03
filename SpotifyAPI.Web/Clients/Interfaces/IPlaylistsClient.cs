@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
@@ -12,5 +13,9 @@ namespace SpotifyAPI.Web
     Task<Paging<PlaylistTrack<IPlaylistItem>>> GetItems(string playlistId, PlaylistGetItemsRequest request);
 
     Task<FullPlaylist> Create(string userId, PlaylistCreateRequest request);
+
+    Task<bool> UploadCover(string playlistId, string base64JpgData);
+
+    Task<List<Image>> GetCovers(string playlistId);
   }
 }
