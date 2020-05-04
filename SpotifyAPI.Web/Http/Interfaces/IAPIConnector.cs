@@ -20,6 +20,7 @@ namespace SpotifyAPI.Web.Http
     Task<T> Post<T>(Uri uri);
     Task<T> Post<T>(Uri uri, IDictionary<string, string> parameters);
     Task<T> Post<T>(Uri uri, IDictionary<string, string> parameters, object body);
+    Task<HttpStatusCode> Post(Uri uri, IDictionary<string, string> parameters, object body);
 
     Task<T> Put<T>(Uri uri);
     Task<T> Put<T>(Uri uri, IDictionary<string, string> parameters);
@@ -30,6 +31,7 @@ namespace SpotifyAPI.Web.Http
     Task<T> Delete<T>(Uri uri);
     Task<T> Delete<T>(Uri uri, IDictionary<string, string> parameters);
     Task<T> Delete<T>(Uri uri, IDictionary<string, string> parameters, object body);
+    Task<HttpStatusCode> Delete(Uri uri, IDictionary<string, string> parameters, object body);
 
     Task<T> SendAPIRequest<T>(Uri uri, HttpMethod method, IDictionary<string, string> parameters = null, object body = null);
 

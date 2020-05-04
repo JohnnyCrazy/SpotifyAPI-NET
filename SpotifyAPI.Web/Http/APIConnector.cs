@@ -55,6 +55,14 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Delete, parameters, body);
     }
 
+    public async Task<HttpStatusCode> Delete(Uri uri, IDictionary<string, string> parameters, object body)
+    {
+      Ensure.ArgumentNotNull(uri, nameof(uri));
+
+      var response = await SendAPIRequestDetailed(uri, HttpMethod.Delete, parameters, body);
+      return response.StatusCode;
+    }
+
     public Task<T> Get<T>(Uri uri)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
@@ -88,6 +96,14 @@ namespace SpotifyAPI.Web.Http
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Post, parameters, body);
+    }
+
+    public async Task<HttpStatusCode> Post(Uri uri, IDictionary<string, string> parameters, object body)
+    {
+      Ensure.ArgumentNotNull(uri, nameof(uri));
+
+      var response = await SendAPIRequestDetailed(uri, HttpMethod.Post, parameters, body);
+      return response.StatusCode;
     }
 
     public Task<T> Put<T>(Uri uri)

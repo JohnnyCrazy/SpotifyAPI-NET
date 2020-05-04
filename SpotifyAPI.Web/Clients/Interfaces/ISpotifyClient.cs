@@ -11,5 +11,7 @@ namespace SpotifyAPI.Web
     IPlaylistsClient Playlists { get; }
 
     ISearchClient Search { get; }
+
+    IFollowClient Follow { get; }
   }
 }

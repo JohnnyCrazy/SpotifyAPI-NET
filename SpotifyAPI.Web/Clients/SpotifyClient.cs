@@ -20,6 +20,7 @@ namespace SpotifyAPI.Web
       Shows = new ShowsClient(_apiConnector);
       Playlists = new PlaylistsClient(_apiConnector);
       Search = new SearchClient(_apiConnector);
+      Follow = new FollowClient(_apiConnector);
     }
 
     public IUserProfileClient UserProfile { get; }
@@ -31,5 +32,7 @@ namespace SpotifyAPI.Web
     public IPlaylistsClient Playlists { get; }
 
     public ISearchClient Search { get; }
+
+    public IFollowClient Follow { get; }
   }
 }

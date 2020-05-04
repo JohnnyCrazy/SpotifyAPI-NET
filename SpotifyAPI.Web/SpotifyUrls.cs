@@ -43,6 +43,14 @@ namespace SpotifyAPI.Web
 
     public static Uri Search() => EUri($"search");
 
+    public static Uri CurrentUserFollowerContains() => EUri($"me/following/contains");
+
+    public static Uri PlaylistFollowersContains(string playlistId) => EUri($"playlists/{playlistId}/followers/contains");
+
+    public static Uri CurrentUserFollower() => EUri($"me/following");
+
+    public static Uri PlaylistFollowers(string playlistId) => EUri($"playlists/{playlistId}/followers");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }
