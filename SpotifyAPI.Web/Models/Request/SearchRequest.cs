@@ -4,8 +4,17 @@ namespace SpotifyAPI.Web
 {
   public class SearchRequest : RequestParams
   {
+    public SearchRequest(Types type, string query)
+    {
+      Ensure.ArgumentNotNull(type, nameof(type));
+      Ensure.ArgumentNotNullOrEmptyString(query, nameof(query));
+
+      Type = type;
+      Query = query;
+    }
+
     [QueryParam("type")]
-    public Type? Types { get; set; }
+    public Types Type { get; set; }
 
     [QueryParam("q")]
     public string Query { get; set; }
@@ -20,36 +29,30 @@ namespace SpotifyAPI.Web
     public int? Offset { get; set; }
 
     [QueryParam("include_external")]
-    public External? IncludeExternal { get; set; }
-
-    protected override void CustomEnsure()
-    {
-      Ensure.ArgumentNotNull(Types, nameof(Types));
-      Ensure.ArgumentNotNullOrEmptyString(Query, nameof(Query));
-    }
+    public IncludeExternals? IncludeExternal { get; set; }
 
     [Flags]
-    public enum External
+    public enum IncludeExternals
     {
       [String("audio")]
-      Audio = 0,
+      Audio = 1,
     }
 
     [Flags]
-    public enum Type
+    public enum Types
     {
       [String("album")]
-      Album = 0,
+      Album = 1,
       [String("artist")]
-      Artist = 1,
+      Artist = 2,
       [String("playlist")]
-      Playlist = 2,
+      Playlist = 4,
       [String("track")]
-      Track = 4,
+      Track = 8,
       [String("show")]
-      Show = 8,
+      Show = 16,
       [String("episode")]
-      Episode = 16,
+      Episode = 32,
       All = Album | Artist | Playlist | Track | Show | Episode
     }
   }

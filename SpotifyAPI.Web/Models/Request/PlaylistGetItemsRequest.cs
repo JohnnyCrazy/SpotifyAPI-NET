@@ -5,13 +5,16 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistGetItemsRequest : RequestParams
   {
-    public PlaylistGetItemsRequest()
+    public PlaylistGetItemsRequest(AdditionalTypes types = AdditionalTypes.All)
     {
-      AdditionalTypes = AdditionalType.All;
+      Ensure.ArgumentNotNull(types, nameof(types));
+
+      AdditionalTypesParam = types;
+      Fields = new List<string>();
     }
 
     [QueryParam("fields")]
-    public List<string> Fields { get; set; }
+    public IList<string> Fields { get; }
 
     [QueryParam("limit")]
     public int? Limit { get; set; }
@@ -27,15 +30,15 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <value></value>
     [QueryParam("additional_types")]
-    public AdditionalType AdditionalTypes { get; set; }
+    public AdditionalTypes AdditionalTypesParam { get; set; }
 
     [Flags]
-    public enum AdditionalType
+    public enum AdditionalTypes
     {
       [String("track")]
-      Track = 0,
+      Track = 1,
       [String("episode")]
-      Episode = 1,
+      Episode = 2,
       All = Track | Episode
     }
   }

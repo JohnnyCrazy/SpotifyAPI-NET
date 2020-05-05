@@ -7,7 +7,7 @@ namespace SpotifyAPI.Web
 {
   public class SimplePaginator : IPaginator
   {
-    protected bool ShouldContinue<T>(List<T> results, Paging<T> page)
+    protected virtual bool ShouldContinue<T>(List<T> results, Paging<T> page)
     {
       return true;
     }

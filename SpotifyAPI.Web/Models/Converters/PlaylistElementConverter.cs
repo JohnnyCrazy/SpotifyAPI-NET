@@ -11,6 +11,8 @@ namespace SpotifyAPI.Web
     public override object ReadJson(JsonReader reader, Type objectType,
         object existingValue, JsonSerializer serializer)
     {
+      Ensure.ArgumentNotNull(serializer, nameof(serializer));
+
       var token = JToken.ReadFrom(reader);
       if (token.Type == JTokenType.Null)
       {

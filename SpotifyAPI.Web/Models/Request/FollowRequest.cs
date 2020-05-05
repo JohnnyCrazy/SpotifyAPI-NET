@@ -4,17 +4,20 @@ namespace SpotifyAPI.Web
 {
   public class FollowRequest : RequestParams
   {
+    public FollowRequest(Type type, IList<string> ids)
+    {
+      Ensure.ArgumentNotNull(type, nameof(type));
+      Ensure.ArgumentNotNullOrEmptyList(ids, nameof(ids));
+
+      TypeParam = type;
+      Ids = ids;
+    }
+
     [QueryParam("type")]
     public Type? TypeParam { get; set; }
 
     [BodyParam("ids")]
-    public List<string> Ids { get; set; }
-
-    protected override void CustomEnsure()
-    {
-      Ensure.ArgumentNotNull(TypeParam, nameof(TypeParam));
-      Ensure.ArgumentNotNullOrEmptyList(Ids, nameof(Ids));
-    }
+    public IList<string> Ids { get; }
 
     public enum Type
     {

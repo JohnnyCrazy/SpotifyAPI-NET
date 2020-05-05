@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -13,13 +15,16 @@ namespace SpotifyAPI.Web.Http
 
     public NewtonsoftJSONSerializer()
     {
+      var contractResolver = new PrivateFieldDefaultContractResolver
+      {
+        NamingStrategy = new SnakeCaseNamingStrategy()
+      };
+      contractResolver.DefaultMembersSearchFlags |= BindingFlags.NonPublic;
+
       _serializerSettings = new JsonSerializerSettings
       {
         NullValueHandling = NullValueHandling.Ignore,
-        ContractResolver = new DefaultContractResolver
-        {
-          NamingStrategy = new SnakeCaseNamingStrategy()
-        }
+        ContractResolver = contractResolver
       };
     }
 
@@ -45,6 +50,17 @@ namespace SpotifyAPI.Web.Http
       }
 
       request.Body = JsonConvert.SerializeObject(request.Body, _serializerSettings);
+    }
+
+    private class PrivateFieldDefaultContractResolver : DefaultContractResolver
+    {
+      protected override List<MemberInfo> GetSerializableMembers(Type objectType)
+      {
+        // Does not seem to work, still need DefaultMembersSearchFlags |= BindingFlags.NonPublic
+        var list = base.GetSerializableMembers(objectType);
+        list.AddRange(objectType.GetProperties(BindingFlags.NonPublic));
+        return list;
+      }
     }
   }
 }

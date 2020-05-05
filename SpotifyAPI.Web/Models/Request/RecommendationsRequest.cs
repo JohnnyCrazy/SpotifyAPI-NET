@@ -10,16 +10,19 @@ namespace SpotifyAPI.Web
       Min = new Dictionary<string, string>();
       Max = new Dictionary<string, string>();
       Target = new Dictionary<string, string>();
+      SeedArtists = new List<string>();
+      SeedGenres = new List<string>();
+      SeedTracks = new List<string>();
     }
 
     [QueryParam("seed_artists")]
-    public string SeedArtists { get; set; }
+    public IList<string> SeedArtists { get; }
 
     [QueryParam("seed_genres")]
-    public string SeedGenres { get; set; }
+    public IList<string> SeedGenres { get; }
 
     [QueryParam("seed_tracks")]
-    public string SeedTracks { get; set; }
+    public IList<string> SeedTracks { get; }
 
     [QueryParam("limit")]
     public int? Limit { get; set; }
@@ -27,20 +30,22 @@ namespace SpotifyAPI.Web
     [QueryParam("market")]
     public string Market { get; set; }
 
-    public Dictionary<string, string> Min { get; set; }
-    public Dictionary<string, string> Max { get; set; }
-    public Dictionary<string, string> Target { get; set; }
+    public Dictionary<string, string> Min { get; }
+    public Dictionary<string, string> Max { get; }
+    public Dictionary<string, string> Target { get; }
 
     protected override void CustomEnsure()
     {
-      if (string.IsNullOrEmpty(SeedTracks) && string.IsNullOrEmpty(SeedGenres) && string.IsNullOrEmpty(SeedArtists))
+      if (SeedArtists.Count == 0 && SeedGenres.Count == 0 && SeedTracks.Count == 0)
       {
         throw new ArgumentException("At least one of the seeds has to be non-empty");
       }
     }
 
-    protected override void AddCustomQueryParams(System.Collections.Generic.Dictionary<string, string> queryParams)
+    protected override void AddCustomQueryParams(Dictionary<string, string> queryParams)
     {
+      Ensure.ArgumentNotNull(queryParams, nameof(queryParams));
+
       foreach (KeyValuePair<string, string> pair in Min)
       {
         queryParams.Add($"min_{pair.Key}", pair.Value);

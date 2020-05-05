@@ -45,15 +45,13 @@ namespace SpotifyAPI.Web
         object value = prop.GetValue(this);
         if (value != null)
         {
-          if (value is List<string>)
+          if (value is IList<string> list && list.Count > 0)
           {
-            var list = value as List<string>;
             var str = string.Join(",", list);
             queryParams.Add(attribute.Key ?? prop.Name, str);
           }
-          else if (value is Enum)
+          else if (value is Enum valueAsEnum)
           {
-            var valueAsEnum = value as Enum;
             var enumType = valueAsEnum.GetType();
             var valueList = new List<string>();
 
@@ -88,6 +86,7 @@ namespace SpotifyAPI.Web
     protected virtual void AddCustomQueryParams(Dictionary<string, string> queryParams) { }
   }
 
+  [AttributeUsage(AttributeTargets.Property)]
   public class QueryParamAttribute : Attribute
   {
     public string Key { get; }
@@ -99,6 +98,7 @@ namespace SpotifyAPI.Web
     }
   }
 
+  [AttributeUsage(AttributeTargets.Property)]
   public class BodyParamAttribute : Attribute
   {
     public string Key { get; }

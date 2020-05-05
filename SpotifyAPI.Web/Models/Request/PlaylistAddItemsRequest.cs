@@ -1,12 +1,18 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web
 {
   public class PlaylistAddItemsRequest : RequestParams
   {
+    public PlaylistAddItemsRequest(IList<string> uris)
+    {
+      Ensure.ArgumentNotNull(uris, nameof(uris));
+
+      Uris = uris;
+    }
+
     [BodyParam("uris")]
-    public List<string> Uris { get; set; }
+    public IList<string> Uris { get; }
 
     [BodyParam("position")]
     public int? Position { get; set; }

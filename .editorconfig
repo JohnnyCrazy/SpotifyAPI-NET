@@ -13,6 +13,9 @@ indent_size = 2
 indent_size = 2
 
 [*.{cs,vb}]
+# Does not seem to work...
+dotnet_diagnostic.CA1303.severity = none
+dotnet_diagnostic.CA1056.severity = none
 # Sort using and Import directives with System.* appearing first
 dotnet_sort_system_directives_first = true
 dotnet_style_require_accessibility_modifiers = always:warning
@@ -26,3 +29,5 @@ dotnet_style_qualification_for_event = false:warning
 # Code-block preferences
 csharp_prefer_braces = true:warning
 csharp_prefer_simple_using_statement = true:warning
+
+# Custom disabled

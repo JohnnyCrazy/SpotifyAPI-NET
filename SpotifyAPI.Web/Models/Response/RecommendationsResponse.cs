@@ -4,7 +4,7 @@ namespace SpotifyAPI.Web
 {
   public class RecommendationsResponse
   {
-    public List<RecommendationSeed> Seeds { get; set; }
-    public List<SimpleTrack> Tracks { get; set; }
+    public List<RecommendationSeed> Seeds { get; private set; }
+    public List<SimpleTrack> Tracks { get; private set; }
   }
 }

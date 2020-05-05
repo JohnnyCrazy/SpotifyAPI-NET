@@ -2,10 +2,10 @@ namespace SpotifyAPI.Web
 {
   public class SearchResponse
   {
-    public Paging<FullArtist> Artists { get; set; }
-    public Paging<SimpleAlbum> Albums { get; set; }
-    public Paging<FullTrack> Tracks { get; set; }
-    public Paging<SimpleShow> Shows { get; set; }
-    public Paging<SimpleEpisode> Episodes { get; set; }
+    public Paging<FullArtist> Artists { get; private set; }
+    public Paging<SimpleAlbum> Albums { get; private set; }
+    public Paging<FullTrack> Tracks { get; private set; }
+    public Paging<SimpleShow> Shows { get; private set; }
+    public Paging<SimpleEpisode> Episodes { get; private set; }
   }
 }

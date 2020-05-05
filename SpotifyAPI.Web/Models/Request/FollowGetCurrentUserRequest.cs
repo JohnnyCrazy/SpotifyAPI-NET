@@ -2,14 +2,13 @@ namespace SpotifyAPI.Web
 {
   public class FollowOfCurrentUserRequest : RequestParams
   {
-    public FollowOfCurrentUserRequest()
+    public FollowOfCurrentUserRequest(Type type = Type.Artist)
     {
-      Type = Types.Artist;
+      TypeParam = type;
     }
 
-
     [QueryParam("type")]
-    public Types Type { get; set; }
+    public Type TypeParam { get; set; }
 
     [QueryParam("limit")]
     public int? Limit { get; set; }
@@ -17,7 +16,7 @@ namespace SpotifyAPI.Web
     [QueryParam("after")]
     public string After { get; set; }
 
-    public enum Types
+    public enum Type
     {
       [String("artist")]
       Artist

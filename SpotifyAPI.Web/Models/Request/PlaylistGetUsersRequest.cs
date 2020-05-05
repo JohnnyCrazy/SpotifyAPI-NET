@@ -7,7 +7,5 @@ namespace SpotifyAPI.Web
 
     [QueryParam("offset")]
     public int? Offset { get; set; }
-
-
   }
 }

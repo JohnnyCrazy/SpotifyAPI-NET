@@ -3,19 +3,22 @@ namespace SpotifyAPI.Web
 {
   public class UnfollowRequest : RequestParams
   {
-    [QueryParam("type")]
-    public Types? Type { get; set; }
-
-    [BodyParam("ids")]
-    public List<string> Ids { get; set; }
-
-    protected override void CustomEnsure()
+    public UnfollowRequest(Type type, IList<string> ids)
     {
-      Ensure.ArgumentNotNull(Type, nameof(Type));
-      Ensure.ArgumentNotNullOrEmptyList(Ids, nameof(Ids));
+      Ensure.ArgumentNotNull(type, nameof(type));
+      Ensure.ArgumentNotNullOrEmptyList(ids, nameof(ids));
+
+      TypeParam = type;
+      Ids = ids;
     }
 
-    public enum Types
+    [QueryParam("type")]
+    public Type TypeParam { get; }
+
+    [BodyParam("ids")]
+    public IList<string> Ids { get; }
+
+    public enum Type
     {
       [String("artist")]
       Artist,

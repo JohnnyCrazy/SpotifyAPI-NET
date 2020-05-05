@@ -20,7 +20,9 @@ namespace SpotifyAPI.Web
     Task<Paging<SimplePlaylist>> GetUsers(string userId);
     Task<Paging<SimplePlaylist>> GetUsers(string userId, PlaylistGetUsersRequest request);
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<FullPlaylist> Get(string playlistId);
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<FullPlaylist> Get(string playlistId, PlaylistGetRequest request);
 
     Task<bool> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request);

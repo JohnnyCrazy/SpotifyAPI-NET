@@ -4,11 +4,13 @@ namespace SpotifyAPI.Web
   {
     public PlaylistCreateRequest(string name)
     {
+      Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
       Name = name;
     }
 
     [BodyParam("name")]
-    public string Name { get; set; }
+    public string Name { get; }
 
     [BodyParam("public")]
     public bool? Public { get; set; }

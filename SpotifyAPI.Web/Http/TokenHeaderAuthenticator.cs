@@ -16,6 +16,8 @@ namespace SpotifyAPI.Web.Http
 
     public Task Apply(IRequest request)
     {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
       request.Headers["Authorization"] = $"{TokenType} {Token}";
       return Task.CompletedTask;
     }

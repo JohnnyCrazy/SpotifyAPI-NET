@@ -19,6 +19,7 @@ namespace SpotifyAPI.Web
     /// <param name="userId"></param>
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
     /// <returns></returns>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<PublicUser> Get(string userId);
   }
 }

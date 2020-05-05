@@ -4,19 +4,17 @@ namespace SpotifyAPI.Web
 {
   public class ShowsRequest : RequestParams
   {
-    public ShowsRequest(List<string> ids)
+    public ShowsRequest(IList<string> ids)
     {
+      Ensure.ArgumentNotNullOrEmptyList(ids, nameof(ids));
+
       Ids = ids;
     }
+
     [QueryParam("ids")]
-    public List<string> Ids { get; set; }
+    public IList<string> Ids { get; }
 
     [QueryParam("market")]
     public string Market { get; set; }
-
-    protected override void CustomEnsure()
-    {
-      Ensure.ArgumentNotNullOrEmptyList(Ids, nameof(Ids));
-    }
   }
 }

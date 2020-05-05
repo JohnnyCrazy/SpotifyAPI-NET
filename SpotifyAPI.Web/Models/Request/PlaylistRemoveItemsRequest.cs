@@ -5,27 +5,26 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistRemoveItemsRequest : RequestParams
   {
+    public PlaylistRemoveItemsRequest(IList<Item> tracks)
+    {
+      Ensure.ArgumentNotNullOrEmptyList(tracks, nameof(tracks));
+
+      Tracks = tracks;
+    }
+
     [BodyParam("tracks")]
-    public List<Item> Tracks { get; set; }
+    public IList<Item> Tracks { get; }
 
     [BodyParam("snapshot_id")]
     public string SnapshotId { get; set; }
 
-    protected override void CustomEnsure()
-    {
-      Ensure.ArgumentNotNullOrEmptyList(Tracks, nameof(Tracks));
-    }
-
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034")]
     public class Item
     {
-      public Item(string uri)
-      {
-        Uri = uri;
-      }
-
-      [JsonProperty("uri")]
+      [JsonProperty("uri", NullValueHandling = NullValueHandling.Ignore)]
       public string Uri { get; set; }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227")]
       [JsonProperty("positions", NullValueHandling = NullValueHandling.Ignore)]
       public List<int> Positions { get; set; }
     }

@@ -5,7 +5,7 @@ namespace SpotifyAPI.Web
   {
     static private readonly URIParameterFormatProvider _provider = new URIParameterFormatProvider();
 
-    public static Uri API_V1 = new Uri("https://api.spotify.com/v1/");
+    public static readonly Uri APIV1 = new Uri("https://api.spotify.com/v1/");
 
     public static Uri Me() => EUri($"me");
 

@@ -4,12 +4,14 @@ namespace SpotifyAPI.Web
 {
   public class FollowCheckPlaylistRequest : RequestParams
   {
-    [QueryParam("ids")]
-    public List<string> Ids { get; set; }
-
-    protected override void CustomEnsure()
+    public FollowCheckPlaylistRequest(IList<string> ids)
     {
-      Ensure.ArgumentNotNullOrEmptyList(Ids, nameof(Ids));
+      Ensure.ArgumentNotNullOrEmptyList(ids, nameof(ids));
+
+      Ids = ids;
     }
+
+    [QueryParam("ids")]
+    public IList<string> Ids { get; }
   }
 }

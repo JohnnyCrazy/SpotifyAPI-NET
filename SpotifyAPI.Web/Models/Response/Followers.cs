@@ -2,8 +2,8 @@ namespace SpotifyAPI.Web
 {
   public class Followers
   {
-    public string Href { get; set; }
+    public string Href { get; private set; }
 
-    public int Total { get; set; }
+    public int Total { get; private set; }
   }
 }

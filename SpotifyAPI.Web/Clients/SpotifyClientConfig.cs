@@ -105,7 +105,7 @@ namespace SpotifyAPI.Web
     public static SpotifyClientConfig CreateDefault(IAuthenticator authenticator)
     {
       return new SpotifyClientConfig(
-        SpotifyUrls.API_V1,
+        SpotifyUrls.APIV1,
         authenticator,
         new NewtonsoftJSONSerializer(),
         new NetHttpClient(),

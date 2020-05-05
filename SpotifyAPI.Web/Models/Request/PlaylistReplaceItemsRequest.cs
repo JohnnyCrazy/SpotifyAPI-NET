@@ -4,12 +4,14 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistReplaceItemsRequest : RequestParams
   {
-    [BodyParam("uris")]
-    public List<string> Uris { get; set; }
-
-    protected override void CustomEnsure()
+    public PlaylistReplaceItemsRequest(List<string> uris)
     {
-      Ensure.ArgumentNotNullOrEmptyList(Uris, nameof(Uris));
+      Ensure.ArgumentNotNull(uris, nameof(uris));
+
+      Uris = uris;
     }
+
+    [BodyParam("uris")]
+    public IList<string> Uris { get; }
   }
 }

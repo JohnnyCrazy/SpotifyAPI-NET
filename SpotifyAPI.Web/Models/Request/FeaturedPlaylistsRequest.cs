@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 namespace SpotifyAPI.Web
 {
@@ -14,9 +15,9 @@ namespace SpotifyAPI.Web
     public DateTime? Timestamp { get; set; }
 
     [QueryParam("timestamp")]
-    protected string _Timestamp
+    protected string TimestampFormatted
     {
-      get => Timestamp?.ToString("o");
+      get => Timestamp?.ToString("o", CultureInfo.InvariantCulture);
     }
   }
 }

@@ -5,11 +5,11 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistTrack<T>
   {
-    public DateTime? AddedAt { get; set; }
-    public PublicUser AddedBy { get; set; }
-    public bool IsLocal { get; set; }
+    public DateTime? AddedAt { get; private set; }
+    public PublicUser AddedBy { get; private set; }
+    public bool IsLocal { get; private set; }
 
     [JsonConverter(typeof(PlaylistElementConverter))]
-    public T Track { get; set; }
+    public T Track { get; private set; }
   }
 }

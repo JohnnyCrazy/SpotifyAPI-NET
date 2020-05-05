@@ -28,7 +28,7 @@ namespace SpotifyAPI.Web.Http
       return await BuildResponse(responseMsg).ConfigureAwait(false);
     }
 
-    private async Task<IResponse> BuildResponse(HttpResponseMessage responseMsg)
+    private static async Task<IResponse> BuildResponse(HttpResponseMessage responseMsg)
     {
       Ensure.ArgumentNotNull(responseMsg, nameof(responseMsg));
 
@@ -46,7 +46,7 @@ namespace SpotifyAPI.Web.Http
       };
     }
 
-    private HttpRequestMessage BuildRequestMessage(IRequest request)
+    private static HttpRequestMessage BuildRequestMessage(IRequest request)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -79,7 +79,7 @@ namespace SpotifyAPI.Web.Http
       GC.SuppressFinalize(this);
     }
 
-    private void Dispose(bool disposing)
+    protected virtual void Dispose(bool disposing)
     {
       if (disposing)
       {

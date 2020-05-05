@@ -14,7 +14,9 @@ namespace SpotifyAPI.Web.Http
 
     // IHTTPClient HTTPClient { get; }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<T> Get<T>(Uri uri);
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters);
 
     Task<T> Post<T>(Uri uri);

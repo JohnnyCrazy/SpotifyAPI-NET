@@ -16,7 +16,7 @@ namespace SpotifyAPI.Web
       return formatType == typeof(ICustomFormatter) ? _formatter : null;
     }
 
-    public class URIParameterFormatter : ICustomFormatter
+    private class URIParameterFormatter : ICustomFormatter
     {
       public string Format(string format, object arg, IFormatProvider formatProvider)
       {

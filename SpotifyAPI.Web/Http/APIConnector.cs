@@ -158,10 +158,9 @@ namespace SpotifyAPI.Web.Http
       Ensure.ArgumentNotNull(uri, nameof(uri));
       Ensure.ArgumentNotNull(method, nameof(method));
 
-      return new Request
+      return new Request(parameters)
       {
         BaseAddress = _baseAddress,
-        Parameters = parameters,
         Endpoint = uri,
         Method = method,
         Body = body
@@ -183,13 +182,13 @@ namespace SpotifyAPI.Web.Http
       _httpLogger?.OnResponse(response);
       if (_retryHandler != null)
       {
-        response = await _retryHandler?.HandleRetry(request, response, async (newRequest) =>
+        response = await _retryHandler.HandleRetry(request, response, async (newRequest) =>
         {
           await _authenticator.Apply(newRequest).ConfigureAwait(false);
           var newResponse = await _httpClient.DoRequest(request).ConfigureAwait(false);
           _httpLogger?.OnResponse(newResponse);
           return newResponse;
-        });
+        }).ConfigureAwait(false);
       }
       ProcessErrors(response);
       return response;
@@ -214,7 +213,7 @@ namespace SpotifyAPI.Web.Http
       )
     {
       var request = CreateRequest(uri, method, parameters, body);
-      IAPIResponse<T> apiResponse = await DoSerializedRequest<T>(request);
+      IAPIResponse<T> apiResponse = await DoSerializedRequest<T>(request).ConfigureAwait(false);
       return apiResponse.Body;
     }
 
@@ -226,11 +225,11 @@ namespace SpotifyAPI.Web.Http
       )
     {
       var request = CreateRequest(uri, method, parameters, body);
-      var response = await DoSerializedRequest<object>(request);
+      var response = await DoSerializedRequest<object>(request).ConfigureAwait(false);
       return response.Response;
     }
 
-    private void ProcessErrors(IResponse response)
+    private static void ProcessErrors(IResponse response)
     {
       Ensure.ArgumentNotNull(response, nameof(response));
 
