@@ -158,7 +158,7 @@ namespace SpotifyAPI.Web.Http
       Ensure.ArgumentNotNull(uri, nameof(uri));
       Ensure.ArgumentNotNull(method, nameof(method));
 
-      return new Request(parameters)
+      return new Request(new Dictionary<string, string>(), parameters)
       {
         BaseAddress = _baseAddress,
         Endpoint = uri,

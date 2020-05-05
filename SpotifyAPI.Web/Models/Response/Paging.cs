@@ -12,4 +12,15 @@ namespace SpotifyAPI.Web
     public string Previous { get; private set; }
     public int Total { get; private set; }
   }
+
+  public class Paging<T, TNext>
+  {
+    public string Href { get; private set; }
+    public List<T> Items { get; private set; }
+    public int Limit { get; private set; }
+    public string Next { get; private set; }
+    public int Offset { get; private set; }
+    public string Previous { get; private set; }
+    public int Total { get; private set; }
+  }
 }

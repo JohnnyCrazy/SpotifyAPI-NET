@@ -49,6 +49,11 @@ namespace SpotifyAPI.Web
       return DefaultPaginator.Paginate(firstPage, _apiConnector);
     }
 
+    public Task<List<T>> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper)
+    {
+      return DefaultPaginator.Paginate(firstPage, mapper, _apiConnector);
+    }
+
     public Task<List<T>> Paginate<T>(Paging<T> firstPage, IPaginator paginator)
     {
       Ensure.ArgumentNotNull(paginator, nameof(paginator));
@@ -59,6 +64,11 @@ namespace SpotifyAPI.Web
     public Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage)
     {
       return DefaultPaginator.Paginate(getFirstPage, _apiConnector);
+    }
+
+    public Task<List<T>> Paginate<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper)
+    {
+      return DefaultPaginator.Paginate(getFirstPage, mapper, _apiConnector);
     }
 
     public Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
