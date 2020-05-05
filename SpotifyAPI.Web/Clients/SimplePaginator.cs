@@ -14,6 +14,9 @@ namespace SpotifyAPI.Web
 
     public async Task<List<T>> Paginate<T>(Paging<T> firstPage, IAPIConnector connector)
     {
+      Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
+      Ensure.ArgumentNotNull(connector, nameof(connector));
+
       var page = firstPage;
       var results = new List<T>();
       results.AddRange(firstPage.Items);
@@ -28,6 +31,8 @@ namespace SpotifyAPI.Web
 
     public async Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IAPIConnector connector)
     {
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+
       var firstPage = await getFirstPage().ConfigureAwait(false);
       return await Paginate(firstPage, connector).ConfigureAwait(false);
     }
