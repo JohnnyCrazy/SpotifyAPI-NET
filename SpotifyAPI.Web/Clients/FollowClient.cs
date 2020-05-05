@@ -29,7 +29,9 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams());
+      var statusCode = await API
+        .Put(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams())
+        .ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
@@ -37,7 +39,9 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
 
-      var statusCode = await API.Put(URLs.PlaylistFollowers(playlistId), null, null);
+      var statusCode = await API
+        .Put(URLs.PlaylistFollowers(playlistId), null, null)
+        .ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
@@ -46,7 +50,9 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(URLs.PlaylistFollowers(playlistId), null, request.BuildBodyParams());
+      var statusCode = await API
+        .Put(URLs.PlaylistFollowers(playlistId), null, request.BuildBodyParams())
+        .ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
@@ -68,7 +74,9 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Delete(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams());
+      var statusCode = await API
+        .Delete(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams())
+        .ConfigureAwait(false);
       return statusCode == HttpStatusCode.NoContent;
     }
 
@@ -76,7 +84,9 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
 
-      var statusCode = await API.Delete(URLs.PlaylistFollowers(playlistId), null, null);
+      var statusCode = await API
+        .Delete(URLs.PlaylistFollowers(playlistId), null, null)
+        .ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
   }

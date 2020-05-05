@@ -55,7 +55,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNullOrEmptyString(base64Jpg, nameof(base64Jpg));
 
-      var statusCode = await API.PutRaw(URLs.PlaylistImages(playlistId), null, base64Jpg);
+      var statusCode = await API.PutRaw(URLs.PlaylistImages(playlistId), null, base64Jpg).ConfigureAwait(false);
       return statusCode == HttpStatusCode.Accepted;
     }
 
@@ -102,7 +102,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams());
+      var statusCode = await API.Put(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams()).ConfigureAwait(false);
       return statusCode == HttpStatusCode.Created;
     }
 
@@ -123,7 +123,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(URLs.Playlist(playlistId), null, request.BuildBodyParams());
+      var statusCode = await API.Put(URLs.Playlist(playlistId), null, request.BuildBodyParams()).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 

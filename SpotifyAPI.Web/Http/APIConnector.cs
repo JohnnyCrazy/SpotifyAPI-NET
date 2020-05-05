@@ -59,7 +59,7 @@ namespace SpotifyAPI.Web.Http
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
-      var response = await SendAPIRequestDetailed(uri, HttpMethod.Delete, parameters, body);
+      var response = await SendAPIRequestDetailed(uri, HttpMethod.Delete, parameters, body).ConfigureAwait(false);
       return response.StatusCode;
     }
 
@@ -102,7 +102,7 @@ namespace SpotifyAPI.Web.Http
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
-      var response = await SendAPIRequestDetailed(uri, HttpMethod.Post, parameters, body);
+      var response = await SendAPIRequestDetailed(uri, HttpMethod.Post, parameters, body).ConfigureAwait(false);
       return response.StatusCode;
     }
 
@@ -131,7 +131,7 @@ namespace SpotifyAPI.Web.Http
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
-      var response = await SendAPIRequestDetailed(uri, HttpMethod.Put, parameters, body);
+      var response = await SendAPIRequestDetailed(uri, HttpMethod.Put, parameters, body).ConfigureAwait(false);
       return response.StatusCode;
     }
 
@@ -139,7 +139,7 @@ namespace SpotifyAPI.Web.Http
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
-      var response = await SendRawRequest(uri, HttpMethod.Put, parameters, body);
+      var response = await SendRawRequest(uri, HttpMethod.Put, parameters, body).ConfigureAwait(false);
       return response.StatusCode;
     }
 
@@ -171,7 +171,7 @@ namespace SpotifyAPI.Web.Http
     private async Task<IAPIResponse<T>> DoSerializedRequest<T>(IRequest request)
     {
       _jsonSerializer.SerializeRequest(request);
-      var response = await DoRequest(request);
+      var response = await DoRequest(request).ConfigureAwait(false);
       return _jsonSerializer.DeserializeResponse<T>(response);
     }
 

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 
 namespace SpotifyAPI.Web
@@ -15,6 +18,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(config, nameof(config));
 
       _apiConnector = config.CreateAPIConnector();
+      DefaultPaginator = config.Paginator;
       UserProfile = new UserProfileClient(_apiConnector);
       Browse = new BrowseClient(_apiConnector);
       Shows = new ShowsClient(_apiConnector);
@@ -23,6 +27,8 @@ namespace SpotifyAPI.Web
       Follow = new FollowClient(_apiConnector);
       Tracks = new TracksClient(_apiConnector);
     }
+
+    public IPaginator DefaultPaginator { get; }
 
     public IUserProfileClient UserProfile { get; }
 
@@ -37,5 +43,29 @@ namespace SpotifyAPI.Web
     public IFollowClient Follow { get; }
 
     public ITracksClient Tracks { get; }
+
+    public Task<List<T>> Paginate<T>(Paging<T> firstPage)
+    {
+      return DefaultPaginator.Paginate(firstPage, _apiConnector);
+    }
+
+    public Task<List<T>> Paginate<T>(Paging<T> firstPage, IPaginator paginator)
+    {
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      return paginator.Paginate(firstPage, _apiConnector);
+    }
+
+    public Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage)
+    {
+      return DefaultPaginator.Paginate(getFirstPage, _apiConnector);
+    }
+
+    public Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
+    {
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      return paginator.Paginate(getFirstPage, _apiConnector);
+    }
   }
 }
