@@ -30,7 +30,7 @@ devices.Devices.ForEach(device => Console.WriteLine(device.Name));
 
 ```csharp
 PlaybackContext context = _spotify.GetPlayback();
-if(contex.Item != null)
+if(context.Item != null)
   Console.WriteLine(context.Item.Name)); //Print the current song
 ```
 
@@ -51,7 +51,7 @@ This is a simpler (less data) version of `GetPlayback`
 
 ```csharp
 PlaybackContext context = _spotify.GetPlayingTrack();
-if(contex.Item != null)
+if(context.Item != null)
   Console.WriteLine(context.Item.Name)); //Print the current song
 ```
 
