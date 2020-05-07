@@ -87,6 +87,12 @@ namespace SpotifyAPI.Web
 
     public static Uri PlayerPrevious() => EUri($"me/player/previous");
 
+    public static Uri Albums() => EUri($"albums");
+
+    public static Uri Album(string albumId) => EUri($"albums/{albumId}");
+
+    public static Uri AlbumTracks(string albumId) => EUri($"albums/{albumId}/tracks");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }
