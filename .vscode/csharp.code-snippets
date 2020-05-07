@@ -7,7 +7,7 @@
       "{",
       "  public class $1",
       "  {",
-      "     public ${2:string} ${3:Name} { get; set; }",
+      "     public ${2:string} ${3:Name} { get; private set; }",
       "",
       "     $4",
       "  }",

@@ -11,7 +11,7 @@ namespace SpotifyAPI.Web
   {
     public JObject BuildBodyParams()
     {
-      // Make sure everything is okay before building query params
+      // Make sure everything is okay before building body params
       CustomEnsure();
 
       var bodyProps = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
