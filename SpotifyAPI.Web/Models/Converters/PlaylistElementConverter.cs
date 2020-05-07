@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace SpotifyAPI.Web
 {
-  public class PlaylistElementConverter : JsonConverter
+  public class PlayableItemConverter : JsonConverter
   {
     public override bool CanConvert(Type objectType) => true;
 

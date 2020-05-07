@@ -1,26 +1,15 @@
 using System;
-using System.Collections.Generic;
 
 namespace SpotifyAPI.Web
 {
-  public class PlaylistGetItemsRequest : RequestParams
+  public class PlayerCurrentPlaybackRequest : RequestParams
   {
-    public PlaylistGetItemsRequest(AdditionalTypes types = AdditionalTypes.All)
+    public PlayerCurrentPlaybackRequest(AdditionalTypes types = AdditionalTypes.All)
     {
       Ensure.ArgumentNotNull(types, nameof(types));
 
       AdditionalTypesParam = types;
-      Fields = new List<string>();
     }
-
-    [QueryParam("fields")]
-    public IList<string> Fields { get; }
-
-    [QueryParam("limit")]
-    public int? Limit { get; set; }
-
-    [QueryParam("offset")]
-    public int? Offset { get; set; }
 
     [QueryParam("market")]
     public string Market { get; set; }

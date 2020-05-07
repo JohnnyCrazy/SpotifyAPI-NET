@@ -18,6 +18,8 @@ namespace SpotifyAPI.Web.Http
     Task<T> Get<T>(Uri uri);
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters);
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
+    Task<HttpStatusCode> Get(Uri uri, IDictionary<string, string> parameters, object body);
 
     Task<T> Post<T>(Uri uri);
     Task<T> Post<T>(Uri uri, IDictionary<string, string> parameters);

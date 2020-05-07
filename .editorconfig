@@ -16,6 +16,8 @@ indent_size = 2
 # Does not seem to work...
 dotnet_diagnostic.CA1303.severity = none
 dotnet_diagnostic.CA1056.severity = none
+dotnet_diagnostic.CA1034.severity = none
+dotnet_diagnostic.CA1054.severity = none
 # Sort using and Import directives with System.* appearing first
 dotnet_sort_system_directives_first = true
 dotnet_style_require_accessibility_modifiers = always:warning

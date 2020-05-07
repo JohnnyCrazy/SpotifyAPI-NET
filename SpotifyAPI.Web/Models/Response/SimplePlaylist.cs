@@ -16,7 +16,7 @@ namespace SpotifyAPI.Web
     public PublicUser Owner { get; private set; }
     public bool? Public { get; private set; }
     public string SnapshotId { get; private set; }
-    public Paging<PlaylistTrack<IPlaylistItem>> Tracks { get; private set; }
+    public Paging<PlaylistTrack<IPlayableItem>> Tracks { get; private set; }
     public string Type { get; private set; }
     public string Uri { get; private set; }
   }

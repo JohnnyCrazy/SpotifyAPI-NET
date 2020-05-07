@@ -61,6 +61,32 @@ namespace SpotifyAPI.Web
 
     public static Uri AudioFeatures() => EUri($"audio-features");
 
+    public static Uri Player() => EUri($"me/player");
+
+    public static Uri PlayerQueue() => EUri($"me/player/queue");
+
+    public static Uri PlayerDevices() => EUri($"me/player/devices");
+
+    public static Uri PlayerCurrentlyPlaying() => EUri($"me/player/currently-playing");
+
+    public static Uri PlayerRecentlyPlayed() => EUri($"me/player/recently-played");
+
+    public static Uri PlayerPause() => EUri($"me/player/pause");
+
+    public static Uri PlayerResume() => EUri($"me/player/play");
+
+    public static Uri PlayerSeek() => EUri($"me/player/seek");
+
+    public static Uri PlayerRepeat() => EUri($"me/player/repeat");
+
+    public static Uri PlayerShuffle() => EUri($"me/player/shuffle");
+
+    public static Uri PlayerVolume() => EUri($"me/player/volume");
+
+    public static Uri PlayerNext() => EUri($"me/player/next");
+
+    public static Uri PlayerPrevious() => EUri($"me/player/previous");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }

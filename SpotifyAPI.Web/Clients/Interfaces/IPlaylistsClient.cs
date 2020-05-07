@@ -9,8 +9,8 @@ namespace SpotifyAPI.Web
 
     Task<SnapshotResponse> AddItems(string playlistId, PlaylistAddItemsRequest request);
 
-    Task<Paging<PlaylistTrack<IPlaylistItem>>> GetItems(string playlistId);
-    Task<Paging<PlaylistTrack<IPlaylistItem>>> GetItems(string playlistId, PlaylistGetItemsRequest request);
+    Task<Paging<PlaylistTrack<IPlayableItem>>> GetItems(string playlistId);
+    Task<Paging<PlaylistTrack<IPlayableItem>>> GetItems(string playlistId, PlaylistGetItemsRequest request);
 
     Task<FullPlaylist> Create(string userId, PlaylistCreateRequest request);
 

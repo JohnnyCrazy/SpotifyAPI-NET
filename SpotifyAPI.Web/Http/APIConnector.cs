@@ -77,6 +77,14 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Get, parameters);
     }
 
+    public async Task<HttpStatusCode> Get(Uri uri, IDictionary<string, string> parameters, object body)
+    {
+      Ensure.ArgumentNotNull(uri, nameof(uri));
+
+      var response = await SendAPIRequestDetailed(uri, HttpMethod.Get, parameters, body).ConfigureAwait(false);
+      return response.StatusCode;
+    }
+
     public Task<T> Post<T>(Uri uri)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));

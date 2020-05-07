@@ -17,7 +17,7 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <value></value>
     [QueryParam("additional_types")]
-    public AdditionalTypes AdditionalTypesParam { get; set; }
+    public AdditionalTypes AdditionalTypesParam { get; }
 
     [Flags]
     public enum AdditionalTypes

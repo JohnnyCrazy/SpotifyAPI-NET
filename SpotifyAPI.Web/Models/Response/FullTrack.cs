@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace SpotifyAPI.Web
 {
-  public class FullTrack : IPlaylistItem
+  public class FullTrack : IPlayableItem
   {
     public SimpleAlbum Album { get; private set; }
     public List<SimpleArtist> Artists { get; private set; }

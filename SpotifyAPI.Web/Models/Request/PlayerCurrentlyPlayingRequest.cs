@@ -1,29 +1,20 @@
 using System;
-using System.Collections.Generic;
 
 namespace SpotifyAPI.Web
 {
-  public class PlaylistGetItemsRequest : RequestParams
+  public class PlayerCurrentlyPlayingRequest : RequestParams
   {
-    public PlaylistGetItemsRequest(AdditionalTypes types = AdditionalTypes.All)
+    public PlayerCurrentlyPlayingRequest(string market, AdditionalTypes types = AdditionalTypes.All)
     {
+      Ensure.ArgumentNotNullOrEmptyString(market, nameof(market));
       Ensure.ArgumentNotNull(types, nameof(types));
 
+      Market = market;
       AdditionalTypesParam = types;
-      Fields = new List<string>();
     }
 
-    [QueryParam("fields")]
-    public IList<string> Fields { get; }
-
-    [QueryParam("limit")]
-    public int? Limit { get; set; }
-
-    [QueryParam("offset")]
-    public int? Offset { get; set; }
-
     [QueryParam("market")]
-    public string Market { get; set; }
+    public string Market { get; }
 
     /// <summary>
     ///   This is set to `"track", "episode"` by default.
