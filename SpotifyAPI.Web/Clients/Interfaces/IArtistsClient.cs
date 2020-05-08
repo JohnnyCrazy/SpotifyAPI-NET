@@ -6,6 +6,7 @@ namespace SpotifyAPI.Web
   {
     Task<ArtistsResponse> GetSeveral(ArtistsRequest request);
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<FullArtist> Get(string artistId);
 
     Task<Paging<SimpleAlbum>> GetAlbums(string artistId);
