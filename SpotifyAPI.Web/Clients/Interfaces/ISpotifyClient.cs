@@ -26,6 +26,8 @@ namespace SpotifyAPI.Web
 
     IAlbumsClient Albums { get; }
 
+    IArtistsClient Artists { get; }
+
     Task<List<T>> Paginate<T>(Paging<T> firstPage);
     Task<List<T>> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper);
     Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage);

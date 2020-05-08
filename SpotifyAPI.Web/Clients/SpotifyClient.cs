@@ -28,6 +28,7 @@ namespace SpotifyAPI.Web
       Tracks = new TracksClient(_apiConnector);
       Player = new PlayerClient(_apiConnector);
       Albums = new AlbumsClient(_apiConnector);
+      Artists = new ArtistsClient(_apiConnector);
     }
 
     public IPaginator DefaultPaginator { get; }
@@ -49,6 +50,8 @@ namespace SpotifyAPI.Web
     public IPlayerClient Player { get; }
 
     public IAlbumsClient Albums { get; }
+
+    public IArtistsClient Artists { get; }
 
     public Task<List<T>> Paginate<T>(Paging<T> firstPage)
     {

@@ -1,18 +1,35 @@
 {
-  "model": {
+  "model-class": {
     "scope": "csharp",
-    "prefix": "model",
+    "prefix": "model-class",
     "body": [
       "namespace SpotifyAPI.Web",
       "{",
-      "  public class $1",
+      "  public class $TM_FILENAME_BASE",
       "  {",
-      "     public ${2:string} ${3:Name} { get; private set; }",
+      "     public ${2:string} ${3:Name} { get; set; }",
       "",
       "     $4",
       "  }",
       "}"
     ],
     "description": "Creates a new model"
+  },
+  "request-class": {
+    "scope": "csharp",
+    "prefix": "request-class",
+    "body": [
+      "namespace SpotifyAPI.Web",
+      "{",
+      "  public class $TM_FILENAME_BASE : RequestParams",
+      "  {",
+      "     [QueryParam(\"${3:Name}\")]",
+      "     public ${2:string} ${3:Name} { get; set; }",
+      "",
+      "     $4",
+      "  }",
+      "}"
+    ],
+    "description": "Creates a new request"
   }
 }
