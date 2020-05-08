@@ -103,6 +103,8 @@ namespace SpotifyAPI.Web
 
     public static Uri ArtistRelatedArtists(string artistId) => EUri($"artists/{artistId}/related-artists");
 
+    public static Uri PersonalizationTop(string type) => EUri($"me/top/{type}");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }
