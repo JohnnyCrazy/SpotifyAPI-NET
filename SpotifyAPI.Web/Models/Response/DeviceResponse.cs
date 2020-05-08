@@ -4,6 +4,6 @@ namespace SpotifyAPI.Web
 {
   public class DeviceResponse
   {
-    public List<Device> Devices { get; private set; }
+    public List<Device> Devices { get; set; }
   }
 }

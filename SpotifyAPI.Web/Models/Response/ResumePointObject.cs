@@ -2,7 +2,7 @@ namespace SpotifyAPI.Web
 {
   public class ResumePoint
   {
-    public bool FullyPlayed { get; private set; }
-    public int ResumePositionMs { get; private set; }
+    public bool FullyPlayed { get; set; }
+    public int ResumePositionMs { get; set; }
   }
 }

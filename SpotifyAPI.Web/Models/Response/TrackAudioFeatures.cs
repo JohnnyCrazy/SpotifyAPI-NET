@@ -2,23 +2,23 @@ namespace SpotifyAPI.Web
 {
   public class TrackAudioFeatures
   {
-    public float Acousticness { get; private set; }
-    public string AnalysisUrl { get; private set; }
-    public float Danceability { get; private set; }
-    public int DurationMs { get; private set; }
-    public float Energy { get; private set; }
-    public string Id { get; private set; }
-    public float Instrumentalness { get; private set; }
-    public int Key { get; private set; }
-    public float Liveness { get; private set; }
-    public float Loudness { get; private set; }
-    public int Mode { get; private set; }
-    public float Speechiness { get; private set; }
-    public float Tempo { get; private set; }
-    public int TimeSignature { get; private set; }
-    public string TrackHref { get; private set; }
-    public string Type { get; private set; }
-    public string Uri { get; private set; }
-    public float Valence { get; private set; }
+    public float Acousticness { get; set; }
+    public string AnalysisUrl { get; set; }
+    public float Danceability { get; set; }
+    public int DurationMs { get; set; }
+    public float Energy { get; set; }
+    public string Id { get; set; }
+    public float Instrumentalness { get; set; }
+    public int Key { get; set; }
+    public float Liveness { get; set; }
+    public float Loudness { get; set; }
+    public int Mode { get; set; }
+    public float Speechiness { get; set; }
+    public float Tempo { get; set; }
+    public int TimeSignature { get; set; }
+    public string TrackHref { get; set; }
+    public string Type { get; set; }
+    public string Uri { get; set; }
+    public float Valence { get; set; }
   }
 }

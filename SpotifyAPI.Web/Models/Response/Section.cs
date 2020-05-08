@@ -2,17 +2,17 @@ namespace SpotifyAPI.Web
 {
   public class Section
   {
-    public float Start { get; private set; }
-    public float Duration { get; private set; }
-    public float Confidence { get; private set; }
-    public float Loudness { get; private set; }
-    public float Tempo { get; private set; }
-    public float TempoConfidence { get; private set; }
-    public int Key { get; private set; }
-    public float KeyConfidence { get; private set; }
-    public int Mode { get; private set; }
-    public float ModeConfidence { get; private set; }
-    public int TimeSignature { get; private set; }
-    public float TimeSignatureConfidence { get; private set; }
+    public float Start { get; set; }
+    public float Duration { get; set; }
+    public float Confidence { get; set; }
+    public float Loudness { get; set; }
+    public float Tempo { get; set; }
+    public float TempoConfidence { get; set; }
+    public int Key { get; set; }
+    public float KeyConfidence { get; set; }
+    public int Mode { get; set; }
+    public float ModeConfidence { get; set; }
+    public int TimeSignature { get; set; }
+    public float TimeSignatureConfidence { get; set; }
   }
 }

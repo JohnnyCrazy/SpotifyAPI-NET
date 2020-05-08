@@ -4,6 +4,6 @@ namespace SpotifyAPI.Web
 {
   public class RecommendationGenresResponse
   {
-    public List<string> Genres { get; private set; }
+    public List<string> Genres { get; set; }
   }
 }

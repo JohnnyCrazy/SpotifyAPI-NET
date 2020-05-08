@@ -2,8 +2,8 @@ namespace SpotifyAPI.Web
 {
   public class TimeInterval
   {
-    public float Start { get; private set; }
-    public float Duration { get; private set; }
-    public float Confidence { get; private set; }
+    public float Start { get; set; }
+    public float Duration { get; set; }
+    public float Confidence { get; set; }
   }
 }
