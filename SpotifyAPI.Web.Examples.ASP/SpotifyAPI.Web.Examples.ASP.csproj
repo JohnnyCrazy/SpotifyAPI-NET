@@ -8,6 +8,6 @@
     <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="3.1.0" />
+    <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="3.1.1" />
   </ItemGroup>
 </Project>
