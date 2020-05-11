@@ -105,6 +105,10 @@ namespace SpotifyAPI.Web
 
     public static Uri PersonalizationTop(string type) => EUri($"me/top/{type}");
 
+    public static Uri Episode(string episodeId) => EUri($"episodes/{episodeId}");
+
+    public static Uri Episodes() => EUri($"episodes");
+
     private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
   }
 }

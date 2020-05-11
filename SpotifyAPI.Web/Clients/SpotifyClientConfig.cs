@@ -5,19 +5,16 @@ namespace SpotifyAPI.Web
 {
   public class SpotifyClientConfig
   {
-    public Uri BaseAddress { get; }
-    public IAuthenticator Authenticator { get; }
-    public IJSONSerializer JSONSerializer { get; }
-    public IHTTPClient HTTPClient { get; }
-    public IHTTPLogger HTTPLogger { get; }
-    public IPaginator Paginator { get; set; }
-
-    public IRetryHandler RetryHandler { get; }
+    public Uri BaseAddress { get; private set; }
+    public IAuthenticator Authenticator { get; private set; }
+    public IJSONSerializer JSONSerializer { get; private set; }
+    public IHTTPClient HTTPClient { get; private set; }
+    public IHTTPLogger HTTPLogger { get; private set; }
+    public IRetryHandler RetryHandler { get; private set; }
+    public IPaginator DefaultPaginator { get; private set; }
 
     /// <summary>
     ///   This config spefies the internal parts of the SpotifyClient.
-    ///   In apps where multiple different access tokens are used, one should create a default config and then use
-    ///   <see cref="WithToken" /> or <see cref="WithAuthenticator" /> to specify the auth details.
     /// </summary>
     /// <param name="baseAddress"></param>
     /// <param name="authenticator"></param>
@@ -42,77 +39,92 @@ namespace SpotifyAPI.Web
       HTTPClient = httpClient;
       RetryHandler = retryHandler;
       HTTPLogger = httpLogger;
-      Paginator = paginator;
+      DefaultPaginator = paginator;
     }
 
     internal IAPIConnector CreateAPIConnector()
     {
-      Ensure.ArgumentNotNull(BaseAddress, nameof(BaseAddress));
-      Ensure.ArgumentNotNull(Authenticator, nameof(Authenticator));
-      Ensure.ArgumentNotNull(JSONSerializer, nameof(JSONSerializer));
-      Ensure.ArgumentNotNull(HTTPClient, nameof(HTTPClient));
-
-      return new APIConnector(BaseAddress, Authenticator, JSONSerializer, HTTPClient, RetryHandler, HTTPLogger);
+      return new APIConnector(
+        BaseAddress,
+        Authenticator,
+        JSONSerializer,
+        HTTPClient,
+        RetryHandler,
+        HTTPLogger
+      );
     }
 
-    public SpotifyClientConfig WithToken(string token, string tokenType = "Bearer")
+    public void AddToken(string token, string tokenType = "Bearer")
     {
       Ensure.ArgumentNotNull(token, nameof(token));
-
-      return WithAuthenticator(new TokenHeaderAuthenticator(token, tokenType));
+      Authenticator = new TokenHeaderAuthenticator(token, tokenType);
     }
 
-    public SpotifyClientConfig WithRetryHandler(IRetryHandler retryHandler)
+    public void AddRetryHandler(IRetryHandler retryHandler)
     {
-      return new SpotifyClientConfig(
-        BaseAddress, Authenticator, JSONSerializer, HTTPClient, retryHandler, HTTPLogger, Paginator);
+      RetryHandler = retryHandler;
     }
 
-    public SpotifyClientConfig WithAuthenticator(IAuthenticator authenticator)
+    public void AddAuthenticator(IAuthenticator authenticator)
     {
-      return new SpotifyClientConfig(
-        BaseAddress, authenticator, JSONSerializer, HTTPClient, RetryHandler, HTTPLogger, Paginator);
+      Ensure.ArgumentNotNull(authenticator, nameof(authenticator));
+
+      Authenticator = authenticator;
     }
 
-    public SpotifyClientConfig WithHTTPLogger(IHTTPLogger httpLogger)
+    public void AddHTTPLogger(IHTTPLogger httpLogger)
     {
-      return new SpotifyClientConfig(
-        BaseAddress, Authenticator, JSONSerializer, HTTPClient, RetryHandler, httpLogger, Paginator);
+      HTTPLogger = httpLogger;
     }
 
-    public SpotifyClientConfig WithPaginator(IPaginator paginator)
+    public void AddHTTPClient(IHTTPClient httpClient)
     {
-      return new SpotifyClientConfig(
-        BaseAddress, Authenticator, JSONSerializer, HTTPClient, RetryHandler, HTTPLogger, paginator);
+      Ensure.ArgumentNotNull(httpClient, nameof(httpClient));
+
+      HTTPClient = httpClient;
+    }
+
+    public void AddJSONSerializer(IJSONSerializer jsonSerializer)
+    {
+      Ensure.ArgumentNotNull(jsonSerializer, nameof(jsonSerializer));
+
+      JSONSerializer = jsonSerializer;
+    }
+
+
+    public void AddDefaultPaginator(IPaginator paginator)
+    {
+      DefaultPaginator = paginator;
     }
 
     public static SpotifyClientConfig CreateDefault(string token, string tokenType = "Bearer")
     {
-      Ensure.ArgumentNotNull(token, nameof(token));
-
-      return CreateDefault(new TokenHeaderAuthenticator(token, tokenType));
+      return CreateDefault(options =>
+      {
+        options.AddToken(token, tokenType);
+      });
     }
 
-    /// <summary>
-    ///   Creates a default configuration, which is not useable without calling <see cref="WithToken" /> or
-    /// <see cref="WithAuthenticator" />
-    /// </summary>
-    public static SpotifyClientConfig CreateDefault()
+    public static SpotifyClientConfig CreateDefault(Action<SpotifyClientConfig> optionsCallback)
     {
-      return CreateDefault(null);
-    }
+      Ensure.ArgumentNotNull(optionsCallback, nameof(optionsCallback));
 
-    public static SpotifyClientConfig CreateDefault(IAuthenticator authenticator)
-    {
-      return new SpotifyClientConfig(
+      var config = new SpotifyClientConfig(
         SpotifyUrls.APIV1,
-        authenticator,
+        null,
         new NewtonsoftJSONSerializer(),
         new NetHttpClient(),
         null,
         null,
         new SimplePaginator()
       );
+      optionsCallback(config);
+
+      if (config.Authenticator == null)
+      {
+        throw new NullReferenceException("The authenticator was not set after the options callback was run. Please specify a token with AddToken or AddAuthenticator");
+      }
+      return config;
     }
   }
 }

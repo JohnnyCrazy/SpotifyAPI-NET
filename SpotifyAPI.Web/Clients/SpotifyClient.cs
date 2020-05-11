@@ -18,7 +18,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(config, nameof(config));
 
       _apiConnector = config.CreateAPIConnector();
-      DefaultPaginator = config.Paginator;
+      DefaultPaginator = config.DefaultPaginator;
       UserProfile = new UserProfileClient(_apiConnector);
       Browse = new BrowseClient(_apiConnector);
       Shows = new ShowsClient(_apiConnector);
@@ -30,6 +30,7 @@ namespace SpotifyAPI.Web
       Albums = new AlbumsClient(_apiConnector);
       Artists = new ArtistsClient(_apiConnector);
       Personalization = new PersonalizationClient(_apiConnector);
+      Episodes = new EpisodesClient(_apiConnector);
     }
 
     public IPaginator DefaultPaginator { get; }
@@ -55,6 +56,8 @@ namespace SpotifyAPI.Web
     public IArtistsClient Artists { get; }
 
     public IPersonalizationClient Personalization { get; }
+
+    public IEpisodesClient Episodes { get; }
 
     public Task<List<T>> Paginate<T>(Paging<T> firstPage)
     {
