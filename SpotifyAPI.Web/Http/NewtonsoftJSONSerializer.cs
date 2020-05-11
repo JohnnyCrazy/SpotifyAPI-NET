@@ -19,7 +19,6 @@ namespace SpotifyAPI.Web.Http
       {
         NamingStrategy = new SnakeCaseNamingStrategy()
       };
-      contractResolver.DefaultMembersSearchFlags |= BindingFlags.NonPublic;
 
       _serializerSettings = new JsonSerializerSettings
       {
