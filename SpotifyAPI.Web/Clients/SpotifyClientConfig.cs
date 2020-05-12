@@ -23,7 +23,7 @@ namespace SpotifyAPI.Web
     /// <param name="httpClient"></param>
     /// <param name="retryHandler"></param>
     /// <param name="httpLogger"></param>
-    /// <param name="paginator"></param>
+    /// <param name="defaultPaginator"></param>
     public SpotifyClientConfig(
       Uri baseAddress,
       IAuthenticator authenticator,
@@ -31,7 +31,7 @@ namespace SpotifyAPI.Web
       IHTTPClient httpClient,
       IRetryHandler retryHandler,
       IHTTPLogger httpLogger,
-      IPaginator paginator
+      IPaginator defaultPaginator
     )
     {
       BaseAddress = baseAddress;
@@ -40,7 +40,7 @@ namespace SpotifyAPI.Web
       HTTPClient = httpClient;
       RetryHandler = retryHandler;
       HTTPLogger = httpLogger;
-      DefaultPaginator = paginator;
+      DefaultPaginator = defaultPaginator;
     }
 
     public SpotifyClientConfig WithToken(string token, string tokenType = "Bearer")
@@ -130,9 +130,9 @@ namespace SpotifyAPI.Web
     }
 
 
-    public SpotifyClientConfig WithDefaultPaginator(IPaginator paginator)
+    public SpotifyClientConfig WithDefaultPaginator(IPaginator defaultPaginator)
     {
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+      Ensure.ArgumentNotNull(defaultPaginator, nameof(defaultPaginator));
 
       return new SpotifyClientConfig(
         BaseAddress,
@@ -141,7 +141,7 @@ namespace SpotifyAPI.Web
         HTTPClient,
         RetryHandler,
         HTTPLogger,
-        paginator
+        defaultPaginator
       );
     }
 

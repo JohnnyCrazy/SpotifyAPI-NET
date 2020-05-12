@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using System;
 using System.IO;
@@ -9,11 +10,20 @@ namespace SpotifyAPI.Web.Http
 {
   public class NetHttpClient : IHTTPClient
   {
+    private readonly HttpMessageHandler _httpMessageHandler;
     private readonly HttpClient _httpClient;
 
     public NetHttpClient()
     {
       _httpClient = new HttpClient();
+    }
+
+    public NetHttpClient(IProxyConfig proxyConfig)
+    {
+      Ensure.ArgumentNotNull(proxyConfig, nameof(proxyConfig));
+
+      _httpMessageHandler = CreateMessageHandler(proxyConfig);
+      _httpClient = new HttpClient(_httpMessageHandler);
     }
 
     public async Task<IResponse> DoRequest(IRequest request)
@@ -84,12 +94,43 @@ namespace SpotifyAPI.Web.Http
       if (disposing)
       {
         _httpClient?.Dispose();
+        _httpMessageHandler?.Dispose();
       }
     }
 
     public void SetRequestTimeout(TimeSpan timeout)
     {
       _httpClient.Timeout = timeout;
+    }
+
+    private static HttpMessageHandler CreateMessageHandler(IProxyConfig proxyConfig)
+    {
+      var proxy = new WebProxy
+      {
+        Address = new UriBuilder(proxyConfig.Host) { Port = proxyConfig.Port }.Uri,
+        UseDefaultCredentials = true,
+        BypassProxyOnLocal = proxyConfig.BypassProxyOnLocal
+      };
+
+      if (!string.IsNullOrEmpty(proxyConfig.User) || !string.IsNullOrEmpty(proxyConfig.Password))
+      {
+        proxy.UseDefaultCredentials = false;
+        proxy.Credentials = new NetworkCredential(proxyConfig.User, proxyConfig.Password);
+      }
+
+      var httpClientHandler = new HttpClientHandler
+      {
+        PreAuthenticate = proxy.UseDefaultCredentials,
+        UseDefaultCredentials = proxy.UseDefaultCredentials,
+        UseProxy = true,
+        Proxy = proxy,
+      };
+      if (proxyConfig.SkipSSLCheck)
+      {
+        httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+      }
+
+      return httpClientHandler;
     }
   }
 }
