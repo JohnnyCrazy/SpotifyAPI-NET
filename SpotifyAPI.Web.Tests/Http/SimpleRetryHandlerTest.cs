@@ -14,157 +14,150 @@ namespace SpotifyAPI.Web
     [Test]
     public async Task HandleRetry_TooManyRequestsWithNoSuccess()
     {
-      var sleep = new Mock<Func<int, Task>>();
-
-      var request = new Mock<IRequest>();
-      var initialResponse = new Mock<IResponse>();
-      initialResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
-      initialResponse.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
+      var setup = new Setup();
+      setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
+      setup.Response.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
         { "Retry-After", "50" }
       });
 
       var retryCalled = 0;
-      Task<IResponse> retry(IRequest request)
+      setup.Retry = (IRequest request) =>
       {
         retryCalled++;
-        return Task.FromResult(initialResponse.Object);
-      }
+        return Task.FromResult(setup.Response.Object);
+      };
 
-      var handler = new SimpleRetryHandler(sleep.Object)
+      var handler = new SimpleRetryHandler(setup.Sleep.Object)
       {
         TooManyRequestsConsumesARetry = true,
         RetryTimes = 2
       };
-      var response = await handler.HandleRetry(request.Object, initialResponse.Object, retry);
+      var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
       Assert.AreEqual(2, retryCalled);
-      Assert.AreEqual(initialResponse.Object, response);
-      sleep.Verify(s => s(50000), Times.Exactly(2));
-
+      Assert.AreEqual(setup.Response.Object, response);
+      setup.Sleep.Verify(s => s(50000), Times.Exactly(2));
     }
 
     [Test]
     public async Task HandleRetry_TooManyRetriesWithSuccess()
     {
-      var sleep = new Mock<Func<int, Task>>();
-
-      var request = new Mock<IRequest>();
-      var initialResponse = new Mock<IResponse>();
-      initialResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
-      initialResponse.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
+      var setup = new Setup();
+      setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
+      setup.Response.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
         { "Retry-After", "50" }
       });
+
       var successResponse = new Mock<IResponse>();
       successResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.OK);
 
       var retryCalled = 0;
-      Task<IResponse> retry(IRequest request)
+      setup.Retry = (request) =>
       {
         retryCalled++;
         return Task.FromResult(successResponse.Object);
-      }
+      };
 
-      var handler = new SimpleRetryHandler(sleep.Object)
+      var handler = new SimpleRetryHandler(setup.Sleep.Object)
       {
         TooManyRequestsConsumesARetry = true,
         RetryTimes = 10
       };
-      var response = await handler.HandleRetry(request.Object, initialResponse.Object, retry);
+      var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
       Assert.AreEqual(1, retryCalled);
       Assert.AreEqual(successResponse.Object, response);
-      sleep.Verify(s => s(50000), Times.Once);
+      setup.Sleep.Verify(s => s(50000), Times.Once);
     }
 
     [Test]
     public async Task HandleRetry_TooManyRetriesWithSuccessNoConsume()
     {
-      var sleep = new Mock<Func<int, Task>>();
-
-      var request = new Mock<IRequest>();
-      var initialResponse = new Mock<IResponse>();
-      initialResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
-      initialResponse.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
+      var setup = new Setup();
+      setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
+      setup.Response.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
         { "Retry-After", "50" }
       });
       var successResponse = new Mock<IResponse>();
       successResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.OK);
 
       var retryCalled = 0;
-      Task<IResponse> retry(IRequest request)
+      setup.Retry = (IRequest request) =>
       {
         retryCalled++;
         return Task.FromResult(successResponse.Object);
-      }
+      };
 
-      var handler = new SimpleRetryHandler(sleep.Object)
+      var handler = new SimpleRetryHandler(setup.Sleep.Object)
       {
         TooManyRequestsConsumesARetry = false,
         RetryTimes = 0
       };
-      var response = await handler.HandleRetry(request.Object, initialResponse.Object, retry);
+      var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
       Assert.AreEqual(1, retryCalled);
       Assert.AreEqual(successResponse.Object, response);
-      sleep.Verify(s => s(50000), Times.Once);
+      setup.Sleep.Verify(s => s(50000), Times.Once);
     }
 
     [Test]
     public async Task HandleRetry_ServerErrors()
     {
-      var sleep = new Mock<Func<int, Task>>();
-
-      var request = new Mock<IRequest>();
-      var initialResponse = new Mock<IResponse>();
-      initialResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.BadGateway);
+      var setup = new Setup();
+      setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.BadGateway);
 
       var retryCalled = 0;
-      Task<IResponse> retry(IRequest request)
+      setup.Retry = (request) =>
       {
         retryCalled++;
-        return Task.FromResult(initialResponse.Object);
-      }
+        return Task.FromResult(setup.Response.Object);
+      };
 
-      var handler = new SimpleRetryHandler(sleep.Object)
+      var handler = new SimpleRetryHandler(setup.Sleep.Object)
       {
         TooManyRequestsConsumesARetry = true,
         RetryTimes = 10,
         RetryAfter = 50
       };
-      var response = await handler.HandleRetry(request.Object, initialResponse.Object, retry);
+      var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
       Assert.AreEqual(10, retryCalled);
-      Assert.AreEqual(initialResponse.Object, response);
-      sleep.Verify(s => s(50), Times.Exactly(10));
+      Assert.AreEqual(setup.Response.Object, response);
+      setup.Sleep.Verify(s => s(50), Times.Exactly(10));
     }
 
     [Test]
     public async Task HandleRetry_DirectSuccess()
     {
-      var sleep = new Mock<Func<int, Task>>();
-
-      var request = new Mock<IRequest>();
-      var initialResponse = new Mock<IResponse>();
-      initialResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.OK);
+      var setup = new Setup();
+      setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.OK);
 
       var retryCalled = 0;
-      Task<IResponse> retry(IRequest request)
+      setup.Retry = (request) =>
       {
         retryCalled++;
-        return Task.FromResult(initialResponse.Object);
-      }
+        return Task.FromResult(setup.Response.Object);
+      };
 
-      var handler = new SimpleRetryHandler(sleep.Object)
+      var handler = new SimpleRetryHandler(setup.Sleep.Object)
       {
         TooManyRequestsConsumesARetry = true,
         RetryTimes = 10,
         RetryAfter = 50
       };
-      var response = await handler.HandleRetry(request.Object, initialResponse.Object, retry);
+      var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
       Assert.AreEqual(0, retryCalled);
-      Assert.AreEqual(initialResponse.Object, response);
-      sleep.Verify(s => s(50), Times.Exactly(0));
+      Assert.AreEqual(setup.Response.Object, response);
+      setup.Sleep.Verify(s => s(50), Times.Exactly(0));
+    }
+
+    private class Setup
+    {
+      public Mock<Func<int, Task>> Sleep { get; set; } = new Mock<Func<int, Task>>();
+      public Mock<IResponse> Response { get; set; } = new Mock<IResponse>();
+      public Mock<IRequest> Request { get; set; } = new Mock<IRequest>();
+      public Func<IRequest, Task<IResponse>> Retry { get; set; }
     }
   }
 }
