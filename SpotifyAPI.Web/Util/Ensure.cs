@@ -39,7 +39,7 @@ namespace SpotifyAPI.Web
       throw new ArgumentException("String is empty or null", name);
     }
 
-    public static void ArgumentNotNullOrEmptyList<T>(IList<T> value, string name)
+    public static void ArgumentNotNullOrEmptyList<T>(IEnumerable<T> value, string name)
     {
       if (value != null && value.Any())
       {
