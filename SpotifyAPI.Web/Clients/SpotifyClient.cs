@@ -16,8 +16,19 @@ namespace SpotifyAPI.Web
     public SpotifyClient(SpotifyClientConfig config)
     {
       Ensure.ArgumentNotNull(config, nameof(config));
+      if (config.Authenticator == null)
+      {
+        throw new NullReferenceException("Authenticator in config is null. Please supply it via `WithAuthenticator` or `WithToken`");
+      }
 
-      _apiConnector = config.CreateAPIConnector();
+      _apiConnector = new APIConnector(
+        config.BaseAddress,
+        config.Authenticator,
+        config.JSONSerializer,
+        config.HTTPClient,
+        config.RetryHandler,
+        config.HTTPLogger
+      );
       DefaultPaginator = config.DefaultPaginator;
       UserProfile = new UserProfileClient(_apiConnector);
       Browse = new BrowseClient(_apiConnector);

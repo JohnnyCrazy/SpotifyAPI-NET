@@ -22,6 +22,7 @@ namespace SpotifyAPI.Web
       [String("album")]
       Album,
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720")]
       [String("single")]
       Single,
 
