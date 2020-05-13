@@ -6,16 +6,18 @@ using SpotifyAPI.Web.Http;
 namespace SpotifyAPI.Web.Tests
 {
   [TestFixture]
-  public class TokenHeaderAuthenticatorTest
+  public class TokenAuthenticatorTest
   {
     [Test]
     public void Apply_AddsCorrectHeader()
     {
-      var authenticator = new TokenHeaderAuthenticator("MyToken", "Bearer");
+      var authenticator = new TokenAuthenticator("MyToken", "Bearer");
       var request = new Mock<IRequest>();
+      var apiConnector = new Mock<IAPIConnector>();
+
       request.SetupGet(r => r.Headers).Returns(new Dictionary<string, string>());
 
-      authenticator.Apply(request.Object);
+      authenticator.Apply(request.Object, apiConnector.Object);
       Assert.AreEqual(request.Object.Headers["Authorization"], "Bearer MyToken");
     }
   }

@@ -106,6 +106,13 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Post, parameters, body);
     }
 
+    public Task<T> Post<T>(Uri uri, IDictionary<string, string> parameters, object body, Dictionary<string, string> headers)
+    {
+      Ensure.ArgumentNotNull(uri, nameof(uri));
+
+      return SendAPIRequest<T>(uri, HttpMethod.Post, parameters, body, headers);
+    }
+
     public async Task<HttpStatusCode> Post(Uri uri, IDictionary<string, string> parameters, object body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
@@ -160,13 +167,14 @@ namespace SpotifyAPI.Web.Http
         Uri uri,
         HttpMethod method,
         IDictionary<string, string> parameters,
-        object body
+        object body,
+        IDictionary<string, string> headers
       )
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
       Ensure.ArgumentNotNull(method, nameof(method));
 
-      return new Request(new Dictionary<string, string>(), parameters)
+      return new Request(headers ?? new Dictionary<string, string>(), parameters ?? new Dictionary<string, string>())
       {
         BaseAddress = _baseAddress,
         Endpoint = uri,
@@ -184,7 +192,10 @@ namespace SpotifyAPI.Web.Http
 
     private async Task<IResponse> DoRequest(IRequest request)
     {
-      await _authenticator.Apply(request).ConfigureAwait(false);
+      if (_authenticator != null)
+      {
+        await _authenticator.Apply(request, this).ConfigureAwait(false);
+      }
       _httpLogger?.OnRequest(request);
       IResponse response = await _httpClient.DoRequest(request).ConfigureAwait(false);
       _httpLogger?.OnResponse(response);
@@ -192,7 +203,10 @@ namespace SpotifyAPI.Web.Http
       {
         response = await _retryHandler.HandleRetry(request, response, async (newRequest) =>
         {
-          await _authenticator.Apply(newRequest).ConfigureAwait(false);
+          if (_authenticator != null)
+          {
+            await _authenticator.Apply(request, this).ConfigureAwait(false);
+          }
           var newResponse = await _httpClient.DoRequest(request).ConfigureAwait(false);
           _httpLogger?.OnResponse(newResponse);
           return newResponse;
@@ -206,10 +220,11 @@ namespace SpotifyAPI.Web.Http
         Uri uri,
         HttpMethod method,
         IDictionary<string, string> parameters = null,
-        object body = null
+        object body = null,
+        IDictionary<string, string> headers = null
       )
     {
-      var request = CreateRequest(uri, method, parameters, body);
+      var request = CreateRequest(uri, method, parameters, body, headers);
       return DoRequest(request);
     }
 
@@ -217,10 +232,11 @@ namespace SpotifyAPI.Web.Http
         Uri uri,
         HttpMethod method,
         IDictionary<string, string> parameters = null,
-        object body = null
+        object body = null,
+        IDictionary<string, string> headers = null
       )
     {
-      var request = CreateRequest(uri, method, parameters, body);
+      var request = CreateRequest(uri, method, parameters, body, headers);
       IAPIResponse<T> apiResponse = await DoSerializedRequest<T>(request).ConfigureAwait(false);
       return apiResponse.Body;
     }
@@ -229,10 +245,11 @@ namespace SpotifyAPI.Web.Http
         Uri uri,
         HttpMethod method,
         IDictionary<string, string> parameters = null,
-        object body = null
+        object body = null,
+        IDictionary<string, string> headers = null
       )
     {
-      var request = CreateRequest(uri, method, parameters, body);
+      var request = CreateRequest(uri, method, parameters, body, headers);
       var response = await DoSerializedRequest<object>(request).ConfigureAwait(false);
       return response.Response;
     }

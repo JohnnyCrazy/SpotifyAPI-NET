@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- <GenerateDocumentationFile>true</GenerateDocumentationFile> -->
     <PackageId>SpotifyAPI.Web</PackageId>
     <Title>SpotifyAPI.Web</Title>
     <Authors>Jonas Dellinger</Authors>

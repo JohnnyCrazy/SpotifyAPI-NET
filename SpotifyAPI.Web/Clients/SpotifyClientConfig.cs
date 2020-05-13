@@ -49,7 +49,7 @@ namespace SpotifyAPI.Web
 
       return new SpotifyClientConfig(
         BaseAddress,
-        new TokenHeaderAuthenticator(token, tokenType),
+        new TokenAuthenticator(token, tokenType),
         JSONSerializer,
         HTTPClient,
         RetryHandler,
@@ -147,7 +147,7 @@ namespace SpotifyAPI.Web
 
     public static SpotifyClientConfig CreateDefault(string token, string tokenType = "Bearer")
     {
-      return CreateDefault().WithAuthenticator(new TokenHeaderAuthenticator(token, tokenType));
+      return CreateDefault().WithAuthenticator(new TokenAuthenticator(token, tokenType));
     }
 
     public static SpotifyClientConfig CreateDefault()

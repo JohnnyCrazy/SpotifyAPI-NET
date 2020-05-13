@@ -1,7 +1,7 @@
 {
-  "model-class": {
+  "class-model": {
     "scope": "csharp",
-    "prefix": "model-class",
+    "prefix": "class-model",
     "body": [
       "namespace SpotifyAPI.Web",
       "{",
@@ -15,9 +15,9 @@
     ],
     "description": "Creates a new model"
   },
-  "request-class": {
+  "class-request": {
     "scope": "csharp",
-    "prefix": "request-class",
+    "prefix": "class-request",
     "body": [
       "namespace SpotifyAPI.Web",
       "{",

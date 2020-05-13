@@ -37,9 +37,9 @@ namespace SpotifyAPI.Web
       Assert.AreEqual(null, defaultConfig.HTTPLogger);
       Assert.AreEqual(null, defaultConfig.RetryHandler);
 
-      Assert.IsInstanceOf(typeof(TokenHeaderAuthenticator), defaultConfig.Authenticator);
+      Assert.IsInstanceOf(typeof(TokenAuthenticator), defaultConfig.Authenticator);
 
-      var tokenHeaderAuth = defaultConfig.Authenticator as TokenHeaderAuthenticator;
+      var tokenHeaderAuth = defaultConfig.Authenticator as TokenAuthenticator;
       Assert.AreEqual(token, tokenHeaderAuth.Token);
       Assert.AreEqual(tokenType, tokenHeaderAuth.TokenType);
     }
@@ -51,7 +51,7 @@ namespace SpotifyAPI.Web
       var defaultConfig = SpotifyClientConfig.CreateDefault();
       var tokenConfig = defaultConfig.WithToken(token);
 
-      Assert.AreEqual(token, (tokenConfig.Authenticator as TokenHeaderAuthenticator).Token);
+      Assert.AreEqual(token, (tokenConfig.Authenticator as TokenAuthenticator).Token);
       Assert.AreNotEqual(defaultConfig, tokenConfig);
       Assert.AreEqual(null, defaultConfig.Authenticator);
     }

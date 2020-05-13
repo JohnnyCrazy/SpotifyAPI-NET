@@ -46,7 +46,7 @@ namespace SpotifyAPI.Web.Tests
       );
       await apiConnector.SendAPIRequest<string>(new Uri("/me", UriKind.Relative), HttpMethod.Get).ConfigureAwait(false);
 
-      authenticator.Verify(a => a.Apply(It.IsAny<IRequest>()), Times.Once);
+      authenticator.Verify(a => a.Apply(It.IsAny<IRequest>(), It.IsAny<IAPIConnector>()), Times.Once);
       httpClient.Verify(h => h.DoRequest(It.IsAny<IRequest>()), Times.Once);
       serializer.Verify(s => s.DeserializeResponse<string>(response.Object), Times.Once);
     }
@@ -89,7 +89,7 @@ namespace SpotifyAPI.Web.Tests
       await apiConnector.SendAPIRequest<string>(new Uri("/me", UriKind.Relative), HttpMethod.Get).ConfigureAwait(false);
 
       serializer.Verify(s => s.SerializeRequest(It.IsAny<IRequest>()), Times.Once);
-      authenticator.Verify(a => a.Apply(It.IsAny<IRequest>()), Times.Exactly(2));
+      authenticator.Verify(a => a.Apply(It.IsAny<IRequest>(), It.IsAny<IAPIConnector>()), Times.Exactly(2));
       httpClient.Verify(h => h.DoRequest(It.IsAny<IRequest>()), Times.Exactly(2));
       serializer.Verify(s => s.DeserializeResponse<string>(response.Object), Times.Once);
     }

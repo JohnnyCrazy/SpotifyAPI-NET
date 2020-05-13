@@ -11,6 +11,6 @@ namespace SpotifyAPI.Web
       API = apiConnector;
     }
 
-    public IAPIConnector API { get; set; }
+    protected IAPIConnector API { get; set; }
   }
 }

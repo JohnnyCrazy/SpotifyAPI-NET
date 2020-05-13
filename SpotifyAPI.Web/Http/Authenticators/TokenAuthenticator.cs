@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web.Http
 {
-  public class TokenHeaderAuthenticator : IAuthenticator
+  public class TokenAuthenticator : IAuthenticator
   {
-    public TokenHeaderAuthenticator(string token, string tokenType)
+    public TokenAuthenticator(string token, string tokenType)
     {
       Token = token;
       TokenType = tokenType;
@@ -14,7 +14,7 @@ namespace SpotifyAPI.Web.Http
 
     public string TokenType { get; set; }
 
-    public Task Apply(IRequest request)
+    public Task Apply(IRequest request, IAPIConnector apiConnector)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 

@@ -4,6 +4,6 @@ namespace SpotifyAPI.Web.Http
 {
   public interface IAuthenticator
   {
-    Task Apply(IRequest request);
+    Task Apply(IRequest request, IAPIConnector apiConnector);
   }
 }
