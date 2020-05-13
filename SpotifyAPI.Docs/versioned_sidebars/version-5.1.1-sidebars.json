@@ -1,0 +1,102 @@
+{
+  "version-5.1.1/someSidebar": [
+    {
+      "type": "category",
+      "label": "SpotifyAPI-NET",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-5.1.1/home"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "SpotifyAPI-NET.Web",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/getting_started"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/albums"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/artists"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/browse"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/follow"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/library"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/personalization"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/player"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/playlists"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/profiles"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/proxy"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/search"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/tracks"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/web/utilities"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "SpotifyAPI-NET.Auth",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-5.1.1/auth/getting_started"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/auth/implicit_grant"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/auth/authorization_code"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/auth/client_credentials"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.1.1/auth/token_swap"
+        }
+      ]
+    }
+  ]
+}

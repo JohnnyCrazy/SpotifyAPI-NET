@@ -1,16 +1,31 @@
 {
-  "name": "SpotifyAPI.Docs",
-  "version": "0.0.1",
-  "main": "index.js",
-  "repository": "https://github.com/JohnnyCrazy/SpotifyAPI-NET",
-  "author": "Jonas Dellinger",
-  "license": "CUSTOM",
+  "name": "spotify-api-docs",
+  "version": "0.0.0",
   "private": true,
-  "devDependencies": {
-    "vuepress": "^1.4.0"
-  },
   "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^2.0.0-alpha.54",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.54",
+    "classnames": "^2.2.6",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-github-btn": "^1.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
