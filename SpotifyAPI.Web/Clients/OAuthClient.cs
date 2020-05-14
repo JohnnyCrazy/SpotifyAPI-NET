@@ -17,7 +17,15 @@ namespace SpotifyAPI.Web
 
     public Task<TokenResponse> RequestToken(ClientCredentialsRequest request)
     {
+      return RequestToken(request, API);
+    }
+
+    public static Task<TokenResponse> RequestToken(
+        ClientCredentialsRequest request, IAPIConnector apiConnector
+      )
+    {
       Ensure.ArgumentNotNull(request, nameof(request));
+      Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
       var form = new List<KeyValuePair<string, string>>
       {
@@ -30,7 +38,7 @@ namespace SpotifyAPI.Web
         { "Authorization", $"Basic {base64}"}
       };
 
-      return API.Post<TokenResponse>(SpotifyUrls.OAuthToken, null, new FormUrlEncodedContent(form), headers);
+      return apiConnector.Post<TokenResponse>(SpotifyUrls.OAuthToken, null, new FormUrlEncodedContent(form), headers);
     }
 
     private static APIConnector ValidateConfig(SpotifyClientConfig config)

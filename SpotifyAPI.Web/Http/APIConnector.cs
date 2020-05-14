@@ -192,10 +192,7 @@ namespace SpotifyAPI.Web.Http
 
     private async Task<IResponse> DoRequest(IRequest request)
     {
-      if (_authenticator != null)
-      {
-        await _authenticator.Apply(request, this).ConfigureAwait(false);
-      }
+      await ApplyAuthenticator(request).ConfigureAwait(false);
       _httpLogger?.OnRequest(request);
       IResponse response = await _httpClient.DoRequest(request).ConfigureAwait(false);
       _httpLogger?.OnResponse(response);
@@ -203,10 +200,7 @@ namespace SpotifyAPI.Web.Http
       {
         response = await _retryHandler.HandleRetry(request, response, async (newRequest) =>
         {
-          if (_authenticator != null)
-          {
-            await _authenticator.Apply(request, this).ConfigureAwait(false);
-          }
+          await ApplyAuthenticator(request).ConfigureAwait(false);
           var newResponse = await _httpClient.DoRequest(request).ConfigureAwait(false);
           _httpLogger?.OnResponse(newResponse);
           return newResponse;
@@ -214,6 +208,14 @@ namespace SpotifyAPI.Web.Http
       }
       ProcessErrors(response);
       return response;
+    }
+
+    private async Task ApplyAuthenticator(IRequest request)
+    {
+      if (_authenticator != null && !request.Endpoint.IsAbsoluteUri)
+      {
+        await _authenticator.Apply(request, this).ConfigureAwait(false);
+      }
     }
 
     public Task<IResponse> SendRawRequest(
