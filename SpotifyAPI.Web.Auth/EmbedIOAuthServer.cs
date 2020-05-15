@@ -16,12 +16,16 @@ namespace SpotifyAPI.Web.Auth
     public event Func<object, ImplictGrantResponse, Task> ImplictGrantReceived;
 
     private const string CallbackPath = "/";
-    private const string DefaultResourcePath = "SpotifyAPI.Web.Auth.Resources.DefaultHTML";
+    private const string AssetsResourcePath = "SpotifyAPI.Web.Auth.Resources.auth_assets";
+    private const string DefaultResourcePath = "SpotifyAPI.Web.Auth.Resources.default_site";
 
     private CancellationTokenSource _cancelTokenSource;
     private readonly WebServer _webServer;
 
-    public EmbedIOAuthServer(Uri baseUri, int port, string resourcePath = DefaultResourcePath)
+    public EmbedIOAuthServer(Uri baseUri, int port)
+      : this(baseUri, port, Assembly.GetExecutingAssembly(), DefaultResourcePath) { }
+
+    public EmbedIOAuthServer(Uri baseUri, int port, Assembly resourceAssembly, string resourcePath)
     {
       Ensure.ArgumentNotNull(baseUri, nameof(baseUri));
 
@@ -57,7 +61,8 @@ namespace SpotifyAPI.Web.Auth
 
           return ctx.SendStringAsync("OK", "text/plain", Encoding.UTF8);
         }))
-        .WithEmbeddedResources("/", Assembly.GetExecutingAssembly(), resourcePath);
+        .WithEmbeddedResources("/auth_assets", Assembly.GetExecutingAssembly(), AssetsResourcePath)
+        .WithEmbeddedResources("/", resourceAssembly, resourcePath);
     }
 
     public Uri BaseUri { get; }
