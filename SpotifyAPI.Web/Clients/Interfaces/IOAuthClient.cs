@@ -4,6 +4,6 @@ namespace SpotifyAPI.Web
 {
   public interface IOAuthClient
   {
-    Task<TokenResponse> RequestToken(ClientCredentialsRequest request);
+    Task<CredentialsTokenResponse> RequestToken(ClientCredentialsRequest request);
   }
 }

@@ -1,7 +1,7 @@
 using System;
 namespace SpotifyAPI.Web
 {
-  public class TokenResponse
+  public class CredentialsTokenResponse
   {
     public string AccessToken { get; set; }
     public string TokenType { get; set; }

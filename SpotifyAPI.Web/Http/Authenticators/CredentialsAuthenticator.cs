@@ -8,7 +8,7 @@ namespace SpotifyAPI.Web.Http
   /// </summary>
   public class CredentialsAuthenticator : IAuthenticator
   {
-    private TokenResponse _token;
+    private CredentialsTokenResponse _token;
 
     /// <summary>
     ///   Initiate a new instance. The first token will be fetched when the first API call occurs
@@ -36,7 +36,7 @@ namespace SpotifyAPI.Web.Http
     /// <summary>
     ///   The ClientID, defined in a spotify application in your Spotify Developer Dashboard
     /// </summary>
-    public string ClientSecret { get; set; }
+    public string ClientSecret { get; }
 
     public async Task Apply(IRequest request, IAPIConnector apiConnector)
     {

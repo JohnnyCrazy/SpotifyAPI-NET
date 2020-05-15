@@ -212,7 +212,9 @@ namespace SpotifyAPI.Web.Http
 
     private async Task ApplyAuthenticator(IRequest request)
     {
-      if (_authenticator != null && !request.Endpoint.IsAbsoluteUri)
+      if (_authenticator != null
+        && !request.Endpoint.IsAbsoluteUri
+        || request.Endpoint.AbsoluteUri.Contains("https://api.spotify.com", StringComparison.InvariantCulture))
       {
         await _authenticator.Apply(request, this).ConfigureAwait(false);
       }

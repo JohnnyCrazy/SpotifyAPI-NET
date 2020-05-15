@@ -1,5 +1,8 @@
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  ///   Used when requesting a token from spotify oauth services (Client Credentials Auth)
+  /// </summary>
   public class ClientCredentialsRequest
   {
     public ClientCredentialsRequest(string clientId, string clientSecret)

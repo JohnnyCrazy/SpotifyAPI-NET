@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>SpotifyAPI.Web.Auth</PackageId>
     <Title>SpotifyAPI.Web.Auth</Title>
     <Authors>Jonas Dellinger</Authors>
@@ -19,13 +18,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EmbedIO" Version="2.9.2">
+    <PackageReference Include="EmbedIO" Version="3.4.3">
       <PrivateAssets>None</PrivateAssets>
     </PackageReference>
     <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj">
       <SpecificVersion>False</SpecificVersion>
       <PrivateAssets>None</PrivateAssets>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SpotifyAPI.Web\Util\Ensure.cs" />
   </ItemGroup>
 
   <ItemGroup>
