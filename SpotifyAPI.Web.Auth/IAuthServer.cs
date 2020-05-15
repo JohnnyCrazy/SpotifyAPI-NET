@@ -14,6 +14,6 @@ namespace SpotifyAPI.Web.Auth
 
     Uri BuildLoginUri(LoginRequest request);
 
-    Uri RedirectUri { get; }
+    Uri BaseUri { get; }
   }
 }

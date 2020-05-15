@@ -17,7 +17,11 @@ namespace CLI.CustomHTML
     public static async Task Main()
     {
       _server = new EmbedIOAuthServer(
-        new Uri("http://localhost:5000"), 5000, Assembly.GetExecutingAssembly(), "CLI.CustomHTML.Resources.custom_site");
+        new Uri("http://localhost:5000/callback"),
+        5000,
+        Assembly.GetExecutingAssembly(),
+        "CLI.CustomHTML.Resources.custom_site"
+      );
       await _server.Start();
 
       _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
@@ -45,7 +49,7 @@ namespace CLI.CustomHTML
       await _server.Stop();
 
       AuthorizationCodeTokenResponse token = await new OAuthClient().RequestToken(
-        new AuthorizationCodeTokenRequest(clientId, clientSecret, response.Code, _server.RedirectUri)
+        new AuthorizationCodeTokenRequest(clientId, clientSecret, response.Code, _server.BaseUri)
       );
 
       var config = SpotifyClientConfig.CreateDefault().WithToken(token.AccessToken, token.TokenType);
@@ -54,6 +58,7 @@ namespace CLI.CustomHTML
       var me = await spotify.UserProfile.Current();
 
       Console.WriteLine($"Your E-Mail: {me.Email}");
+      Environment.Exit(0);
     }
   }
 }

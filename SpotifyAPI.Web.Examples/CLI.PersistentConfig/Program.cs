@@ -61,7 +61,7 @@ namespace CLI.PersistentConfig
 
     private static async Task StartAuthentication()
     {
-      _server = new EmbedIOAuthServer(new Uri("http://localhost:5000"), 5000);
+      _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
       await _server.Start();
       _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
 
@@ -85,7 +85,7 @@ namespace CLI.PersistentConfig
     {
       await _server.Stop();
       AuthorizationCodeTokenResponse token = await new OAuthClient().RequestToken(
-        new AuthorizationCodeTokenRequest(clientId, clientSecret, response.Code, _server.RedirectUri)
+        new AuthorizationCodeTokenRequest(clientId, clientSecret, response.Code, _server.BaseUri)
       );
 
       await File.WriteAllTextAsync(CredentialsPath, JsonConvert.SerializeObject(token));

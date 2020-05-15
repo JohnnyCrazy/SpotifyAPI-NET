@@ -15,7 +15,6 @@ namespace SpotifyAPI.Web.Auth
     public event Func<object, AuthorizationCodeResponse, Task> AuthorizationCodeReceived;
     public event Func<object, ImplictGrantResponse, Task> ImplictGrantReceived;
 
-    private const string CallbackPath = "/";
     private const string AssetsResourcePath = "SpotifyAPI.Web.Auth.Resources.auth_assets";
     private const string DefaultResourcePath = "SpotifyAPI.Web.Auth.Resources.default_site";
 
@@ -62,11 +61,10 @@ namespace SpotifyAPI.Web.Auth
           return ctx.SendStringAsync("OK", "text/plain", Encoding.UTF8);
         }))
         .WithEmbeddedResources("/auth_assets", Assembly.GetExecutingAssembly(), AssetsResourcePath)
-        .WithEmbeddedResources("/", resourceAssembly, resourcePath);
+        .WithEmbeddedResources(baseUri.AbsolutePath, resourceAssembly, resourcePath);
     }
 
     public Uri BaseUri { get; }
-    public Uri RedirectUri { get => new Uri(BaseUri, CallbackPath); }
     public int Port { get; }
 
     public Task Start()
@@ -86,12 +84,10 @@ namespace SpotifyAPI.Web.Auth
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var callbackUri = new Uri(BaseUri, CallbackPath);
-
       StringBuilder builder = new StringBuilder(SpotifyUrls.Authorize.ToString());
       builder.Append($"?client_id={request.ClientId}");
       builder.Append($"&response_type={request.ResponseTypeParam.ToString().ToLower()}");
-      builder.Append($"&redirect_uri={HttpUtility.UrlEncode(callbackUri.ToString())}");
+      builder.Append($"&redirect_uri={HttpUtility.UrlEncode(BaseUri.ToString())}");
       if (!string.IsNullOrEmpty(request.State))
       {
         builder.Append($"&state={HttpUtility.UrlEncode(request.State)}");
