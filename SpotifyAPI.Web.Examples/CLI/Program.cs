@@ -7,6 +7,7 @@ using SpotifyAPI.Web.Http;
 using SpotifyAPI.Web;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using static SpotifyAPI.Web.Scopes;
 
 namespace CLI
 {
@@ -66,7 +67,7 @@ namespace CLI
 
       var request = new LoginRequest(clientId, LoginRequest.ResponseType.Code)
       {
-        Scope = new List<string> { "user-read-email", "user-read-private" }
+        Scope = new List<string> { UserReadEmail, UserReadPrivate, PlaylistReadPrivate }
       };
 
       Uri url = _server.BuildLoginUri(request);
