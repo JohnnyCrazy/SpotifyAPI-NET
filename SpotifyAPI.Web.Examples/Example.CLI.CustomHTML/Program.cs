@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,7 +6,7 @@ using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using static SpotifyAPI.Web.Scopes;
 
-namespace CLI.CustomHTML
+namespace Example.CLI.CustomHTML
 {
   public class Program
   {

@@ -116,3 +116,5 @@ UpgradeLog*.XML
 .idea/
 .env
 SpotifyAPI.Web.Tests/UtilTests/Test.cs
+
+Properties/launchSettings.json

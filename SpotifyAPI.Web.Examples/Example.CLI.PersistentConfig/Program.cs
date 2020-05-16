@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using static SpotifyAPI.Web.Scopes;
 
-namespace CLI.PersistentConfig
+namespace Example.CLI.PersistentConfig
 {
   /// <summary>
   ///   This is a basic example how to get user access using the Auth package and a CLI Program
