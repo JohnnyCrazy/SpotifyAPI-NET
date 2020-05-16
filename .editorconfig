@@ -1,16 +1,11 @@
+﻿root = true
+
 [*]
+end_of_line = lf
 indent_style = space
-
-[*.{cs,csx,vb,vbx}]]
-indent_size = 4
+indent_size = 2
 insert_final_newline = true
-charset = utf-8-bom
-
-[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
-indent_size = 2
-
-[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
-indent_size = 2
+charset = utf-8
 
 [*.{cs,vb}]
 dotnet_diagnostic.CA1303.severity = none

@@ -1,19 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyAPI.Web", "SpotifyAPI.Web\SpotifyAPI.Web.csproj", "{EC8A93BA-27C4-4642-B7A0-11B809C35BE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyAPI.Web.Tests", "SpotifyAPI.Web.Tests\SpotifyAPI.Web.Tests.csproj", "{47FD780C-47B2-4634-9BB4-83C660101FAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAPI.Web.Auth", "SpotifyAPI.Web.Auth\SpotifyAPI.Web.Auth.csproj", "{400A3787-FDBE-4A4C-9DDD-AAEB3DCE1DF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotifyAPI.Web.Auth", "SpotifyAPI.Web.Auth\SpotifyAPI.Web.Auth.csproj", "{400A3787-FDBE-4A4C-9DDD-AAEB3DCE1DF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpotifyAPI.Web.Examples", "SpotifyAPI.Web.Examples", "{48A7DE65-29BB-409C-AC45-77F6586C0B15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI.PersistentConfig", "SpotifyAPI.Web.Examples\CLI.PersistentConfig\CLI.PersistentConfig.csproj", "{F4ECE937-99F2-4C4F-9F5C-4AB875D9538A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLI.PersistentConfig", "SpotifyAPI.Web.Examples\CLI.PersistentConfig\CLI.PersistentConfig.csproj", "{F4ECE937-99F2-4C4F-9F5C-4AB875D9538A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI.CustomHTML", "SpotifyAPI.Web.Examples\CLI.CustomHTML\CLI.CustomHTML.csproj", "{941AB88D-B3A9-407F-BF88-BFE14B401687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLI.CustomHTML", "SpotifyAPI.Web.Examples\CLI.CustomHTML\CLI.CustomHTML.csproj", "{941AB88D-B3A9-407F-BF88-BFE14B401687}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68E44B78-0896-413C-99AC-80D58F35D5B1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,11 +50,11 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {097062B8-0E87-43C8-BD98-61843A68BE6D}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F4ECE937-99F2-4C4F-9F5C-4AB875D9538A} = {48A7DE65-29BB-409C-AC45-77F6586C0B15}
 		{941AB88D-B3A9-407F-BF88-BFE14B401687} = {48A7DE65-29BB-409C-AC45-77F6586C0B15}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {097062B8-0E87-43C8-BD98-61843A68BE6D}
 	EndGlobalSection
 EndGlobal
