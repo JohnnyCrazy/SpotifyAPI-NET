@@ -20,7 +20,7 @@ namespace Example.CLI.CustomHTML
         new Uri("http://localhost:5000/callback"),
         5000,
         Assembly.GetExecutingAssembly(),
-        "CLI.CustomHTML.Resources.custom_site"
+        "Example.CLI.CustomHTML.Resources.custom_site"
       );
       await _server.Start();
 
