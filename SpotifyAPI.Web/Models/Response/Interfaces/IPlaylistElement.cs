@@ -12,6 +12,6 @@ namespace SpotifyAPI.Web
   public interface IPlayableItem
   {
     [JsonConverter(typeof(StringEnumConverter))]
-    public ItemType Type { get; }
+    ItemType Type { get; }
   }
 }

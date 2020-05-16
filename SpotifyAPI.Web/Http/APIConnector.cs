@@ -212,9 +212,15 @@ namespace SpotifyAPI.Web.Http
 
     private async Task ApplyAuthenticator(IRequest request)
     {
+#if NETSTANDARD2_0
+      if (_authenticator != null
+        && !request.Endpoint.IsAbsoluteUri
+        || request.Endpoint.AbsoluteUri.Contains("https://api.spotify.com"))
+#else
       if (_authenticator != null
         && !request.Endpoint.IsAbsoluteUri
         || request.Endpoint.AbsoluteUri.Contains("https://api.spotify.com", StringComparison.InvariantCulture))
+#endif
       {
         await _authenticator.Apply(request, this).ConfigureAwait(false);
       }
@@ -267,11 +273,13 @@ namespace SpotifyAPI.Web.Http
         return;
       }
 
-      throw response.StatusCode switch
+      switch (response.StatusCode)
       {
-        HttpStatusCode.Unauthorized => new APIUnauthorizedException(response),
-        _ => new APIException(response),
-      };
+        case HttpStatusCode.Unauthorized:
+          throw new APIUnauthorizedException(response);
+        default:
+          throw new APIException(response);
+      }
     }
   }
 }

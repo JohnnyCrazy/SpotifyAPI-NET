@@ -25,8 +25,12 @@ namespace SpotifyAPI.Web.Http
     public void OnResponse(IResponse response)
     {
       Ensure.ArgumentNotNull(response, nameof(response));
-
+#if NETSTANDARD2_0
+      string body = response.Body?.ToString().Replace("\n", "");
+#else
       string body = response.Body?.ToString().Replace("\n", "", StringComparison.InvariantCulture);
+#endif
+
       body = body?.Substring(0, Math.Min(50, body?.Length ?? 0));
       Console.WriteLine("--> {0} {1} {2}\n", response.StatusCode, response.ContentType, body);
     }

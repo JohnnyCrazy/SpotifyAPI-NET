@@ -52,7 +52,7 @@ namespace SpotifyAPI.Web.Http
 
     private static int? ParseTooManyRetriesToMs(IResponse response)
     {
-      if (response.StatusCode != HttpStatusCode.TooManyRequests)
+      if (response.StatusCode != (HttpStatusCode)429)
       {
         return null;
       }
