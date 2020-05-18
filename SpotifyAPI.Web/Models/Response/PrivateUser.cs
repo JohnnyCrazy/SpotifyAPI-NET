@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace SpotifyAPI.Web.Models
+namespace SpotifyAPI.Web
 {
   public class PrivateUser
   {

@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
-using SpotifyAPI.Web.Models;
 using URLs = SpotifyAPI.Web.SpotifyUrls;
 
 namespace SpotifyAPI.Web
