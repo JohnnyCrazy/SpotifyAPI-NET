@@ -80,30 +80,6 @@ namespace SpotifyAPI.Web.Auth
       return Task.CompletedTask;
     }
 
-    public Uri BuildLoginUri(LoginRequest request)
-    {
-      Ensure.ArgumentNotNull(request, nameof(request));
-
-      StringBuilder builder = new StringBuilder(SpotifyUrls.Authorize.ToString());
-      builder.Append($"?client_id={request.ClientId}");
-      builder.Append($"&response_type={request.ResponseTypeParam.ToString().ToLower()}");
-      builder.Append($"&redirect_uri={HttpUtility.UrlEncode(BaseUri.ToString())}");
-      if (!string.IsNullOrEmpty(request.State))
-      {
-        builder.Append($"&state={HttpUtility.UrlEncode(request.State)}");
-      }
-      if (request.Scope != null)
-      {
-        builder.Append($"&scope={HttpUtility.UrlEncode(string.Join(" ", request.Scope))}");
-      }
-      if (request.ShowDialog != null)
-      {
-        builder.Append($"&show_dialog={request.ShowDialog.Value}");
-      }
-
-      return new Uri(builder.ToString());
-    }
-
     public void Dispose()
     {
       Dispose(true);

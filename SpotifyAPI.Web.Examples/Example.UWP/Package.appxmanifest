@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="ca23f8da-8ef6-406e-8234-ba506f52edc2"
+    Name="ad405b02-e8d1-4972-9f4c-d0741ac5f355"
     Publisher="CN=jonas"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ca23f8da-8ef6-406e-8234-ba506f52edc2" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="ad405b02-e8d1-4972-9f4c-d0741ac5f355" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>UWP</DisplayName>
+    <DisplayName>Example.UWP</DisplayName>
     <PublisherDisplayName>jonas</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -35,11 +35,19 @@
         DisplayName="Example.UWP"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="UWP"
+        Description="Example.UWP"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="spotifyapi.web.oauth">
+            <uap:Logo>Assets\StoreLogo.png</uap:Logo>
+            <uap:DisplayName>SpotifyAPI.Example.UWP</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

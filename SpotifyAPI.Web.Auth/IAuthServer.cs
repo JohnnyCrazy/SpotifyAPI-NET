@@ -12,8 +12,6 @@ namespace SpotifyAPI.Web.Auth
     Task Start();
     Task Stop();
 
-    Uri BuildLoginUri(LoginRequest request);
-
     Uri BaseUri { get; }
   }
 }

@@ -26,19 +26,19 @@ namespace Example.CLI.CustomHTML
 
       _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
 
-      var request = new LoginRequest(clientId, LoginRequest.ResponseType.Code)
+      var request = new LoginRequest(_server.BaseUri, clientId, LoginRequest.ResponseType.Code)
       {
         Scope = new List<string> { UserReadEmail }
       };
 
-      Uri url = _server.BuildLoginUri(request);
+      Uri uri = request.ToUri();
       try
       {
-        BrowserUtil.Open(url);
+        BrowserUtil.Open(uri);
       }
       catch (Exception)
       {
-        Console.WriteLine("Unable to open URL, manually open: {0}", url);
+        Console.WriteLine("Unable to open URL, manually open: {0}", uri);
       }
 
       Console.ReadKey();
