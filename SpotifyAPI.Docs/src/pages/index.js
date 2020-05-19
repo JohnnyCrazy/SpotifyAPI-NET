@@ -1,40 +1,69 @@
 import React from 'react';
 import classnames from 'classnames';
 import Layout from '@theme/Layout';
+import CodeBlock from '@theme/CodeBlock'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 import GitHubButton from 'react-github-btn'
 
+const exampleCode =
+  `var spotify = new SpotifyClient("YourAccessToken");
+
+var me = await spotify.UserProfile.Current();
+Console.WriteLine($"Hello there {me.DisplayName}");
+
+var playlists = await spotify.Paginate(() => spotify.Playlists.CurrentUsers());
+Console.WriteLine($"You got {playlists.Count} playlists 🚀");
+`;
+
+const installCodeNuget =
+  `# Core Package
+Install-Package SpotifyAPI.Web
+`;
+
+const installCodeCLI =
+  `# Core Package
+dotnet add package SpotifyAPI.Web
+`;
+
 const features = [
   {
-    title: <>Easy to Use</>,
-    imageUrl: 'img/undraw_docusaurus_mountain.svg',
-    description: (
+    title: <>Sane Defaults - Easy To Configure</>,
+    imageUrl: 'img/undraw_preferences_uuo2.svg',
+    description: () => (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        <code>SpotifyAPI-NET</code> allows you to quickly integrate with Spotify's Web API by supplying sane configuration defaults from the start. Later on, behaviour can be customized easily with the help of interfaces.
       </>
     ),
   },
   {
-    title: <>Focus on What Matters</>,
-    imageUrl: 'img/undraw_docusaurus_tree.svg',
-    description: (
+    title: <>All API Calls Integrated</>,
+    imageUrl: 'img/undraw_project_completed_w0oq.svg',
+    description: () => (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        The Spotify Web API consists of over 74 API calls. <code>SpotifyAPI-NET</code> provides fully typed requests/responses for all of them.
       </>
     ),
   },
   {
-    title: <>Powered by React</>,
-    imageUrl: 'img/undraw_docusaurus_react.svg',
-    description: (
+    title: <>.NET Standard 2.X</>,
+    imageUrl: 'img/undraw_Devices_e67q.svg',
+    description: () => (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        With the support of .NET Standard 2.X, <code>SpotifyAPI-NET</code> can run on many platforms, including .NET Core, UWP and Xamarin.Forms (Windows, Android, iOS and Mac)
+      </>
+    ),
+  },
+  {
+    title: <>Testable</>,
+    imageUrl: 'img/undraw_QA_engineers_dg5p.svg',
+    description: () => (
+      <>
+        <code>SpotifyAPI-NET</code> is built on a modular structure, which allows easy testing through mocks and stubs. Learn more by visiting the <Link to={useBaseUrl('docs/next/testing')}>Testing Guide</Link>
       </>
     ),
   },
@@ -50,7 +79,7 @@ function Feature({ imageUrl, title, description }) {
         </div>
       )}
       <h3>{title}</h3>
-      <p>{description}</p>
+      <p>{description()}</p>
     </div>
   );
 }
@@ -64,22 +93,31 @@ function Home() {
       description="Description will go into a meta tag in <head />">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
-          <img src="img/logo.svg" width="120" height="120" />
-          <h1 className="hero__title">
-            {siteConfig.title}
-            <span style={{ marginLeft: '50px' }} />
-            <GitHubButton href="https://github.com/JohnnyCrazy/SpotifyAPI-NET" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star JohnnyCrazy/SpotifyAPI-NET on GitHub">Star</GitHubButton>
-          </h1>
-          <p className="hero__subtitle">{siteConfig.tagline}</p>
-          <div className={styles.buttons}>
-            <Link
-              className={classnames(
-                'button button--outline button--secondary button--lg',
-                styles.getStarted,
-              )}
-              to={useBaseUrl('docs/doc1')}>
-              Get Started
-            </Link>
+          <div className="row">
+            <div className="col col--5">
+              <img src="img/logo.svg" width="120" height="120" />
+              <h1 className="hero__title">
+                {siteConfig.title}
+                <span style={{ marginLeft: '50px' }} />
+                <GitHubButton href="https://github.com/JohnnyCrazy/SpotifyAPI-NET" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star JohnnyCrazy/SpotifyAPI-NET on GitHub">Star</GitHubButton>
+              </h1>
+              <p className="hero__subtitle">{siteConfig.tagline}</p>
+              <div className={styles.buttons}>
+                <Link
+                  className={classnames(
+                    'button button--outline button--secondary button--lg',
+                    styles.getStarted,
+                  )}
+                  to={useBaseUrl('docs/next/home')}>
+                  Get Started
+                </Link>
+              </div>
+            </div>
+            <div className={classnames('col col--7', styles.exampleCode)}>
+              <CodeBlock metastring="csharp" className="csharp">
+                {exampleCode}
+              </CodeBlock>
+            </div>
           </div>
         </div>
       </header>
@@ -95,6 +133,26 @@ function Home() {
             </div>
           </section>
         )}
+        <h2 style={{ textAlign: 'center' }}>Try it out now</h2>
+        <div style={{ padding: '50px' }}>
+          <Tabs
+            defaultValue="cli"
+            values={[
+              { label: 'dotnet CLI', value: 'cli' },
+              { label: 'NuGET Console', value: 'nuget' },
+            ]}>
+            <TabItem value="cli">
+              <CodeBlock metastring="csharp" className="bash">
+                {installCodeCLI}
+              </CodeBlock>
+            </TabItem>
+            <TabItem value="nuget">
+              <CodeBlock metastring="csharp" className="bash">
+                {installCodeNuget}
+              </CodeBlock>
+            </TabItem>
+          </Tabs>
+        </div>
       </main>
     </Layout>
   );

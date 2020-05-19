@@ -5,10 +5,15 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding   : 4rem 0;
   text-align: center;
-  position: relative;
-  overflow: hidden;
+  position  : relative;
+  overflow  : hidden;
+}
+
+.exampleCode {
+  margin-top: 20px;
+  text-align: left;
 }
 
 @media screen and (max-width: 966px) {
@@ -18,19 +23,19 @@
 }
 
 .buttons {
-  display: flex;
-  align-items: center;
+  display        : flex;
+  align-items    : center;
   justify-content: center;
 }
 
 .features {
-  display: flex;
+  display    : flex;
   align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+  padding    : 2rem 0;
+  width      : 100%;
 }
 
 .featureImage {
   height: 200px;
-  width: 200px;
+  width : 200px;
 }

@@ -1,5 +1,16 @@
 module.exports = {
-  someSidebar: {
-    Docusaurus: ['doc1']
-  },
+  docs: {
+    'Spotify-API': [
+      'introduction',
+      'installation',
+      'configuration',
+      {
+        type: 'category',
+        label: 'Guides',
+        items: [
+          'pagination',
+        ]
+      },
+    ]
+  }
 };

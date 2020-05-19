@@ -20,13 +20,12 @@ module.exports = {
       },
       links: [
         {
-          to: 'docs/doc1',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
           items: [
             {
-              label: 'Current/Next',
+              label: 'Latest/Next',
               to: 'docs/next/home',
             },
             {
