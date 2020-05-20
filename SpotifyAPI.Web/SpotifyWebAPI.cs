@@ -813,6 +813,7 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///     Add the current user as a follower of a playlist.
     /// </summary>
+    /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
     /// <param name="playlistId">
     ///     The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private
     ///     status, as long as you know its playlist ID.
@@ -866,7 +867,6 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///     Remove the current user as a follower of a playlist asynchronously.
     /// </summary>
-    /// <param name="ownerId">The Spotify user ID of the person who owns the playlist.</param>
     /// <param name="playlistId">The Spotify ID of the playlist that is to be no longer followed.</param>
     /// <returns></returns>
     /// <remarks>AUTH NEEDED</remarks>
