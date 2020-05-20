@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +29,7 @@ namespace SpotifyAPI.Web
     {
       StringBuilder builder = new StringBuilder(SpotifyUrls.Authorize.ToString());
       builder.Append($"?client_id={ClientId}");
-      builder.Append($"&response_type={ResponseTypeParam.ToString().ToLower()}");
+      builder.Append($"&response_type={ResponseTypeParam.ToString().ToLower(CultureInfo.InvariantCulture)}");
       builder.Append($"&redirect_uri={HttpUtility.UrlEncode(RedirectUri.ToString())}");
       if (!string.IsNullOrEmpty(State))
       {

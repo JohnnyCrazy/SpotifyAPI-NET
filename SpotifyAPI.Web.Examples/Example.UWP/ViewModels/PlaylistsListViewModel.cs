@@ -16,7 +16,8 @@ namespace Example.UWP.ViewModels
     private SpotifyClient _spotify;
 
     private List<SimplePlaylist> _playlists;
-    public List<SimplePlaylist> Playlists {
+    public List<SimplePlaylist> Playlists
+    {
       get => _playlists ?? (_playlists = new List<SimplePlaylist>());
       set => SetProperty(ref _playlists, value);
     }
@@ -30,7 +31,7 @@ namespace Example.UWP.ViewModels
     {
       await base.Initialize();
 
-      Playlists = await _spotify.Paginate(() => _spotify.Playlists.CurrentUsers());
+      Playlists = await _spotify.PaginateAll(() => _spotify.Playlists.CurrentUsers());
     }
   }
 }

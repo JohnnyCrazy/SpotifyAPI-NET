@@ -3,13 +3,18 @@ module.exports = {
     'Spotify-API': [
       'introduction',
       'installation',
-      'configuration',
+      'getting_started',
       {
         type: 'category',
         label: 'Guides',
         items: [
           'pagination',
         ]
+      },
+      {
+        type: 'category',
+        label: 'Examples',
+        items: []
       },
     ]
   }

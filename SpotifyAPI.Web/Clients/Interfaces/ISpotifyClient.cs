@@ -34,11 +34,26 @@ namespace SpotifyAPI.Web
 
     ILibraryClient Library { get; }
 
-    Task<List<T>> Paginate<T>(Paging<T> firstPage);
-    Task<List<T>> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper);
-    Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage);
-    Task<List<T>> Paginate<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper);
-    Task<List<T>> Paginate<T>(Paging<T> firstPage, IPaginator paginator);
-    Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator);
+    Task<List<T>> PaginateAll<T>(Paging<T> firstPage);
+    Task<List<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator paginator);
+    Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage);
+    Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator);
+
+    Task<List<T>> PaginateAll<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper);
+    Task<List<T>> PaginateAll<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
+    Task<List<T>> PaginateAll<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper);
+    Task<List<T>> PaginateAll<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
+
+#if NETSTANDARD2_1
+    IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage);
+    IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage, IPaginator paginator);
+    IAsyncEnumerable<T> Paginate<T>(Func<Task<Paging<T>>> getFirstPage);
+    IAsyncEnumerable<T> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator);
+
+    IAsyncEnumerable<T> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper);
+    IAsyncEnumerable<T> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
+    IAsyncEnumerable<T> Paginate<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper);
+    IAsyncEnumerable<T> Paginate<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
+#endif
   }
 }

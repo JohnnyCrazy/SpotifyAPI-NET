@@ -16,9 +16,12 @@ const exampleCode =
 var me = await spotify.UserProfile.Current();
 Console.WriteLine($"Hello there {me.DisplayName}");
 
-var playlists = await spotify.Paginate(() => spotify.Playlists.CurrentUsers());
-Console.WriteLine($"You got {playlists.Count} playlists 🚀");
-`;
+await foreach(var playlist in spotify.Paginate(
+  () => spotify.Playlists.CurrentUsers()
+))
+{
+  Console.WriteLine(playlist.Name);
+}`;
 
 const installCodeNuget =
   `# Core Package
@@ -108,7 +111,7 @@ function Home() {
                     'button button--outline button--secondary button--lg',
                     styles.getStarted,
                   )}
-                  to={useBaseUrl('docs/next/home')}>
+                  to={useBaseUrl('docs/next/introduction')}>
                   Get Started
                 </Link>
               </div>

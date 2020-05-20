@@ -73,38 +73,161 @@ namespace SpotifyAPI.Web
 
     public ILibraryClient Library { get; }
 
-    public Task<List<T>> Paginate<T>(Paging<T> firstPage)
+    public Task<List<T>> PaginateAll<T>(Paging<T> firstPage)
+    {
+      return DefaultPaginator.PaginateAll(firstPage, _apiConnector);
+    }
+
+    public Task<List<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator paginator)
+    {
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      return paginator.PaginateAll(firstPage, _apiConnector);
+    }
+
+    public async Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage)
+    {
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+
+      return await DefaultPaginator.PaginateAll(
+        await getFirstPage().ConfigureAwait(false), _apiConnector
+      ).ConfigureAwait(false);
+    }
+
+    public async Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
+    {
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      return await paginator.PaginateAll(
+        await getFirstPage().ConfigureAwait(false), _apiConnector
+      ).ConfigureAwait(false);
+    }
+
+    public Task<List<T>> PaginateAll<T, TNext>(
+      Paging<T, TNext> firstPage,
+      Func<TNext, Paging<T, TNext>> mapper
+    )
+    {
+      return DefaultPaginator.PaginateAll(firstPage, mapper, _apiConnector);
+    }
+
+    public async Task<List<T>> PaginateAll<T, TNext>(
+      Func<Task<Paging<T, TNext>>> getFirstPage,
+      Func<TNext, Paging<T, TNext>> mapper
+    )
+    {
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+
+      return await DefaultPaginator.PaginateAll(await getFirstPage().ConfigureAwait(false), mapper, _apiConnector).ConfigureAwait(false);
+    }
+
+    public Task<List<T>> PaginateAll<T, TNext>(
+      Paging<T, TNext> firstPage,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginator paginator)
+    {
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      return paginator.PaginateAll(firstPage, mapper, _apiConnector);
+    }
+
+    public async Task<List<T>> PaginateAll<T, TNext>(
+      Func<Task<Paging<T, TNext>>> getFirstPage,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginator paginator
+    )
+    {
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      return await paginator.PaginateAll(
+        await getFirstPage().ConfigureAwait(false), mapper, _apiConnector
+      ).ConfigureAwait(false);
+    }
+
+
+#if NETSTANDARD2_1
+    public IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage)
     {
       return DefaultPaginator.Paginate(firstPage, _apiConnector);
     }
 
-    public Task<List<T>> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper)
-    {
-      return DefaultPaginator.Paginate(firstPage, mapper, _apiConnector);
-    }
-
-    public Task<List<T>> Paginate<T>(Paging<T> firstPage, IPaginator paginator)
+    public IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage, IPaginator paginator)
     {
       Ensure.ArgumentNotNull(paginator, nameof(paginator));
 
       return paginator.Paginate(firstPage, _apiConnector);
     }
 
-    public Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage)
+    public async IAsyncEnumerable<T> Paginate<T>(Func<Task<Paging<T>>> getFirstPage)
     {
-      return DefaultPaginator.Paginate(getFirstPage, _apiConnector);
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+
+      var firstPage = await getFirstPage().ConfigureAwait(false);
+      await foreach (var item in DefaultPaginator.Paginate(firstPage, _apiConnector))
+      {
+        yield return item;
+      }
     }
 
-    public Task<List<T>> Paginate<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper)
+    public async IAsyncEnumerable<T> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
     {
-      return DefaultPaginator.Paginate(getFirstPage, mapper, _apiConnector);
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      var firstPage = await getFirstPage().ConfigureAwait(false);
+      await foreach (var item in DefaultPaginator.Paginate(firstPage, _apiConnector))
+      {
+        yield return item;
+      }
     }
 
-    public Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
+    public IAsyncEnumerable<T> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper)
+    {
+      return DefaultPaginator.Paginate(firstPage, mapper, _apiConnector);
+    }
+
+    public IAsyncEnumerable<T> Paginate<T, TNext>(
+      Paging<T, TNext> firstPage,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginator paginator
+    )
     {
       Ensure.ArgumentNotNull(paginator, nameof(paginator));
 
-      return paginator.Paginate(getFirstPage, _apiConnector);
+      return paginator.Paginate(firstPage, mapper, _apiConnector);
     }
+
+    public async IAsyncEnumerable<T> Paginate<T, TNext>(
+      Func<Task<Paging<T, TNext>>> getFirstPage,
+      Func<TNext, Paging<T, TNext>> mapper
+    )
+    {
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+
+      var firstPage = await getFirstPage().ConfigureAwait(false);
+      await foreach (var item in DefaultPaginator.Paginate(firstPage, mapper, _apiConnector))
+      {
+        yield return item;
+      }
+    }
+
+    public async IAsyncEnumerable<T> Paginate<T, TNext>(
+      Func<Task<Paging<T, TNext>>> getFirstPage,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginator paginator
+    )
+    {
+      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+
+      var firstPage = await getFirstPage().ConfigureAwait(false);
+      await foreach (var item in paginator.Paginate(firstPage, mapper, _apiConnector))
+      {
+        yield return item;
+      }
+    }
+#endif
   }
 }

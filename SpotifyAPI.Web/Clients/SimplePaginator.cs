@@ -1,7 +1,9 @@
+using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
+using System.Runtime.CompilerServices;
 
 namespace SpotifyAPI.Web
 {
@@ -16,7 +18,7 @@ namespace SpotifyAPI.Web
       return Task.FromResult(true);
     }
 
-    public async Task<List<T>> Paginate<T>(Paging<T> firstPage, IAPIConnector connector)
+    public async Task<List<T>> PaginateAll<T>(Paging<T> firstPage, IAPIConnector connector)
     {
       Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
       Ensure.ArgumentNotNull(connector, nameof(connector));
@@ -33,15 +35,7 @@ namespace SpotifyAPI.Web
       return results;
     }
 
-    public async Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IAPIConnector connector)
-    {
-      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
-
-      var firstPage = await getFirstPage().ConfigureAwait(false);
-      return await Paginate(firstPage, connector).ConfigureAwait(false);
-    }
-
-    public async Task<List<T>> Paginate<T, TNext>(
+    public async Task<List<T>> PaginateAll<T, TNext>(
       Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IAPIConnector connector
     )
     {
@@ -62,12 +56,55 @@ namespace SpotifyAPI.Web
       return results;
     }
 
-    public async Task<List<T>> Paginate<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper, IAPIConnector connector)
+#if NETSTANDARD2_1
+    public async IAsyncEnumerable<T> Paginate<T>(
+      Paging<T> firstPage,
+      IAPIConnector connector,
+      [EnumeratorCancellation] CancellationToken cancel = default)
     {
-      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
+      Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
+      Ensure.ArgumentNotNull(connector, nameof(connector));
 
-      var firstPage = await getFirstPage().ConfigureAwait(false);
-      return await Paginate(firstPage, mapper, connector).ConfigureAwait(false);
+      var page = firstPage;
+      foreach (var item in page.Items)
+      {
+        yield return item;
+      }
+      while (page.Next != null)
+      {
+        page = await connector.Get<Paging<T>>(new Uri(page.Next, UriKind.Absolute)).ConfigureAwait(false);
+        foreach (var item in page.Items)
+        {
+          yield return item;
+        }
+      }
     }
+
+    public async IAsyncEnumerable<T> Paginate<T, TNext>(
+      Paging<T, TNext> firstPage,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IAPIConnector connector,
+      [EnumeratorCancellation] CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
+      Ensure.ArgumentNotNull(mapper, nameof(mapper));
+      Ensure.ArgumentNotNull(connector, nameof(connector));
+
+      var page = firstPage;
+      foreach (var item in page.Items)
+      {
+        yield return item;
+      }
+      while (page.Next != null)
+      {
+        var next = await connector.Get<TNext>(new Uri(page.Next, UriKind.Absolute)).ConfigureAwait(false);
+        page = mapper(next);
+        foreach (var item in page.Items)
+        {
+          yield return item;
+        }
+      }
+    }
+#endif
   }
 }

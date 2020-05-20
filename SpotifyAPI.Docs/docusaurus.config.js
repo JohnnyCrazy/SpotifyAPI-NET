@@ -26,7 +26,7 @@ module.exports = {
           items: [
             {
               label: 'Latest/Next',
-              to: 'docs/next/home',
+              to: 'docs/next/introduction',
             },
             {
               label: versions[0],

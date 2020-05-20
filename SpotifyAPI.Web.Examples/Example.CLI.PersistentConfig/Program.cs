@@ -53,7 +53,7 @@ namespace Example.CLI.PersistentConfig
       var me = await spotify.UserProfile.Current();
       Console.WriteLine($"Welcome {me.DisplayName} ({me.Id}), your authenticated!");
 
-      var playlists = await spotify.Paginate(await spotify.Playlists.CurrentUsers());
+      var playlists = await spotify.PaginateAll(() => spotify.Playlists.CurrentUsers());
       Console.WriteLine($"Total Playlists in your Account: {playlists.Count}");
 
       Environment.Exit(0);

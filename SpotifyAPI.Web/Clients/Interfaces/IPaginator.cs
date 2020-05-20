@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,10 +8,21 @@ namespace SpotifyAPI.Web
 {
   public interface IPaginator
   {
-    Task<List<T>> Paginate<T>(Paging<T> firstPage, IAPIConnector connector);
-    Task<List<T>> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IAPIConnector connector);
+    Task<List<T>> PaginateAll<T>(Paging<T> firstPage, IAPIConnector connector);
+    Task<List<T>> PaginateAll<T, TNext>(
+      Paging<T, TNext> firstPage,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IAPIConnector connector
+    );
 
-    Task<List<T>> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IAPIConnector connector);
-    Task<List<T>> Paginate<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper, IAPIConnector connector);
+#if NETSTANDARD2_1
+    IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage, IAPIConnector connector, CancellationToken cancel = default);
+    IAsyncEnumerable<T> Paginate<T, TNext>(
+      Paging<T, TNext> firstPage,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IAPIConnector connector,
+      CancellationToken cancel = default
+    );
+#endif
   }
 }
