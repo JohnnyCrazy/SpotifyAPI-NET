@@ -18,6 +18,11 @@ namespace SpotifyAPI.Web.Http
       _httpClient = new HttpClient();
     }
 
+    public NetHttpClient(HttpClient httpClient)
+    {
+      _httpClient = httpClient;
+    }
+
     public NetHttpClient(IProxyConfig proxyConfig)
     {
       Ensure.ArgumentNotNull(proxyConfig, nameof(proxyConfig));

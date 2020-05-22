@@ -1,0 +1,44 @@
+﻿@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["Page"] = "profile";
+    ViewData["Description"] = "Have a look at your spotify info and logout of your account";
+}
+
+<table class="pure-table">
+  <thead>
+    <th>Key</th>
+    <th>Value</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Id</td>
+      <td>@Model.Me.Id</td>
+    </tr>
+    <tr>
+      <td>Uri</td>
+      <td>@Model.Me.Uri</td>
+    </tr>
+    <tr>
+      <td>DisplayName</td>
+      <td>@Model.Me.DisplayName</td>
+    </tr>
+    <tr>
+      <td>Country</td>
+      <td>@Model.Me.Country</td>
+    </tr>
+    <tr>
+      <td>Product</td>
+      <td>@Model.Me.Product</td>
+    </tr>
+    <tr>
+      <td>E-Mail (unverfied)</td>
+      <td>@Model.Me.Email</td>
+    </tr>
+  </tbody>
+</table>
+
+<form method="post" asp-controller="Profile">
+  <input type="submit" value="Logout"/>
+</form>

@@ -5,36 +5,23 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch SpotifyAPI.Web.Examples.ASP",
+      "name": "Launch Example.ASP",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build-web-example-asp",
-      // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/SpotifyAPI.Web.Examples.ASP/bin/Debug/netcoreapp3.0/SpotifyAPI.Web.Examples.ASP.dll",
+      "preLaunchTask": "Example.ASP-build",
+      "program": "${workspaceFolder}/SpotifyAPI.Web.Examples/Example.ASP/bin/Debug/netcoreapp3.1/Example.ASP.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/SpotifyAPI.Web.Examples.ASP",
+      "cwd": "${workspaceFolder}/SpotifyAPI.Web.Examples/Example.ASP",
       "stopAtEntry": false,
-      // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
-      },
+      // "serverReadyAction": {
+      //   "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+      // },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"
       }
-    },
-    {
-      "name": "Launch SpotifyAPI.Web.Examples.CLI",
-      "type": "coreclr",
-      "request": "launch",
-      "preLaunchTask": "build-web-example-cli",
-      "program": "${workspaceFolder}/SpotifyAPI.Web.Examples.CLI/bin/Debug/netcoreapp3.0/SpotifyAPI.Web.Examples.CLI.dll",
-      "args": [],
-      "cwd": "${workspaceFolder}/SpotifyAPI.Web.Examples.CLI",
-      "stopAtEntry": false
     }
   ]
 }
