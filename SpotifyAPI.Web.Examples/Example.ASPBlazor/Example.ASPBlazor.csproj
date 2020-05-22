@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\SpotifyAPI.Web\SpotifyAPI.Web.csproj" />
+  </ItemGroup>
+
 </Project>

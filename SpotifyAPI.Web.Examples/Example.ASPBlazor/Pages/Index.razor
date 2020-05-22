@@ -1,7 +1,61 @@
-﻿@page "/"
+@page "/"
+@inject NavigationManager navManager
+@using SpotifyAPI.Web
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+@if (_isAuthed && _me != null)
+{
+  <h2>Welcome @_me.DisplayName!</h2>
+  <p>
+    You have a grant toal of @_totalPlaylistCount playlists!
+  </p>
+}
+else
+{
+  <span>To get started:</span>
+  <a href="@_authUri">
+    Login via Spotify
+  </a>
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    private Uri _authUri;
+
+    private bool _isAuthed;
+
+    private PrivateUser _me;
+
+    private int _totalPlaylistCount;
+
+    protected override void OnInitialized()
+    {
+      var clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
+      var baseUri = navManager.ToAbsoluteUri(navManager.BaseUri);
+
+      var loginRequest = new LoginRequest(baseUri, clientId, LoginRequest.ResponseType.Token)
+      {
+        Scope = new[] { Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative }
+      };
+      _authUri = loginRequest.ToUri();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+      var uri = new Uri(navManager.Uri);
+      var maxLen = Math.Min(1, uri.Fragment.Length);
+      Dictionary<string, string> fragmentParams = uri.Fragment.Substring(maxLen)
+        ?.Split("&", StringSplitOptions.RemoveEmptyEntries)
+        ?.Select(param => param.Split("=", StringSplitOptions.RemoveEmptyEntries))
+        ?.ToDictionary(param => param[0], param => param[1]) ?? new Dictionary<string, string>();
+
+      _isAuthed = fragmentParams.ContainsKey("access_token");
+      if (_isAuthed)
+      {
+        var spotify = new SpotifyClient(fragmentParams["access_token"]);
+
+        _me = await spotify.UserProfile.Current();
+        _totalPlaylistCount = (await spotify.Playlists.CurrentUsers()).Total;
+      }
+    }
+}
