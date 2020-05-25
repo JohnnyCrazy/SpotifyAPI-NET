@@ -23,3 +23,4 @@ namespace SpotifyAPI.Web
     public const string UserFollowModify = "user-follow-modify";
   }
 }
+

@@ -6,22 +6,36 @@ namespace SpotifyAPI.Web.Http
 {
   public class Request : IRequest
   {
-    public Request()
+    public Request(Uri baseAddress, Uri endpoint, HttpMethod method)
     {
       Headers = new Dictionary<string, string>();
       Parameters = new Dictionary<string, string>();
+      BaseAddress = baseAddress;
+      Endpoint = endpoint;
+      Method = method;
     }
 
-    public Request(IDictionary<string, string> headers)
+    public Request(Uri baseAddress, Uri endpoint, HttpMethod method, IDictionary<string, string> headers)
     {
       Headers = headers;
       Parameters = new Dictionary<string, string>();
+      BaseAddress = baseAddress;
+      Endpoint = endpoint;
+      Method = method;
     }
 
-    public Request(IDictionary<string, string> headers, IDictionary<string, string> parameters)
+    public Request(
+      Uri baseAddress,
+      Uri endpoint,
+      HttpMethod method,
+      IDictionary<string, string> headers,
+      IDictionary<string, string> parameters)
     {
       Headers = headers;
       Parameters = parameters;
+      BaseAddress = baseAddress;
+      Endpoint = endpoint;
+      Method = method;
     }
 
     public Uri BaseAddress { get; set; }
@@ -34,6 +48,6 @@ namespace SpotifyAPI.Web.Http
 
     public HttpMethod Method { get; set; }
 
-    public object Body { get; set; }
+    public object? Body { get; set; }
   }
 }

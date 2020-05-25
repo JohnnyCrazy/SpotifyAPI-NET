@@ -18,6 +18,7 @@ namespace SpotifyAPI.Web
     public int? RangeLength { get; set; }
 
     [BodyParam("snapshot_id")]
-    public string SnapshotId { get; set; }
+    public string? SnapshotId { get; set; }
   }
 }
+

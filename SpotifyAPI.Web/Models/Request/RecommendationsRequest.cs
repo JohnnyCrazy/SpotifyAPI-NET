@@ -28,7 +28,7 @@ namespace SpotifyAPI.Web
     public int? Limit { get; set; }
 
     [QueryParam("market")]
-    public string Market { get; set; }
+    public string? Market { get; set; }
 
     public Dictionary<string, string> Min { get; }
     public Dictionary<string, string> Max { get; }
@@ -61,3 +61,4 @@ namespace SpotifyAPI.Web
     }
   }
 }
+

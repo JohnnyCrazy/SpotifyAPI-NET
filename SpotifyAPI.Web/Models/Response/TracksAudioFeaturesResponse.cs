@@ -4,6 +4,7 @@ namespace SpotifyAPI.Web
 {
   public class TracksAudioFeaturesResponse
   {
-    public List<TrackAudioFeatures> AudioFeatures { get; set; }
+    public List<TrackAudioFeatures> AudioFeatures { get; set; } = default!;
   }
 }
+

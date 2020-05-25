@@ -14,12 +14,12 @@ namespace SpotifyAPI.Web.Http
       Headers = new ReadOnlyDictionary<string, string>(headers);
     }
 
-    public object Body { get; set; }
+    public object? Body { get; set; }
 
     public IReadOnlyDictionary<string, string> Headers { get; set; }
 
     public HttpStatusCode StatusCode { get; set; }
 
-    public string ContentType { get; set; }
+    public string? ContentType { get; set; }
   }
 }

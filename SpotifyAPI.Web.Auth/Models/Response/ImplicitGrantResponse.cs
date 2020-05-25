@@ -14,10 +14,10 @@ namespace SpotifyAPI.Web.Auth
       ExpiresIn = expiresIn;
     }
 
-    public string AccessToken { get; set; }
-    public string TokenType { get; set; }
+    public string AccessToken { get; set; } = default!;
+    public string TokenType { get; set; } = default!;
     public int ExpiresIn { get; set; }
-    public string State { get; set; }
+    public string State { get; set; } = default!;
 
     /// <summary>
     ///   Auto-Initalized to UTC Now

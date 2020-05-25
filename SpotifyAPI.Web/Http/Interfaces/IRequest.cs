@@ -16,6 +16,6 @@ namespace SpotifyAPI.Web.Http
 
     HttpMethod Method { get; }
 
-    object Body { get; set; }
+    object? Body { get; set; }
   }
 }

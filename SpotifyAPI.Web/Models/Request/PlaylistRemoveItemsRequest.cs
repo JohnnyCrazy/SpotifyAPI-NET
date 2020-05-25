@@ -16,17 +16,18 @@ namespace SpotifyAPI.Web
     public IList<Item> Tracks { get; }
 
     [BodyParam("snapshot_id")]
-    public string SnapshotId { get; set; }
+    public string? SnapshotId { get; set; }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034")]
     public class Item
     {
       [JsonProperty("uri", NullValueHandling = NullValueHandling.Ignore)]
-      public string Uri { get; set; }
+      public string? Uri { get; set; }
 
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227")]
       [JsonProperty("positions", NullValueHandling = NullValueHandling.Ignore)]
-      public List<int> Positions { get; set; }
+      public List<int>? Positions { get; set; }
     }
   }
 }
+

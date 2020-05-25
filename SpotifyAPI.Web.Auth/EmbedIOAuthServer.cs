@@ -12,13 +12,13 @@ namespace SpotifyAPI.Web.Auth
 {
   public class EmbedIOAuthServer : IAuthServer
   {
-    public event Func<object, AuthorizationCodeResponse, Task> AuthorizationCodeReceived;
-    public event Func<object, ImplictGrantResponse, Task> ImplictGrantReceived;
+    public event Func<object, AuthorizationCodeResponse, Task>? AuthorizationCodeReceived;
+    public event Func<object, ImplictGrantResponse, Task>? ImplictGrantReceived;
 
     private const string AssetsResourcePath = "SpotifyAPI.Web.Auth.Resources.auth_assets";
     private const string DefaultResourcePath = "SpotifyAPI.Web.Auth.Resources.default_site";
 
-    private CancellationTokenSource _cancelTokenSource;
+    private CancellationTokenSource? _cancelTokenSource;
     private readonly WebServer _webServer;
 
     public EmbedIOAuthServer(Uri baseUri, int port)
@@ -76,7 +76,7 @@ namespace SpotifyAPI.Web.Auth
 
     public Task Stop()
     {
-      _cancelTokenSource.Cancel();
+      _cancelTokenSource?.Cancel();
       return Task.CompletedTask;
     }
 

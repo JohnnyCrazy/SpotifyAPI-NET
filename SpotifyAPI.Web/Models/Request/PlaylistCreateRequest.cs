@@ -19,6 +19,7 @@ namespace SpotifyAPI.Web
     public bool? Collaborative { get; set; }
 
     [BodyParam("description")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
   }
 }
+

@@ -12,7 +12,7 @@ namespace SpotifyAPI.Web
     }
 
     [QueryParam("market")]
-    public string Market { get; set; }
+    public string? Market { get; set; }
 
     /// <summary>
     ///   This is set to `"track", "episode"` by default.
@@ -32,3 +32,4 @@ namespace SpotifyAPI.Web
     }
   }
 }
+

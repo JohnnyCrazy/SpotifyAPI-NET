@@ -21,8 +21,8 @@ namespace SpotifyAPI.Web
     public Uri RedirectUri { get; }
     public ResponseType ResponseTypeParam { get; }
     public string ClientId { get; }
-    public string State { get; set; }
-    public ICollection<string> Scope { get; set; }
+    public string? State { get; set; }
+    public ICollection<string>? Scope { get; set; }
     public bool? ShowDialog { get; set; }
 
     public Uri ToUri()
@@ -54,3 +54,4 @@ namespace SpotifyAPI.Web
     }
   }
 }
+

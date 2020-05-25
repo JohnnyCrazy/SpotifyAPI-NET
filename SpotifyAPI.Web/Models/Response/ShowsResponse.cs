@@ -4,6 +4,7 @@ namespace SpotifyAPI.Web
 {
   public class ShowsResponse
   {
-    public List<SimpleShow> Shows { get; set; }
+    public List<SimpleShow> Shows { get; set; } = default!;
   }
 }
+

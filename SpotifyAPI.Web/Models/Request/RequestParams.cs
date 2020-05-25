@@ -20,9 +20,8 @@ namespace SpotifyAPI.Web
       var obj = new JObject();
       foreach (var prop in bodyProps)
       {
-        var attribute = prop.GetCustomAttribute(typeof(BodyParamAttribute)) as BodyParamAttribute;
         object value = prop.GetValue(this);
-        if (value != null)
+        if (value != null && prop.GetCustomAttribute(typeof(BodyParamAttribute)) is BodyParamAttribute attribute)
         {
           obj[attribute.Key ?? prop.Name] = JToken.FromObject(value);
         }
@@ -41,9 +40,8 @@ namespace SpotifyAPI.Web
       var queryParams = new Dictionary<string, string>();
       foreach (var prop in queryProps)
       {
-        var attribute = prop.GetCustomAttribute(typeof(QueryParamAttribute)) as QueryParamAttribute;
         object value = prop.GetValue(this);
-        if (value != null)
+        if (value != null && prop.GetCustomAttribute(typeof(QueryParamAttribute)) is QueryParamAttribute attribute)
         {
           if (value is IList<string> list && list.Count > 0)
           {
@@ -91,7 +89,6 @@ namespace SpotifyAPI.Web
   {
     public string Key { get; }
 
-    public QueryParamAttribute() { }
     public QueryParamAttribute(string key)
     {
       Key = key;
@@ -103,10 +100,10 @@ namespace SpotifyAPI.Web
   {
     public string Key { get; }
 
-    public BodyParamAttribute() { }
     public BodyParamAttribute(string key)
     {
       Key = key;
     }
   }
 }
+

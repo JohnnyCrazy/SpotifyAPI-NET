@@ -5,19 +5,24 @@ namespace SpotifyAPI.Web
   public class FeaturedPlaylistsRequest : RequestParams
   {
     [QueryParam("country")]
-    public string Country { get; set; }
+    public string? Country { get; set; }
+
     [QueryParam("locale")]
-    public string Locale { get; set; }
+    public string? Locale { get; set; }
+
     [QueryParam("limit")]
     public int? Limit { get; set; }
+
     [QueryParam("offset")]
     public int? Offset { get; set; }
+
     public DateTime? Timestamp { get; set; }
 
     [QueryParam("timestamp")]
-    protected string TimestampFormatted
+    protected string? TimestampFormatted
     {
       get => Timestamp?.ToString("o", CultureInfo.InvariantCulture);
     }
   }
 }
+

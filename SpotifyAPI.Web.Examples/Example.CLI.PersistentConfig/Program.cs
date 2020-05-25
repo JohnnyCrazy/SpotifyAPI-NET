@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System;
@@ -18,12 +17,19 @@ namespace Example.CLI.PersistentConfig
   public class Program
   {
     private const string CredentialsPath = "credentials.json";
-    private static readonly string clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
-    private static readonly string clientSecret = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET");
-    private static EmbedIOAuthServer _server;
+    private static readonly string? clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
+    private static readonly string? clientSecret = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET");
+    private static readonly EmbedIOAuthServer _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
 
     public static async Task<int> Main()
     {
+      if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret))
+      {
+        throw new NullReferenceException(
+          "Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET via environment variables before starting the program"
+        );
+      }
+
       if (File.Exists(CredentialsPath))
       {
         await Start();
@@ -42,7 +48,7 @@ namespace Example.CLI.PersistentConfig
       var json = await File.ReadAllTextAsync(CredentialsPath);
       var token = JsonConvert.DeserializeObject<AuthorizationCodeTokenResponse>(json);
 
-      var authenticator = new AuthorizationCodeAuthenticator(clientId, clientSecret, token);
+      var authenticator = new AuthorizationCodeAuthenticator(clientId!, clientSecret!, token);
       authenticator.TokenRefreshed += (sender, token) => File.WriteAllText(CredentialsPath, JsonConvert.SerializeObject(token));
 
       var config = SpotifyClientConfig.CreateDefault()
@@ -61,11 +67,10 @@ namespace Example.CLI.PersistentConfig
 
     private static async Task StartAuthentication()
     {
-      _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
       await _server.Start();
       _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
 
-      var request = new LoginRequest(_server.BaseUri, clientId, LoginRequest.ResponseType.Code)
+      var request = new LoginRequest(_server.BaseUri, clientId!, LoginRequest.ResponseType.Code)
       {
         Scope = new List<string> { UserReadEmail, UserReadPrivate, PlaylistReadPrivate }
       };
@@ -85,7 +90,7 @@ namespace Example.CLI.PersistentConfig
     {
       await _server.Stop();
       AuthorizationCodeTokenResponse token = await new OAuthClient().RequestToken(
-        new AuthorizationCodeTokenRequest(clientId, clientSecret, response.Code, _server.BaseUri)
+        new AuthorizationCodeTokenRequest(clientId!, clientSecret!, response.Code, _server.BaseUri)
       );
 
       await File.WriteAllTextAsync(CredentialsPath, JsonConvert.SerializeObject(token));

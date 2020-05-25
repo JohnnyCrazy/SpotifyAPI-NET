@@ -9,7 +9,7 @@ namespace SpotifyAPI.Web.Http
   /// </summary>
   public class AuthorizationCodeAuthenticator : IAuthenticator
   {
-    public event EventHandler<AuthorizationCodeTokenResponse> TokenRefreshed;
+    public event EventHandler<AuthorizationCodeTokenResponse>? TokenRefreshed;
 
     /// <summary>
     ///   Initiate a new instance. The token will be refreshed once it expires.

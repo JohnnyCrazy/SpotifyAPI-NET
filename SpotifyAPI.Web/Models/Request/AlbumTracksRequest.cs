@@ -3,7 +3,7 @@ namespace SpotifyAPI.Web
   public class AlbumTracksRequest : RequestParams
   {
     [QueryParam("market")]
-    public string Market { get; set; }
+    public string? Market { get; set; }
 
     [QueryParam("limit")]
     public int? Limit { get; set; }
@@ -12,3 +12,4 @@ namespace SpotifyAPI.Web
     public int? Offset { get; set; }
   }
 }
+

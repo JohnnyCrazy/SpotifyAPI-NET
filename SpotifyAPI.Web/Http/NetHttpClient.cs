@@ -10,7 +10,7 @@ namespace SpotifyAPI.Web.Http
 {
   public class NetHttpClient : IHTTPClient
   {
-    private readonly HttpMessageHandler _httpMessageHandler;
+    private readonly HttpMessageHandler? _httpMessageHandler;
     private readonly HttpClient _httpClient;
 
     public NetHttpClient()

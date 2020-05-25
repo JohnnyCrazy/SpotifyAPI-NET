@@ -14,7 +14,7 @@ namespace SpotifyAPI.Web
     public int? Limit { get; set; }
 
     [QueryParam("after")]
-    public string After { get; set; }
+    public string? After { get; set; }
 
     public enum Type
     {
@@ -23,3 +23,4 @@ namespace SpotifyAPI.Web
     }
   }
 }
+

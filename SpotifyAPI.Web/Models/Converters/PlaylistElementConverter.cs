@@ -8,8 +8,8 @@ namespace SpotifyAPI.Web
   {
     public override bool CanConvert(Type objectType) => true;
 
-    public override object ReadJson(JsonReader reader, Type objectType,
-        object existingValue, JsonSerializer serializer)
+    public override object? ReadJson(JsonReader reader, Type objectType,
+        object? existingValue, JsonSerializer serializer)
     {
       Ensure.ArgumentNotNull(serializer, nameof(serializer));
 
@@ -19,7 +19,7 @@ namespace SpotifyAPI.Web
         return null;
       }
 
-      var type = token["type"].Value<string>();
+      var type = token["type"]?.Value<string>();
       if (type == "track")
       {
         var obj = new FullTrack();
@@ -38,10 +38,10 @@ namespace SpotifyAPI.Web
       }
     }
 
-    public override void WriteJson(JsonWriter writer, object value,
-        JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
       throw new NotSupportedException();
     }
   }
 }
+

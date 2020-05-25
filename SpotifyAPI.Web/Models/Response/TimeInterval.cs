@@ -7,3 +7,4 @@ namespace SpotifyAPI.Web
     public float Confidence { get; set; }
   }
 }
+

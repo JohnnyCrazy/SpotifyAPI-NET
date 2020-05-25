@@ -12,8 +12,8 @@ namespace SpotifyAPI.Web
 
     public string Host { get; }
     public int Port { get; }
-    public string User { get; set; }
-    public string Password { get; set; }
+    public string? User { get; set; }
+    public string? Password { get; set; }
     public bool BypassProxyOnLocal { get; set; }
     public bool SkipSSLCheck { get; set; }
   }

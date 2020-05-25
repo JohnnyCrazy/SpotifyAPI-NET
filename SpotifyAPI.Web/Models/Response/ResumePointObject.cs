@@ -6,3 +6,4 @@ namespace SpotifyAPI.Web
     public int ResumePositionMs { get; set; }
   }
 }
+

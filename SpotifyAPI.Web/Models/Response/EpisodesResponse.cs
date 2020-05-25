@@ -4,6 +4,7 @@ namespace SpotifyAPI.Web
 {
   public class EpisodesResponse
   {
-    public List<FullEpisode> Episodes { get; set; }
+    public List<FullEpisode> Episodes { get; set; } = default!;
   }
 }
+

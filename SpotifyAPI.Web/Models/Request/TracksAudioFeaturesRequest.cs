@@ -12,6 +12,7 @@ namespace SpotifyAPI.Web
     }
 
     [QueryParam("ids")]
-    public IList<string> Ids { get; private set; }
+    public IList<string> Ids { get; }
   }
 }
+

@@ -9,10 +9,11 @@ namespace SpotifyAPI.Web
 
     [JsonProperty("afterRelinkingSize")]
     public int AfterRelinkingSize { get; set; }
-    public string Href { get; set; }
-    public string Id { get; set; }
+    public string Href { get; set; } = default!;
+    public string Id { get; set; } = default!;
     [JsonProperty("initialPoolSize")]
     public int InitialPoolSize { get; set; }
-    public string Type { get; set; }
+    public string Type { get; set; } = default!;
   }
 }
+

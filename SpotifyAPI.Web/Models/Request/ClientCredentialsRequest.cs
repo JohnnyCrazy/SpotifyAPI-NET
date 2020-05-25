@@ -17,3 +17,4 @@ namespace SpotifyAPI.Web
     public string ClientSecret { get; }
   }
 }
+

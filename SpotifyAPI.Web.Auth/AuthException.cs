@@ -14,7 +14,7 @@ namespace SpotifyAPI.Web.Auth
         System.Runtime.Serialization.SerializationInfo info,
         System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 
-    public string Error { get; set; }
-    public string State { get; set; }
+    public string? Error { get; set; }
+    public string? State { get; set; }
   }
 }

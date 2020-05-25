@@ -3,8 +3,8 @@ namespace SpotifyAPI.Web
 {
   public class CredentialsTokenResponse
   {
-    public string AccessToken { get; set; }
-    public string TokenType { get; set; }
+    public string AccessToken { get; set; } = default!;
+    public string TokenType { get; set; } = default!;
     public int ExpiresIn { get; set; }
 
     /// <summary>
@@ -16,3 +16,4 @@ namespace SpotifyAPI.Web
     public bool IsExpired { get => CreatedAt.AddSeconds(ExpiresIn) <= DateTime.UtcNow; }
   }
 }
+

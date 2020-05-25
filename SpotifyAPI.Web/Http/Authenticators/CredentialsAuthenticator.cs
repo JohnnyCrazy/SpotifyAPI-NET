@@ -8,7 +8,7 @@ namespace SpotifyAPI.Web.Http
   /// </summary>
   public class CredentialsAuthenticator : IAuthenticator
   {
-    private CredentialsTokenResponse _token;
+    private CredentialsTokenResponse? _token;
 
     /// <summary>
     ///   Initiate a new instance. The first token will be fetched when the first API call occurs

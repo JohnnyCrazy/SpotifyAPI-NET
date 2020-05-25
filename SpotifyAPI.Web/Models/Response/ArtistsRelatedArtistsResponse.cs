@@ -4,6 +4,7 @@ namespace SpotifyAPI.Web
 {
   public class ArtistsRelatedArtistsResponse
   {
-    public List<FullArtist> Artists { get; set; }
+    public List<FullArtist> Artists { get; set; } = default!;
   }
 }
+

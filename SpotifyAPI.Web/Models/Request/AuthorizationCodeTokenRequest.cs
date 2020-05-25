@@ -25,3 +25,4 @@ namespace SpotifyAPI.Web
     public Uri RedirectUri { get; }
   }
 }
+

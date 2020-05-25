@@ -16,3 +16,4 @@ namespace SpotifyAPI.Web
     public float TimeSignatureConfidence { get; set; }
   }
 }
+

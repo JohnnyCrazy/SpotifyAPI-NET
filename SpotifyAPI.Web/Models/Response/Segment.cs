@@ -11,7 +11,8 @@ namespace SpotifyAPI.Web
     public float LoudnessMax { get; set; }
     public float LoudnessMaxTime { get; set; }
     public float LoudnessEnd { get; set; }
-    public List<float> Pitches { get; set; }
-    public List<float> Timbre { get; set; }
+    public List<float> Pitches { get; set; } = default!;
+    public List<float> Timbre { get; set; } = default!;
   }
 }
+

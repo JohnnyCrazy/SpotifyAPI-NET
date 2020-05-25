@@ -7,9 +7,9 @@ using System.Runtime.Serialization;
 namespace SpotifyAPI.Web
 {
   [Serializable]
-  public class APIException : System.Exception
+  public class APIException : Exception
   {
-    public IResponse Response { get; set; }
+    public IResponse? Response { get; set; }
 
     public APIException(IResponse response) : base(ParseAPIErrorMessage(response))
     {
@@ -26,7 +26,7 @@ namespace SpotifyAPI.Web
     {
     }
 
-    public APIException(string message, System.Exception innerException) : base(message, innerException)
+    public APIException(string message, Exception innerException) : base(message, innerException)
     {
     }
 
@@ -35,7 +35,7 @@ namespace SpotifyAPI.Web
       Response = info.GetValue("APIException.Response", typeof(IResponse)) as IResponse;
     }
 
-    private static string ParseAPIErrorMessage(IResponse response)
+    private static string? ParseAPIErrorMessage(IResponse response)
     {
       var body = response.Body as string;
       if (string.IsNullOrEmpty(body))
@@ -44,7 +44,7 @@ namespace SpotifyAPI.Web
       }
       try
       {
-        JObject bodyObject = JObject.Parse(body);
+        JObject bodyObject = JObject.Parse(body!);
         JObject error = bodyObject.Value<JObject>("error");
         if (error != null)
         {

@@ -6,3 +6,4 @@ namespace SpotifyAPI.Web
     public bool? Public { get; set; }
   }
 }
+

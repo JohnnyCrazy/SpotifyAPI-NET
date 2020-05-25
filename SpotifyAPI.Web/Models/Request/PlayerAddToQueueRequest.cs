@@ -13,6 +13,7 @@ namespace SpotifyAPI.Web
     public string Uri { get; }
 
     [QueryParam("device_id")]
-    public string DeviceId { get; set; }
+    public string? DeviceId { get; set; }
   }
 }
+

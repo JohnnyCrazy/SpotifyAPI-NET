@@ -9,3 +9,4 @@ namespace SpotifyAPI.Web
     public int? Offset { get; set; }
   }
 }
+

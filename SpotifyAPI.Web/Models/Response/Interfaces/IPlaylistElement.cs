@@ -15,3 +15,4 @@ namespace SpotifyAPI.Web
     ItemType Type { get; }
   }
 }
+

@@ -7,11 +7,11 @@ namespace SpotifyAPI.Web
   public class SpotifyClientConfig
   {
     public Uri BaseAddress { get; private set; }
-    public IAuthenticator Authenticator { get; private set; }
+    public IAuthenticator? Authenticator { get; private set; }
     public IJSONSerializer JSONSerializer { get; private set; }
     public IHTTPClient HTTPClient { get; private set; }
-    public IHTTPLogger HTTPLogger { get; private set; }
-    public IRetryHandler RetryHandler { get; private set; }
+    public IHTTPLogger? HTTPLogger { get; private set; }
+    public IRetryHandler? RetryHandler { get; private set; }
     public IPaginator DefaultPaginator { get; private set; }
 
     /// <summary>
@@ -26,11 +26,11 @@ namespace SpotifyAPI.Web
     /// <param name="defaultPaginator"></param>
     public SpotifyClientConfig(
       Uri baseAddress,
-      IAuthenticator authenticator,
+      IAuthenticator? authenticator,
       IJSONSerializer jsonSerializer,
       IHTTPClient httpClient,
-      IRetryHandler retryHandler,
-      IHTTPLogger httpLogger,
+      IRetryHandler? retryHandler,
+      IHTTPLogger? httpLogger,
       IPaginator defaultPaginator
     )
     {

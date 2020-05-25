@@ -4,6 +4,7 @@ namespace SpotifyAPI.Web
 {
   public class TracksResponse
   {
-    public List<FullTrack> Tracks { get; set; }
+    public List<FullTrack> Tracks { get; set; } = default!;
   }
 }
+

@@ -101,6 +101,7 @@ namespace SpotifyAPI.Web
     private static APIConnector ValidateConfig(SpotifyClientConfig config)
     {
       Ensure.ArgumentNotNull(config, nameof(config));
+
       return new APIConnector(
         config.BaseAddress,
         config.Authenticator,

@@ -10,7 +10,7 @@ namespace SpotifyAPI.Web
     }
 
     [QueryParam("device_id")]
-    public string DeviceId { get; set; }
+    public string? DeviceId { get; set; }
 
     [QueryParam("state")]
     public State StateParam { get; }
@@ -28,3 +28,4 @@ namespace SpotifyAPI.Web
     }
   }
 }
+

@@ -9,22 +9,22 @@ namespace SpotifyAPI.Web.Http
   public class APIConnector : IAPIConnector
   {
     private readonly Uri _baseAddress;
-    private readonly IAuthenticator _authenticator;
+    private readonly IAuthenticator? _authenticator;
     private readonly IJSONSerializer _jsonSerializer;
     private readonly IHTTPClient _httpClient;
-    private readonly IRetryHandler _retryHandler;
-    private readonly IHTTPLogger _httpLogger;
+    private readonly IRetryHandler? _retryHandler;
+    private readonly IHTTPLogger? _httpLogger;
 
     public APIConnector(Uri baseAddress, IAuthenticator authenticator) :
       this(baseAddress, authenticator, new NewtonsoftJSONSerializer(), new NetHttpClient(), null, null)
     { }
     public APIConnector(
       Uri baseAddress,
-      IAuthenticator authenticator,
+      IAuthenticator? authenticator,
       IJSONSerializer jsonSerializer,
       IHTTPClient httpClient,
-      IRetryHandler retryHandler,
-      IHTTPLogger httpLogger)
+      IRetryHandler? retryHandler,
+      IHTTPLogger? httpLogger)
     {
       _baseAddress = baseAddress;
       _authenticator = authenticator;
@@ -41,21 +41,21 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Delete);
     }
 
-    public Task<T> Delete<T>(Uri uri, IDictionary<string, string> parameters)
+    public Task<T> Delete<T>(Uri uri, IDictionary<string, string>? parameters)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Delete, parameters);
     }
 
-    public Task<T> Delete<T>(Uri uri, IDictionary<string, string> parameters, object body)
+    public Task<T> Delete<T>(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Delete, parameters, body);
     }
 
-    public async Task<HttpStatusCode> Delete(Uri uri, IDictionary<string, string> parameters, object body)
+    public async Task<HttpStatusCode> Delete(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -70,14 +70,14 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Get);
     }
 
-    public Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters)
+    public Task<T> Get<T>(Uri uri, IDictionary<string, string>? parameters)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Get, parameters);
     }
 
-    public async Task<HttpStatusCode> Get(Uri uri, IDictionary<string, string> parameters, object body)
+    public async Task<HttpStatusCode> Get(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -92,28 +92,28 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Post);
     }
 
-    public Task<T> Post<T>(Uri uri, IDictionary<string, string> parameters)
+    public Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Post, parameters);
     }
 
-    public Task<T> Post<T>(Uri uri, IDictionary<string, string> parameters, object body)
+    public Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Post, parameters, body);
     }
 
-    public Task<T> Post<T>(Uri uri, IDictionary<string, string> parameters, object body, Dictionary<string, string> headers)
+    public Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters, object? body, Dictionary<string, string>? headers)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Post, parameters, body, headers);
     }
 
-    public async Task<HttpStatusCode> Post(Uri uri, IDictionary<string, string> parameters, object body)
+    public async Task<HttpStatusCode> Post(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -128,21 +128,21 @@ namespace SpotifyAPI.Web.Http
       return SendAPIRequest<T>(uri, HttpMethod.Put);
     }
 
-    public Task<T> Put<T>(Uri uri, IDictionary<string, string> parameters)
+    public Task<T> Put<T>(Uri uri, IDictionary<string, string>? parameters)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Put, parameters);
     }
 
-    public Task<T> Put<T>(Uri uri, IDictionary<string, string> parameters, object body)
+    public Task<T> Put<T>(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
       return SendAPIRequest<T>(uri, HttpMethod.Put, parameters, body);
     }
 
-    public async Task<HttpStatusCode> Put(Uri uri, IDictionary<string, string> parameters, object body)
+    public async Task<HttpStatusCode> Put(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -150,7 +150,7 @@ namespace SpotifyAPI.Web.Http
       return response.StatusCode;
     }
 
-    public async Task<HttpStatusCode> PutRaw(Uri uri, IDictionary<string, string> parameters, object body)
+    public async Task<HttpStatusCode> PutRaw(Uri uri, IDictionary<string, string>? parameters, object? body)
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -166,19 +166,21 @@ namespace SpotifyAPI.Web.Http
     private IRequest CreateRequest(
         Uri uri,
         HttpMethod method,
-        IDictionary<string, string> parameters,
-        object body,
-        IDictionary<string, string> headers
+        IDictionary<string, string>? parameters,
+        object? body,
+        IDictionary<string, string>? headers
       )
     {
       Ensure.ArgumentNotNull(uri, nameof(uri));
       Ensure.ArgumentNotNull(method, nameof(method));
 
-      return new Request(headers ?? new Dictionary<string, string>(), parameters ?? new Dictionary<string, string>())
+      return new Request(
+        _baseAddress,
+        uri,
+        method,
+        headers ?? new Dictionary<string, string>(),
+        parameters ?? new Dictionary<string, string>())
       {
-        BaseAddress = _baseAddress,
-        Endpoint = uri,
-        Method = method,
         Body = body
       };
     }
@@ -222,16 +224,16 @@ namespace SpotifyAPI.Web.Http
         || request.Endpoint.AbsoluteUri.Contains("https://api.spotify.com", StringComparison.InvariantCulture))
 #endif
       {
-        await _authenticator.Apply(request, this).ConfigureAwait(false);
+        await _authenticator!.Apply(request, this).ConfigureAwait(false);
       }
     }
 
     public Task<IResponse> SendRawRequest(
         Uri uri,
         HttpMethod method,
-        IDictionary<string, string> parameters = null,
-        object body = null,
-        IDictionary<string, string> headers = null
+        IDictionary<string, string>? parameters = null,
+        object? body = null,
+        IDictionary<string, string>? headers = null
       )
     {
       var request = CreateRequest(uri, method, parameters, body, headers);
@@ -241,9 +243,9 @@ namespace SpotifyAPI.Web.Http
     public async Task<T> SendAPIRequest<T>(
         Uri uri,
         HttpMethod method,
-        IDictionary<string, string> parameters = null,
-        object body = null,
-        IDictionary<string, string> headers = null
+        IDictionary<string, string>? parameters = null,
+        object? body = null,
+        IDictionary<string, string>? headers = null
       )
     {
       var request = CreateRequest(uri, method, parameters, body, headers);
@@ -254,9 +256,9 @@ namespace SpotifyAPI.Web.Http
     public async Task<IResponse> SendAPIRequestDetailed(
         Uri uri,
         HttpMethod method,
-        IDictionary<string, string> parameters = null,
-        object body = null,
-        IDictionary<string, string> headers = null
+        IDictionary<string, string>? parameters = null,
+        object? body = null,
+        IDictionary<string, string>? headers = null
       )
     {
       var request = CreateRequest(uri, method, parameters, body, headers);

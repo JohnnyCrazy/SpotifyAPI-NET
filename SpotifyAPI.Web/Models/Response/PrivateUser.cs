@@ -5,16 +5,17 @@ namespace SpotifyAPI.Web
 {
   public class PrivateUser
   {
-    public string Country { get; set; }
-    public string DisplayName { get; set; }
-    public string Email { get; set; }
-    public Dictionary<string, string> ExternalUrls { get; set; }
-    public Followers Followers { get; set; }
-    public string Href { get; set; }
-    public string Id { get; set; }
-    public List<Image> Images { get; set; }
-    public string Product { get; set; }
-    public string Type { get; set; }
-    public string Uri { get; set; }
+    public string Country { get; set; } = default!;
+    public string DisplayName { get; set; } = default!;
+    public string Email { get; set; } = default!;
+    public Dictionary<string, string> ExternalUrls { get; set; } = default!;
+    public Followers Followers { get; set; } = default!;
+    public string Href { get; set; } = default!;
+    public string Id { get; set; } = default!;
+    public List<Image> Images { get; set; } = default!;
+    public string Product { get; set; } = default!;
+    public string Type { get; set; } = default!;
+    public string Uri { get; set; } = default!;
   }
 }
+
