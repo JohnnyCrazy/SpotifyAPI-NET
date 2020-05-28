@@ -31,5 +31,21 @@
       "}"
     ],
     "description": "Creates a new request"
+  },
+  "reqcomment": {
+    "scope": "csharp",
+    "prefix": "reqcomment",
+    "body": "The request-model which contains required and optional parameters.",
+    "description": "Creates a new request comment for XAML"
+  },
+  "remark": {
+    "scope": "csharp",
+    "prefix": "remark",
+    "body": [
+      "<remarks>",
+      "/// $1",
+      "/// </remarks>"
+    ],
+    "description": "Creates a new request comment for XAML"
   }
 }
