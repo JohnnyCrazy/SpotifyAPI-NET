@@ -21,6 +21,10 @@ namespace Example.ASP
             .ConfigureWebHostDefaults(webBuilder =>
             {
               webBuilder.UseStartup<Startup>();
+            })
+            .ConfigureAppConfiguration((httpContext, builder) =>
+            {
+              builder.AddUserSecrets<Program>();
             });
   }
 }
