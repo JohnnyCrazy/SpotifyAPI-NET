@@ -62,6 +62,7 @@ namespace Example.CLI.PersistentConfig
       var playlists = await spotify.PaginateAll(() => spotify.Playlists.CurrentUsers());
       Console.WriteLine($"Total Playlists in your Account: {playlists.Count}");
 
+      _server.Dispose();
       Environment.Exit(0);
     }
 
