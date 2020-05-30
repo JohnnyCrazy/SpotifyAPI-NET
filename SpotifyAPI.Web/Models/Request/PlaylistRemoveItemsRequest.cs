@@ -5,6 +5,15 @@ namespace SpotifyAPI.Web
 {
   public class PlaylistRemoveItemsRequest : RequestParams
   {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="tracks">
+    /// An array of objects containing Spotify URIs of the tracks or episodes to remove.
+    /// For example: { "tracks": [{ "uri": "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },
+    /// { "uri": "spotify:track:1301WleyT98MSxVHPZCA6M" }] }.
+    /// A maximum of 100 objects can be sent at once.
+    /// </param>
     public PlaylistRemoveItemsRequest(IList<Item> tracks)
     {
       Ensure.ArgumentNotNullOrEmptyList(tracks, nameof(tracks));
@@ -12,9 +21,22 @@ namespace SpotifyAPI.Web
       Tracks = tracks;
     }
 
+    /// <summary>
+    /// An array of objects containing Spotify URIs of the tracks or episodes to remove.
+    /// For example: { "tracks": [{ "uri": "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },
+    /// { "uri": "spotify:track:1301WleyT98MSxVHPZCA6M" }] }.
+    /// A maximum of 100 objects can be sent at once.
+    /// </summary>
+    /// <value></value>
     [BodyParam("tracks")]
     public IList<Item> Tracks { get; }
 
+    /// <summary>
+    /// The playlist’s snapshot ID against which you want to make the changes.
+    /// The API will validate that the specified items exist and in the specified positions and make the changes,
+    /// even if more recent changes have been made to the playlist.
+    /// </summary>
+    /// <value></value>
     [BodyParam("snapshot_id")]
     public string? SnapshotId { get; set; }
 

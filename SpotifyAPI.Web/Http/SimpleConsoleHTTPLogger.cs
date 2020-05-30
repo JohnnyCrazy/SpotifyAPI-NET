@@ -3,7 +3,7 @@ using System;
 
 namespace SpotifyAPI.Web.Http
 {
-  public class SimpleHTTPLogger : IHTTPLogger
+  public class SimpleConsoleHTTPLogger : IHTTPLogger
   {
     private const string OnRequestFormat = "\n{0} {1} [{2}] {3}";
 
