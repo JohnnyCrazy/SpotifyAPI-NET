@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SpotifyAPI.Web.Http;
 
 namespace SpotifyAPI.Web
 {
@@ -34,15 +35,17 @@ namespace SpotifyAPI.Web
 
     ILibraryClient Library { get; }
 
-    Task<List<T>> PaginateAll<T>(Paging<T> firstPage);
-    Task<List<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator paginator);
-    Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage);
-    Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator);
+    IResponse? LastResponse { get; }
 
-    Task<List<T>> PaginateAll<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper);
-    Task<List<T>> PaginateAll<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
-    Task<List<T>> PaginateAll<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper);
-    Task<List<T>> PaginateAll<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
+    Task<IList<T>> PaginateAll<T>(Paging<T> firstPage);
+    Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator paginator);
+    Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage);
+    Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator);
+
+    Task<IList<T>> PaginateAll<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper);
+    Task<IList<T>> PaginateAll<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
+    Task<IList<T>> PaginateAll<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper);
+    Task<IList<T>> PaginateAll<T, TNext>(Func<Task<Paging<T, TNext>>> getFirstPage, Func<TNext, Paging<T, TNext>> mapper, IPaginator paginator);
 
 #if NETSTANDARD2_1
     IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage);

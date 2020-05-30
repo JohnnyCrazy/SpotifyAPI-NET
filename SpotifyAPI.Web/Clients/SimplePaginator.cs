@@ -18,7 +18,7 @@ namespace SpotifyAPI.Web
       return Task.FromResult(true);
     }
 
-    public async Task<List<T>> PaginateAll<T>(Paging<T> firstPage, IAPIConnector connector)
+    public async Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IAPIConnector connector)
     {
       Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
       Ensure.ArgumentNotNull(connector, nameof(connector));
@@ -35,7 +35,7 @@ namespace SpotifyAPI.Web
       return results;
     }
 
-    public async Task<List<T>> PaginateAll<T, TNext>(
+    public async Task<IList<T>> PaginateAll<T, TNext>(
       Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IAPIConnector connector
     )
     {

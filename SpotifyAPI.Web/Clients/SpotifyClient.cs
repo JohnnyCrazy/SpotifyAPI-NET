@@ -29,6 +29,11 @@ namespace SpotifyAPI.Web
         config.RetryHandler,
         config.HTTPLogger
       );
+      _apiConnector.ResponseReceived += (sender, response) =>
+      {
+        LastResponse = response;
+      };
+
       DefaultPaginator = config.DefaultPaginator;
       UserProfile = new UserProfileClient(_apiConnector);
       Browse = new BrowseClient(_apiConnector);
@@ -73,19 +78,21 @@ namespace SpotifyAPI.Web
 
     public ILibraryClient Library { get; }
 
-    public Task<List<T>> PaginateAll<T>(Paging<T> firstPage)
+    public IResponse? LastResponse { get; private set; }
+
+    public Task<IList<T>> PaginateAll<T>(Paging<T> firstPage)
     {
       return DefaultPaginator.PaginateAll(firstPage, _apiConnector);
     }
 
-    public Task<List<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator paginator)
+    public Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator paginator)
     {
       Ensure.ArgumentNotNull(paginator, nameof(paginator));
 
       return paginator.PaginateAll(firstPage, _apiConnector);
     }
 
-    public async Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage)
+    public async Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage)
     {
       Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
 
@@ -94,7 +101,7 @@ namespace SpotifyAPI.Web
       ).ConfigureAwait(false);
     }
 
-    public async Task<List<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
+    public async Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
     {
       Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
       Ensure.ArgumentNotNull(paginator, nameof(paginator));
@@ -104,7 +111,7 @@ namespace SpotifyAPI.Web
       ).ConfigureAwait(false);
     }
 
-    public Task<List<T>> PaginateAll<T, TNext>(
+    public Task<IList<T>> PaginateAll<T, TNext>(
       Paging<T, TNext> firstPage,
       Func<TNext, Paging<T, TNext>> mapper
     )
@@ -112,7 +119,7 @@ namespace SpotifyAPI.Web
       return DefaultPaginator.PaginateAll(firstPage, mapper, _apiConnector);
     }
 
-    public async Task<List<T>> PaginateAll<T, TNext>(
+    public async Task<IList<T>> PaginateAll<T, TNext>(
       Func<Task<Paging<T, TNext>>> getFirstPage,
       Func<TNext, Paging<T, TNext>> mapper
     )
@@ -122,7 +129,7 @@ namespace SpotifyAPI.Web
       return await DefaultPaginator.PaginateAll(await getFirstPage().ConfigureAwait(false), mapper, _apiConnector).ConfigureAwait(false);
     }
 
-    public Task<List<T>> PaginateAll<T, TNext>(
+    public Task<IList<T>> PaginateAll<T, TNext>(
       Paging<T, TNext> firstPage,
       Func<TNext, Paging<T, TNext>> mapper,
       IPaginator paginator)
@@ -132,7 +139,7 @@ namespace SpotifyAPI.Web
       return paginator.PaginateAll(firstPage, mapper, _apiConnector);
     }
 
-    public async Task<List<T>> PaginateAll<T, TNext>(
+    public async Task<IList<T>> PaginateAll<T, TNext>(
       Func<Task<Paging<T, TNext>>> getFirstPage,
       Func<TNext, Paging<T, TNext>> mapper,
       IPaginator paginator

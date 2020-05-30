@@ -15,6 +15,8 @@ namespace SpotifyAPI.Web.Http
     private readonly IRetryHandler? _retryHandler;
     private readonly IHTTPLogger? _httpLogger;
 
+    public event EventHandler<IResponse>? ResponseReceived;
+
     public APIConnector(Uri baseAddress, IAuthenticator authenticator) :
       this(baseAddress, authenticator, new NewtonsoftJSONSerializer(), new NetHttpClient(), null, null)
     { }
@@ -198,6 +200,7 @@ namespace SpotifyAPI.Web.Http
       _httpLogger?.OnRequest(request);
       IResponse response = await _httpClient.DoRequest(request).ConfigureAwait(false);
       _httpLogger?.OnResponse(response);
+      ResponseReceived?.Invoke(this, response);
       if (_retryHandler != null)
       {
         response = await _retryHandler.HandleRetry(request, response, async (newRequest) =>
@@ -205,6 +208,7 @@ namespace SpotifyAPI.Web.Http
           await ApplyAuthenticator(request).ConfigureAwait(false);
           var newResponse = await _httpClient.DoRequest(request).ConfigureAwait(false);
           _httpLogger?.OnResponse(newResponse);
+          ResponseReceived?.Invoke(this, response);
           return newResponse;
         }).ConfigureAwait(false);
       }

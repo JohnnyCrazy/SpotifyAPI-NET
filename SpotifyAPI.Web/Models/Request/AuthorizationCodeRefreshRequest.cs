@@ -5,6 +5,12 @@ namespace SpotifyAPI.Web
   /// </summary>
   public class AuthorizationCodeRefreshRequest
   {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="clientId">The Client ID of your Spotify Application (See Spotify Dev Dashboard)</param>
+    /// <param name="clientSecret">The Client Secret of your Spotify Application (See Spotify Dev Dashboard)</param>
+    /// <param name="refreshToken">The refresh token received from an earlier authorization code grant</param>
     public AuthorizationCodeRefreshRequest(string clientId, string clientSecret, string refreshToken)
     {
       Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
@@ -16,8 +22,22 @@ namespace SpotifyAPI.Web
       RefreshToken = refreshToken;
     }
 
+    /// <summary>
+    /// The refresh token received from an earlier authorization code grant
+    /// </summary>
+    /// <value></value>
     public string RefreshToken { get; }
+
+    /// <summary>
+    /// The Client ID of your Spotify Application (See Spotify Dev Dashboard)
+    /// </summary>
+    /// <value></value>
     public string ClientId { get; }
+
+    /// <summary>
+    /// The Client Secret of your Spotify Application (See Spotify Dev Dashboard)
+    /// </summary>
+    /// <value></value>
     public string ClientSecret { get; }
   }
 }
