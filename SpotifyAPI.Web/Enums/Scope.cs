@@ -63,6 +63,10 @@ namespace SpotifyAPI.Web.Enums
     AppRemoteControl = 262144,
 
     [String("ugc-image-upload")]
-    UgcImageUpload = 524288
+    UgcImageUpload = 524288,
+
+    [String("user-read-playback-position")]
+    UserReadPlaybackPosition = 1048576
+
   }
 }

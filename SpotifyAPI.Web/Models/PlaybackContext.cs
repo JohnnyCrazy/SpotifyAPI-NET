@@ -1,9 +1,12 @@
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using SpotifyAPI.Web.Enums;
+using SpotifyAPI.Web.Converters;
 
 namespace SpotifyAPI.Web.Models
 {
+  [JsonConverter(typeof(PlaybackContextConverter))]
   public class PlaybackContext : BasicModel
   {
     [JsonProperty("device")]
@@ -29,7 +32,7 @@ namespace SpotifyAPI.Web.Models
     public bool IsPlaying { get; set; }
 
     [JsonProperty("item")]
-    public FullTrack Item { get; set; }
+    public ITyped Item { get; set; }
 
     [JsonProperty("currently_playing_type")]
     [JsonConverter(typeof(StringEnumConverter))]

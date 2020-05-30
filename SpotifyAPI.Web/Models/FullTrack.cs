@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web.Models
 {
-  public class FullTrack : BasicModel
+  public class FullTrack : BasicModel, ITyped
   {
     [JsonProperty("album")]
     public SimpleAlbum Album { get; set; }
