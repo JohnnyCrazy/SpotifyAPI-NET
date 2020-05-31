@@ -1,9 +1,5 @@
 ---
-sidebar: false
----
-
----
-id: Proxy Settings
+id: proxy
 title: Proxy Settings
 sidebar_label: Proxy Settings
 ---

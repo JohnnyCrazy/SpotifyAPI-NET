@@ -3,12 +3,13 @@ const versions = require('./versions.json');
 module.exports = {
   title: 'SpotifyAPI-NET',
   tagline: '🔊 A Client for the Spotify Web API, written in C#/.NET',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://johnnycrazy.github.io/SpotifyAPI-NET',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
   organizationName: 'JohnnyCrazy', // Usually your GitHub org/user name.
   projectName: 'SpotifyAPI-NET', // Usually your repo name.
   themeConfig: {
+    sidebarCollapsible: false,
     prism: {
       additionalLanguages: ['csharp'],
     },

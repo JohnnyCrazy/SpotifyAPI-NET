@@ -16,9 +16,9 @@ const exampleCode =
 var me = await spotify.UserProfile.Current();
 Console.WriteLine($"Hello there {me.DisplayName}");
 
-await foreach(var playlist in spotify.Paginate(
-  () => spotify.Playlists.CurrentUsers()
-))
+await foreach(
+  var playlist in spotify.Paginate(spotify.Playlists.CurrentUsers())
+)
 {
   Console.WriteLine(playlist.Name);
 }`;
@@ -39,7 +39,7 @@ const features = [
     imageUrl: 'img/undraw_preferences_uuo2.svg',
     description: () => (
       <>
-        <code>SpotifyAPI-NET</code> allows you to quickly integrate with Spotify's Web API by supplying sane configuration defaults from the start. Later on, behaviour can be customized easily with the help of interfaces.
+        <code>SpotifyAPI-NET</code> allows you to quickly integrate with Spotify's Web API by supplying sane configuration defaults from the start. Later on, behaviour can be customized using extensive configuration possibilities.
       </>
     ),
   },
@@ -57,7 +57,7 @@ const features = [
     imageUrl: 'img/undraw_Devices_e67q.svg',
     description: () => (
       <>
-        With the support of .NET Standard 2.X, <code>SpotifyAPI-NET</code> can run on many platforms, including .NET Core, UWP and Xamarin.Forms (Windows, Android, iOS and Mac)
+        With the support of .NET Standard 2.X, <code>SpotifyAPI-NET</code> runs on many platforms, including .NET Core, UWP and Xamarin.Forms (Windows, Android, iOS and Mac)
       </>
     ),
   },
@@ -92,8 +92,8 @@ function Home() {
   const { siteConfig = {} } = context;
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`${siteConfig.title}`}
+      description="Documentation for the C# .NET SpotifyAPI-NET Library">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <div className="row">
@@ -136,25 +136,27 @@ function Home() {
             </div>
           </section>
         )}
-        <h2 style={{ textAlign: 'center' }}>Try it out now</h2>
-        <div style={{ padding: '50px' }}>
-          <Tabs
-            defaultValue="cli"
-            values={[
-              { label: 'dotnet CLI', value: 'cli' },
-              { label: 'NuGET Console', value: 'nuget' },
-            ]}>
-            <TabItem value="cli">
-              <CodeBlock metastring="csharp" className="bash">
-                {installCodeCLI}
-              </CodeBlock>
-            </TabItem>
-            <TabItem value="nuget">
-              <CodeBlock metastring="csharp" className="bash">
-                {installCodeNuget}
-              </CodeBlock>
-            </TabItem>
-          </Tabs>
+        <div className="container">
+          <h2 style={{ textAlign: 'center' }}>Try it out now</h2>
+          <div style={{ padding: '50px' }}>
+            <Tabs
+              defaultValue="cli"
+              values={[
+                { label: 'dotnet CLI', value: 'cli' },
+                { label: 'NuGET Console', value: 'nuget' },
+              ]}>
+              <TabItem value="cli">
+                <CodeBlock metastring="csharp" className="bash">
+                  {installCodeCLI}
+                </CodeBlock>
+              </TabItem>
+              <TabItem value="nuget">
+                <CodeBlock metastring="csharp" className="bash">
+                  {installCodeNuget}
+                </CodeBlock>
+              </TabItem>
+            </Tabs>
+          </div>
         </div>
       </main>
     </Layout>
