@@ -3,6 +3,10 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Endpoints for retrieving information about,
+  /// and managing, tracks that the current user has saved in their “Your Music” library.
+  /// </summary>
   public interface ILibraryClient
   {
     /// <summary>

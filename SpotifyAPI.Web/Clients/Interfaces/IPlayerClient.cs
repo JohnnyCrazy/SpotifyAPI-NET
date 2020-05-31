@@ -3,6 +3,13 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Player Endpoints.
+  /// These endpoints are in beta.
+  /// While we encourage you to build with them, a situation may arise
+  /// where we need to disable some or all of the functionality and/or change how
+  /// they work without prior notice. Please report any issues via our developer community forum.
+  /// </summary>
   public interface IPlayerClient
   {
     /// <summary>

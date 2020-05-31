@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Search Endpoints
+  /// </summary>
   public interface ISearchClient
   {
     /// <summary>

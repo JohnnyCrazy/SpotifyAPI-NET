@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Endpoints for retrieving information about the user’s listening habits.
+  /// </summary>
   public interface IPersonalizationClient
   {
     /// <summary>

@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Endpoints for retrieving information about a user’s playlists and for managing a user’s playlists.
+  /// </summary>
   public interface IPlaylistsClient
   {
     /// <summary>

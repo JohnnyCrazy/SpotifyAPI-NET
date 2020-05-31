@@ -11,7 +11,9 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///   Get detailed profile information about the current user (including the current user’s username).
     /// </summary>
-    /// <remarks>https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-current-users-profile</remarks>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-current-users-profile
+    /// </remarks>
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
     Task<PrivateUser> Current();
 

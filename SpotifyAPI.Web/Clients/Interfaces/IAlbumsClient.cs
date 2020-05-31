@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Endpoints for retrieving information about one or more albums from the Spotify catalog.
+  /// </summary>
   public interface IAlbumsClient
   {
     /// <summary>

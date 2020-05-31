@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Endpoints for getting playlists and new album releases featured on Spotify’s Browse tab.
+  /// </summary>
   public interface IBrowseClient
   {
     /// <summary>

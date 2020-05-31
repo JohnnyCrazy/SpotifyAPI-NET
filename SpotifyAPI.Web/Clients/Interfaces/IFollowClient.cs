@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace SpotifyAPI.Web
 {
+  /// <summary>
+  /// Endpoints for managing the artists, users, and playlists that a Spotify user follows.
+  /// </summary>
   public interface IFollowClient
   {
     /// <summary>
