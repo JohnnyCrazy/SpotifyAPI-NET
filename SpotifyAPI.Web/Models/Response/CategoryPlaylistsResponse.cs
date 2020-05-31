@@ -2,7 +2,7 @@ namespace SpotifyAPI.Web
 {
   public class CategoryPlaylistsResponse
   {
-    public Paging<SimplePlaylist> Playlists { get; set; } = default!;
+    public Paging<SimplePlaylist, CategoryPlaylistsResponse> Playlists { get; set; } = default!;
   }
 }
 

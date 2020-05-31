@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
+using System.Runtime.CompilerServices;
 
 namespace SpotifyAPI.Web
 {
@@ -80,157 +82,287 @@ namespace SpotifyAPI.Web
 
     public IResponse? LastResponse { get; private set; }
 
-    public Task<IList<T>> PaginateAll<T>(Paging<T> firstPage)
+    /// <summary>
+    /// Fetches all pages and returns them grouped in a list.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPage">The first page, will be included in the output list!</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <returns>A list containing all fetched pages</returns>
+    public Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator? paginator = null)
     {
-      return DefaultPaginator.PaginateAll(firstPage, _apiConnector);
+      return (paginator ?? DefaultPaginator).PaginateAll(firstPage, _apiConnector);
     }
 
-    public Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator paginator)
-    {
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
-
-      return paginator.PaginateAll(firstPage, _apiConnector);
-    }
-
-    public async Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage)
-    {
-      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
-
-      return await DefaultPaginator.PaginateAll(
-        await getFirstPage().ConfigureAwait(false), _apiConnector
-      ).ConfigureAwait(false);
-    }
-
-    public async Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
-    {
-      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
-
-      return await paginator.PaginateAll(
-        await getFirstPage().ConfigureAwait(false), _apiConnector
-      ).ConfigureAwait(false);
-    }
-
-    public Task<IList<T>> PaginateAll<T, TNext>(
-      Paging<T, TNext> firstPage,
-      Func<TNext, Paging<T, TNext>> mapper
-    )
-    {
-      return DefaultPaginator.PaginateAll(firstPage, mapper, _apiConnector);
-    }
-
-    public async Task<IList<T>> PaginateAll<T, TNext>(
-      Func<Task<Paging<T, TNext>>> getFirstPage,
-      Func<TNext, Paging<T, TNext>> mapper
-    )
+    /// <summary>
+    /// Fetches all pages and returns them grouped in a list.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="getFirstPage">A function to retrive the first page, will be included in the output list!</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <returns>A list containing all fetched pages</returns>
+    public async Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator? paginator = null)
     {
       Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
 
-      return await DefaultPaginator.PaginateAll(await getFirstPage().ConfigureAwait(false), mapper, _apiConnector).ConfigureAwait(false);
+      var firstPage = await getFirstPage().ConfigureAwait(false);
+      return await (paginator ?? DefaultPaginator).PaginateAll(firstPage, _apiConnector).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Fetches all pages and returns them grouped in a list.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPageTask">A task to retrive the first page, will be included in the output list!</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <returns>A list containing all fetched pages</returns>
+    public async Task<IList<T>> PaginateAll<T>(Task<Paging<T>> firstPageTask, IPaginator? paginator = null)
+    {
+      Ensure.ArgumentNotNull(firstPageTask, nameof(firstPageTask));
+
+      var firstPage = await firstPageTask.ConfigureAwait(false);
+      return await (paginator ?? DefaultPaginator).PaginateAll(firstPage, _apiConnector).ConfigureAwait(false);
+    }
+
+
+    /// <summary>
+    /// Fetches all pages and returns them grouped in a list.
+    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
+    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPage">A first page, will be included in the output list!</param>
+    /// <param name="mapper">A function which maps response objects to the next paging object</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <returns>A list containing all fetched pages</returns>
     public Task<IList<T>> PaginateAll<T, TNext>(
       Paging<T, TNext> firstPage,
       Func<TNext, Paging<T, TNext>> mapper,
-      IPaginator paginator)
+      IPaginator? paginator = null
+    )
     {
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
-
-      return paginator.PaginateAll(firstPage, mapper, _apiConnector);
+      return (paginator ?? DefaultPaginator).PaginateAll(firstPage, mapper, _apiConnector);
     }
 
+
+    /// <summary>
+    /// Fetches all pages and returns them grouped in a list.
+    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
+    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="getFirstPage">A function to retrive the first page, will be included in the output list!</param>
+    /// <param name="mapper">A function which maps response objects to the next paging object</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <typeparam name="TNext">The Response-Type</typeparam>
+    /// <returns></returns>
     public async Task<IList<T>> PaginateAll<T, TNext>(
       Func<Task<Paging<T, TNext>>> getFirstPage,
       Func<TNext, Paging<T, TNext>> mapper,
-      IPaginator paginator
+      IPaginator? paginator = null
     )
     {
       Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
 
-      return await paginator.PaginateAll(
-        await getFirstPage().ConfigureAwait(false), mapper, _apiConnector
-      ).ConfigureAwait(false);
+      var firstPage = await getFirstPage().ConfigureAwait(false);
+      return await (paginator ?? DefaultPaginator).PaginateAll(firstPage, mapper, _apiConnector).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Fetches all pages and returns them grouped in a list.
+    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
+    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPageTask">A Task to retrive the first page, will be included in the output list!</param>
+    /// <param name="mapper">A function which maps response objects to the next paging object</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <typeparam name="TNext">The Response-Type</typeparam>
+    /// <returns></returns>
+    public async Task<IList<T>> PaginateAll<T, TNext>(
+      Task<Paging<T, TNext>> firstPageTask,
+      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginator? paginator = null
+    )
+    {
+      Ensure.ArgumentNotNull(firstPageTask, nameof(firstPageTask));
+
+      var firstPage = await firstPageTask.ConfigureAwait(false);
+      return await (paginator ?? DefaultPaginator).PaginateAll(firstPage, mapper, _apiConnector).ConfigureAwait(false);
+    }
 
 #if NETSTANDARD2_1
-    public IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage)
+
+    /// <summary>
+    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPage">A first page, will be included in the output list!</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <returns>An iterable IAsyncEnumerable</returns>
+    public IAsyncEnumerable<T> Paginate<T>(
+      Paging<T> firstPage,
+      IPaginator? paginator = null,
+      CancellationToken cancellationToken = default
+    )
     {
-      return DefaultPaginator.Paginate(firstPage, _apiConnector);
+      return (paginator ?? DefaultPaginator).Paginate(firstPage, _apiConnector, cancellationToken);
     }
 
-    public IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage, IPaginator paginator)
+    /// <summary>
+    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="getFirstPage">A Function to retrive the first page, will be included in the output list!</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <returns>An iterable IAsyncEnumerable</returns>
+    public async IAsyncEnumerable<T> Paginate<T>(
+      Func<Task<Paging<T>>> getFirstPage,
+      IPaginator? paginator = null,
+      [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
     {
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
 
-      return paginator.Paginate(firstPage, _apiConnector);
-    }
-
-    public async IAsyncEnumerable<T> Paginate<T>(Func<Task<Paging<T>>> getFirstPage)
-    {
       Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
 
       var firstPage = await getFirstPage().ConfigureAwait(false);
-      await foreach (var item in DefaultPaginator.Paginate(firstPage, _apiConnector))
+      await foreach (var item in (paginator ?? DefaultPaginator)
+        .Paginate(firstPage, _apiConnector)
+        .WithCancellation(cancellationToken)
+      )
       {
         yield return item;
       }
     }
 
-    public async IAsyncEnumerable<T> Paginate<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator paginator)
+    /// <summary>
+    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPageTask">A Task to retrive the first page, will be included in the output list!</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <returns>An iterable IAsyncEnumerable</returns>
+    public async IAsyncEnumerable<T> Paginate<T>(
+      Task<Paging<T>> firstPageTask,
+      IPaginator? paginator = null,
+      [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+      Ensure.ArgumentNotNull(firstPageTask, nameof(firstPageTask));
 
-      var firstPage = await getFirstPage().ConfigureAwait(false);
-      await foreach (var item in DefaultPaginator.Paginate(firstPage, _apiConnector))
+      var firstPage = await firstPageTask.ConfigureAwait(false);
+      await foreach (var item in (paginator ?? DefaultPaginator)
+        .Paginate(firstPage, _apiConnector)
+        .WithCancellation(cancellationToken)
+      )
       {
         yield return item;
       }
     }
 
-    public IAsyncEnumerable<T> Paginate<T, TNext>(Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper)
-    {
-      return DefaultPaginator.Paginate(firstPage, mapper, _apiConnector);
-    }
-
+    /// <summary>
+    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
+    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
+    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPage">A first page, will be included in the output list!</param>
+    /// <param name="mapper">A function which maps response objects to the next paging object</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <typeparam name="TNext">The Response-Type</typeparam>
+    /// <returns></returns>
     public IAsyncEnumerable<T> Paginate<T, TNext>(
       Paging<T, TNext> firstPage,
       Func<TNext, Paging<T, TNext>> mapper,
-      IPaginator paginator
+      IPaginator? paginator = null,
+      CancellationToken cancellationToken = default
     )
     {
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
-
-      return paginator.Paginate(firstPage, mapper, _apiConnector);
+      return (paginator ?? DefaultPaginator).Paginate(firstPage, mapper, _apiConnector, cancellationToken);
     }
 
+    /// <summary>
+    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
+    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
+    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="getFirstPage">A Function to retrive the first page, will be included in the output list!</param>
+    /// <param name="mapper">A function which maps response objects to the next paging object</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <typeparam name="TNext">The Response-Type</typeparam>
+    /// <returns></returns>
     public async IAsyncEnumerable<T> Paginate<T, TNext>(
       Func<Task<Paging<T, TNext>>> getFirstPage,
-      Func<TNext, Paging<T, TNext>> mapper
-    )
+      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginator? paginator = null,
+      [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
       Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
 
       var firstPage = await getFirstPage().ConfigureAwait(false);
-      await foreach (var item in DefaultPaginator.Paginate(firstPage, mapper, _apiConnector))
+      await foreach (var item in (paginator ?? DefaultPaginator)
+        .Paginate(firstPage, mapper, _apiConnector)
+        .WithCancellation(cancellationToken)
+      )
       {
         yield return item;
       }
     }
 
+    /// <summary>
+    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
+    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
+    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
+    /// The default paginator will fetch all available resources without a delay between requests.
+    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
+    /// </summary>
+    /// <param name="firstPageTask">A Task to retrive the first page, will be included in the output list!</param>
+    /// <param name="mapper">A function which maps response objects to the next paging object</param>
+    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <typeparam name="TNext">The Response-Type</typeparam>
+    /// <returns></returns>
     public async IAsyncEnumerable<T> Paginate<T, TNext>(
-      Func<Task<Paging<T, TNext>>> getFirstPage,
+      Task<Paging<T, TNext>> firstPageTask,
       Func<TNext, Paging<T, TNext>> mapper,
-      IPaginator paginator
-    )
+      IPaginator? paginator = null,
+      [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-      Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
-      Ensure.ArgumentNotNull(paginator, nameof(paginator));
+      Ensure.ArgumentNotNull(firstPageTask, nameof(firstPageTask));
 
-      var firstPage = await getFirstPage().ConfigureAwait(false);
-      await foreach (var item in paginator.Paginate(firstPage, mapper, _apiConnector))
+      var firstPage = await firstPageTask.ConfigureAwait(false);
+      await foreach (var item in (paginator ?? DefaultPaginator)
+        .Paginate(firstPage, mapper, _apiConnector)
+        .WithCancellation(cancellationToken)
+      )
       {
         yield return item;
       }
