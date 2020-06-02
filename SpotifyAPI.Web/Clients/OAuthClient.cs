@@ -9,8 +9,8 @@ namespace SpotifyAPI.Web
 {
   public class OAuthClient : APIClient, IOAuthClient
   {
-    public OAuthClient(IAPIConnector apiConnector) : base(apiConnector) { }
     public OAuthClient() : this(SpotifyClientConfig.CreateDefault()) { }
+    public OAuthClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062")]
     public OAuthClient(SpotifyClientConfig config) : base(ValidateConfig(config)) { }
@@ -30,6 +30,49 @@ namespace SpotifyAPI.Web
       return RequestToken(request, API);
     }
 
+    public Task<AuthorizationCodeTokenResponse> RequestToken(TokenSwapTokenRequest request)
+    {
+      return RequestToken(request, API);
+    }
+
+    public Task<AuthorizationCodeRefreshResponse> RequestToken(TokenSwapRefreshRequest request)
+    {
+      return RequestToken(request, API);
+    }
+
+    public static Task<AuthorizationCodeRefreshResponse> RequestToken(
+        TokenSwapRefreshRequest request, IAPIConnector apiConnector
+      )
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+      Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
+
+      var form = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>("refresh_token", request.RefreshToken)
+      };
+
+      return apiConnector.Post<AuthorizationCodeRefreshResponse>(
+        request.RefreshUri, null, new FormUrlEncodedContent(form)
+      );
+    }
+
+    public static Task<AuthorizationCodeTokenResponse> RequestToken(
+        TokenSwapTokenRequest request, IAPIConnector apiConnector
+      )
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+      Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
+
+      var form = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>("code", request.Code)
+      };
+
+      return apiConnector.Post<AuthorizationCodeTokenResponse>(
+        request.TokenUri, null, new FormUrlEncodedContent(form)
+      );
+    }
 
     public static Task<CredentialsTokenResponse> RequestToken(
         ClientCredentialsRequest request, IAPIConnector apiConnector
