@@ -9,8 +9,6 @@ namespace SpotifyAPI.Web.Http
   /// </summary>
   public class AuthorizationCodeAuthenticator : IAuthenticator
   {
-    public event EventHandler<AuthorizationCodeTokenResponse>? TokenRefreshed;
-
     /// <summary>
     ///   Initiate a new instance. The token will be refreshed once it expires.
     ///   The initialToken will be updated with the new values on refresh!
@@ -25,6 +23,12 @@ namespace SpotifyAPI.Web.Http
       ClientId = clientId;
       ClientSecret = clientSecret;
     }
+
+    /// <summary>
+    /// This event is called once a new refreshed token was aquired
+    /// </summary>
+    public event EventHandler<AuthorizationCodeTokenResponse>? TokenRefreshed;
+
 
     /// <summary>
     ///   The ClientID, defined in a spotify application in your Spotify Developer Dashboard

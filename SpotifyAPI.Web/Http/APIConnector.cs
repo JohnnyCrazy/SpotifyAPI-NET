@@ -283,6 +283,8 @@ namespace SpotifyAPI.Web.Http
       {
         case HttpStatusCode.Unauthorized:
           throw new APIUnauthorizedException(response);
+        case HttpStatusCode.TooManyRequests:
+          throw new APITooManyRequestsException(response);
         default:
           throw new APIException(response);
       }

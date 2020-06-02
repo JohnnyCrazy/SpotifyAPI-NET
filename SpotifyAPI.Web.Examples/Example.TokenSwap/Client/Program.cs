@@ -11,7 +11,7 @@ namespace Client
     private static readonly string clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
     private static EmbedIOAuthServer _server;
 
-    public static async Task Main(string[] args)
+    public static async Task Main()
     {
       _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
       await _server.Start();
