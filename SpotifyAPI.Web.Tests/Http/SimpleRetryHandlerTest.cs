@@ -36,7 +36,7 @@ namespace SpotifyAPI.Web
 
       Assert.AreEqual(2, retryCalled);
       Assert.AreEqual(setup.Response.Object, response);
-      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Exactly(2));
+      setup.Sleep.Verify(s => s(TimeSpan.FromSeconds(50)), Times.Exactly(2));
     }
 
     [Test]
@@ -67,7 +67,7 @@ namespace SpotifyAPI.Web
 
       Assert.AreEqual(1, retryCalled);
       Assert.AreEqual(successResponse.Object, response);
-      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Once);
+      setup.Sleep.Verify(s => s(TimeSpan.FromSeconds(50)), Times.Once);
     }
 
     [Test]
@@ -97,7 +97,7 @@ namespace SpotifyAPI.Web
 
       Assert.AreEqual(1, retryCalled);
       Assert.AreEqual(successResponse.Object, response);
-      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Once);
+      setup.Sleep.Verify(s => s(TimeSpan.FromSeconds(50)), Times.Once);
     }
 
     [Test]

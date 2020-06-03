@@ -13,6 +13,7 @@ module.exports = {
           'proxy',
           'pagination',
           'retry_handling',
+          'unit_testing'
         ]
       },
       {
@@ -20,6 +21,9 @@ module.exports = {
         label: 'Authentication Guides',
         items: [
           'auth_introduction',
+          'client_credentials',
+          'implicit_grant',
+          'authorization_code'
         ]
       },
       {
