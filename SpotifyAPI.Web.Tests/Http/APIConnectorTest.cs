@@ -32,7 +32,7 @@ namespace SpotifyAPI.Web.Tests
         r.HandleRetry(
           It.IsAny<IRequest>(),
           It.IsAny<IResponse>(),
-          It.IsAny<Func<IRequest, Task<IResponse>>>()
+          It.IsAny<IRetryHandler.RetryFunc>()
         )
       ).Returns(Task.FromResult(response.Object));
 
@@ -74,9 +74,9 @@ namespace SpotifyAPI.Web.Tests
         r.HandleRetry(
           It.IsAny<IRequest>(),
           It.IsAny<IResponse>(),
-          It.IsAny<Func<IRequest, Task<IResponse>>>()
+          It.IsAny<IRetryHandler.RetryFunc>()
         )
-      ).Returns((IRequest request, IResponse response, Func<IRequest, Task<IResponse>> retry) => retry(request));
+      ).Returns((IRequest request, IResponse response, IRetryHandler.RetryFunc retry) => retry(request));
 
       var apiConnector = new APIConnector(
         new Uri("https://spotify.com"),

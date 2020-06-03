@@ -3,8 +3,9 @@ using System.Net;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using SpotifyAPI.Web.Http;
 
-namespace SpotifyAPI.Web.Http
+namespace SpotifyAPI.Web
 {
   public class SimpleRetryHandler : IRetryHandler
   {
@@ -64,14 +65,18 @@ namespace SpotifyAPI.Web.Http
       throw new APIException("429 received, but unable to parse Retry-After Header. This should not happen!");
     }
 
-    public Task<IResponse> HandleRetry(IRequest request, IResponse response, Func<IRequest, Task<IResponse>> retry)
+    public Task<IResponse> HandleRetry(IRequest request, IResponse response, IRetryHandler.RetryFunc retry)
     {
       Ensure.ArgumentNotNull(response, nameof(response));
 
       return HandleRetryInternally(request, response, retry, RetryTimes);
     }
 
-    private async Task<IResponse> HandleRetryInternally(IRequest request, IResponse response, Func<IRequest, Task<IResponse>> retry, int triesLeft)
+    private async Task<IResponse> HandleRetryInternally(
+      IRequest request,
+      IResponse response,
+      IRetryHandler.RetryFunc retry,
+      int triesLeft)
     {
       var secondsToWait = ParseTooManyRetriesToMs(response);
       if (secondsToWait != null && (!TooManyRequestsConsumesARetry || triesLeft > 0))

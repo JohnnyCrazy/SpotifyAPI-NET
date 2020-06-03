@@ -9,6 +9,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 import GitHubButton from 'react-github-btn'
+import InstallInstructions from '../install_instructions';
 
 const exampleCode =
   `var spotify = new SpotifyClient("YourAccessToken");
@@ -22,16 +23,6 @@ await foreach(
 {
   Console.WriteLine(playlist.Name);
 }`;
-
-const installCodeNuget =
-  `# Core Package
-Install-Package SpotifyAPI.Web
-`;
-
-const installCodeCLI =
-  `# Core Package
-dotnet add package SpotifyAPI.Web
-`;
 
 const features = [
   {
@@ -125,6 +116,10 @@ function Home() {
         </div>
       </header>
       <main>
+        <div className="container">
+          <h2 style={{ textAlign: 'center', marginTop: '30px' }}>Try it out now</h2>
+          <InstallInstructions />
+        </div>
         {features && features.length && (
           <section className={styles.features}>
             <div className="container">
@@ -136,28 +131,6 @@ function Home() {
             </div>
           </section>
         )}
-        <div className="container">
-          <h2 style={{ textAlign: 'center' }}>Try it out now</h2>
-          <div style={{ padding: '50px' }}>
-            <Tabs
-              defaultValue="cli"
-              values={[
-                { label: 'dotnet CLI', value: 'cli' },
-                { label: 'NuGET Console', value: 'nuget' },
-              ]}>
-              <TabItem value="cli">
-                <CodeBlock metastring="csharp" className="bash">
-                  {installCodeCLI}
-                </CodeBlock>
-              </TabItem>
-              <TabItem value="nuget">
-                <CodeBlock metastring="csharp" className="bash">
-                  {installCodeNuget}
-                </CodeBlock>
-              </TabItem>
-            </Tabs>
-          </div>
-        </div>
       </main>
     </Layout>
   );

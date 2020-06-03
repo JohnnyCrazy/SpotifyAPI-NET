@@ -8,6 +8,8 @@ namespace SpotifyAPI.Web.Http
   /// </summary>
   public interface IRetryHandler
   {
-    Task<IResponse> HandleRetry(IRequest request, IResponse response, Func<IRequest, Task<IResponse>> retry);
+    delegate Task<IResponse> RetryFunc(IRequest request);
+
+    Task<IResponse> HandleRetry(IRequest request, IResponse response, RetryFunc retry);
   }
 }

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using SpotifyAPI.Web.Http;
 
-namespace SpotifyAPI.Web.Http
+namespace SpotifyAPI.Web
 {
   /// <summary>
   ///   This Authenticator requests new credentials token on demand and stores them into memory.

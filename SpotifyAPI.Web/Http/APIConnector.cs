@@ -283,7 +283,7 @@ namespace SpotifyAPI.Web.Http
       {
         case HttpStatusCode.Unauthorized:
           throw new APIUnauthorizedException(response);
-        case HttpStatusCode.TooManyRequests:
+        case (HttpStatusCode)429: // TODO: Remove hack once .netstandard 2.0 is not supported
           throw new APITooManyRequestsException(response);
         default:
           throw new APIException(response);

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using SpotifyAPI.Web.Http;
 
-namespace SpotifyAPI.Web.Http
+namespace SpotifyAPI.Web
 {
   public class TokenAuthenticator : IAuthenticator
   {

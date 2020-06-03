@@ -157,7 +157,7 @@ namespace SpotifyAPI.Web
       public Mock<Func<int, Task>> Sleep { get; set; } = new Mock<Func<int, Task>>();
       public Mock<IResponse> Response { get; set; } = new Mock<IResponse>();
       public Mock<IRequest> Request { get; set; } = new Mock<IRequest>();
-      public Func<IRequest, Task<IResponse>> Retry { get; set; }
+      public IRetryHandler.RetryFunc Retry { get; set; }
     }
   }
 }

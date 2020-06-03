@@ -9,7 +9,7 @@ module.exports = {
   organizationName: 'JohnnyCrazy', // Usually your GitHub org/user name.
   projectName: 'SpotifyAPI-NET', // Usually your repo name.
   themeConfig: {
-    sidebarCollapsible: false,
+    sidebarCollapsible: true,
     prism: {
       additionalLanguages: ['csharp'],
     },
