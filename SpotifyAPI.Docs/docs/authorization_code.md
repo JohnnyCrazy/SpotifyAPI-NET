@@ -61,6 +61,8 @@ var config = SpotifyClientConfig
 var spotify = new SpotifyClient(config);
 ```
 
+For a real example, have a look at [Example.ASP](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.ASP). This also uses the great package `AspNet.Security.OAuth.Spotify` which takes care of the OAuth flow inside of `ASP.NET`.
+
 ## Using Spotify.Web.Auth
 
 For cross-platform CLI and desktop apps (non `UWP` apps), `Spotify.Web.Auth` can be used to supply a small embedded Web Server for the code retrieval.
@@ -102,3 +104,5 @@ private static async Task OnAuthorizationCodeReceived(object sender, Authorizati
   // do calls with spotify and save token?
 }
 ```
+
+For real examples, have a look at [Example.CLI.PersistentConfig](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.CLI.PersistentConfig) and [Example.CLI.CustomHTML](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.CLI.CustomHTML)

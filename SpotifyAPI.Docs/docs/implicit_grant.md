@@ -71,7 +71,7 @@ protected override void OnActivated(IActivatedEventArgs args)
 }
 ```
 
-For a real example, have a look at the [UWP Example](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/v6/SpotifyAPI.Web.Examples/Example.UWP)
+For a real example, have a look at the [Example.UWP](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.UWP), [Example.ASP](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.ASP) or [Example.ASPBlazor](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.ASPBlazor)
 
 # Using Spotify.Web.Auth
 
@@ -103,4 +103,4 @@ private static async Task OnImplictGrantReceived(object sender, ImplictGrantResp
 }
 ```
 
-For real examples, have a look at [Example.CLI.PersistentConfig](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/v6/SpotifyAPI.Web.Examples/Example.CLI.PersistentConfig) and [Example.CLI.CustomHTML](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/v6/SpotifyAPI.Web.Examples/Example.CLI.CustomHTML)
+For real examples, have a look at [Example.CLI.PersistentConfig](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.CLI.PersistentConfig) and [Example.CLI.CustomHTML](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.CLI.CustomHTML)
