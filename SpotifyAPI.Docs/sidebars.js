@@ -12,6 +12,7 @@ module.exports = {
           'logging',
           'proxy',
           'pagination',
+          'retry_handling',
         ]
       },
       {

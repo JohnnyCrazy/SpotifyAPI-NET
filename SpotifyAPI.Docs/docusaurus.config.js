@@ -41,11 +41,6 @@ module.exports = {
         },
         { to: 'news', label: 'News', position: 'left' },
         {
-          href: 'https://www.nuget.org/packages/SpotifyAPI.Web/',
-          label: 'NuGET',
-          position: 'right',
-        },
-        {
           href: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET',
           label: 'GitHub',
           position: 'right',

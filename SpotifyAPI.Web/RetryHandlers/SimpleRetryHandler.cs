@@ -9,12 +9,12 @@ namespace SpotifyAPI.Web
 {
   public class SimpleRetryHandler : IRetryHandler
   {
-    private readonly Func<int, Task> _sleep;
+    private readonly Func<TimeSpan, Task> _sleep;
 
     /// <summary>
     ///     Specifies after how many miliseconds should a failed request be retried.
     /// </summary>
-    public int RetryAfter { get; set; }
+    public TimeSpan RetryAfter { get; set; }
 
     /// <summary>
     ///     Maximum number of tries for one failed request.
@@ -38,10 +38,10 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <returns></returns>
     public SimpleRetryHandler() : this(Task.Delay) { }
-    public SimpleRetryHandler(Func<int, Task> sleep)
+    public SimpleRetryHandler(Func<TimeSpan, Task> sleep)
     {
       _sleep = sleep;
-      RetryAfter = 50;
+      RetryAfter = TimeSpan.FromMilliseconds(50);
       RetryTimes = 10;
       TooManyRequestsConsumesARetry = false;
       RetryErrorCodes = new[] {
@@ -51,7 +51,7 @@ namespace SpotifyAPI.Web
       };
     }
 
-    private static int? ParseTooManyRetriesToMs(IResponse response)
+    private static TimeSpan? ParseTooManyRetries(IResponse response)
     {
       if (response.StatusCode != (HttpStatusCode)429)
       {
@@ -59,7 +59,7 @@ namespace SpotifyAPI.Web
       }
       if (int.TryParse(response.Headers["Retry-After"], out int secondsToWait))
       {
-        return secondsToWait * 1000;
+        return TimeSpan.FromSeconds(secondsToWait);
       }
 
       throw new APIException("429 received, but unable to parse Retry-After Header. This should not happen!");
@@ -78,7 +78,7 @@ namespace SpotifyAPI.Web
       IRetryHandler.RetryFunc retry,
       int triesLeft)
     {
-      var secondsToWait = ParseTooManyRetriesToMs(response);
+      var secondsToWait = ParseTooManyRetries(response);
       if (secondsToWait != null && (!TooManyRequestsConsumesARetry || triesLeft > 0))
       {
         await _sleep(secondsToWait.Value).ConfigureAwait(false);

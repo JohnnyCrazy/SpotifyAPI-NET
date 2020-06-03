@@ -36,7 +36,7 @@ namespace SpotifyAPI.Web
 
       Assert.AreEqual(2, retryCalled);
       Assert.AreEqual(setup.Response.Object, response);
-      setup.Sleep.Verify(s => s(50000), Times.Exactly(2));
+      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Exactly(2));
     }
 
     [Test]
@@ -67,7 +67,7 @@ namespace SpotifyAPI.Web
 
       Assert.AreEqual(1, retryCalled);
       Assert.AreEqual(successResponse.Object, response);
-      setup.Sleep.Verify(s => s(50000), Times.Once);
+      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Once);
     }
 
     [Test]
@@ -97,7 +97,7 @@ namespace SpotifyAPI.Web
 
       Assert.AreEqual(1, retryCalled);
       Assert.AreEqual(successResponse.Object, response);
-      setup.Sleep.Verify(s => s(50000), Times.Once);
+      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Once);
     }
 
     [Test]
@@ -117,13 +117,13 @@ namespace SpotifyAPI.Web
       {
         TooManyRequestsConsumesARetry = true,
         RetryTimes = 10,
-        RetryAfter = 50
+        RetryAfter = TimeSpan.FromMilliseconds(50)
       };
       var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
       Assert.AreEqual(10, retryCalled);
       Assert.AreEqual(setup.Response.Object, response);
-      setup.Sleep.Verify(s => s(50), Times.Exactly(10));
+      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Exactly(10));
     }
 
     [Test]
@@ -143,18 +143,18 @@ namespace SpotifyAPI.Web
       {
         TooManyRequestsConsumesARetry = true,
         RetryTimes = 10,
-        RetryAfter = 50
+        RetryAfter = TimeSpan.FromMilliseconds(50)
       };
       var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
       Assert.AreEqual(0, retryCalled);
       Assert.AreEqual(setup.Response.Object, response);
-      setup.Sleep.Verify(s => s(50), Times.Exactly(0));
+      setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Exactly(0));
     }
 
     private class Setup
     {
-      public Mock<Func<int, Task>> Sleep { get; set; } = new Mock<Func<int, Task>>();
+      public Mock<Func<TimeSpan, Task>> Sleep { get; set; } = new Mock<Func<TimeSpan, Task>>();
       public Mock<IResponse> Response { get; set; } = new Mock<IResponse>();
       public Mock<IRequest> Request { get; set; } = new Mock<IRequest>();
       public IRetryHandler.RetryFunc Retry { get; set; }

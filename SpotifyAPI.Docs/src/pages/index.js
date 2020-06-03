@@ -93,7 +93,25 @@ function Home() {
               <h1 className="hero__title">
                 {siteConfig.title}
                 <span style={{ marginLeft: '50px' }} />
-                <GitHubButton href="https://github.com/JohnnyCrazy/SpotifyAPI-NET" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star JohnnyCrazy/SpotifyAPI-NET on GitHub">Star</GitHubButton>
+                <GitHubButton
+                  href="https://github.com/JohnnyCrazy/SpotifyAPI-NET"
+                  data-icon="octicon-star"
+                  data-size="large"
+                  data-show-count="true"
+                  aria-label="Star JohnnyCrazy/SpotifyAPI-NET on GitHub">Star</GitHubButton>
+                <br />
+                <a href="https://www.nuget.org/packages/SpotifyAPI.Web/" rel="noopener noreferrer">
+                  <img
+                    alt="Nuget"
+                    src="https://img.shields.io/nuget/v/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square">
+                  </img>{'  '}
+                </a>
+                <a href="https://www.nuget.org/packages/SpotifyAPI.Web.Auth/" rel="noopener noreferrer">
+                  <img
+                    alt="Nuget"
+                    src="https://img.shields.io/nuget/v/SpotifyAPI.Web.Auth?label=SpotifyAPI.Web.Auth&style=flat-square">
+                  </img>
+                </a>
               </h1>
               <p className="hero__subtitle">{siteConfig.tagline}</p>
               <div className={styles.buttons}>
