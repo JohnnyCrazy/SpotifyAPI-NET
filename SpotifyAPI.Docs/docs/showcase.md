@@ -54,3 +54,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [ARDUINO-Spotify-Remote-Control](https://github.com/NADER11NDEU/ARDUINO-Spotify-Remote-Control) by [@NADER11NDEU](https://github.com/NADER11NDEU)
 
 > Well, with this project we will be able to control active spotify devices with Arduino. How we gonna do that ? We will use serial communication.
+
+### [Melodify](https://github.com/novatorem/Melodify) by [@Novatorem](https://github.com/Novatorem)
+
+> Spotify miniplayer interface with user stats, recommendations, youtube music videos, and more. Exposes a lot of SpotifyAPI-NET functionality with reauth.
