@@ -5,7 +5,6 @@ namespace SpotifyAPI.Web
   public class LibrarySaveAlbumsRequest : RequestParams
   {
     /// <summary>
-
     /// </summary>
     /// <param name="ids">
     /// A comma-separated list of the Spotify IDs.

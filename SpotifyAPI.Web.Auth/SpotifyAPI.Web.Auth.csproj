@@ -6,20 +6,31 @@
     <PackageId>SpotifyAPI.Web.Auth</PackageId>
     <Title>SpotifyAPI.Web.Auth</Title>
     <Authors>Jonas Dellinger</Authors>
-    <PackageLicenseUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/JohnnyCrazy/SpotifyAPI-NET/</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <Description>
-      Authorization Flows for the Spotify's Web API, written in .NET
+      An embedded Web Server, based on EmbeddedIO, for Spotify Web API Authorization flows
 
       For more infos, visit https://github.com/JohnnyCrazy/SpotifyAPI-NET
     </Description>
     <PackageTags>
       spotify api music .net c# spotify-client
     </PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(APPVEYOR)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
     <PackageReference Include="EmbedIO" Version="3.4.3">
       <PrivateAssets>None</PrivateAssets>
     </PackageReference>
