@@ -5,7 +5,7 @@ title: Token Swap
 
 Token Swap provides an authenticatiow flow where client-side apps (like cli/desktop/mobile apps) are still able to use long-living tokens and the oppurtunity to refresh them without exposing your application's secret. This however requires a server-side part to work.
 
-It is based on the [Authorization Code](authorization_code) flow and is also documented by spotify: [Token Swap and Refresh ](https://developer.spotify.com/documentation/ios/guides/token-swap-and-refresh/).
+It is based on the [Authorization Code](authorization_code.md) flow and is also documented by spotify: [Token Swap and Refresh ](https://developer.spotify.com/documentation/ios/guides/token-swap-and-refresh/).
 
 ## Flow
 

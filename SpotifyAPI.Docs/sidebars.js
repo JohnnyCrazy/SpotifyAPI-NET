@@ -33,6 +33,7 @@ module.exports = {
         label: 'Examples',
         items: [
           'example_asp',
+          'example_blazor_wasm',
           'example_blazor',
           'example_cli_custom_html',
           'example_cli_persistent_config',

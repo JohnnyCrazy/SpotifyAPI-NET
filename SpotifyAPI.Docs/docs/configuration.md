@@ -45,4 +45,4 @@ public HttpResult Get()
 }
 ```
 
-This way, a single `HTTPClient` will be used. For a real world example, checkout the [ASP.NET Example](example_aspnet)
+This way, a single `HTTPClient` will be used. For a real example, checkout the [ASP.NET Example](example_asp.md)

@@ -57,7 +57,7 @@ class Program
 ```
 
 :::tip
-Notice that the spotify api does not allow unauthorized API access. Wondering where you should get an access token from? For a quick test, head over to the [Spotify Developer Console](https://developer.spotify.com/console/get-album/) and generate an access token with the required scopes! For a permanent solution, head over to the [authentication guides](auth_introduction).
+Notice that the spotify api does not allow unauthorized API access. Wondering where you should get an access token from? For a quick test, head over to the [Spotify Developer Console](https://developer.spotify.com/console/get-album/) and generate an access token with the required scopes! For a permanent solution, head over to the [authentication guides](auth_introduction.md).
 
 :::
 
@@ -105,4 +105,4 @@ If a query/body parameter is required, it has to be supplied in the constructor 
 
 ## Guides
 
-All other relevant topics are covered in the "Guides" and [Authentication Guides](auth_introduction) section in the sidebar!
+All other relevant topics are covered in the "Guides" and [Authentication Guides](auth_introduction.md) section in the sidebar!

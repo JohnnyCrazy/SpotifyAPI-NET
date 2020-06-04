@@ -12,9 +12,9 @@ Since every auth flow also needs an application in the [spotify dashboard](https
 
 Then, continue with the docs of the specific auth flows:
 
-* [Client Credentials](client_credentials)
-* [Implicit Grant](implicit_grant)
-* [Authorization Code](authorization_code)
-* Token Swap
+* [Client Credentials](client_credentials.md)
+* [Implicit Grant](implicit_grant.md)
+* [Authorization Code](authorization_code.md)
+* [Token Swap](token_swap.md)
 
 ![auth comparison](/img/auth_comparison.png)
