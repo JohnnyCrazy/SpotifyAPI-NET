@@ -1,56 +1,69 @@
-SpotifyAPI-NET 
-===
 
-[![Build status](https://ci.appveyor.com/api/projects/status/mxpjhw3uli4q0yx1?svg=true)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
+<h1 align="center">
+  <p align="center">SpotifyAPI-NET</p>
+  <a href="https://johnnycrazy.github.io/SpotifyAPI-NET/">
+    <img
+      height="128"
+      width="128"
+      src="SpotifyAPI.Docs/static/img/logo.svg"
+      alt="SpotifyAPI-NET">
+  </a>
+</h1>
 
-A Wrapper for Spotify's Web API, written in .NET  
+> ℹ This README targets Version >= 6.X, which is currently in beta status. For the documentation of version 5.1.1, visit [the docs](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/home)
 
-**Spotify's Web API** ([link](https://developer.spotify.com/web-api/))
-> Based on simple REST principles, our Web API endpoints return metadata in JSON format about artists, albums, and tracks directly from the Spotify catalogue.
-> The API also provides access to user-related data such as playlists and music saved in a “Your Music” library, subject to user’s authorization.
+[![Build status](https://img.shields.io/appveyor/build/JohnnyCrazy/SpotifyAPI-NET/master?style=flat-square)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
+![License](https://img.shields.io/github/license/JohnnyCrazy/SpotifyAPI-NET?style=flat-square)
+[![SpotifyAPI.Web NuGET](https://img.shields.io/nuget/vpre/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square)](https://www.nuget.org/packages/SpotifyAPI.Web/)
+[![SpotifyAPI.Web.Auth NuGET](https://img.shields.io/nuget/vpre/SpotifyAPI.Web.Auth?label=SpotifyAPI.Web.Auth&style=flat-square)](https://www.nuget.org/packages/SpotifyAPI.Web/)
 
-**SpotifyAPI.Web** [![Nuget SpotifyAPI.Web](https://badge.fury.io/nu/SpotifyAPI.Web.svg)](https://www.nuget.org/packages/SpotifyAPI.Web/)
-> A wrapper around Spotify's Web API, providing sync and async methods to query all possible endpoints. Results are returned as typed class instances, allowing property-based access.
+This open source library for the Spotify Web API provides an easy to use interface for .NET based languages, like C# and VisualBasic .NET. By using it you can query general spotify catalog information (tracks, albums and playlists), manage user-related content ("My Library", create and edit playlists) and control the users music players (play, stop, transfer playback, play specific track).
 
-**SpotifyAPI.Web.Auth** [![Nuget SpotifyAPI.Web.Auth](https://badge.fury.io/nu/SpotifyAPI.Web.Auth.svg)](https://www.nuget.org/packages/SpotifyAPI.Web.Auth/)
-> A library providing C# implementations of the 3 supported Authentication modes, including `ImplicitGrantAuth`, `AuthorizationCodeAuth` and `CredentialsAuth`
+### Features
 
-### Docs and Usage
 
-More Information, Installation-Instructions, Examples and API-Reference can be found at [github.io/SpotifyAPI-Net/](http://johnnycrazy.github.io/SpotifyAPI-NET/)
-
-### NuGet  
-You can add the API to your project via [nuget-package](https://www.nuget.org/packages/SpotifyAPI.Web/):  
-```
-Install-Package SpotifyAPI.Web
-Install-Package SpotifyAPI.Web.Auth
-
-//or
-
-Install-Package SpotifyAPI.Web -pre
-Install-Package SpotifyAPI.Web.Auth -pre
-```
+* ✅ Typed responses and requests to over 74 endpoints. Complete and always up to date.
+* ✅ Supports `.NET Standard 2.X`, which includes all major platforms, including mobile:
+  * `.NET Framework`
+  * `UWP`
+  * `.NET Core`
+  * `Xamarin.Forms`
+* ✅ Included `HTTPClient`, but feel free to bring your own!
+* ✅ Logging supported
+* ✅ Retry Handlers supported
+* ✅ Proxy support
+* ✅ Pagination support
+* ✅ All OAuth2 Authentications supported for use in `ASP .NET` **and** `CLI` apps
+* ✅ Modular structure, for easy unit testing
 
 ### Example
 
-```c#
-using SpotifyAPI.Web.Enums;
-using SpotifyAPI.Web.Models;
+```csharp
+using System;
+using SpotifyAPI.Web;
 
-public static async void Example()
+class Program
 {
-  SpotifyWebAPI api = new SpotifyWebAPI
-  {
-      AccessToken = "XX?X?X",
-      TokenType = "Bearer"
-  };
-  
-  FullTrack track = await api.GetTrackAsync("1eV81a6H4xDdpi8r2C4tQT");
-  if(!track.HasError()) {
-    Console.WriteLine(track.Name);
-  }
+    static async Task Main()
+    {
+      var spotify = new SpotifyClient("YourAccessToken");
+
+      var track = await spotify.Tracks.Get("1s6ux0lNiTziSrd7iUAADH");
+      Console.WriteLine(track.Name);
+    }
 }
 ```
+
+More examples can be found on [the website](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/next/introduction) and in the `SpotifyAPI.Web.Examples` directory.
+
+
+### Docs and Usage
+
+More Information, Installation-Instructions, Examples, Guides can be found at [johnnycrazy.github.io/SpotifyAPI-NET/](http://johnnycrazy.github.io/SpotifyAPI-NET/)
+
+### Installation
+
+Installation Instructions can be found in the [Getting Started Guide](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/next/getting_started)
 
 ### Donations
 
