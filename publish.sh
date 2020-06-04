@@ -2,7 +2,7 @@
 
 set -e
 
-if [ -n "$APPVEYOR_REPO_TAG" ]; then
+if [ "$APPVEYOR_REPO_TAG" = "true" ]; then
   echo "Publishing..."
 
   sudo curl -o /usr/local/bin/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe

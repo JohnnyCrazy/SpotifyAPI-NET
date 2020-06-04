@@ -142,6 +142,7 @@ namespace SpotifyAPI.Web
     /// <param name="mapper">A function which maps response objects to the next paging object</param>
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
+    /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
     public Task<IList<T>> PaginateAll<T, TNext>(
       Paging<T, TNext> firstPage,

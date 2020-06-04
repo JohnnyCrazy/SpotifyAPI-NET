@@ -92,10 +92,11 @@ namespace SpotifyAPI.Web
       {
         new KeyValuePair<string, string>("refresh_token", request.RefreshToken)
       };
-
+#pragma warning disable CA2000
       return apiConnector.Post<AuthorizationCodeRefreshResponse>(
         request.RefreshUri, null, new FormUrlEncodedContent(form)
       );
+#pragma warning restore CA2000
     }
 
     public static Task<AuthorizationCodeTokenResponse> RequestToken(
@@ -110,9 +111,11 @@ namespace SpotifyAPI.Web
         new KeyValuePair<string, string>("code", request.Code)
       };
 
+#pragma warning disable CA2000
       return apiConnector.Post<AuthorizationCodeTokenResponse>(
         request.TokenUri, null, new FormUrlEncodedContent(form)
       );
+#pragma warning restore CA2000
     }
 
     public static Task<CredentialsTokenResponse> RequestToken(
@@ -170,7 +173,9 @@ namespace SpotifyAPI.Web
       string clientSecret)
     {
       var headers = BuildAuthHeader(clientId, clientSecret);
+#pragma warning disable CA2000
       return apiConnector.Post<T>(SpotifyUrls.OAuthToken, null, new FormUrlEncodedContent(form), headers);
+#pragma warning restore CA2000
     }
 
     private static Dictionary<string, string> BuildAuthHeader(string clientId, string clientSecret)
