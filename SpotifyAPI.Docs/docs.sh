@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ -z "$APPVEYOR_PULL_REQUEST_NUMBER" ]; then
   if [ "$APPVEYOR_REPO_BRANCH" = "master" ]; then
     echo "Building docs..."
