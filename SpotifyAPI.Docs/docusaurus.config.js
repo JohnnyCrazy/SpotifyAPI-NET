@@ -54,6 +54,7 @@ module.exports = {
   },
   presets: [
     [
+
       '@docusaurus/preset-classic',
       {
         docs: {
@@ -68,10 +69,7 @@ module.exports = {
           path: 'news',
           routeBasePath: 'news',
           showReadingTime: true,
-          feedOptions: {
-            type: 'all',
-            copyright: `Copyright © ${new Date().getFullYear()} Jonas Dellinger.`,
-          },
+          feedOptions: undefined,
           // Please change this to your repo.
           editUrl:
             'https://github.com/JohnnyCrazy/SpotifyAPI-NET/edit/master/SpotifyAPI.Docs/blog/',
