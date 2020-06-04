@@ -23,13 +23,22 @@ module.exports = {
           'auth_introduction',
           'client_credentials',
           'implicit_grant',
-          'authorization_code'
+          'authorization_code',
+          'token_swap'
         ]
       },
+      'showcase',
       {
         type: 'category',
         label: 'Examples',
-        items: []
+        items: [
+          'example_asp',
+          'example_blazor',
+          'example_cli_custom_html',
+          'example_cli_persistent_config',
+          'example_token_swap',
+          'example_uwp'
+        ]
       },
     ]
   }

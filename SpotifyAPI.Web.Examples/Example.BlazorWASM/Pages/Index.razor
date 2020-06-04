@@ -1,8 +1,17 @@
-@page "/"
-@inject NavigationManager navManager
+﻿@page "/"
 @using SpotifyAPI.Web
+@using System
+@using Microsoft.Extensions.Configuration
+
+@inject IConfiguration Configuration
+@inject NavigationManager navManager
 
 <h1>Hello, world!</h1>
+
+<p>SPOTIFY_CLIENT_ID: @(Configuration["SPOTIFY_CLIENT_ID"] ?? "Not set, example won't work")</p>
+<p>
+
+</p>
 
 @if (_isAuthed && _me != null)
 {
@@ -20,24 +29,26 @@ else
 }
 
 @code {
-  private Uri _authUri;
-
-  private bool _isAuthed;
+  private bool _isAuthed = false;
 
   private PrivateUser _me;
 
   private int _totalPlaylistCount;
 
+  private Uri _authUri;
+
   protected override void OnInitialized()
   {
-    var clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
-    var baseUri = navManager.ToAbsoluteUri(navManager.BaseUri);
-
-    var loginRequest = new LoginRequest(baseUri, clientId, LoginRequest.ResponseType.Token)
+    if (!string.IsNullOrEmpty(Configuration["SPOTIFY_CLIENT_ID"]))
     {
-      Scope = new[] { Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative }
-    };
-    _authUri = loginRequest.ToUri();
+      var baseUri = navManager.ToAbsoluteUri(navManager.BaseUri);
+
+      var loginRequest = new LoginRequest(baseUri, Configuration["SPOTIFY_CLIENT_ID"], LoginRequest.ResponseType.Token)
+      {
+        Scope = new[] { Scopes.PlaylistReadPrivate, Scopes.PlaylistReadCollaborative }
+      };
+      _authUri = loginRequest.ToUri();
+    }
   }
 
   protected override async Task OnInitializedAsync()
@@ -48,6 +59,8 @@ else
       .Split("&", StringSplitOptions.RemoveEmptyEntries)?
       .Select(param => param.Split("=", StringSplitOptions.RemoveEmptyEntries))?
       .ToDictionary(param => param[0], param => param[1]) ?? new Dictionary<string, string>();
+
+    Console.WriteLine(fragmentParams);
 
     _isAuthed = fragmentParams.ContainsKey("access_token");
     if (_isAuthed)

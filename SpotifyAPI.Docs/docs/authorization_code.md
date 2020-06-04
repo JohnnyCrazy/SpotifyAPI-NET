@@ -41,11 +41,11 @@ public Task GetCallback(string code)
 If the token expires at some point (check via `response.IsExpired`), you can refresh it:
 
 ```csharp
-  var newResponse = await new OAuthClient().RequestToken(
-    new AuthorizationCodeRefreshRequest("ClientId", "ClientSecret", response.RefreshToken)
-  );
+var newResponse = await new OAuthClient().RequestToken(
+  new AuthorizationCodeRefreshRequest("ClientId", "ClientSecret", response.RefreshToken)
+);
 
-  var spotify = new SpotifyClient(newResponse.AccessToken);
+var spotify = new SpotifyClient(newResponse.AccessToken);
 ```
 
 You can also let the `AuthorizationCodeAuthenticator` take care of the refresh part:
