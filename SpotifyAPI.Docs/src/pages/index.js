@@ -103,13 +103,13 @@ function Home() {
                 <a href="https://www.nuget.org/packages/SpotifyAPI.Web/" rel="noopener noreferrer">
                   <img
                     alt="Nuget"
-                    src="https://img.shields.io/nuget/v/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square">
+                    src="https://img.shields.io/nuget/vpre/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square">
                   </img>{'  '}
                 </a>
                 <a href="https://www.nuget.org/packages/SpotifyAPI.Web.Auth/" rel="noopener noreferrer">
                   <img
                     alt="Nuget"
-                    src="https://img.shields.io/nuget/v/SpotifyAPI.Web.Auth?label=SpotifyAPI.Web.Auth&style=flat-square">
+                    src="https://img.shields.io/nuget/vpre/SpotifyAPI.Web.Auth?label=SpotifyAPI.Web.Auth&style=flat-square">
                   </img>
                 </a>
               </h1>
