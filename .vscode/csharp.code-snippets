@@ -1,0 +1,51 @@
+{
+  "class-model": {
+    "scope": "csharp",
+    "prefix": "class-model",
+    "body": [
+      "namespace SpotifyAPI.Web",
+      "{",
+      "  public class $TM_FILENAME_BASE",
+      "  {",
+      "     public ${2:string} ${3:Name} { get; set; }",
+      "",
+      "     $4",
+      "  }",
+      "}"
+    ],
+    "description": "Creates a new model"
+  },
+  "class-request": {
+    "scope": "csharp",
+    "prefix": "class-request",
+    "body": [
+      "namespace SpotifyAPI.Web",
+      "{",
+      "  public class $TM_FILENAME_BASE : RequestParams",
+      "  {",
+      "     [QueryParam(\"${3:Name}\")]",
+      "     public ${2:string} ${3:Name} { get; set; }",
+      "",
+      "     $4",
+      "  }",
+      "}"
+    ],
+    "description": "Creates a new request"
+  },
+  "reqcomment": {
+    "scope": "csharp",
+    "prefix": "reqcomment",
+    "body": "The request-model which contains required and optional parameters.",
+    "description": "Creates a new request comment for XAML"
+  },
+  "remark": {
+    "scope": "csharp",
+    "prefix": "remark",
+    "body": [
+      "<remarks>",
+      "/// $1",
+      "/// </remarks>"
+    ],
+    "description": "Creates a new request comment for XAML"
+  }
+}

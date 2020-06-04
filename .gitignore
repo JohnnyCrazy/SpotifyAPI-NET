@@ -114,3 +114,7 @@ UpgradeLog*.XML
 
 # Idea jetbrains
 .idea/
+.env
+SpotifyAPI.Web.Tests/UtilTests/Test.cs
+
+launchSettings.json

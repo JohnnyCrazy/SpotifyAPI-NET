@@ -1,0 +1,22 @@
+html,
+body {
+  width : 100%;
+  height: 100%;
+}
+
+body {
+  color                : #f5f6fa;
+  background-color     : #353b48;
+  width                : 100%;
+  height               : 100%;
+  background-attachment: fixed;
+}
+
+main {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.logo {
+  margin-bottom: 50px;
+}

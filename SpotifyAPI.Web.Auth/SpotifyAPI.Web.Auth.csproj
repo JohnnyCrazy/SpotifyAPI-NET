@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    
+    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
     <PackageId>SpotifyAPI.Web.Auth</PackageId>
     <Title>SpotifyAPI.Web.Auth</Title>
     <Authors>Jonas Dellinger</Authors>
@@ -18,24 +19,18 @@
     </PackageTags>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\SpotifyAPI.Web.Auth.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\SpotifyAPI.Web.Auth.xml</DocumentationFile>
-    <NoWarn>1701;1702;1705;1591</NoWarn>
-  </PropertyGroup>
-    
   <ItemGroup>
-    <PackageReference Include="EmbedIO" Version="2.9.2">
+    <PackageReference Include="EmbedIO" Version="3.4.3">
       <PrivateAssets>None</PrivateAssets>
     </PackageReference>
     <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj">
       <SpecificVersion>False</SpecificVersion>
       <PrivateAssets>None</PrivateAssets>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SpotifyAPI.Web\Util\Ensure.cs" />
   </ItemGroup>
 
   <ItemGroup>

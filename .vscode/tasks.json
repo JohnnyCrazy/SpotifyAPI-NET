@@ -2,28 +2,16 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build-web-example-asp",
+      "label": "Example.ASP-build",
       "command": "dotnet",
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/SpotifyAPI.Web.Examples.ASP/SpotifyAPI.Web.Examples.ASP.csproj",
+        "${workspaceFolder}/SpotifyAPI.Web.Examples/Example.ASP/Example.ASP.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
-    },
-    {
-      "label": "build-web-example-cli",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/SpotifyAPI.Web.Examples.CLI/SpotifyAPI.Web.Examples.CLI.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
-    },
+    }
   ]
 }

@@ -1,0 +1,25 @@
+---
+id: proxy
+title: Proxy
+---
+
+The included `HTTPClient` has full proxy configuration support:
+
+```csharp
+var httpClient = new NetHttpClient(new ProxyConfig("localhost", 8080)
+{
+  User = "",
+  Password = "",
+  SkipSSLCheck = false,
+});
+var config = SpotifyClientConfig
+  .CreateDefault()
+  .WithHTTPClient(httpClient);
+
+var spotify = new SpotifyClient(config);
+```
+
+As an example, [mitmproxy](https://mitmproxy.org/) can be used to inspect the requests and responses:
+
+![mitmproxy](/img/mitmproxy.png)
+
