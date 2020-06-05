@@ -2,4 +2,7 @@
   "editor.detectIndentation": false,
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
+  "files.associations": {
+    "*.md": "mdx"
+  },
 }

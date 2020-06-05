@@ -3,11 +3,13 @@ id: example_blazor
 title: Blazor ServerSide
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 ## Description
 
 Very similar to the [Blazor WASM Example](example_blazor_wasm.md), but runs code on the server side and pushes view updates to the client.
 
-![ASP Blazor Example - Home](/img/asp_blazor_example_home.png)
+<img alt="ASP Blazor Example - Home" src={useBaseUrl('img/asp_blazor_example_home.png')} />
 
 ## Run it
 

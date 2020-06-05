@@ -3,6 +3,8 @@ id: example_asp
 title: ASP.NET
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 ## Description
 
 This example is based on ASP .NET Core. It uses `Authorization Code` under the hood with the help of [`AspNet.Security.OAuth.Spotify`](https://www.nuget.org/packages/AspNet.Security.OAuth.Spotify/). It stores the access token in the current user session (cookie-based) and allows to refresh tokens when they expire. Two pages are implemented:
@@ -10,8 +12,8 @@ This example is based on ASP .NET Core. It uses `Authorization Code` under the h
 * Home shows your current playlists via pagination
 * Profile shows your current profile information
 
-![ASP Example - Home](/img/asp_example_home.png)
-![ASP Example - Profile](/img/asp_example_profile.png)
+<img alt="ASP Example - Home" src={useBaseUrl('img/asp_example_home.png')} />
+<img alt="ASP Example - Profile" src={useBaseUrl('img/asp_example_profile.png')} />
 
 ## Run it
 

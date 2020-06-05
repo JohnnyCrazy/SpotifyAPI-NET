@@ -3,6 +3,8 @@ id: implicit_grant
 title: Implicit Grant
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 > Implicit grant flow is for clients that are implemented entirely using JavaScript and running in the resource owner’s browser. You do not need any server-side code to use it. Rate limits for requests are improved but there is no refresh token provided. This flow is described in RFC-6749.
 
 This flow is useful for getting a user access token for a short timespan
@@ -35,7 +37,7 @@ Note, this parameter is not sent to the server! You need JavaScript to access it
 
 This flow can also be used with custom protocols instead of `http`/`https`. This is especially interesting for `UWP` apps, since your able to register custom protocol handlers quite easily.
 
-![protocol handlers](/img/auth_protocol_handlers.png)
+<img alt="protocol handlers" src={useBaseUrl('img/auth_protocol_handlers.png')} />
 
 The process is very similar, you generate a uri and open it for the user
 

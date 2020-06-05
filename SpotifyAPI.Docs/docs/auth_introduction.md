@@ -3,6 +3,8 @@ id: auth_introduction
 title: Introduction
 ---
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 Spotify does not allow unauthorized access to the api. Thus, you need an access token to make requets. This access token can be gathered via multiple schemes, all following the OAuth2 spec. Since it's important to choose the correct scheme for your usecase, make sure you have a grasp of the following terminology/docs:
 
 * OAuth2
@@ -17,4 +19,4 @@ Then, continue with the docs of the specific auth flows:
 * [Authorization Code](authorization_code.md)
 * [Token Swap](token_swap.md)
 
-![auth comparison](/img/auth_comparison.png)
+<img alt="auth comparison" src={useBaseUrl('img/auth_comparison.png')} />
