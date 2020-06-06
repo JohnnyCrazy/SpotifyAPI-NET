@@ -13,6 +13,7 @@ module.exports = {
           'proxy',
           'pagination',
           'retry_handling',
+          'iplayableitem',
           'unit_testing'
         ]
       },

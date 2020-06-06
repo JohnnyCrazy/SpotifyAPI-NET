@@ -12,6 +12,10 @@ namespace SpotifyAPI.Web
     public int ProgressMs { get; set; }
     public bool IsPlaying { get; set; }
 
+    /// <summary>
+    /// Can be a FullTrack or FullEpisode
+    /// </summary>
+    /// <value></value>
     [JsonConverter(typeof(PlayableItemConverter))]
     public IPlayableItem Item { get; set; } = default!;
 
