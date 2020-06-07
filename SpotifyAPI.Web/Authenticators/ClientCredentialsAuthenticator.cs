@@ -10,16 +10,28 @@ namespace SpotifyAPI.Web
   public class ClientCredentialsAuthenticator : IAuthenticator
   {
     /// <summary>
-    ///   Initiate a new instance. The first token will be fetched when the first API call occurs
+    /// Initiate a new instance. The initial token will be fetched when the first API call occurs.
     /// </summary>
     /// <param name="clientId">
-    ///   The ClientID, defined in a spotify application in your Spotify Developer Dashboard
+    /// The ClientID, defined in a spotify application in your Spotify Developer Dashboard.
     /// </param>
     /// <param name="clientSecret">
-    ///   The ClientID, defined in a spotify application in your Spotify Developer Dashboard
+    /// The ClientSecret, defined in a spotify application in your Spotify Developer Dashboard.
     /// </param>
     public ClientCredentialsAuthenticator(string clientId, string clientSecret) : this(clientId, clientSecret, null) { }
 
+    /// <summary>
+    /// Initiate a new instance. The initial token is provided and will be used if not expired
+    /// </summary>
+    /// <param name="clientId">
+    /// The ClientID, defined in a spotify application in your Spotify Developer Dashboard.
+    /// </param>
+    /// <param name="clientSecret">
+    /// The ClientSecret, defined in a spotify application in your Spotify Developer Dashboard.
+    /// </param>
+    /// <param name="token">
+    /// An optional inital token received earlier.
+    /// </param>
     public ClientCredentialsAuthenticator(string clientId, string clientSecret, ClientCredentialsTokenResponse? token)
     {
       Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
