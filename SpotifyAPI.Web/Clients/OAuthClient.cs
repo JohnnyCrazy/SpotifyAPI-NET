@@ -24,7 +24,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow
     /// </remarks>
     /// <returns></returns>1
-    public Task<CredentialsTokenResponse> RequestToken(ClientCredentialsRequest request)
+    public Task<ClientCredentialsTokenResponse> RequestToken(ClientCredentialsRequest request)
     {
       return RequestToken(request, API);
     }
@@ -118,7 +118,7 @@ namespace SpotifyAPI.Web
 #pragma warning restore CA2000
     }
 
-    public static Task<CredentialsTokenResponse> RequestToken(
+    public static Task<ClientCredentialsTokenResponse> RequestToken(
         ClientCredentialsRequest request, IAPIConnector apiConnector
       )
     {
@@ -130,7 +130,7 @@ namespace SpotifyAPI.Web
         new KeyValuePair<string, string>("grant_type", "client_credentials")
       };
 
-      return SendOAuthRequest<CredentialsTokenResponse>(apiConnector, form, request.ClientId, request.ClientSecret);
+      return SendOAuthRequest<ClientCredentialsTokenResponse>(apiConnector, form, request.ClientId, request.ClientSecret);
     }
 
     public static Task<AuthorizationCodeRefreshResponse> RequestToken(

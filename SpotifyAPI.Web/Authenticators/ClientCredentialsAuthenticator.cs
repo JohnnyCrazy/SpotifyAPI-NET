@@ -7,10 +7,8 @@ namespace SpotifyAPI.Web
   ///   This Authenticator requests new credentials token on demand and stores them into memory.
   ///   It is unable to query user specifc details.
   /// </summary>
-  public class CredentialsAuthenticator : IAuthenticator
+  public class ClientCredentialsAuthenticator : IAuthenticator
   {
-    private CredentialsTokenResponse? _token;
-
     /// <summary>
     ///   Initiate a new instance. The first token will be fetched when the first API call occurs
     /// </summary>
@@ -20,14 +18,19 @@ namespace SpotifyAPI.Web
     /// <param name="clientSecret">
     ///   The ClientID, defined in a spotify application in your Spotify Developer Dashboard
     /// </param>
-    public CredentialsAuthenticator(string clientId, string clientSecret)
+    public ClientCredentialsAuthenticator(string clientId, string clientSecret) : this(clientId, clientSecret, null) { }
+
+    public ClientCredentialsAuthenticator(string clientId, string clientSecret, ClientCredentialsTokenResponse? token)
     {
       Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
       Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
 
       ClientId = clientId;
       ClientSecret = clientSecret;
+      Token = token;
     }
+
+    public ClientCredentialsTokenResponse? Token { get; private set; }
 
     /// <summary>
     ///   The ClientID, defined in a spotify application in your Spotify Developer Dashboard
@@ -43,13 +46,13 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      if (_token == null || _token.IsExpired)
+      if (Token == null || Token.IsExpired)
       {
         var tokenRequest = new ClientCredentialsRequest(ClientId, ClientSecret);
-        _token = await OAuthClient.RequestToken(tokenRequest, apiConnector).ConfigureAwait(false);
+        Token = await OAuthClient.RequestToken(tokenRequest, apiConnector).ConfigureAwait(false);
       }
 
-      request.Headers["Authorization"] = $"{_token.TokenType} {_token.AccessToken}";
+      request.Headers["Authorization"] = $"{Token.TokenType} {Token.AccessToken}";
     }
   }
 }

@@ -16,7 +16,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow
     /// </remarks>
     /// <returns></returns>
-    Task<CredentialsTokenResponse> RequestToken(ClientCredentialsRequest request);
+    Task<ClientCredentialsTokenResponse> RequestToken(ClientCredentialsRequest request);
 
     /// <summary>
     /// Refresh an already received token via Authorization Code Auth
