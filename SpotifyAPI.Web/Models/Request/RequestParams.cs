@@ -10,19 +10,22 @@ namespace SpotifyAPI.Web
 {
   public abstract class RequestParams
   {
-    private static readonly ConcurrentDictionary<PropertyInfo, BodyParamAttribute> _bodyParamsCache =
-      new ConcurrentDictionary<PropertyInfo, BodyParamAttribute>();
+    private static readonly ConcurrentDictionary<Type, List<(PropertyInfo, BodyParamAttribute)>> _bodyParamsCache =
+      new ConcurrentDictionary<Type, List<(PropertyInfo, BodyParamAttribute)>>();
+
     public JObject BuildBodyParams()
     {
       // Make sure everything is okay before building body params
       CustomEnsure();
 
       var body = new JObject();
-      if (!_bodyParamsCache.IsEmpty)
+      var type = GetType();
+
+      if (!_bodyParamsCache.IsEmpty && _bodyParamsCache.ContainsKey(type))
       {
-        foreach (var bodyParam in _bodyParamsCache)
+        foreach (var (info, attribute) in _bodyParamsCache[type])
         {
-          AddBodyParam(body, bodyParam.Key, bodyParam.Value);
+          AddBodyParam(body, info, attribute);
         }
       }
       else
@@ -31,10 +34,11 @@ namespace SpotifyAPI.Web
           .GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
           .Where(prop => prop.GetCustomAttributes(typeof(BodyParamAttribute), true).Length > 0);
 
+        _bodyParamsCache[type] = new List<(PropertyInfo, BodyParamAttribute)>();
         foreach (var prop in bodyProps)
         {
           var attribute = (BodyParamAttribute)prop.GetCustomAttribute(typeof(BodyParamAttribute));
-          _bodyParamsCache[prop] = attribute;
+          _bodyParamsCache[type].Add((prop, attribute));
           AddBodyParam(body, prop, attribute);
         }
       }
@@ -51,20 +55,22 @@ namespace SpotifyAPI.Web
       }
     }
 
-    private static readonly ConcurrentDictionary<PropertyInfo, QueryParamAttribute> _queryParamsCache =
-      new ConcurrentDictionary<PropertyInfo, QueryParamAttribute>();
+    private static readonly ConcurrentDictionary<Type, List<(PropertyInfo, QueryParamAttribute)>> _queryParamsCache =
+      new ConcurrentDictionary<Type, List<(PropertyInfo, QueryParamAttribute)>>();
+
     public Dictionary<string, string> BuildQueryParams()
     {
       // Make sure everything is okay before building query params
       CustomEnsure();
 
       var queryParams = new Dictionary<string, string>();
+      var type = GetType();
 
-      if (!_queryParamsCache.IsEmpty)
+      if (!_queryParamsCache.IsEmpty && _queryParamsCache.ContainsKey(type))
       {
-        foreach (var queryParam in _queryParamsCache)
+        foreach (var (info, attribute) in _queryParamsCache[type])
         {
-          AddQueryParam(queryParams, queryParam.Key, queryParam.Value);
+          AddQueryParam(queryParams, info, attribute);
         }
       }
       else
@@ -72,10 +78,11 @@ namespace SpotifyAPI.Web
         var queryProps = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
         .Where(prop => prop.GetCustomAttributes(typeof(QueryParamAttribute), true).Length > 0);
 
+        _queryParamsCache[type] = new List<(PropertyInfo, QueryParamAttribute)>();
         foreach (var prop in queryProps)
         {
           var attribute = (QueryParamAttribute)prop.GetCustomAttribute(typeof(QueryParamAttribute));
-          _queryParamsCache[prop] = attribute;
+          _queryParamsCache[type].Add((prop, attribute));
           AddQueryParam(queryParams, prop, attribute);
         }
       }
@@ -94,6 +101,10 @@ namespace SpotifyAPI.Web
         {
           var str = string.Join(",", list);
           queryParams.Add(attribute.Key ?? prop.Name, str);
+        }
+        else if (value is bool valueAsBool)
+        {
+          queryParams.Add(attribute.Key ?? prop.Name, valueAsBool ? "true" : "false");
         }
         else if (value is Enum valueAsEnum)
         {
