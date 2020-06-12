@@ -28,10 +28,9 @@ namespace SpotifyAPI.Web
 
     public Task<Paging<PlaylistTrack<IPlayableItem>>> GetItems(string playlistId)
     {
-      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       var request = new PlaylistGetItemsRequest();
 
-      return API.Get<Paging<PlaylistTrack<IPlayableItem>>>(URLs.PlaylistTracks(playlistId), request.BuildQueryParams());
+      return GetItems(playlistId, request);
     }
 
     public Task<Paging<PlaylistTrack<IPlayableItem>>> GetItems(string playlistId, PlaylistGetItemsRequest request)
@@ -83,10 +82,9 @@ namespace SpotifyAPI.Web
 
     public Task<FullPlaylist> Get(string playlistId)
     {
-      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       var request = new PlaylistGetRequest(); // We need some defaults
 
-      return API.Get<FullPlaylist>(URLs.Playlist(playlistId), request.BuildQueryParams());
+      return Get(playlistId, request);
     }
 
     public Task<FullPlaylist> Get(string playlistId, PlaylistGetRequest request)

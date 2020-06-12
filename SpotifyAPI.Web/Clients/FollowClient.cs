@@ -60,14 +60,14 @@ namespace SpotifyAPI.Web
     {
       var request = new FollowOfCurrentUserRequest();
 
-      return API.Get<FollowedArtistsResponse>(URLs.CurrentUserFollower(), request.BuildQueryParams());
+      return OfCurrentUser(request);
     }
 
     public Task<FollowedArtistsResponse> OfCurrentUser(FollowOfCurrentUserRequest request)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<FollowedArtistsResponse>(URLs.CurrentUserFollower());
+      return API.Get<FollowedArtistsResponse>(URLs.CurrentUserFollower(), request.BuildQueryParams());
     }
 
     public async Task<bool> Unfollow(UnfollowRequest request)
