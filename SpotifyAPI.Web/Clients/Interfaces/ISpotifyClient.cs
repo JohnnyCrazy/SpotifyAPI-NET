@@ -111,28 +111,6 @@ namespace SpotifyAPI.Web
 
     /// <summary>
     /// Fetches all pages and returns them grouped in a list.
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="getFirstPage">A function to retrive the first page, will be included in the output list!</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <returns>A list containing all fetched pages</returns>
-    Task<IList<T>> PaginateAll<T>(Func<Task<IPaginatable<T>>> getFirstPage, IPaginator? paginator = default!);
-
-    /// <summary>
-    /// Fetches all pages and returns them grouped in a list.
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="firstPageTask">A task to retrive the first page, will be included in the output list!</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <returns>A list containing all fetched pages</returns>
-    Task<IList<T>> PaginateAll<T>(Task<IPaginatable<T>> firstPageTask, IPaginator? paginator = default!);
-
-    /// <summary>
-    /// Fetches all pages and returns them grouped in a list.
     /// Some responses (e.g search response) have the pagination nested in a JSON Property.
     /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
     /// The default paginator will fetch all available resources without a delay between requests.
@@ -146,44 +124,6 @@ namespace SpotifyAPI.Web
     /// <returns>A list containing all fetched pages</returns>
     Task<IList<T>> PaginateAll<T, TNext>(
       IPaginatable<T, TNext> firstPage,
-      Func<TNext, IPaginatable<T, TNext>> mapper,
-      IPaginator? paginator = default!
-    );
-
-    /// <summary>
-    /// Fetches all pages and returns them grouped in a list.
-    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
-    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="getFirstPage">A function to retrive the first page, will be included in the output list!</param>
-    /// <param name="mapper">A function which maps response objects to the next paging object</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <typeparam name="TNext">The Response-Type</typeparam>
-    /// <returns></returns>
-    Task<IList<T>> PaginateAll<T, TNext>(
-      Func<Task<IPaginatable<T, TNext>>> getFirstPage,
-      Func<TNext, IPaginatable<T, TNext>> mapper,
-      IPaginator? paginator = default!
-    );
-
-    /// <summary>
-    /// Fetches all pages and returns them grouped in a list.
-    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
-    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="firstPageTask">A Task to retrive the first page, will be included in the output list!</param>
-    /// <param name="mapper">A function which maps response objects to the next paging object</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <typeparam name="TNext">The Response-Type</typeparam>
-    /// <returns></returns>
-    Task<IList<T>> PaginateAll<T, TNext>(
-      Task<IPaginatable<T, TNext>> firstPageTask,
       Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = default!
     );
@@ -207,38 +147,6 @@ namespace SpotifyAPI.Web
 
     /// <summary>
     /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="getFirstPage">A Function to retrive the first page, will be included in the output list!</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <param name="cancellationToken">An optional Cancellation Token</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <returns>An iterable IAsyncEnumerable</returns>
-    IAsyncEnumerable<T> Paginate<T>(
-      Func<Task<IPaginatable<T>>> getFirstPage,
-      IPaginator? paginator = default!,
-      CancellationToken cancellationToken = default!
-    );
-
-    /// <summary>
-    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="firstPageTask">A Task to retrive the first page, will be included in the output list!</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <param name="cancellationToken">An optional Cancellation Token</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <returns>An iterable IAsyncEnumerable</returns>
-    IAsyncEnumerable<T> Paginate<T>(
-      Task<IPaginatable<T>> firstPageTask,
-      IPaginator? paginator = default!,
-      CancellationToken cancellationToken = default!
-    );
-
-    /// <summary>
-    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
     /// Some responses (e.g search response) have the pagination nested in a JSON Property.
     /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
     /// The default paginator will fetch all available resources without a delay between requests.
@@ -258,47 +166,6 @@ namespace SpotifyAPI.Web
       CancellationToken cancellationToken = default!
     );
 
-    /// <summary>
-    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
-    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
-    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="getFirstPage">A Function to retrive the first page, will be included in the output list!</param>
-    /// <param name="mapper">A function which maps response objects to the next paging object</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <param name="cancellationToken">An optional Cancellation Token</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <typeparam name="TNext">The Response-Type</typeparam>
-    /// <returns></returns>
-    IAsyncEnumerable<T> Paginate<T, TNext>(
-      Func<Task<IPaginatable<T, TNext>>> getFirstPage,
-      Func<TNext, IPaginatable<T, TNext>> mapper,
-      IPaginator? paginator = default!,
-      CancellationToken cancellationToken = default!
-    );
-
-    /// <summary>
-    /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
-    /// Some responses (e.g search response) have the pagination nested in a JSON Property.
-    /// To workaround this limitation, the mapper is required and needs to point to the correct next pagination.
-    /// The default paginator will fetch all available resources without a delay between requests.
-    /// This can drain your request limit quite fast, so consider using a custom paginator with delays.
-    /// </summary>
-    /// <param name="firstPageTask">A Task to retrive the first page, will be included in the output list!</param>
-    /// <param name="mapper">A function which maps response objects to the next paging object</param>
-    /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <param name="cancellationToken">An optional Cancellation Token</param>
-    /// <typeparam name="T">The Paging-Type</typeparam>
-    /// <typeparam name="TNext">The Response-Type</typeparam>
-    /// <returns></returns>
-    IAsyncEnumerable<T> Paginate<T, TNext>(
-      Task<IPaginatable<T, TNext>> firstPageTask,
-      Func<TNext, IPaginatable<T, TNext>> mapper,
-      IPaginator? paginator = default!,
-      CancellationToken cancellationToken = default!
-    );
 #endif
   }
 }
