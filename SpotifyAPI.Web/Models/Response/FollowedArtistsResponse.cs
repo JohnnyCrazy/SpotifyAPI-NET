@@ -2,7 +2,7 @@ namespace SpotifyAPI.Web
 {
   public class FollowedArtistsResponse
   {
-    public CursorPaging<FullArtist> Artists { get; set; } = default!;
+    public CursorPaging<FullArtist, FollowedArtistsResponse> Artists { get; set; } = default!;
   }
 }
 

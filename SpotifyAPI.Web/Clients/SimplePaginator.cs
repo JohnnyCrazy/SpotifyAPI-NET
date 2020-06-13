@@ -9,16 +9,16 @@ namespace SpotifyAPI.Web
 {
   public class SimplePaginator : IPaginator
   {
-    protected virtual Task<bool> ShouldContinue<T>(List<T> results, Paging<T> page)
+    protected virtual Task<bool> ShouldContinue<T>(List<T> results, IPaginatable<T> page)
     {
       return Task.FromResult(true);
     }
-    protected virtual Task<bool> ShouldContinue<T, TNext>(List<T> results, Paging<T, TNext> page)
+    protected virtual Task<bool> ShouldContinue<T, TNext>(List<T> results, IPaginatable<T, TNext> page)
     {
       return Task.FromResult(true);
     }
 
-    public async Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IAPIConnector connector)
+    public async Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IAPIConnector connector)
     {
       Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
       Ensure.ArgumentNotNull(connector, nameof(connector));
@@ -36,7 +36,7 @@ namespace SpotifyAPI.Web
     }
 
     public async Task<IList<T>> PaginateAll<T, TNext>(
-      Paging<T, TNext> firstPage, Func<TNext, Paging<T, TNext>> mapper, IAPIConnector connector
+      IPaginatable<T, TNext> firstPage, Func<TNext, IPaginatable<T, TNext>> mapper, IAPIConnector connector
     )
     {
       Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
@@ -58,7 +58,7 @@ namespace SpotifyAPI.Web
 
 #if NETSTANDARD2_1
     public async IAsyncEnumerable<T> Paginate<T>(
-      Paging<T> firstPage,
+      IPaginatable<T> firstPage,
       IAPIConnector connector,
       [EnumeratorCancellation] CancellationToken cancel = default)
     {
@@ -81,8 +81,8 @@ namespace SpotifyAPI.Web
     }
 
     public async IAsyncEnumerable<T> Paginate<T, TNext>(
-      Paging<T, TNext> firstPage,
-      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginatable<T, TNext> firstPage,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IAPIConnector connector,
       [EnumeratorCancellation] CancellationToken cancel = default)
     {

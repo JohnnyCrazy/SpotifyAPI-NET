@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
+using SpotifyAPI.Web;
 
 namespace SpotifyAPI.Web
 {
@@ -18,7 +19,7 @@ namespace SpotifyAPI.Web
     /// <param name="connector">An API Connector to make requests to spotify</param>
     /// <typeparam name="T">Paging Type</typeparam>
     /// <returns>A list containing all pages, including the firstPage</returns>
-    Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IAPIConnector connector);
+    Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IAPIConnector connector);
 
     /// <summary>
     /// Fetches all pages and returns them grouped in a list.
@@ -33,8 +34,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">Outer response Type</typeparam>
     /// <returns>A list containing all pages, including the firstPage</returns>
     Task<IList<T>> PaginateAll<T, TNext>(
-      Paging<T, TNext> firstPage,
-      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginatable<T, TNext> firstPage,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IAPIConnector connector
     );
 
@@ -47,7 +48,7 @@ namespace SpotifyAPI.Web
     /// <param name="cancel">A CancellationToken</param>
     /// <typeparam name="T">Paging Type</typeparam>
     /// <returns></returns>
-    IAsyncEnumerable<T> Paginate<T>(Paging<T> firstPage, IAPIConnector connector, CancellationToken cancel = default);
+    IAsyncEnumerable<T> Paginate<T>(IPaginatable<T> firstPage, IAPIConnector connector, CancellationToken cancel = default);
 
     /// <summary>
     /// Fetches all pages and returns them grouped in a list.
@@ -63,8 +64,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">Outer response Type</typeparam>
     /// <returns></returns>
     IAsyncEnumerable<T> Paginate<T, TNext>(
-      Paging<T, TNext> firstPage,
-      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginatable<T, TNext> firstPage,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IAPIConnector connector,
       CancellationToken cancel = default
     );

@@ -91,7 +91,7 @@ namespace SpotifyAPI.Web
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
-    public Task<IList<T>> PaginateAll<T>(Paging<T> firstPage, IPaginator? paginator = null)
+    public Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IPaginator? paginator = null)
     {
       return (paginator ?? DefaultPaginator).PaginateAll(firstPage, _apiConnector);
     }
@@ -105,7 +105,7 @@ namespace SpotifyAPI.Web
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
-    public async Task<IList<T>> PaginateAll<T>(Func<Task<Paging<T>>> getFirstPage, IPaginator? paginator = null)
+    public async Task<IList<T>> PaginateAll<T>(Func<Task<IPaginatable<T>>> getFirstPage, IPaginator? paginator = null)
     {
       Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
 
@@ -122,7 +122,7 @@ namespace SpotifyAPI.Web
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
-    public async Task<IList<T>> PaginateAll<T>(Task<Paging<T>> firstPageTask, IPaginator? paginator = null)
+    public async Task<IList<T>> PaginateAll<T>(Task<IPaginatable<T>> firstPageTask, IPaginator? paginator = null)
     {
       Ensure.ArgumentNotNull(firstPageTask, nameof(firstPageTask));
 
@@ -145,8 +145,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
     public Task<IList<T>> PaginateAll<T, TNext>(
-      Paging<T, TNext> firstPage,
-      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginatable<T, TNext> firstPage,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = null
     )
     {
@@ -168,8 +168,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns></returns>
     public async Task<IList<T>> PaginateAll<T, TNext>(
-      Func<Task<Paging<T, TNext>>> getFirstPage,
-      Func<TNext, Paging<T, TNext>> mapper,
+      Func<Task<IPaginatable<T, TNext>>> getFirstPage,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = null
     )
     {
@@ -193,8 +193,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns></returns>
     public async Task<IList<T>> PaginateAll<T, TNext>(
-      Task<Paging<T, TNext>> firstPageTask,
-      Func<TNext, Paging<T, TNext>> mapper,
+      Task<IPaginatable<T, TNext>> firstPageTask,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = null
     )
     {
@@ -217,7 +217,7 @@ namespace SpotifyAPI.Web
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>An iterable IAsyncEnumerable</returns>
     public IAsyncEnumerable<T> Paginate<T>(
-      Paging<T> firstPage,
+      IPaginatable<T> firstPage,
       IPaginator? paginator = null,
       CancellationToken cancellationToken = default
     )
@@ -236,7 +236,7 @@ namespace SpotifyAPI.Web
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>An iterable IAsyncEnumerable</returns>
     public async IAsyncEnumerable<T> Paginate<T>(
-      Func<Task<Paging<T>>> getFirstPage,
+      Func<Task<IPaginatable<T>>> getFirstPage,
       IPaginator? paginator = null,
       [EnumeratorCancellation] CancellationToken cancellationToken = default
     )
@@ -265,7 +265,7 @@ namespace SpotifyAPI.Web
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>An iterable IAsyncEnumerable</returns>
     public async IAsyncEnumerable<T> Paginate<T>(
-      Task<Paging<T>> firstPageTask,
+      Task<IPaginatable<T>> firstPageTask,
       IPaginator? paginator = null,
       [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -296,8 +296,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns></returns>
     public IAsyncEnumerable<T> Paginate<T, TNext>(
-      Paging<T, TNext> firstPage,
-      Func<TNext, Paging<T, TNext>> mapper,
+      IPaginatable<T, TNext> firstPage,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = null,
       CancellationToken cancellationToken = default
     )
@@ -320,8 +320,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns></returns>
     public async IAsyncEnumerable<T> Paginate<T, TNext>(
-      Func<Task<Paging<T, TNext>>> getFirstPage,
-      Func<TNext, Paging<T, TNext>> mapper,
+      Func<Task<IPaginatable<T, TNext>>> getFirstPage,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = null,
       [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
@@ -352,8 +352,8 @@ namespace SpotifyAPI.Web
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns></returns>
     public async IAsyncEnumerable<T> Paginate<T, TNext>(
-      Task<Paging<T, TNext>> firstPageTask,
-      Func<TNext, Paging<T, TNext>> mapper,
+      Task<IPaginatable<T, TNext>> firstPageTask,
+      Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = null,
       [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
