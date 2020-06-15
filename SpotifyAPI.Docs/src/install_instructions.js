@@ -3,22 +3,25 @@ import CodeBlock from '@theme/CodeBlock'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
+// Will be removed after beta releases
+const VERSION = '6.0.0-beta.5';
+
 const installCodeNuget =
-  `Install-Package SpotifyAPI.Web -Version 6.0.0-beta.4
+  `Install-Package SpotifyAPI.Web -Version ${VERSION}
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
-Install-Package SpotifyAPI.Web.Auth -Version 6.0.0-beta.4
+Install-Package SpotifyAPI.Web.Auth -Version ${VERSION}
 `;
 
 const installReference =
-  `<PackageReference Include="SpotifyAPI.Web" Version="6.0.0-beta.4" />
+  `<PackageReference Include="SpotifyAPI.Web" Version="${VERSION}" />
 <!-- Optional Auth module, which includes an embedded HTTP Server for OAuth2 -->
-<PackageReference Include="SpotifyAPI.Web.Auth" Version="6.0.0-beta.4" />
+<PackageReference Include="SpotifyAPI.Web.Auth" Version="${VERSION}" />
 `;
 
 const installCodeCLI =
-  `dotnet add package SpotifyAPI.Web --version 6.0.0-beta.4
+  `dotnet add package SpotifyAPI.Web --version ${VERSION}
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
-dotnet add package SpotifyAPI.Web.Auth --version 6.0.0-beta.4
+dotnet add package SpotifyAPI.Web.Auth --version ${VERSION}
 `;
 
 const InstallInstructions = () => {
