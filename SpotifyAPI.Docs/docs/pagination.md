@@ -14,10 +14,8 @@ It allows to receive only a subset of all available data and dynamically check i
 `PaginateAll` will query all remaining elements based on a first page and return all of them in a `IList`. This method should not be used for a huge amount of pages (e.g `Search` Endpoint), since it stores every response in memory.
 
 ```csharp
-// we need the first page, every syntax can be used for pagination
+// we need the first page
 var page = await spotify.Playlists.CurrentUsers();
-var page = spotify.Playlists.CurrentUsers();
-var page = () => spotify.Playlists.CurrentUsers();
 
 // allPages will include the first page retrived before
 var allPages = await spotify.PaginateAll(page);
@@ -31,10 +29,8 @@ var allPages = await spotify.PaginateAll(page);
 `Paginate` is based on `IAsyncEnumerable` and streams pages instead of returning them all in one list. This allows to break the fetching early and keeps only 1 page in memory at a time. This method should always be preferred to `PaginateAll`
 
 ```csharp
-// we need the first page, every syntax can be used for pagination
+// we need the first page
 var page = await spotify.Playlists.CurrentUsers();
-var page = spotify.Playlists.CurrentUsers();
-var page = () => spotify.Playlists.CurrentUsers();
 
 await foreach(var item in spotify.Paginate(page))
 {
