@@ -4,7 +4,7 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 // Will be removed after beta releases
-const VERSION = '6.0.0-beta.5';
+const VERSION = '6.0.0-beta.6';
 
 const installCodeNuget =
   `Install-Package SpotifyAPI.Web -Version ${VERSION}
