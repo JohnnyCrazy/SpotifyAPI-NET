@@ -6,6 +6,8 @@ namespace SpotifyAPI.Web
 {
   public class PlayableItemConverter : JsonConverter
   {
+    public override bool CanWrite { get => false; }
+
     public override bool CanConvert(Type objectType) => true;
 
     public override object? ReadJson(JsonReader reader, Type objectType,
