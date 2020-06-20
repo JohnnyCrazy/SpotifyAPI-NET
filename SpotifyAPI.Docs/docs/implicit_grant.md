@@ -88,16 +88,16 @@ public static async Task Main()
   _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
   await _server.Start();
 
-  _server.ImplictGrantReceived += OnImplictGrantReceived;
+  _server.ImplictGrantReceived += OnImplicitGrantReceived;
 
-  var request = new LoginRequest(_server.BaseUri, "ClientId", LoginRequest.ResponseType.Code)
+  var request = new LoginRequest(_server.BaseUri, "ClientId", LoginRequest.ResponseType.Token)
   {
     Scope = new List<string> { Scopes.UserReadEmail }
   };
-  BrowserUtil.Open(uri);
+  BrowserUtil.Open(request.ToUri());
 }
 
-private static async Task OnImplictGrantReceived(object sender, ImplictGrantResponse response)
+private static async Task OnImplicitGrantReceived(object sender, ImplictGrantResponse response)
 {
   await _server.Stop();
   var spotify = new SpotifyClient(response.AccessToken);
