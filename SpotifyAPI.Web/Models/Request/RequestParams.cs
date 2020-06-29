@@ -97,10 +97,13 @@ namespace SpotifyAPI.Web
       object value = prop.GetValue(this);
       if (value != null)
       {
-        if (value is IList<string> list && list.Count > 0)
+        if (value is IList<string> list)
         {
-          var str = string.Join(",", list);
-          queryParams.Add(attribute.Key ?? prop.Name, str);
+          if (list.Count > 0)
+          {
+            var str = string.Join(",", list);
+            queryParams.Add(attribute.Key ?? prop.Name, str);
+          }
         }
         else if (value is bool valueAsBool)
         {

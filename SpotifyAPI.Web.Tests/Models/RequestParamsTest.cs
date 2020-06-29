@@ -36,6 +36,15 @@ namespace SpotifyAPI.Web.Tests
       Assert.AreEqual("{\"first\":true}", firstParams.ToString(Formatting.None));
       Assert.AreEqual("{\"second\":false}", secondParams.ToString(Formatting.None));
     }
+
+    [Test]
+    public void EmptyListIsSkippedInQueryParams()
+    {
+      var first = new EmptyListExampleRequestModel();
+      Assert.AreEqual(new Dictionary<string, string> { }, first.BuildQueryParams());
+      first.List.Add("hello_world");
+      Assert.AreEqual(new Dictionary<string, string> { { "list", "hello_world" } }, first.BuildQueryParams());
+    }
   }
 
   public class FirstRequestModel : RequestParams
@@ -50,5 +59,11 @@ namespace SpotifyAPI.Web.Tests
     [BodyParam("second")]
     [QueryParam("second")]
     public bool? Second { get; set; }
+  }
+
+  public class EmptyListExampleRequestModel : RequestParams
+  {
+    [QueryParam("list")]
+    public IList<string> List { get; set; } = new List<string>();
   }
 }
