@@ -37,3 +37,20 @@ foreach (PlaylistTrack<IPlayableItem> item in playlist.Tracks.Items)
 ```
 
 To this day, `IPlayableItem` can only be `FullTrack` or `FullEpisode`.
+
+## Fields
+
+When requesting just a subset of fields using the `fields` query parameter, the call might fail with an exception similar to `Received unkown playlist element type`. For example, the following call fails:
+
+```csharp
+var playlistGetItemsRequest = new PlaylistGetItemsRequest();
+playlistGetItemsRequest.Fields.Add("items(track(name))");
+var playlistItems = await spotify.Playlists.GetItems("YourPlaylistId", playlistGetItemsRequest);
+```
+
+By requesting just the track name from the items, we don't have any kind of type information of the item itself. Thus, we're unable to cast it to the correct model. To fix this, include the type in the fields as well:
+
+```csharp
+playlistGetItemsRequest.Fields.Add("items(track(name,type))");
+```
+

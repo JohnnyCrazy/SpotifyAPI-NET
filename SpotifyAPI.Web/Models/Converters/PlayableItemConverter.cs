@@ -36,7 +36,9 @@ namespace SpotifyAPI.Web
       }
       else
       {
-        throw new Exception($"Received unkown playlist element type: {type}");
+        throw new Exception($@"Received unkown playlist element type: {type}.
+If you're requesting a subset of available fields via the fields query paramter,
+make sure to include at least the type field. Often it's `items(track(type))` or `item(type)`");
       }
     }
 
