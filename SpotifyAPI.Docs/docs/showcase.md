@@ -58,3 +58,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [Melodify](https://github.com/novatorem/Melodify) by [@Novatorem](https://github.com/Novatorem)
 
 > Spotify miniplayer interface with user stats, recommendations, youtube music videos, and more. Exposes a lot of SpotifyAPI-NET functionality with reauth.
+
+### [Library Bridger](https://github.com/Iztral/Library-Bridger-2) by [@Iztral](https://github.com/Iztral)
+
+> Application that scans your local music library and searches Spotify for equivalent tracks. It automates most of the process so you don't need to search for each individual song by hand. Additional, you can enable search by audio so it works a bit like Shazam.
