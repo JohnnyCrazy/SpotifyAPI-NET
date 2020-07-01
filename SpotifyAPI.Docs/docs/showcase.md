@@ -21,6 +21,10 @@ Send a PR via the "Edit this page" link at the end of the page!
 
 > Records Spotify to mp3 without ads while it plays and includes media tags to the recorded files
 
+### [Sp0](https://github.com/JohnnyCrazy/sp0) by [@JohnnyCrazy](https://github.com/JohnnyCrazy)
+
+> A cross-platform CLI Tool for requesting the Spotify Web API, with a focus on automation. 
+
 ### [audio-band](https://github.com/dsafa/audio-band) by [@dsafa](https://github.com/dsafa)
 
 > Display and control songs from the Windows taskbar
