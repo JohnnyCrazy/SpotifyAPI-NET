@@ -57,7 +57,9 @@ namespace SpotifyAPI.Web
       {
         return null;
       }
-      if (int.TryParse(response.Headers["Retry-After"], out int secondsToWait))
+      if (
+        int.TryParse(response.Headers.GetValueOrDefault("Retry-After"), out int secondsToWait)
+        || int.TryParse(response.Headers.GetValueOrDefault("retry-after"), out secondsToWait))
       {
         return TimeSpan.FromSeconds(secondsToWait);
       }

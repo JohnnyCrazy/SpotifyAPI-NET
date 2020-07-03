@@ -12,6 +12,35 @@ namespace SpotifyAPI.Web
   public class SimpleRetryHandlerTest
   {
     [Test]
+    public void HandleRetry_WorksWithLowerCaseHeader()
+    {
+      var setup = new Setup();
+      setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
+      setup.Response.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
+        { "retry-after", "50" }
+      });
+
+      var retryCalled = 0;
+      setup.Retry = (IRequest request) =>
+      {
+        retryCalled++;
+        return Task.FromResult(setup.Response.Object);
+      };
+
+      var handler = new SimpleRetryHandler(setup.Sleep.Object)
+      {
+        TooManyRequestsConsumesARetry = true,
+        RetryTimes = 1
+      };
+      Assert.DoesNotThrowAsync(async () =>
+      {
+        var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
+      });
+
+      Assert.AreEqual(1, retryCalled);
+    }
+
+    [Test]
     public async Task HandleRetry_TooManyRequestsWithNoSuccess()
     {
       var setup = new Setup();
