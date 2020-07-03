@@ -76,7 +76,7 @@ namespace SpotifyAPI.Web.Tests
           It.IsAny<IResponse>(),
           It.IsAny<IRetryHandler.RetryFunc>()
         )
-      ).Returns((IRequest request, IResponse response, IRetryHandler.RetryFunc retry) => retry(request));
+      ).Returns((IRequest request, IResponse _, IRetryHandler.RetryFunc retry) => retry(request));
 
       var apiConnector = new APIConnector(
         new Uri("https://spotify.com"),
