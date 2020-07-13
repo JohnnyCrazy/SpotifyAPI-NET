@@ -45,6 +45,32 @@ namespace SpotifyAPI.Web.Tests
       first.List.Add("hello_world");
       Assert.AreEqual(new Dictionary<string, string> { { "list", "hello_world" } }, first.BuildQueryParams());
     }
+
+    [Test]
+    public void EnumWithoutFlagsDoesNotHaveMultipleValues()
+    {
+      var enumModel = new EnumWithoutFlagsRequestModel
+      {
+        AnEnumParam = EnumWithoutFlagsRequestModel.AnEnum.Two
+      };
+
+      var result = enumModel.BuildQueryParams();
+      Assert.AreEqual(1, result.Keys.Count);
+      Assert.AreEqual("two", result["an_enum"]);
+    }
+
+    [Test]
+    public void EnumWithFlagsDoesHaveMultipleValues()
+    {
+      var enumModel = new EnumWitFlagsRequestModel
+      {
+        AnEnumParam = EnumWitFlagsRequestModel.AnEnum.Two | EnumWitFlagsRequestModel.AnEnum.One
+      };
+
+      var result = enumModel.BuildQueryParams();
+      Assert.AreEqual(1, result.Keys.Count);
+      Assert.AreEqual("one,two", result["an_enum"]);
+    }
   }
 
   public class FirstRequestModel : RequestParams
@@ -65,5 +91,36 @@ namespace SpotifyAPI.Web.Tests
   {
     [QueryParam("list")]
     public IList<string> List { get; set; } = new List<string>();
+  }
+
+  public class EnumWithoutFlagsRequestModel : RequestParams
+  {
+    [QueryParam("an_enum")]
+    public AnEnum AnEnumParam { get; set; }
+
+    public enum AnEnum
+    {
+      [String("one")]
+      One,
+
+      [String("two")]
+      Two,
+    }
+  }
+
+  public class EnumWitFlagsRequestModel : RequestParams
+  {
+    [QueryParam("an_enum")]
+    public AnEnum AnEnumParam { get; set; }
+
+    [Flags]
+    public enum AnEnum
+    {
+      [String("one")]
+      One = 1,
+
+      [String("two")]
+      Two = 2,
+    }
   }
 }

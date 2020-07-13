@@ -41,17 +41,17 @@ namespace SpotifyAPI.Web
     public enum IncludeGroups
     {
       [String("album")]
-      Album,
+      Album = 1,
 
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1720")]
       [String("single")]
-      Single,
+      Single = 2,
 
       [String("appears_on")]
-      AppearsOn,
+      AppearsOn = 4,
 
       [String("compilation")]
-      Compilation
+      Compilation = 8,
     }
   }
 }
