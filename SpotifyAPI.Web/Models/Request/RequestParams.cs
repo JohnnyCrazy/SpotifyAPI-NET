@@ -122,7 +122,8 @@ namespace SpotifyAPI.Web
               {
                 if (StringAttribute.GetValue(enumType, enumVal, out var stringVal))
                 {
-                  valueList.Add(stringVal);
+                  // .netstandard2.0 requires !
+                  valueList.Add(stringVal!);
                 }
               }
             }
@@ -131,7 +132,8 @@ namespace SpotifyAPI.Web
           {
             if (StringAttribute.GetValue(enumType, valueAsEnum, out var stringVal))
             {
-              valueList.Add(stringVal);
+              // .netstandard2.0 requires !
+              valueList.Add(stringVal!);
             }
           }
           queryParams.Add(attribute.Key ?? prop.Name, string.Join(",", valueList));

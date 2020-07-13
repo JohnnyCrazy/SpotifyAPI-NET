@@ -64,6 +64,10 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
       Ensure.ArgumentNotNull(connector, nameof(connector));
+      if (firstPage.Items == null)
+      {
+        throw new ArgumentException("The first page has to contain an Items list!", nameof(firstPage));
+      }
 
       var page = firstPage;
       foreach (var item in page.Items)
@@ -73,7 +77,7 @@ namespace SpotifyAPI.Web
       while (page.Next != null)
       {
         page = await connector.Get<Paging<T>>(new Uri(page.Next, UriKind.Absolute)).ConfigureAwait(false);
-        foreach (var item in page.Items)
+        foreach (var item in page.Items!)
         {
           yield return item;
         }
@@ -89,6 +93,10 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(firstPage, nameof(firstPage));
       Ensure.ArgumentNotNull(mapper, nameof(mapper));
       Ensure.ArgumentNotNull(connector, nameof(connector));
+      if (firstPage.Items == null)
+      {
+        throw new ArgumentException("The first page has to contain an Items list!", nameof(firstPage));
+      }
 
       var page = firstPage;
       foreach (var item in page.Items)
@@ -99,7 +107,7 @@ namespace SpotifyAPI.Web
       {
         var next = await connector.Get<TNext>(new Uri(page.Next, UriKind.Absolute)).ConfigureAwait(false);
         page = mapper(next);
-        foreach (var item in page.Items)
+        foreach (var item in page.Items!)
         {
           yield return item;
         }
