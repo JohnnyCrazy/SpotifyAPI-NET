@@ -60,7 +60,7 @@ namespace SpotifyAPI.Web
 
     public Task<RecommendationGenresResponse> GetRecommendationGenres()
     {
-      return API.Get<RecommendationGenresResponse>(URLs.Recommendations());
+      return API.Get<RecommendationGenresResponse>(URLs.RecommendationGenres());
     }
 
     public Task<NewReleasesResponse> GetNewReleases()
