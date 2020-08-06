@@ -24,6 +24,8 @@ namespace SpotifyAPI.Web
     public string? State { get; set; }
     public ICollection<string>? Scope { get; set; }
     public bool? ShowDialog { get; set; }
+    public string? CodeChallengeMethod { get; set; }
+    public string? CodeChallenge { get; set; }
 
     public Uri ToUri()
     {
@@ -42,6 +44,14 @@ namespace SpotifyAPI.Web
       if (ShowDialog != null)
       {
         builder.Append($"&show_dialog={ShowDialog.Value}");
+      }
+      if (CodeChallenge != null)
+      {
+        builder.Append($"&code_challenge={CodeChallenge}");
+      }
+      if (CodeChallengeMethod != null)
+      {
+        builder.Append($"&code_challenge_method={CodeChallengeMethod}");
       }
 
       return new Uri(builder.ToString());

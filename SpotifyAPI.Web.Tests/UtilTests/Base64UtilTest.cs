@@ -10,7 +10,7 @@ namespace SpotifyAPI.Web.Tests
     [Test]
     public void Base64UrlDecode_Works()
     {
-      var encoded = "SGVsbG9Xb3JsZA==";
+      var encoded = "SGVsbG9Xb3JsZA";
 
       Assert.AreEqual("HelloWorld", Encoding.UTF8.GetString(Base64Util.UrlDecode(encoded)));
     }
@@ -20,7 +20,7 @@ namespace SpotifyAPI.Web.Tests
     {
       var decoded = "HelloWorld";
 
-      Assert.AreEqual("SGVsbG9Xb3JsZA==", Base64Util.UrlEncode(Encoding.UTF8.GetBytes(decoded)));
+      Assert.AreEqual("SGVsbG9Xb3JsZA", Base64Util.UrlEncode(Encoding.UTF8.GetBytes(decoded)));
     }
 
     [Test]

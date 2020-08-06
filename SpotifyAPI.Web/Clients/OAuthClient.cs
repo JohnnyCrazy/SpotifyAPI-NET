@@ -16,6 +16,32 @@ namespace SpotifyAPI.Web
     public OAuthClient(SpotifyClientConfig config) : base(ValidateConfig(config)) { }
 
     /// <summary>
+    /// Requests a new token using pkce flow
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow-with-proof-key-for-code-exchange-pkce
+    /// </remarks>
+    /// <returns></returns>1
+    public Task<PKCETokenResponse> RequestToken(PKCETokenRequest request)
+    {
+      return RequestToken(request, API);
+    }
+
+    /// <summary>
+    /// Refreshes a token using pkce flow
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow-with-proof-key-for-code-exchange-pkce
+    /// </remarks>
+    /// <returns></returns>1
+    public Task<PKCETokenResponse> RequestToken(PKCETokenRefreshRequest request)
+    {
+      return RequestToken(request, API);
+    }
+
+    /// <summary>
     /// Requests a new token using client_ids and client_secrets.
     /// If the token is expired, simply call the funtion again to get a new token
     /// </summary>
@@ -79,6 +105,38 @@ namespace SpotifyAPI.Web
     public Task<AuthorizationCodeRefreshResponse> RequestToken(TokenSwapRefreshRequest request)
     {
       return RequestToken(request, API);
+    }
+
+    public static Task<PKCETokenResponse> RequestToken(PKCETokenRequest request, IAPIConnector apiConnector)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+      Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
+
+      var form = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>("client_id", request.ClientId),
+        new KeyValuePair<string, string>("grant_type", "authorization_code"),
+        new KeyValuePair<string, string>("code", request.Code),
+        new KeyValuePair<string, string>("redirect_uri", request.RedirectUri.ToString()),
+        new KeyValuePair<string, string>("code_verifier", request.CodeVerifier),
+      };
+
+      return SendOAuthRequest<PKCETokenResponse>(apiConnector, form, null, null);
+    }
+
+    public static Task<PKCETokenResponse> RequestToken(PKCETokenRefreshRequest request, IAPIConnector apiConnector)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+      Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
+
+      var form = new List<KeyValuePair<string, string>>
+      {
+        new KeyValuePair<string, string>("client_id", request.ClientId),
+        new KeyValuePair<string, string>("grant_type", "refresh_token"),
+        new KeyValuePair<string, string>("refresh_token", request.RefreshToken),
+      };
+
+      return SendOAuthRequest<PKCETokenResponse>(apiConnector, form, null, null);
     }
 
     public static Task<AuthorizationCodeRefreshResponse> RequestToken(
@@ -169,8 +227,8 @@ namespace SpotifyAPI.Web
     private static Task<T> SendOAuthRequest<T>(
       IAPIConnector apiConnector,
       List<KeyValuePair<string, string>> form,
-      string clientId,
-      string clientSecret)
+      string? clientId,
+      string? clientSecret)
     {
       var headers = BuildAuthHeader(clientId, clientSecret);
 #pragma warning disable CA2000
@@ -178,8 +236,13 @@ namespace SpotifyAPI.Web
 #pragma warning restore CA2000
     }
 
-    private static Dictionary<string, string> BuildAuthHeader(string clientId, string clientSecret)
+    private static Dictionary<string, string> BuildAuthHeader(string? clientId, string? clientSecret)
     {
+      if (clientId == null || clientSecret == null)
+      {
+        return new Dictionary<string, string>();
+      }
+
       var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{clientId}:{clientSecret}"));
       return new Dictionary<string, string>
       {

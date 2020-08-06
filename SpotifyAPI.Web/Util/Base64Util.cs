@@ -37,6 +37,10 @@ namespace SpotifyAPI.Web
         {
           buffer[i] = '_';
         }
+        else if (ch == '=')
+        {
+          return new string(buffer, startIndex: 0, length: i);
+        }
       }
 
       return new string(buffer, startIndex: 0, length: numBase64Chars);
