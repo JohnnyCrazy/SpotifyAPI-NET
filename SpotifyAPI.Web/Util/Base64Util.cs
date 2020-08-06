@@ -25,6 +25,20 @@ namespace SpotifyAPI.Web
       var buffer = new char[GetArraySizeRequiredToEncode(input.Length)];
       var numBase64Chars = Convert.ToBase64CharArray(input, 0, input.Length, buffer, 0);
 
+      // Fix up '+' -> '-' and '/' -> '_'. Drop padding characters.
+      for (var i = 0; i < numBase64Chars; i++)
+      {
+        var ch = buffer[i];
+        if (ch == '+')
+        {
+          buffer[i] = '-';
+        }
+        else if (ch == '/')
+        {
+          buffer[i] = '_';
+        }
+      }
+
       return new string(buffer, startIndex: 0, length: numBase64Chars);
     }
 
@@ -36,19 +50,14 @@ namespace SpotifyAPI.Web
         throw new ArgumentNullException(nameof(input));
       }
 
-      if (count == 0)
-      {
-        return Array.Empty<byte>();
-      }
-
       // Assumption: input is base64url encoded without padding and contains no whitespace.
 
-      var paddingCharsToAdd = GetNumBase64PaddingCharsToAddForDecode(count);
-      var arraySizeRequired = checked(count + paddingCharsToAdd);
+      var paddingCharsToAdd = GetNumBase64PaddingCharsToAddForDecode(input.Length);
+      var arraySizeRequired = checked(input.Length + paddingCharsToAdd);
 
       // Copy input into buffer, fixing up '-' -> '+' and '_' -> '/'.
       var i = 0;
-      for (var j = 0; i < count; i++, j++)
+      for (var j = 0; i < input.Length; i++, j++)
       {
         var ch = input[j];
         if (ch == '-')
