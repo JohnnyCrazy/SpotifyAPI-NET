@@ -2,11 +2,11 @@ using System.IO;
 using System.Threading.Tasks;
 using System;
 using SpotifyAPI.Web.Auth;
-using SpotifyAPI.Web.Http;
 using SpotifyAPI.Web;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using static SpotifyAPI.Web.Scopes;
+using Swan.Logging;
 
 namespace Example.CLI.PersistentConfig
 {
@@ -18,15 +18,18 @@ namespace Example.CLI.PersistentConfig
   {
     private const string CredentialsPath = "credentials.json";
     private static readonly string? clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
-    private static readonly string? clientSecret = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET");
     private static readonly EmbedIOAuthServer _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
 
+    private static void Exiting() => Console.CursorVisible = true;
     public static async Task<int> Main()
     {
-      if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret))
+      // This is a bug in the SWAN Logging library, need this hack to bring back the cursor
+      AppDomain.CurrentDomain.ProcessExit += (sender, e) => Exiting();
+
+      if (string.IsNullOrEmpty(clientId))
       {
         throw new NullReferenceException(
-          "Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET via environment variables before starting the program"
+          "Please set SPOTIFY_CLIENT_ID via environment variables before starting the program"
         );
       }
 
@@ -46,9 +49,9 @@ namespace Example.CLI.PersistentConfig
     private static async Task Start()
     {
       var json = await File.ReadAllTextAsync(CredentialsPath);
-      var token = JsonConvert.DeserializeObject<AuthorizationCodeTokenResponse>(json);
+      var token = JsonConvert.DeserializeObject<PKCETokenResponse>(json);
 
-      var authenticator = new AuthorizationCodeAuthenticator(clientId!, clientSecret!, token);
+      var authenticator = new PKCEAuthenticator(clientId!, token);
       authenticator.TokenRefreshed += (sender, token) => File.WriteAllText(CredentialsPath, JsonConvert.SerializeObject(token));
 
       var config = SpotifyClientConfig.CreateDefault()
@@ -68,12 +71,25 @@ namespace Example.CLI.PersistentConfig
 
     private static async Task StartAuthentication()
     {
+      var (verifier, challenge) = PKCEUtil.GenerateCodes();
+
       await _server.Start();
-      _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
+      _server.AuthorizationCodeReceived += async (sender, response) =>
+      {
+        await _server.Stop();
+        PKCETokenResponse token = await new OAuthClient().RequestToken(
+          new PKCETokenRequest(clientId!, response.Code, _server.BaseUri, verifier)
+        );
+
+        await File.WriteAllTextAsync(CredentialsPath, JsonConvert.SerializeObject(token));
+        await Start();
+      };
 
       var request = new LoginRequest(_server.BaseUri, clientId!, LoginRequest.ResponseType.Code)
       {
-        Scope = new List<string> { UserReadEmail, UserReadPrivate, PlaylistReadPrivate }
+        CodeChallenge = challenge,
+        CodeChallengeMethod = "S256",
+        Scope = new List<string> { UserReadEmail, UserReadPrivate, PlaylistReadPrivate, PlaylistReadCollaborative }
       };
 
       Uri uri = request.ToUri();
@@ -85,17 +101,6 @@ namespace Example.CLI.PersistentConfig
       {
         Console.WriteLine("Unable to open URL, manually open: {0}", uri);
       }
-    }
-
-    private static async Task OnAuthorizationCodeReceived(object sender, AuthorizationCodeResponse response)
-    {
-      await _server.Stop();
-      AuthorizationCodeTokenResponse token = await new OAuthClient().RequestToken(
-        new AuthorizationCodeTokenRequest(clientId!, clientSecret!, response.Code, _server.BaseUri)
-      );
-
-      await File.WriteAllTextAsync(CredentialsPath, JsonConvert.SerializeObject(token));
-      await Start();
     }
   }
 }

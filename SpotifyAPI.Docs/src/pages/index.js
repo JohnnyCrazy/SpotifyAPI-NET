@@ -1,18 +1,18 @@
-import React from 'react';
-import classnames from 'classnames';
-import Layout from '@theme/Layout';
-import CodeBlock from '@theme/CodeBlock'
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
 import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import styles from './styles.module.css';
-import GitHubButton from 'react-github-btn'
-import InstallInstructions from '../install_instructions';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import CodeBlock from '@theme/CodeBlock';
+import Layout from '@theme/Layout';
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+import classnames from 'classnames';
+import React from 'react';
+import GitHubButton from 'react-github-btn';
 
-const exampleCode =
-  `var spotify = new SpotifyClient("YourAccessToken");
+import InstallInstructions from '../install_instructions';
+import styles from './styles.module.css';
+
+const exampleCode = `var spotify = new SpotifyClient("YourAccessToken");
 
 var me = await spotify.UserProfile.Current();
 Console.WriteLine($"Hello there {me.DisplayName}");
@@ -30,7 +30,9 @@ const features = [
     imageUrl: 'img/undraw_preferences_uuo2.svg',
     description: () => (
       <>
-        <code>SpotifyAPI-NET</code> allows you to quickly integrate with Spotify's Web API by supplying sane configuration defaults from the start. Later on, behaviour can be customized using extensive configuration possibilities.
+        <code>SpotifyAPI-NET</code> allows you to quickly integrate with Spotify's Web API by supplying sane
+        configuration defaults from the start. Later on, behaviour can be customized using extensive configuration
+        possibilities.
       </>
     ),
   },
@@ -39,7 +41,8 @@ const features = [
     imageUrl: 'img/undraw_project_completed_w0oq.svg',
     description: () => (
       <>
-        The Spotify Web API consists of over 74 API calls. <code>SpotifyAPI-NET</code> provides fully typed requests/responses for all of them.
+        The Spotify Web API consists of over 74 API calls. <code>SpotifyAPI-NET</code> provides fully typed
+        requests/responses for all of them.
       </>
     ),
   },
@@ -48,7 +51,8 @@ const features = [
     imageUrl: 'img/undraw_Devices_e67q.svg',
     description: () => (
       <>
-        With the support of .NET Standard 2.X, <code>SpotifyAPI-NET</code> runs on many platforms, including .NET Core, UWP and Xamarin.Forms (Windows, Android, iOS and Mac)
+        With the support of .NET Standard 2.X, <code>SpotifyAPI-NET</code> runs on many platforms, including .NET Core,
+        UWP and Xamarin.Forms (Windows, Android, iOS and Mac)
       </>
     ),
   },
@@ -57,7 +61,8 @@ const features = [
     imageUrl: 'img/undraw_QA_engineers_dg5p.svg',
     description: () => (
       <>
-        <code>SpotifyAPI-NET</code> is built on a modular structure, which allows easy testing through mocks and stubs. Learn more by visiting the <Link to={useBaseUrl('docs/next/testing')}>Testing Guide</Link>
+        <code>SpotifyAPI-NET</code> is built on a modular structure, which allows easy testing through mocks and stubs.
+        Learn more by visiting the <Link to={useBaseUrl('docs/next/testing')}>Testing Guide</Link>
       </>
     ),
   },
@@ -82,9 +87,7 @@ function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
   return (
-    <Layout
-      title={`${siteConfig.title}`}
-      description="Documentation for the C# .NET SpotifyAPI-NET Library">
+    <Layout title={`${siteConfig.title}`} description="Documentation for the C# .NET SpotifyAPI-NET Library">
       <header className={classnames('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <div className="row">
@@ -98,29 +101,31 @@ function Home() {
                   data-icon="octicon-star"
                   data-size="large"
                   data-show-count="true"
-                  aria-label="Star JohnnyCrazy/SpotifyAPI-NET on GitHub">Star</GitHubButton>
+                  aria-label="Star JohnnyCrazy/SpotifyAPI-NET on GitHub"
+                >
+                  Star
+                </GitHubButton>
                 <br />
                 <a href="https://www.nuget.org/packages/SpotifyAPI.Web/" rel="noopener noreferrer">
                   <img
                     alt="Nuget"
-                    src="https://img.shields.io/nuget/vpre/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square">
-                  </img>{'  '}
+                    src="https://img.shields.io/nuget/vpre/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square"
+                  ></img>
+                  {'  '}
                 </a>
                 <a href="https://www.nuget.org/packages/SpotifyAPI.Web.Auth/" rel="noopener noreferrer">
                   <img
                     alt="Nuget"
-                    src="https://img.shields.io/nuget/vpre/SpotifyAPI.Web.Auth?label=SpotifyAPI.Web.Auth&style=flat-square">
-                  </img>
+                    src="https://img.shields.io/nuget/vpre/SpotifyAPI.Web.Auth?label=SpotifyAPI.Web.Auth&style=flat-square"
+                  ></img>
                 </a>
               </h1>
               <p className="hero__subtitle">{siteConfig.tagline}</p>
               <div className={styles.buttons}>
                 <Link
-                  className={classnames(
-                    'button button--outline button--secondary button--lg',
-                    styles.getStarted,
-                  )}
-                  to={useBaseUrl('docs/next/introduction')}>
+                  className={classnames('button button--outline button--secondary button--lg', styles.getStarted)}
+                  to={useBaseUrl('docs/next/introduction')}
+                >
                   Get Started
                 </Link>
               </div>

@@ -25,6 +25,7 @@ module.exports = {
           'client_credentials',
           'implicit_grant',
           'authorization_code',
+          'pkce',
           'token_swap'
         ]
       },
