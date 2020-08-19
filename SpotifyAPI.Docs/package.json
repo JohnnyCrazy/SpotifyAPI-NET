@@ -8,6 +8,11 @@
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy"
   },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module"
+    }
+  },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.56",
     "@docusaurus/preset-classic": "^2.0.0-alpha.56",
@@ -27,5 +32,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "import-sort-style-module": "^6.0.0",
+    "prettier": "^2.0.5",
+    "prettier-plugin-import-sort": "^0.0.4"
   }
 }
