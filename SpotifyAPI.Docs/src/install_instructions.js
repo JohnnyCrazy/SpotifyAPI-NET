@@ -4,7 +4,7 @@ import Tabs from '@theme/Tabs';
 import React from 'react';
 
 // Will be removed after beta releases
-const VERSION = '6.0.0-beta.10';
+const VERSION = '6.0.0-beta.11';
 
 const installCodeNuget = `Install-Package SpotifyAPI.Web -Version ${VERSION}
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
