@@ -32,7 +32,7 @@ namespace SpotifyAPI.Web
       var statusCode = await API
         .Put(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams())
         .ConfigureAwait(false);
-      return statusCode == HttpStatusCode.OK;
+      return statusCode == HttpStatusCode.NoContent;
     }
 
     public async Task<bool> FollowPlaylist(string playlistId)
