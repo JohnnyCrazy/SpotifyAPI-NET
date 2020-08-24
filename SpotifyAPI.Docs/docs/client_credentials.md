@@ -33,7 +33,7 @@ public static async Task Main()
 {
   var config = SpotifyClientConfig
     .CreateDefault()
-    .WithAuthenticator(new CredentialsAuthenticator("CLIENT_ID", "CLIENT_SECRET"));
+    .WithAuthenticator(new ClientCredentialsAuthenticator("CLIENT_ID", "CLIENT_SECRET"));
 
   var spotify = new SpotifyClient(config);
 }
