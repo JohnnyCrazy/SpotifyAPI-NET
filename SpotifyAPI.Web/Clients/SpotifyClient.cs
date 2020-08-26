@@ -11,6 +11,10 @@ namespace SpotifyAPI.Web
   {
     private readonly IAPIConnector _apiConnector;
 
+    public SpotifyClient(IToken token) :
+      this(SpotifyClientConfig.CreateDefault(token?.AccessToken ?? throw new ArgumentNullException(nameof(token)), token.TokenType))
+    { }
+
     public SpotifyClient(string token, string tokenType = "Bearer") :
       this(SpotifyClientConfig.CreateDefault(token, tokenType))
     { }
