@@ -1,6 +1,6 @@
 using System;
 
-namespace SpotifyAPI.Web.Models.Response.Interfaces
+namespace SpotifyAPI.Web
 {
   /// <summary>
   /// A token to access the Spotify API

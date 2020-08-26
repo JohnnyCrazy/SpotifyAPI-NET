@@ -1,5 +1,4 @@
 using System;
-using SpotifyAPI.Web.Models.Response.Interfaces;
 
 namespace SpotifyAPI.Web
 {

@@ -1,4 +1,4 @@
-namespace SpotifyAPI.Web.Models.Response.Interfaces
+namespace SpotifyAPI.Web
 {
   /// <summary>
   /// A token which allows you to access the API as user

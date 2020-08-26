@@ -1,4 +1,4 @@
-namespace SpotifyAPI.Web.Models.Response.Interfaces
+namespace SpotifyAPI.Web
 {
   /// <summary>
   /// An user token, which can be refreshed

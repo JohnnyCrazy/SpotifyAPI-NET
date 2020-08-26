@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using SpotifyAPI.Web.Models.Response.Interfaces;
 
 namespace SpotifyAPI.Web
 {
