@@ -4,12 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using System.Runtime.CompilerServices;
+using SpotifyAPI.Web.Models.Response.Interfaces;
 
 namespace SpotifyAPI.Web
 {
   public class SpotifyClient : ISpotifyClient
   {
     private readonly IAPIConnector _apiConnector;
+
+    public SpotifyClient(IToken token) :
+      this(SpotifyClientConfig.CreateDefault(token?.AccessToken ?? throw new ArgumentNullException(nameof(token)), token.TokenType))
+    { }
 
     public SpotifyClient(string token, string tokenType = "Bearer") :
       this(SpotifyClientConfig.CreateDefault(token, tokenType))

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using SpotifyAPI.Web.Models.Response.Interfaces;
 
 namespace SpotifyAPI.Web
 {
-  public class AuthorizationCodeTokenResponse
+  public class AuthorizationCodeTokenResponse: IRefreshableToken
   {
     public string AccessToken { get; set; } = default!;
     public string TokenType { get; set; } = default!;

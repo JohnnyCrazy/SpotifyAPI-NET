@@ -1,8 +1,9 @@
 using System;
+using SpotifyAPI.Web.Models.Response.Interfaces;
 
 namespace SpotifyAPI.Web
 {
-  public class AuthorizationCodeRefreshResponse
+  public class AuthorizationCodeRefreshResponse: IUserToken
   {
     public string AccessToken { get; set; } = default!;
     public string TokenType { get; set; } = default!;
