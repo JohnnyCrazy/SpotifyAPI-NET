@@ -95,7 +95,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API.Put(SpotifyUrls.LibraryAlbums(), request.BuildQueryParams(), null).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.Created;
+      return statusCode == HttpStatusCode.OK;
     }
 
     public async Task<bool> SaveShows(LibrarySaveShowsRequest request)
@@ -103,7 +103,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API.Put(SpotifyUrls.LibraryShows(), request.BuildQueryParams(), null).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.Created;
+      return statusCode == HttpStatusCode.OK;
     }
 
     public async Task<bool> SaveTracks(LibrarySaveTracksRequest request)
@@ -111,7 +111,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API.Put(SpotifyUrls.LibraryTracks(), request.BuildQueryParams(), null).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.Created;
+      return statusCode == HttpStatusCode.OK;
     }
   }
 }
