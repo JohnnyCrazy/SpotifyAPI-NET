@@ -6,22 +6,6 @@ namespace SpotifyAPI.Web
   public class PlaylistRemoveItemsRequest : RequestParams
   {
     /// <summary>
-    ///
-    /// </summary>
-    /// <param name="tracks">
-    /// An array of objects containing Spotify URIs of the tracks or episodes to remove.
-    /// For example: { "tracks": [{ "uri": "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },
-    /// { "uri": "spotify:track:1301WleyT98MSxVHPZCA6M" }] }.
-    /// A maximum of 100 objects can be sent at once.
-    /// </param>
-    public PlaylistRemoveItemsRequest(IList<Item> tracks)
-    {
-      Ensure.ArgumentNotNullOrEmptyList(tracks, nameof(tracks));
-
-      Tracks = tracks;
-    }
-
-    /// <summary>
     /// An array of objects containing Spotify URIs of the tracks or episodes to remove.
     /// For example: { "tracks": [{ "uri": "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },
     /// { "uri": "spotify:track:1301WleyT98MSxVHPZCA6M" }] }.
@@ -29,7 +13,15 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <value></value>
     [BodyParam("tracks")]
-    public IList<Item> Tracks { get; }
+    public IList<Item>? Tracks { get; set; }
+
+    /// <summary>
+    /// An array of positions to delete. This also supports local tracks.
+    /// SnapshotId MUST be supplied when using this parameter
+    /// </summary>
+    /// <value></value>
+    [BodyParam("positions")]
+    public IList<int>? Positions { get; set; }
 
     /// <summary>
     /// The playlist’s snapshot ID against which you want to make the changes.
