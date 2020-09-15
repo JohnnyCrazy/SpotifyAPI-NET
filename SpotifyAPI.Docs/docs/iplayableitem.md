@@ -3,7 +3,7 @@ id: iplayableitem
 title: IPlayableItem
 ---
 
-When working with playlists or the current playing context, you will encounter a type `IPlayableItem`, which only contains a `Type` property. Spotify recently introduced shows/episodes to the API, and thus had to adapt API endpoints which previously just returned track objects. Now, playlists and the current playing context can include two types, tracks and episodes. To reflect this in our models, we introduced `IPlayableItem`.
+When working with playlists or the current playing context, you will encounter the `IPlayableItem` type, which only contains a `Type` property. Spotify recently introduced shows/episodes to the API, and thus had to adapt API endpoints which previously just returned track objects. Now, playlists and the current playing context can include two types: tracks and episodes. To reflect this in our models, we introduced `IPlayableItem`.
 
 ```csharp
 var spotify = new SpotifyClient("YourAccessToken");
@@ -40,7 +40,7 @@ To this day, `IPlayableItem` can only be `FullTrack` or `FullEpisode`.
 
 ## Fields
 
-When requesting just a subset of fields using the `fields` query parameter, the call might fail with an exception similar to `Received unkown playlist element type`. For example, the following call fails:
+When requesting just a subset of fields using the `fields` query parameter, the call might fail with an exception similar to `Received unknown playlist element type`. For example, the following call fails:
 
 ```csharp
 var playlistGetItemsRequest = new PlaylistGetItemsRequest();

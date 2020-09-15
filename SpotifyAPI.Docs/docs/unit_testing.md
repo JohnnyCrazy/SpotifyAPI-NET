@@ -8,7 +8,7 @@ The modular structure of the library makes it easy to mock the API when unit tes
 ```csharp
 public static async Task<bool> IsAdmin(IUserProfileClient userProfileClient)
 {
-  // get loggedin user
+  // get logged in user
   var user = await userProfileClient.Current();
 
   // only my user id is an admin

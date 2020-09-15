@@ -3,13 +3,13 @@ id: token_swap
 title: Token Swap
 ---
 
-Token Swap provides an authenticatiow flow where client-side apps (like cli/desktop/mobile apps) are still able to use long-living tokens and the oppurtunity to refresh them without exposing your application's secret. This however requires a server-side part to work.
+Token Swap provides an authenticatiow flow where client-side apps (like CLI/desktop/mobile apps) are still able to use long-living tokens and the opportunity to refresh them without exposing your application's secret. This however requires a server-side part to work.
 
-It is based on the [Authorization Code](authorization_code.md) flow and is also documented by spotify: [Token Swap and Refresh ](https://developer.spotify.com/documentation/ios/guides/token-swap-and-refresh/).
+It is based on the [Authorization Code](authorization_code.md) flow and is also documented by Spotify: [Token Swap and Refresh ](https://developer.spotify.com/documentation/ios/guides/token-swap-and-refresh/).
 
 ## Flow
 
-The client uses the first part of the `Authorization Code` flow and redirects the user to spotify's login page. In this part, only the client id is required. Once the user logged in and confirmed the usage of your app, he will be redirect to a `http://localhost` server which grabs the `code` from the query parameters.
+The client uses the first part of the `Authorization Code` flow and redirects the user to Spotify's login page. In this part, only the client id is required. Once the user logged in and confirmed the usage of your app, they will be redirect to a `http://localhost` server which grabs the `code` from the query parameters.
 
 ```csharp
 var request = new LoginRequest("http://localhost", "ClientId", LoginRequest.ResponseType.Code)
@@ -46,7 +46,7 @@ var spotify = new SpotifyClient(newResponse.AccessToken);
 
 ## Server Implementation
 
-The server needs to support two endpoints, `/swap` and `/refresh` (endpoints can be named differently of course)
+The server needs to support two endpoints, `/swap` and `/refresh` (endpoints can be named differently of course).
 
 ### Swap
 
@@ -58,7 +58,7 @@ curl -X POST "https://example.com/v1/swap"\
   --data "code=AQDy8...xMhKNA"
 ```
 
-The server needs to respond with content-type `application/json` and the at least the following body:
+The server needs to respond with content-type `application/json` and the following body:
 
 ```json
 {
@@ -78,7 +78,7 @@ curl -X POST "https://example.com/v1/refresh"\
   --data "refresh_token=NgCXRK...MzYjw"
 ```
 
-The server needs to respond with content-type `application/json` and the at least the following body:
+The server needs to respond with content-type `application/json` and the following body:
 
 ```json
 {
@@ -90,4 +90,4 @@ The server needs to respond with content-type `application/json` and the at leas
 
 ## Example
 
-An example server has been implemented in NodeJS with a .NET CLI client, located at [Example.TokenSwap](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.TokenSwap)
+An example server has been implemented in Node.JS with a .NET CLI client, located at [Example.TokenSwap](https://github.com/JohnnyCrazy/SpotifyAPI-NET/tree/master/SpotifyAPI.Web.Examples/Example.TokenSwap).

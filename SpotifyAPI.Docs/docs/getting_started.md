@@ -42,6 +42,7 @@ You're now ready to issue your first calls to the Spotify API, a small console e
 
 ```csharp
 using System;
+using System.Threading.Tasks;
 using SpotifyAPI.Web;
 
 class Program

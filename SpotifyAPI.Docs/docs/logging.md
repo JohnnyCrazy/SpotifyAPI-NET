@@ -17,7 +17,7 @@ The `IHTTPLogger` interface can be found [here](https://github.com/JohnnyCrazy/S
 
 ## SimpleConsoleHTTPLogger
 
-The library ships with a simple console-based logger
+The library ships with a simple console-based logger.
 
 ```csharp
 var config = SpotifyClientConfig
