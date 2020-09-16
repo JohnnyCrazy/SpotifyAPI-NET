@@ -3,7 +3,7 @@ id: retry_handling
 title: Retry Handling
 ---
 
-In [Error Handling](error_handling.md) we already found out that requests can fail. We provide a way to automatically retry requests via retry handlers. Note, by default no retries are performed.
+In [Error Handling](error_handling.md), we already found out that requests can fail. We provide a way to automatically retry requests via retry handlers. Note that, by default, no retries are performed.
 
 ```csharp
 var config = SpotifyClientConfig
@@ -18,12 +18,12 @@ public class YourCustomRetryHandler : IRetryHandler
 {
   public Task<IResponse> HandleRetry(IRequest request, IResponse response, IRetryHandler.RetryFunc retry)
   {
-    // request is the sent request and response the received response, obviously?
+    // request is the sent request and response is the received response, obviously
 
     // don't retry:
     return response;
 
-    // retry once
+    // retry once:
     var newResponse = retry(request);
     return newResponse;
 
@@ -36,9 +36,9 @@ public class YourCustomRetryHandler : IRetryHandler
 
 A `SimpleRetryHandler` is included, which contains the following retry logic:
 
-* Retries the (configurable) status codes: 500, 502, 503 and 429
-* `RetryAfter` - specifies the delay between retried calls
-* `RetryTimes` - specifies the maxiumum amount of performed retries per call
+* Retries the (configurable) status codes: 500, 502, 503 and 429.
+* `RetryAfter` - Specifies the delay between retried calls.
+* `RetryTimes` - Specifies the maxiumum amount of performed retries per call.
 * `TooManyRequestsConsumesARetry` - Whether a failure of type "Too Many Requests" should use up one of the retry attempts.
 
 ```csharp

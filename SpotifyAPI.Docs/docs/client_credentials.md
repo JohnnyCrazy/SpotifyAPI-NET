@@ -26,7 +26,7 @@ public static async Task Main()
 
 ## Request Token On-Demand
 
-You can also use `CredentialsAuthenticator`, which will make sure the spotify instance will always have an up-to-date access token by automatically refreshing the token on-demand.
+You can also use `CredentialsAuthenticator`, which will make sure the Spotify instance will always have an up-to-date access token by automatically refreshing the token on demand.
 
 ```csharp
 public static async Task Main()
@@ -40,6 +40,6 @@ public static async Task Main()
 ```
 
 :::info
-There is no thread safety guaranteed when using `CredentialsAuthenticator`.
+Thread safety is not guaranteed when using `CredentialsAuthenticator`.
 :::
 

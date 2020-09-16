@@ -5,13 +5,13 @@ title: Implicit Grant
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-> Implicit grant flow is for clients that are implemented entirely using JavaScript and running in the resource owner’s browser. You do not need any server-side code to use it. Rate limits for requests are improved but there is no refresh token provided. This flow is described in RFC-6749.
+> Implicit grant flow is for clients that are implemented entirely using JavaScript and running in the resource owner’s browser. You do not need any server-side code to use it. Rate limits for requests are improved but there is no refresh token provided. This flow is described in [RFC-6749](http://tools.ietf.org/html/rfc6749#section-4.2).
 
-This flow is useful for getting a user access token for a short timespan
+This flow is useful for getting a user access token for a short timespan.
 
 ## Existing Web-Server
 
-If you are already in control of a Web-Server (like `ASP.NET`), you can start the flow by generating a login uri
+If you are already in control of a Web-Server (like `ASP.NET`), you can start the flow by generating a login uri:
 
 ```csharp
 // Make sure "http://localhost:5000" is in your applications redirect URIs!
@@ -27,7 +27,7 @@ var uri = loginRequest.ToUri();
 // Redirect user to uri via your favorite web-server
 ```
 
-When the user is redirected to the generated uri, he will have to login with his spotify account and confirm, that your application wants to access his user data. Once confirmed, he will be redirect to `http://localhost:5000` and the fragment identifier (`#` part of URI) will contain an access token.
+When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5000` and the fragment identifier (`#` part of URI) will contain an access token.
 
 :::warning
 Note, this parameter is not sent to the server! You need JavaScript to access it.
@@ -39,7 +39,7 @@ This flow can also be used with custom protocols instead of `http`/`https`. This
 
 <img alt="protocol handlers" src={useBaseUrl('img/auth_protocol_handlers.png')} />
 
-The process is very similar, you generate a uri and open it for the user
+The process is very similar, you generate a uri and open it for the user:
 
 ```csharp
 // Make sure "spotifyapi.web.oauth://token" is in your applications redirect URIs!
@@ -57,7 +57,7 @@ var uri = loginRequest.ToUri();
 BrowserUtil.Open(uri);
 ```
 
-After the user logged in and consented your app, your `UWP` app will receive a callback:
+After the user has logged in and consented your app, your `UWP` app will receive a callback:
 
 ```csharp
 protected override void OnActivated(IActivatedEventArgs args)
@@ -77,7 +77,7 @@ For a real example, have a look at the [Example.UWP](https://github.com/JohnnyCr
 
 # Using Spotify.Web.Auth
 
-For cross-platform CLI and desktop apps (non `UWP` apps), custom protocol handlers are sometimes not an option. The fallback here is a small cross-platform embedded web server running on `http://localhost:5000` serving javascript. The javscript will parse the fragment part of the URI and sends a request to the web server in the background. The web server then notifies your appliciation via event.
+For cross-platform CLI and desktop apps (non `UWP` apps), custom protocol handlers are sometimes not an option. The fallback here is a small cross-platform embedded web server running on `http://localhost:5000` serving JavaScript. The JavaScript will parse the fragment part of the URI and sends a request to the web server in the background. The web server then notifies your appliciation via an event.
 
 ```csharp
 private static EmbedIOAuthServer _server;
@@ -101,7 +101,7 @@ private static async Task OnImplicitGrantReceived(object sender, ImplictGrantRes
 {
   await _server.Stop();
   var spotify = new SpotifyClient(response.AccessToken);
-  // do calls with spotify
+  // do calls with Spotify
 }
 ```
 

@@ -3,15 +3,15 @@ id: pagination
 title: Pagination
 ---
 
-When working with spotify responses, you will often encounter the `Paging<T>` type.
+When working with Spotify responses, you will often encounter the `Paging<T>` type.
 
-> The offset-based paging object is a container for a set of objects. It contains a key called items (whose value is an array of the requested objects) along with other keys like previous, next and limit that can be useful in future calls.
+> The offset-based paging object is a container for a set of objects. It contains a key called Items (whose value is an array of the requested objects) along with other keys like Previous, Next and Limit which can be useful in future calls.
 
-It allows to receive only a subset of all available data and dynamically check if more requests are required. The library supports `Paging<T>` responses in two ways:
+It allows you to only receive a subset of all available data and dynamically check if more requests are required. The library supports `Paging<T>` responses in two ways:
 
 ## PaginateAll
 
-`PaginateAll` will query all remaining elements based on a first page and return all of them in a `IList`. This method should not be used for a huge amount of pages (e.g `Search` Endpoint), since it stores every response in memory.
+`PaginateAll` will query all remaining elements based on a first page and return all of them in an `IList`. This method should not be used for huge amounts of pages (e.g `Search` Endpoint), since it stores every response in memory.
 
 ```csharp
 // we need the first page
@@ -26,7 +26,7 @@ var allPages = await spotify.PaginateAll(page);
 :::info .NET Standard >= 2.1 required
 :::
 
-`Paginate` is based on `IAsyncEnumerable` and streams pages instead of returning them all in one list. This allows to break the fetching early and keeps only 1 page in memory at a time. This method should always be preferred to `PaginateAll`
+`Paginate` is based on `IAsyncEnumerable` and streams pages instead of returning them all in one list. This allows it to break the fetching early and keep only 1 page in memory at a time. This method should always be preferred to `PaginateAll`.
 
 ```csharp
 // we need the first page

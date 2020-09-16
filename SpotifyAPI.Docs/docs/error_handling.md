@@ -10,11 +10,11 @@ var track = await spotify.Tracks.Get("NotExistingTrackId");
 Console.WriteLine(track.Name);
 ```
 
-When a request fails an `APIException` is thrown. Specific errors may throw a child exception of `APIException`.
+When a request fails, an `APIException` is thrown. Specific errors may throw a child exception of `APIException`.
 
 ## APIException
 
-A very general API error. The message is parsed from the API response JSON body and the response is available as public property.
+A very general API error. The message is parsed from the API response's JSON body and the response is available as a public property.
 
 ```csharp
 try {
@@ -29,11 +29,11 @@ try {
 
 ## APIUnauthorizedException
 
-Provides the same properties as `APIException` and occurs, when the access token is expired or not provided. Notice that an access token has to be included in **every** request. Spotify does not allow unauthorized API access.
+Provides the same properties as `APIException` and occurs when the access token is expired or not provided. Notice that an access token has to be included in **every** request. Spotify does not allow unauthorized API access.
 
 ## APITooManyRequestsException
 
-Provides the same properties as `APIException` and occurs, when too many requests has been sent by your application. It also provides the property `TimeSpan RetryAfter`, which maps to the received `Retry-After` Header.
+Provides the same properties as `APIException` and occurs when too many requests has been sent by your application. It also provides the property `TimeSpan RetryAfter`, which maps to the received `Retry-After` header.
 
 ```csharp
 try {

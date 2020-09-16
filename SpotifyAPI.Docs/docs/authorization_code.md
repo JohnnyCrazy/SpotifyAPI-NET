@@ -7,7 +7,7 @@ title: Authorization Code
 
 ## Existing Web-Server
 
-If you are already in control of a Web-Server (like `ASP.NET`), you can start the flow by generating a login uri
+If you are already in control of a Web-Server (like `ASP.NET`), you can start the flow by generating a login uri:
 
 ```csharp
 // Make sure "http://localhost:5000" is in your applications redirect URIs!
@@ -23,7 +23,7 @@ var uri = loginRequest.ToUri();
 // Redirect user to uri via your favorite web-server
 ```
 
-When the user is redirected to the generated uri, he will have to login with his spotify account and confirm, that your application wants to access his user data. Once confirmed, he will be redirect to `http://localhost:5000` and a `code` parameter is attached to the query. This `code` has to be exchanged for an `access_token` and `refresh_token`:
+When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5000` and a `code` parameter is attached to the query. This `code` has to be exchanged for an `access_token` and `refresh_token`:
 
 ```csharp
 // This method should be called from your web-server when the user visits "http://localhost:5000"
@@ -68,7 +68,7 @@ For a real example, have a look at [Example.ASP](https://github.com/JohnnyCrazy/
 For cross-platform CLI and desktop apps (non `UWP` apps), `Spotify.Web.Auth` can be used to supply a small embedded Web Server for the code retrieval.
 
 :::warning
-You're client secret will be exposed when embedded in a desktop/cli app. This can be abused and is not preffered. If possible, let the user create an application in spotify dashboard or let a server handle the spotify communication.
+Your client secret will be exposed when embedded in a desktop/CLI app. This can be abused and is not prefered. If possible, let the user create an application in the Spotify dashboard or let a server handle the Spotify communication.
 :::
 
 ```csharp
@@ -101,7 +101,7 @@ private static async Task OnAuthorizationCodeReceived(object sender, Authorizati
   );
 
   var spotify = new SpotifyClient(tokenResponse.AccessToken);
-  // do calls with spotify and save token?
+  // do calls with Spotify and save token?
 }
 ```
 
