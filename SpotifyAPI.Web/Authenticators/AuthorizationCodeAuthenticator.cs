@@ -26,7 +26,7 @@ namespace SpotifyAPI.Web
     }
 
     /// <summary>
-    /// This event is called once a new refreshed token was aquired
+    /// This event is called once a new refreshed token was acquired
     /// </summary>
     public event EventHandler<AuthorizationCodeTokenResponse>? TokenRefreshed;
 

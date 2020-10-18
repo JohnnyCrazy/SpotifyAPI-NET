@@ -24,7 +24,7 @@ namespace SpotifyAPI.Web
     }
 
     /// <summary>
-    /// This event is called once a new refreshed token was aquired
+    /// This event is called once a new refreshed token was acquired
     /// </summary>
     public event EventHandler<PKCETokenResponse>? TokenRefreshed;
 
@@ -35,7 +35,7 @@ namespace SpotifyAPI.Web
     public string ClientId { get; }
 
     /// <summary>
-    ///   The inital token passed to the authenticator. Fields will be updated on refresh.
+    ///   The initial token passed to the authenticator. Fields will be updated on refresh.
     /// </summary>
     /// <value></value>
     public PKCETokenResponse InitialToken { get; }

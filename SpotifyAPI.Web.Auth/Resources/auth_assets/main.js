@@ -1,16 +1,16 @@
 function getUrlParams(hash, start) {
-  const hashes = hash.slice(hash.indexOf(start) + 1).split('&')
+  const hashes = hash.slice(hash.indexOf(start) + 1).split('&');
 
   if (!hashes || hashes.length === 0 || hashes[0] === "") {
     return undefined;
   }
 
-  const params = {}
+  const params = {};
   hashes.map(hash => {
-    const [key, val] = hash.split('=')
-    params[key] = decodeURIComponent(val)
+    const [key, val] = hash.split('=');
+    params[key] = decodeURIComponent(val);
   })
-  return params
+  return params;
 }
 
 function handleImplicitGrant() {
@@ -20,7 +20,6 @@ function handleImplicitGrant() {
   }
   params.request_type = "token";
 
-  console.log("Sent request_type token to server", params);
   fetch('?' + new URLSearchParams(params).toString(), {
     method: 'POST',
   });
@@ -34,7 +33,6 @@ function handleAuthenticationCode() {
   }
   params.request_type = "code";
 
-  console.log("Sent request_type code to server", params);
   fetch('?' + new URLSearchParams(params).toString(), {
     method: 'POST',
   });
