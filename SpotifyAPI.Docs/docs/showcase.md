@@ -9,6 +9,10 @@ Are you using `SpotifyAPI-NET` and would like to include your project in this li
 Send a PR via the "Edit this page" link at the end of the page!
 :::
 
+### [SpotifyMatch.NET](https://https://github.com/DenisMtfl/SpotifyMatch.NET) by [@denismtfl](https://github.com/DenisMtfl)
+
+> Windows tool with for looking up local files with Spotify & adding them to a library
+
 ### [lidarr](https://github.com/lidarr/Lidarr) by [@lidarr](https://github.com/lidarr)
 
 > Looks and smells like Sonarr but made for music.
