@@ -40,7 +40,7 @@ var uri = loginRequest.ToUri();
 // Redirect user to uri via your favorite web-server or open a local browser window
 ```
 
-When the user is redirected to the generated uri, they will have to login with thei Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5000/callback` and a `code` parameter is attached to the query. The redirect URI can also contain a custom protocol paired with UWP App Custom Protocol handler. This received `code` has to be exchanged for an `access_token` and `refresh_token`:
+When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5000/callback` and a `code` parameter is attached to the query. The redirect URI can also contain a custom protocol paired with UWP App Custom Protocol handler. This received `code` has to be exchanged for an `access_token` and `refresh_token`:
 
 ```csharp
 // This method should be called from your web-server when the user visits "http://localhost:5000/callback"
