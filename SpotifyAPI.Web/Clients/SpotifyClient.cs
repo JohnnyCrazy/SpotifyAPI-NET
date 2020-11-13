@@ -191,7 +191,7 @@ namespace SpotifyAPI.Web
 
       var firstPage = await getFirstPage().ConfigureAwait(false);
       await foreach (var item in (paginator ?? DefaultPaginator)
-        .Paginate(firstPage, mapper, _apiConnector)
+        .Paginate(firstPage, mapper, _apiConnector, cancellationToken)
         .WithCancellation(cancellationToken)
       )
       {
@@ -223,7 +223,7 @@ namespace SpotifyAPI.Web
 
       var firstPage = await firstPageTask.ConfigureAwait(false);
       await foreach (var item in (paginator ?? DefaultPaginator)
-        .Paginate(firstPage, mapper, _apiConnector)
+        .Paginate(firstPage, mapper, _apiConnector, cancellationToken)
         .WithCancellation(cancellationToken)
       )
       {

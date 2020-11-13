@@ -254,7 +254,7 @@ namespace SpotifyAPI.Web.Http
     {
       var request = CreateRequest(uri, method, parameters, body, headers);
       IAPIResponse<T> apiResponse = await DoSerializedRequest<T>(request).ConfigureAwait(false);
-      return apiResponse.Body;
+      return apiResponse.Body!;
     }
 
     public async Task<IResponse> SendAPIRequestDetailed(

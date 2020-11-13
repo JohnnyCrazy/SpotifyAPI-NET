@@ -112,13 +112,13 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
-      var form = new List<KeyValuePair<string, string>>
+      var form = new List<KeyValuePair<string?, string?>>
       {
-        new KeyValuePair<string, string>("client_id", request.ClientId),
-        new KeyValuePair<string, string>("grant_type", "authorization_code"),
-        new KeyValuePair<string, string>("code", request.Code),
-        new KeyValuePair<string, string>("redirect_uri", request.RedirectUri.ToString()),
-        new KeyValuePair<string, string>("code_verifier", request.CodeVerifier),
+        new KeyValuePair<string?, string?>("client_id", request.ClientId),
+        new KeyValuePair<string?, string?>("grant_type", "authorization_code"),
+        new KeyValuePair<string?, string?>("code", request.Code),
+        new KeyValuePair<string?, string?>("redirect_uri", request.RedirectUri.ToString()),
+        new KeyValuePair<string?, string?>("code_verifier", request.CodeVerifier),
       };
 
       return SendOAuthRequest<PKCETokenResponse>(apiConnector, form, null, null);
@@ -129,11 +129,11 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
-      var form = new List<KeyValuePair<string, string>>
+      var form = new List<KeyValuePair<string?, string?>>
       {
-        new KeyValuePair<string, string>("client_id", request.ClientId),
-        new KeyValuePair<string, string>("grant_type", "refresh_token"),
-        new KeyValuePair<string, string>("refresh_token", request.RefreshToken),
+        new KeyValuePair<string?, string?>("client_id", request.ClientId),
+        new KeyValuePair<string?, string?>("grant_type", "refresh_token"),
+        new KeyValuePair<string?, string?>("refresh_token", request.RefreshToken),
       };
 
       return SendOAuthRequest<PKCETokenResponse>(apiConnector, form, null, null);
@@ -146,9 +146,9 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
-      var form = new List<KeyValuePair<string, string>>
+      var form = new List<KeyValuePair<string?, string?>>
       {
-        new KeyValuePair<string, string>("refresh_token", request.RefreshToken)
+        new KeyValuePair<string?, string?>("refresh_token", request.RefreshToken)
       };
 #pragma warning disable CA2000
       return apiConnector.Post<AuthorizationCodeRefreshResponse>(
@@ -164,9 +164,9 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
-      var form = new List<KeyValuePair<string, string>>
+      var form = new List<KeyValuePair<string?, string?>>
       {
-        new KeyValuePair<string, string>("code", request.Code)
+        new KeyValuePair<string?, string?>("code", request.Code)
       };
 
 #pragma warning disable CA2000
@@ -183,9 +183,9 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
-      var form = new List<KeyValuePair<string, string>>
+      var form = new List<KeyValuePair<string?, string?>>
       {
-        new KeyValuePair<string, string>("grant_type", "client_credentials")
+        new KeyValuePair<string?, string?>("grant_type", "client_credentials")
       };
 
       return SendOAuthRequest<ClientCredentialsTokenResponse>(apiConnector, form, request.ClientId, request.ClientSecret);
@@ -198,10 +198,10 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
-      var form = new List<KeyValuePair<string, string>>
+      var form = new List<KeyValuePair<string?, string?>>
       {
-        new KeyValuePair<string, string>("grant_type", "refresh_token"),
-        new KeyValuePair<string, string>("refresh_token", request.RefreshToken)
+        new KeyValuePair<string?, string?>("grant_type", "refresh_token"),
+        new KeyValuePair<string?, string?>("refresh_token", request.RefreshToken)
       };
 
       return SendOAuthRequest<AuthorizationCodeRefreshResponse>(apiConnector, form, request.ClientId, request.ClientSecret);
@@ -214,11 +214,11 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 
-      var form = new List<KeyValuePair<string, string>>
+      var form = new List<KeyValuePair<string?, string?>>
       {
-        new KeyValuePair<string, string>("grant_type", "authorization_code"),
-        new KeyValuePair<string, string>("code", request.Code),
-        new KeyValuePair<string, string>("redirect_uri", request.RedirectUri.ToString())
+        new KeyValuePair<string?, string?>("grant_type", "authorization_code"),
+        new KeyValuePair<string?, string?>("code", request.Code),
+        new KeyValuePair<string?, string?>("redirect_uri", request.RedirectUri.ToString())
       };
 
       return SendOAuthRequest<AuthorizationCodeTokenResponse>(apiConnector, form, request.ClientId, request.ClientSecret);
@@ -226,7 +226,7 @@ namespace SpotifyAPI.Web
 
     private static Task<T> SendOAuthRequest<T>(
       IAPIConnector apiConnector,
-      List<KeyValuePair<string, string>> form,
+      List<KeyValuePair<string?, string?>> form,
       string? clientId,
       string? clientSecret)
     {

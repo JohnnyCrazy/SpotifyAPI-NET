@@ -35,16 +35,17 @@ namespace SpotifyAPI.Web.Auth
         .WithModule(new ActionModule("/", HttpVerbs.Post, (ctx) =>
         {
           var query = ctx.Request.QueryString;
-          if (query["error"] != null)
+          var error = query["error"];
+          if (error != null)
           {
-            throw new AuthException(query["error"], query["state"]);
+            throw new AuthException(error, query["state"]);
           }
 
           var requestType = query.Get("request_type");
           if (requestType == "token")
           {
             ImplictGrantReceived?.Invoke(this, new ImplictGrantResponse(
-              query["access_token"], query["token_type"], int.Parse(query["expires_in"])
+              query["access_token"]!, query["token_type"]!, int.Parse(query["expires_in"]!)
             )
             {
               State = query["state"]
@@ -52,7 +53,7 @@ namespace SpotifyAPI.Web.Auth
           }
           if (requestType == "code")
           {
-            AuthorizationCodeReceived?.Invoke(this, new AuthorizationCodeResponse(query["code"])
+            AuthorizationCodeReceived?.Invoke(this, new AuthorizationCodeResponse(query["code"]!)
             {
               State = query["state"]
             });

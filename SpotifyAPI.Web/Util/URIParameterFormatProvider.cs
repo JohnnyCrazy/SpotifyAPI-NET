@@ -11,16 +11,16 @@ namespace SpotifyAPI.Web
       _formatter = new URIParameterFormatter();
     }
 
-    public object? GetFormat(Type formatType)
+    public object? GetFormat(Type? formatType)
     {
       return formatType == typeof(ICustomFormatter) ? _formatter : null;
     }
 
     private class URIParameterFormatter : ICustomFormatter
     {
-      public string Format(string format, object arg, IFormatProvider formatProvider)
+      public string Format(string? format, object? arg, IFormatProvider? formatProvider)
       {
-        return HttpUtility.UrlEncode(arg.ToString());
+        return HttpUtility.UrlEncode(arg?.ToString()) ?? string.Empty;
       }
     }
   }

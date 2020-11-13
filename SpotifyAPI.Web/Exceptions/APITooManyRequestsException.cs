@@ -14,7 +14,7 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNull(response, nameof(response));
 
-      if (response.Headers.TryGetValue("Retry-After", out string retryAfter))
+      if (response.Headers.TryGetValue("Retry-After", out string? retryAfter))
       {
         RetryAfter = TimeSpan.FromSeconds(int.Parse(retryAfter, CultureInfo.InvariantCulture));
       }

@@ -70,6 +70,7 @@ namespace SpotifyAPI.Web
     public Task<IResponse> HandleRetry(IRequest request, IResponse response, IRetryHandler.RetryFunc retry)
     {
       Ensure.ArgumentNotNull(response, nameof(response));
+      Ensure.ArgumentNotNull(retry, nameof(retry));
 
       return HandleRetryInternally(request, response, retry, RetryTimes);
     }

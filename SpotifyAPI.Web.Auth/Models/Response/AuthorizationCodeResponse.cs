@@ -10,6 +10,6 @@ namespace SpotifyAPI.Web.Auth
     }
 
     public string Code { get; set; } = default!;
-    public string State { get; set; } = default!;
+    public string? State { get; set; } = default!;
   }
 }

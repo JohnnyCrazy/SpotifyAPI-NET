@@ -19,9 +19,9 @@ namespace SpotifyAPI.Web
 
       var newParameters = new Dictionary<string, string>();
       NameValueCollection existingParameters = HttpUtility.ParseQueryString(uri.Query);
-      foreach (string key in existingParameters.AllKeys)
+      foreach (string key in existingParameters)
       {
-        newParameters.Add(key, existingParameters[key]);
+        newParameters.Add(key, existingParameters[key]!);
       }
       foreach (KeyValuePair<string, string> parameter in parameters)
       {
