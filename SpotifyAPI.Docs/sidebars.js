@@ -14,8 +14,8 @@ module.exports = {
           'pagination',
           'retry_handling',
           'iplayableitem',
-          'unit_testing'
-        ]
+          'unit_testing',
+        ],
       },
       {
         type: 'category',
@@ -26,8 +26,8 @@ module.exports = {
           'implicit_grant',
           'authorization_code',
           'pkce',
-          'token_swap'
-        ]
+          'token_swap',
+        ],
       },
       'showcase',
       {
@@ -40,9 +40,14 @@ module.exports = {
           'example_cli_custom_html',
           'example_cli_persistent_config',
           'example_token_swap',
-          'example_uwp'
-        ]
+          'example_uwp',
+        ],
       },
-    ]
-  }
+      {
+        type: 'category',
+        label: 'Migration Guides',
+        items: ['5_to_6'],
+      },
+    ],
+  },
 };
