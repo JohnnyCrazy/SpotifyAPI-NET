@@ -15,7 +15,9 @@ namespace SpotifyAPI.Web.Http
       string? parameters = null;
       if (request.Parameters != null)
       {
-        parameters = string.Join(",", request.Parameters?.Select(kv => kv.Key + "=" + kv.Value).ToArray());
+        parameters = string.Join(",",
+          request.Parameters?.Select(kv => kv.Key + "=" + kv.Value)?.ToArray() ?? Array.Empty<string>()
+        );
       }
 
       Console.WriteLine(OnRequestFormat, request.Method, request.Endpoint, parameters, request.Body);
@@ -28,7 +30,7 @@ namespace SpotifyAPI.Web.Http
 #if NETSTANDARD2_0
       string? body = response.Body?.ToString().Replace("\n", "");
 #else
-      string? body = response.Body?.ToString().Replace("\n", "", StringComparison.InvariantCulture);
+      string? body = response.Body?.ToString()?.Replace("\n", "", StringComparison.InvariantCulture);
 #endif
 
       body = body?.Substring(0, Math.Min(50, body?.Length ?? 0));

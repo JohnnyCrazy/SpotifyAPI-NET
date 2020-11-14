@@ -3,7 +3,7 @@ namespace SpotifyAPI.Web.Auth
   [System.Serializable]
   public class AuthException : System.Exception
   {
-    public AuthException(string error, string state)
+    public AuthException(string? error, string? state)
     {
       Error = error;
       State = state;

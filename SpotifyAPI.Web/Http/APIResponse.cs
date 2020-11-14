@@ -2,7 +2,7 @@ namespace SpotifyAPI.Web.Http
 {
   public class APIResponse<T> : IAPIResponse<T>
   {
-    public APIResponse(IResponse response, T body = default)
+    public APIResponse(IResponse response, T? body = default)
     {
       Ensure.ArgumentNotNull(response, nameof(response));
 
@@ -10,7 +10,7 @@ namespace SpotifyAPI.Web.Http
       Response = response;
     }
 
-    public T Body { get; set; }
+    public T? Body { get; set; }
 
     public IResponse Response { get; set; }
   }

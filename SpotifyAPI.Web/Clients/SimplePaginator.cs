@@ -25,11 +25,17 @@ namespace SpotifyAPI.Web
 
       var page = firstPage;
       var results = new List<T>();
-      results.AddRange(firstPage.Items);
+      if (page.Items != null)
+      {
+        results.AddRange(page.Items);
+      }
       while (page.Next != null && await ShouldContinue(results, page).ConfigureAwait(false))
       {
         page = await connector.Get<Paging<T>>(new Uri(page.Next, UriKind.Absolute)).ConfigureAwait(false);
-        results.AddRange(page.Items);
+        if (page.Items != null)
+        {
+          results.AddRange(page.Items);
+        }
       }
 
       return results;
@@ -45,12 +51,18 @@ namespace SpotifyAPI.Web
 
       var page = firstPage;
       var results = new List<T>();
-      results.AddRange(firstPage.Items);
+      if (page.Items != null)
+      {
+        results.AddRange(page.Items);
+      }
       while (page.Next != null && await ShouldContinue(results, page).ConfigureAwait(false))
       {
         var next = await connector.Get<TNext>(new Uri(page.Next, UriKind.Absolute)).ConfigureAwait(false);
         page = mapper(next);
-        results.AddRange(page.Items);
+        if (page.Items != null)
+        {
+          results.AddRange(page.Items);
+        }
       }
 
       return results;

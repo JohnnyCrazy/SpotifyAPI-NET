@@ -37,9 +37,12 @@ namespace SpotifyAPI.Web
         _bodyParamsCache[type] = new List<(PropertyInfo, BodyParamAttribute)>();
         foreach (var prop in bodyProps)
         {
-          var attribute = (BodyParamAttribute)prop.GetCustomAttribute(typeof(BodyParamAttribute));
-          _bodyParamsCache[type].Add((prop, attribute));
-          AddBodyParam(body, prop, attribute);
+          var attribute = prop.GetCustomAttribute<BodyParamAttribute>();
+          if (attribute != null)
+          {
+            _bodyParamsCache[type].Add((prop, attribute));
+            AddBodyParam(body, prop, attribute);
+          }
         }
       }
 
@@ -48,7 +51,7 @@ namespace SpotifyAPI.Web
 
     private void AddBodyParam(JObject body, PropertyInfo prop, BodyParamAttribute attribute)
     {
-      object value = prop.GetValue(this);
+      object? value = prop.GetValue(this);
       if (value != null)
       {
         body[attribute.Key ?? prop.Name] = JToken.FromObject(value);
@@ -81,9 +84,12 @@ namespace SpotifyAPI.Web
         _queryParamsCache[type] = new List<(PropertyInfo, QueryParamAttribute)>();
         foreach (var prop in queryProps)
         {
-          var attribute = (QueryParamAttribute)prop.GetCustomAttribute(typeof(QueryParamAttribute));
-          _queryParamsCache[type].Add((prop, attribute));
-          AddQueryParam(queryParams, prop, attribute);
+          var attribute = prop.GetCustomAttribute<QueryParamAttribute>();
+          if (attribute != null)
+          {
+            _queryParamsCache[type].Add((prop, attribute));
+            AddQueryParam(queryParams, prop, attribute);
+          }
         }
       }
 
@@ -94,7 +100,7 @@ namespace SpotifyAPI.Web
 
     private void AddQueryParam(Dictionary<string, string> queryParams, PropertyInfo prop, QueryParamAttribute attribute)
     {
-      object value = prop.GetValue(this);
+      object? value = prop.GetValue(this);
       if (value != null)
       {
         if (value is IList<string> list)
@@ -140,7 +146,7 @@ namespace SpotifyAPI.Web
         }
         else
         {
-          queryParams.Add(attribute.Key ?? prop.Name, value.ToString());
+          queryParams.Add(attribute.Key ?? prop.Name, value.ToString() ?? throw new Exception("ToString was null on a value"));
         }
       }
     }
