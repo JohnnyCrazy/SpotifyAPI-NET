@@ -44,3 +44,24 @@ jobs:
             TODO
           draft: true
           prerelease: false
+      - name: Upload to GH Release
+        if: startsWith( github.ref, 'refs/tags/')
+        run: |
+          zip -j SpotifyAPI.Web-netstandard2.0.zip SpotifyAPI.Web/bin/Release/netstandard2.0/*
+          zip -j SpotifyAPI.Web-netstandard2.1.zip SpotifyAPI.Web/bin/Release/netstandard2.1/*
+          zip -j SpotifyAPI.Web-net5.0.zip SpotifyAPI.Web/bin/Release/net5.0/*
+
+          zip -j SpotifyAPI.Web.Auth-netstandard2.0.zip SpotifyAPI.Web.Auth/bin/Release/netstandard2.0/*
+          zip -j SpotifyAPI.Web.Auth-netstandard2.1.zip SpotifyAPI.Web.Auth/bin/Release/netstandard2.1/*
+          zip -j SpotifyAPI.Web.Auth-net5.0.zip SpotifyAPI.Web.Auth/bin/Release/net5.0/*
+
+          hub release edit \
+            -a "SpotifyAPI.Web-netstandard2.0.zip" \
+            -a "SpotifyAPI.Web-netstandard2.1.zip" \
+            -a "SpotifyAPI.Web-net5.0.zip" \
+            -a "SpotifyAPI.Web.Auth-netstandard2.0.zip" \
+            -a "SpotifyAPI.Web.Auth-netstandard2.1.zip" \
+            -a "SpotifyAPI.Web.Auth-net5.0.zip" \
+            -m "" "$GITHUB_REF"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
