@@ -17,3 +17,5 @@ jobs:
           node-version: 14.15.0
       - name: Build & Deploy Documentation
         run: ./SpotifyAPI.Docs/docs.sh
+        env:
+          GH_DEPLOY_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
