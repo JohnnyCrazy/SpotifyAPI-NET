@@ -4,11 +4,11 @@ import Tabs from '@theme/Tabs';
 import React from 'react';
 
 // Will be removed after beta releases
-const VERSION = '6.0.0-beta.12';
+const VERSION = '6.0.0';
 
-const installCodeNuget = `Install-Package SpotifyAPI.Web -Version ${VERSION}
+const installCodeNuget = `Install-Package SpotifyAPI.Web
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
-Install-Package SpotifyAPI.Web.Auth -Version ${VERSION}
+Install-Package SpotifyAPI.Web.Auth
 `;
 
 const installReference = `<PackageReference Include="SpotifyAPI.Web" Version="${VERSION}" />
@@ -16,14 +16,14 @@ const installReference = `<PackageReference Include="SpotifyAPI.Web" Version="${
 <PackageReference Include="SpotifyAPI.Web.Auth" Version="${VERSION}" />
 `;
 
-const installCodeCLI = `dotnet add package SpotifyAPI.Web --version ${VERSION}
+const installCodeCLI = `dotnet add package SpotifyAPI.Web
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
-dotnet add package SpotifyAPI.Web.Auth --version ${VERSION}
+dotnet add package SpotifyAPI.Web.Auth
 `;
 
 const InstallInstructions = () => {
   return (
-    <div style={{ padding: '30px' }}>
+    <div style={{ padding: '10px' }}>
       <Tabs
         defaultValue="cli"
         values={[
