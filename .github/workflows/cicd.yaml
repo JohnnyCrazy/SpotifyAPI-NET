@@ -1,0 +1,27 @@
+name: Build/Test/Release SpotifyAPI-NET
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  spotifyapi-net-cicd:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "3.1.x"
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "2.2.x"
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.x"
+      - name: Restore Packages
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --verbosity minimal
+      - name: Test
+        run: dotnet test SpotifyAPI.Web.Tests
