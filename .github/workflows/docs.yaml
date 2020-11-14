@@ -15,7 +15,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.15.0
+      - name: Setup GitHub Deploy SSH Key
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.GH_DEPLOY_SSH_KEY }}
       - name: Build & Deploy Documentation
         run: ./SpotifyAPI.Docs/docs.sh
-        env:
-          GH_DEPLOY_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
