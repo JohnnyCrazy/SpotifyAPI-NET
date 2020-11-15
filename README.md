@@ -10,8 +10,6 @@
   </a>
 </h1>
 
-> ℹ This README targets Version >= 6.X, which is currently in beta status. For the documentation of version 5.1.1, visit [the docs](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/home)
-
 [![Build status](https://img.shields.io/appveyor/build/JohnnyCrazy/SpotifyAPI-NET/master?style=flat-square)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
 [![License](https://img.shields.io/github/license/JohnnyCrazy/SpotifyAPI-NET?style=flat-square)](./LICENSE)
 [![SpotifyAPI.Web NuGET](https://img.shields.io/nuget/vpre/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square)](https://www.nuget.org/packages/SpotifyAPI.Web/)
