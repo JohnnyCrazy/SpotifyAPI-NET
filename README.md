@@ -10,7 +10,7 @@
   </a>
 </h1>
 
-[![Build status](https://img.shields.io/appveyor/build/JohnnyCrazy/SpotifyAPI-NET/master?style=flat-square)](https://ci.appveyor.com/project/JohnnyCrazy/spotifyapi-net)
+![Build SpotifyAPI-NET](https://github.com/JohnnyCrazy/SpotifyAPI-NET/workflows/Build/Test/Release%20SpotifyAPI-NET/badge.svg)
 [![License](https://img.shields.io/github/license/JohnnyCrazy/SpotifyAPI-NET?style=flat-square)](./LICENSE)
 [![SpotifyAPI.Web NuGET](https://img.shields.io/nuget/vpre/SpotifyAPI.Web?label=SpotifyAPI.Web&style=flat-square)](https://www.nuget.org/packages/SpotifyAPI.Web/)
 [![SpotifyAPI.Web.Auth NuGET](https://img.shields.io/nuget/vpre/SpotifyAPI.Web.Auth?label=SpotifyAPI.Web.Auth&style=flat-square)](https://www.nuget.org/packages/SpotifyAPI.Web.Auth/)
