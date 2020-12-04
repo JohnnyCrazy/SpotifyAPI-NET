@@ -74,3 +74,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [Rhythm Games Converter](https://github.com/Suprnova123/Rhythm-Games-Converter) by [@Suprnova123](https://github.com/Suprnova123)
 
 > Tool that looks for songs in, among other things, your Spotify playlists, that also appear in popular rhythm games.
+
+### [SpotiSharp](https://github.com/L0um15/SpotiSharp) by [@L0um15](https://github.com/L0um15)
+
+> Music Downloader using Spotify Web API.
