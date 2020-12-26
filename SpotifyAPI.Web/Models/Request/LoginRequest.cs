@@ -29,7 +29,7 @@ namespace SpotifyAPI.Web
 
     public Uri ToUri()
     {
-      StringBuilder builder = new StringBuilder(SpotifyUrls.Authorize.ToString());
+      var builder = new StringBuilder(SpotifyUrls.Authorize.ToString());
       builder.Append($"?client_id={ClientId}");
       builder.Append($"&response_type={ResponseTypeParam.ToString().ToLower(CultureInfo.InvariantCulture)}");
       builder.Append($"&redirect_uri={HttpUtility.UrlEncode(RedirectUri.ToString())}");

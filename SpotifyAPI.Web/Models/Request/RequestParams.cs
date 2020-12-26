@@ -11,7 +11,7 @@ namespace SpotifyAPI.Web
   public abstract class RequestParams
   {
     private static readonly ConcurrentDictionary<Type, List<(PropertyInfo, BodyParamAttribute)>> _bodyParamsCache =
-      new ConcurrentDictionary<Type, List<(PropertyInfo, BodyParamAttribute)>>();
+      new();
 
     public JObject BuildBodyParams()
     {
@@ -59,7 +59,7 @@ namespace SpotifyAPI.Web
     }
 
     private static readonly ConcurrentDictionary<Type, List<(PropertyInfo, QueryParamAttribute)>> _queryParamsCache =
-      new ConcurrentDictionary<Type, List<(PropertyInfo, QueryParamAttribute)>>();
+      new();
 
     public Dictionary<string, string> BuildQueryParams()
     {
@@ -146,7 +146,7 @@ namespace SpotifyAPI.Web
         }
         else
         {
-          queryParams.Add(attribute.Key ?? prop.Name, value.ToString() ?? throw new Exception("ToString was null on a value"));
+          queryParams.Add(attribute.Key ?? prop.Name, value.ToString() ?? throw new APIException("ToString returned null for query parameter"));
         }
       }
     }
@@ -156,7 +156,7 @@ namespace SpotifyAPI.Web
   }
 
   [AttributeUsage(AttributeTargets.Property)]
-  public class QueryParamAttribute : Attribute
+  public sealed class QueryParamAttribute : Attribute
   {
     public string Key { get; }
 
@@ -167,7 +167,7 @@ namespace SpotifyAPI.Web
   }
 
   [AttributeUsage(AttributeTargets.Property)]
-  public class BodyParamAttribute : Attribute
+  public sealed class BodyParamAttribute : Attribute
   {
     public string Key { get; }
 

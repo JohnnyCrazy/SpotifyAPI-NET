@@ -49,12 +49,12 @@ namespace SpotifyAPI.Web
       return API.Post<FullPlaylist>(URLs.UserPlaylists(userId), null, request.BuildBodyParams());
     }
 
-    public async Task<bool> UploadCover(string playlistId, string base64Jpg)
+    public async Task<bool> UploadCover(string playlistId, string base64JpgData)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
-      Ensure.ArgumentNotNullOrEmptyString(base64Jpg, nameof(base64Jpg));
+      Ensure.ArgumentNotNullOrEmptyString(base64JpgData, nameof(base64JpgData));
 
-      var statusCode = await API.PutRaw(URLs.PlaylistImages(playlistId), null, base64Jpg).ConfigureAwait(false);
+      var statusCode = await API.PutRaw(URLs.PlaylistImages(playlistId), null, base64JpgData).ConfigureAwait(false);
       return statusCode == HttpStatusCode.Accepted;
     }
 

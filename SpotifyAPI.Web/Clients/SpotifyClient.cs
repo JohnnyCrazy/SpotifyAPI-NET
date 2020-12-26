@@ -24,7 +24,9 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(config, nameof(config));
       if (config.Authenticator == null)
       {
-        throw new NullReferenceException("Authenticator in config is null. Please supply it via `WithAuthenticator` or `WithToken`");
+#pragma warning disable CA2208
+        throw new ArgumentNullException("Authenticator in config is null. Please supply it via `WithAuthenticator` or `WithToken`");
+#pragma warning restore CA2208
       }
 
       _apiConnector = new APIConnector(

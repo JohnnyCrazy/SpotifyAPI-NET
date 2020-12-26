@@ -279,15 +279,13 @@ namespace SpotifyAPI.Web.Http
         return;
       }
 
-      switch (response.StatusCode)
+      throw response.StatusCode switch
       {
-        case HttpStatusCode.Unauthorized:
-          throw new APIUnauthorizedException(response);
-        case (HttpStatusCode)429: // TODO: Remove hack once .netstandard 2.0 is not supported
-          throw new APITooManyRequestsException(response);
-        default:
-          throw new APIException(response);
-      }
+        HttpStatusCode.Unauthorized => new APIUnauthorizedException(response),
+        // TODO: Remove hack once .netstandard 2.0 is not supported
+        (HttpStatusCode)429 => new APITooManyRequestsException(response),
+        _ => new APIException(response),
+      };
     }
   }
 }

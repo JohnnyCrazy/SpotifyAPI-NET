@@ -4,7 +4,7 @@ namespace SpotifyAPI.Web
 {
   public abstract class APIClient
   {
-    public APIClient(IAPIConnector apiConnector)
+    protected APIClient(IAPIConnector apiConnector)
     {
       Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
 

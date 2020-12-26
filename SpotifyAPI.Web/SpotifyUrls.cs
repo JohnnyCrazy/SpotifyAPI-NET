@@ -3,13 +3,13 @@ namespace SpotifyAPI.Web
 {
   public static class SpotifyUrls
   {
-    static private readonly URIParameterFormatProvider _provider = new URIParameterFormatProvider();
+    static private readonly URIParameterFormatProvider _provider = new();
 
-    public static readonly Uri APIV1 = new Uri("https://api.spotify.com/v1/");
+    public static readonly Uri APIV1 = new("https://api.spotify.com/v1/");
 
-    public static readonly Uri Authorize = new Uri("https://accounts.spotify.com/authorize");
+    public static readonly Uri Authorize = new("https://accounts.spotify.com/authorize");
 
-    public static readonly Uri OAuthToken = new Uri("https://accounts.spotify.com/api/token");
+    public static readonly Uri OAuthToken = new("https://accounts.spotify.com/api/token");
 
     public static Uri Me() => EUri($"me");
 
@@ -125,6 +125,6 @@ namespace SpotifyAPI.Web
 
     public static Uri LibraryShows() => EUri($"me/shows");
 
-    private static Uri EUri(FormattableString path) => new Uri(path.ToString(_provider), UriKind.Relative);
+    private static Uri EUri(FormattableString path) => new(path.ToString(_provider), UriKind.Relative);
   }
 }

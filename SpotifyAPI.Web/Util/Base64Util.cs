@@ -114,21 +114,17 @@ namespace SpotifyAPI.Web
 
     private static int GetNumBase64PaddingCharsToAddForDecode(int inputLength)
     {
-      switch (inputLength % 4)
+      return (inputLength % 4) switch
       {
-        case 0:
-          return 0;
-        case 2:
-          return 2;
-        case 3:
-          return 1;
-        default:
-          throw new FormatException(
-              string.Format(
-                  CultureInfo.CurrentCulture,
-                  WebEncoders_MalformedInput,
-                  inputLength));
-      }
+        0 => 0,
+        2 => 2,
+        3 => 1,
+        _ => throw new FormatException(
+      string.Format(
+          CultureInfo.CurrentCulture,
+          WebEncoders_MalformedInput,
+          inputLength)),
+      };
     }
   }
 

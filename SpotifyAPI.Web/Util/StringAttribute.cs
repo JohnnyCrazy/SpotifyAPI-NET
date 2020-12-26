@@ -6,14 +6,14 @@ using System.Diagnostics.CodeAnalysis;
 namespace SpotifyAPI.Web
 {
   [AttributeUsage(AttributeTargets.Field)]
-  public class StringAttribute : Attribute
+  public sealed class StringAttribute : Attribute
   {
     public StringAttribute(string value)
     {
       Value = value;
     }
 
-    public string Value { get; set; }
+    public string Value { get; }
 
 #if NETSTANDARD2_0
     public static bool GetValue(Type enumType, Enum enumValue, out string? result)

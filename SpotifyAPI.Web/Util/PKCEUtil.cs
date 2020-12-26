@@ -52,22 +52,18 @@ namespace SpotifyAPI.Web
 
     private static string GenerateRandomURLSafeString(int length)
     {
-      using (var rng = new RNGCryptoServiceProvider())
-      {
-        var bit_count = length * 6;
-        var byte_count = (bit_count + 7) / 8; // rounded up
-        var bytes = new byte[byte_count];
-        rng.GetBytes(bytes);
-        return Base64Util.UrlEncode(bytes);
-      }
+      using var rng = new RNGCryptoServiceProvider();
+      var bit_count = length * 6;
+      var byte_count = (bit_count + 7) / 8; // rounded up
+      var bytes = new byte[byte_count];
+      rng.GetBytes(bytes);
+      return Base64Util.UrlEncode(bytes);
     }
 
     private static byte[] ComputeSHA256(string value)
     {
-      using (var hash = SHA256.Create())
-      {
-        return hash.ComputeHash(Encoding.UTF8.GetBytes(value));
-      }
+      using var hash = SHA256.Create();
+      return hash.ComputeHash(Encoding.UTF8.GetBytes(value));
     }
   }
 }
