@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace SpotifyAPI.Web
 {
@@ -29,14 +29,7 @@ namespace SpotifyAPI.Web
 #pragma warning restore CA2208
       }
 
-      _apiConnector = new APIConnector(
-        config.BaseAddress,
-        config.Authenticator,
-        config.JSONSerializer,
-        config.HTTPClient,
-        config.RetryHandler,
-        config.HTTPLogger
-      );
+      _apiConnector = config.BuildAPIConnector();
       _apiConnector.ResponseReceived += (sender, response) =>
       {
         LastResponse = response;
@@ -122,6 +115,79 @@ namespace SpotifyAPI.Web
     )
     {
       return (paginator ?? DefaultPaginator).PaginateAll(firstPage, mapper, _apiConnector);
+    }
+
+    private Task<T> FetchPage<T>(string? nextUrl)
+    {
+      if (nextUrl == null)
+      {
+        throw new APIPagingException("The paging object has no next page");
+      }
+
+      return _apiConnector.Get<T>(new Uri(nextUrl, UriKind.Absolute));
+    }
+
+    /// <summary>
+    /// Fetches the next page of the paging object
+    /// </summary>
+    /// <param name="paging">A paging object which has a next page</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public Task<Paging<T>> NextPage<T>(Paging<T> paging)
+    {
+      Ensure.ArgumentNotNull(paging, nameof(paging));
+      return FetchPage<Paging<T>>(paging.Next);
+    }
+
+    /// <summary>
+    /// Fetches the next page of the cursor paging object
+    /// </summary>
+    /// <param name="cursorPaging">A cursor paging object which has a next page</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public Task<CursorPaging<T>> NextPage<T>(CursorPaging<T> cursorPaging)
+    {
+      Ensure.ArgumentNotNull(cursorPaging, nameof(cursorPaging));
+      return FetchPage<CursorPaging<T>>(cursorPaging.Next);
+    }
+
+    /// <summary>
+    /// Fetches the next page of the complex IPaginatable object.
+    /// </summary>
+    /// <param name="paginatable">A complex IPaginatable object with a next page</param>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TNext">The type of the next page</typeparam>
+    /// <returns></returns>
+    public Task<TNext> NextPage<T, TNext>(IPaginatable<T, TNext> paginatable)
+    {
+      Ensure.ArgumentNotNull(paginatable, nameof(paginatable));
+      return FetchPage<TNext>(paginatable.Next);
+    }
+
+    /// <summary>
+    /// Fetches the previous page of the paging object.
+    /// </summary>
+    /// <param name="paging">A paging object with a previous page</param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public Task<Paging<T>> PreviousPage<T>(Paging<T> paging)
+    {
+      Ensure.ArgumentNotNull(paging, nameof(paging));
+      return FetchPage<Paging<T>>(paging.Previous);
+    }
+
+
+    /// <summary>
+    /// Fetches the previous page of the complex paging object.
+    /// </summary>
+    /// <param name="paging">A complex paging object with a previous page</param>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TNext">The type of the next page</typeparam>
+    /// <returns></returns>
+    public Task<TNext> PreviousPage<T, TNext>(Paging<T, TNext> paging)
+    {
+      Ensure.ArgumentNotNull(paging, nameof(paging));
+      return FetchPage<TNext>(paging.Previous);
     }
 
 #if NETSTANDARD2_1

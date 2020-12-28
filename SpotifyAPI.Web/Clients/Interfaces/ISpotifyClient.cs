@@ -167,5 +167,15 @@ namespace SpotifyAPI.Web
     );
 
 #endif
+
+    public Task<Paging<T>> NextPage<T>(Paging<T> paging);
+
+    public Task<CursorPaging<T>> NextPage<T>(CursorPaging<T> cursorPaging);
+
+    public Task<TNext> NextPage<T, TNext>(IPaginatable<T, TNext> paginatable);
+
+    public Task<Paging<T>> PreviousPage<T>(Paging<T> paging);
+
+    public Task<TNext> PreviousPage<T, TNext>(Paging<T, TNext> paging);
   }
 }

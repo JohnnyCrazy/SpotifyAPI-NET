@@ -13,6 +13,7 @@ namespace SpotifyAPI.Web
     public IHTTPLogger? HTTPLogger { get; private set; }
     public IRetryHandler? RetryHandler { get; private set; }
     public IPaginator DefaultPaginator { get; private set; }
+    public IAPIConnector? APIConnector { get; private set; }
 
     /// <summary>
     ///   This config spefies the internal parts of the SpotifyClient.
@@ -24,6 +25,7 @@ namespace SpotifyAPI.Web
     /// <param name="retryHandler"></param>
     /// <param name="httpLogger"></param>
     /// <param name="defaultPaginator"></param>
+    /// <param name="apiConnector"></param>
     public SpotifyClientConfig(
       Uri baseAddress,
       IAuthenticator? authenticator,
@@ -31,7 +33,8 @@ namespace SpotifyAPI.Web
       IHTTPClient httpClient,
       IRetryHandler? retryHandler,
       IHTTPLogger? httpLogger,
-      IPaginator defaultPaginator
+      IPaginator defaultPaginator,
+      IAPIConnector? apiConnector = null
     )
     {
       BaseAddress = baseAddress;
@@ -41,6 +44,7 @@ namespace SpotifyAPI.Web
       RetryHandler = retryHandler;
       HTTPLogger = httpLogger;
       DefaultPaginator = defaultPaginator;
+      APIConnector = apiConnector;
     }
 
     public SpotifyClientConfig WithToken(string token, string tokenType = "Bearer")
@@ -142,6 +146,34 @@ namespace SpotifyAPI.Web
         RetryHandler,
         HTTPLogger,
         defaultPaginator
+      );
+    }
+
+    public SpotifyClientConfig WithAPIConnector(IAPIConnector apiConnector)
+    {
+      Ensure.ArgumentNotNull(apiConnector, nameof(apiConnector));
+
+      return new SpotifyClientConfig(
+        BaseAddress,
+        Authenticator,
+        JSONSerializer,
+        HTTPClient,
+        RetryHandler,
+        HTTPLogger,
+        DefaultPaginator,
+        apiConnector
+      );
+    }
+
+    public IAPIConnector BuildAPIConnector()
+    {
+      return APIConnector ?? new APIConnector(
+        BaseAddress,
+        Authenticator,
+        JSONSerializer,
+        HTTPClient,
+        RetryHandler,
+        HTTPLogger
       );
     }
 
