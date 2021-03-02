@@ -39,7 +39,7 @@ namespace SpotifyAPI.Web
       IAPIConnector connector
     );
 
-#if NETSTANDARD2_1
+#if !NETSTANDARD2_0
     /// <summary>
     /// Fetches all pages and returns one by one using IAsyncEnumerable
     /// </summary>

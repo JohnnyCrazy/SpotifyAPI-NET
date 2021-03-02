@@ -128,7 +128,7 @@ namespace SpotifyAPI.Web
       IPaginator? paginator = default!
     );
 
-#if NETSTANDARD2_1
+#if !NETSTANDARD2_0
     /// <summary>
     /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
     /// The default paginator will fetch all available resources without a delay between requests.
