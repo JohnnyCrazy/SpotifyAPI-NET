@@ -78,3 +78,6 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [SpotiSharp](https://github.com/L0um15/SpotiSharp) by [@L0um15](https://github.com/L0um15)
 
 > Music Downloader using Spotify Web API.
+
+### [LuminFy](https://github.com/Ibrajber99/LuminFy) by [@Ibrajber99](https://github.com/Ibrajber99)
+> App to browse user data, media player to control your music and more.
