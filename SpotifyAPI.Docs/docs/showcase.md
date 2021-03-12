@@ -78,3 +78,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [SpotiSharp](https://github.com/L0um15/SpotiSharp) by [@L0um15](https://github.com/L0um15)
 
 > Music Downloader using Spotify Web API.
+> 
+### [LuminFy](https://github.com/Ibrajber99/LuminFy) by [@ibrajber99](https://github.com/Ibrajber99)
+
+> App to look for music check you profile data and controll your Spotfy App from it. 
