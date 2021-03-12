@@ -34,16 +34,17 @@ namespace SpotifyAPI.Web
           .GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
           .Where(prop => prop.GetCustomAttributes(typeof(BodyParamAttribute), true).Length > 0);
 
-        _bodyParamsCache[type] = new List<(PropertyInfo, BodyParamAttribute)>();
+        var cachedParams = new List<(PropertyInfo, BodyParamAttribute)>();
         foreach (var prop in bodyProps)
         {
           var attribute = prop.GetCustomAttribute<BodyParamAttribute>();
           if (attribute != null)
           {
-            _bodyParamsCache[type].Add((prop, attribute));
+            cachedParams.Add((prop, attribute));
             AddBodyParam(body, prop, attribute);
           }
         }
+        _bodyParamsCache[type] = cachedParams;
       }
 
       return body;
@@ -81,16 +82,17 @@ namespace SpotifyAPI.Web
         var queryProps = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
         .Where(prop => prop.GetCustomAttributes(typeof(QueryParamAttribute), true).Length > 0);
 
-        _queryParamsCache[type] = new List<(PropertyInfo, QueryParamAttribute)>();
+        var cachedParams = new List<(PropertyInfo, QueryParamAttribute)>();
         foreach (var prop in queryProps)
         {
           var attribute = prop.GetCustomAttribute<QueryParamAttribute>();
           if (attribute != null)
           {
-            _queryParamsCache[type].Add((prop, attribute));
+            cachedParams.Add((prop, attribute));
             AddQueryParam(queryParams, prop, attribute);
           }
         }
+        _queryParamsCache[type] = cachedParams;
       }
 
       AddCustomQueryParams(queryParams);
