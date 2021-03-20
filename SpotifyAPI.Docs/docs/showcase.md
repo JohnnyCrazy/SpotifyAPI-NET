@@ -82,3 +82,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [LuminFy](https://github.com/Ibrajber99/LuminFy) by [@ibrajber99](https://github.com/Ibrajber99)
 
 > App to look for music check you profile data and controll your Spotfy App from it. 
+
+### [Sortify](https://github.com/tomaszFijalkowski/Sortify) by [@tomaszFijalkowski](https://github.com/tomaszFijalkowski)
+
+> Sortify is a powerful tool that aims to help people organize their Spotify libraries. It allows you to sort existing playlists or create new ones. When creating, you have an option to merge or split the playlists. It also removes any track duplicates from them. All that, while being very simple and friendly to use.
