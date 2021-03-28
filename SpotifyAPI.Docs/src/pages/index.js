@@ -18,7 +18,7 @@ var me = await spotify.UserProfile.Current();
 Console.WriteLine($"Hello there {me.DisplayName}");
 
 await foreach(
-  var playlist in spotify.Paginate(spotify.Playlists.CurrentUsers())
+  var playlist in spotify.Paginate(await spotify.Playlists.CurrentUsers())
 )
 {
   Console.WriteLine(playlist.Name);
