@@ -19,27 +19,22 @@ module.exports = {
         alt: 'SpotifyAPI-NET',
         src: 'img/logo.svg',
       },
-      links: [
+      items: [
         {
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
           items: [
             {
-              label: 'Latest/Next',
-              to: 'docs/next/introduction',
+              label: '6.X (current)',
+              to: 'docs/introduction',
             },
-            {
-              label: versions[0],
-              to: 'docs/home',
-            },
-            ...versions.slice(1).map((version) => ({
+            ...versions.map((version) => ({
               label: version,
               to: `docs/${version}/home`,
-            }))
-          ]
+            })),
+          ],
         },
-        { to: 'news', label: 'News', position: 'left' },
         {
           href: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET',
           label: 'GitHub',
@@ -54,16 +49,21 @@ module.exports = {
   },
   presets: [
     [
-
       '@docusaurus/preset-classic',
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/JohnnyCrazy/SpotifyAPI-NET/edit/master/SpotifyAPI.Docs/',
+          editUrl: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET/edit/master/SpotifyAPI.Docs/',
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '6.X',
+              path: '',
+            },
+          },
         },
         blog: {
           path: 'news',
@@ -71,8 +71,7 @@ module.exports = {
           showReadingTime: true,
           feedOptions: undefined,
           // Please change this to your repo.
-          editUrl:
-            'https://github.com/JohnnyCrazy/SpotifyAPI-NET/edit/master/SpotifyAPI.Docs/blog/',
+          editUrl: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET/edit/master/SpotifyAPI.Docs/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

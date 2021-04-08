@@ -62,7 +62,7 @@ const features = [
     description: () => (
       <>
         <code>SpotifyAPI-NET</code> is built on a modular structure, which allows easy testing through mocks and stubs.
-        Learn more by visiting the <Link to={useBaseUrl('docs/next/testing')}>Testing Guide</Link>
+        Learn more by visiting the <Link to={useBaseUrl('docs/unit_testing')}>Testing Guide</Link>
       </>
     ),
   },
@@ -124,7 +124,7 @@ function Home() {
               <div className={styles.buttons}>
                 <Link
                   className={classnames('button button--outline button--secondary button--lg', styles.getStarted)}
-                  to={useBaseUrl('docs/next/introduction')}
+                  to={useBaseUrl('docs/introduction')}
                 >
                   Get Started
                 </Link>

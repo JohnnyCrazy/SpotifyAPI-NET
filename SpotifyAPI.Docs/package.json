@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "docusaurus start",
+    "start": "docusaurus start --no-open",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy"
@@ -14,11 +14,11 @@
     }
   },
   "dependencies": {
-    "@docusaurus/core": "^2.0.0-alpha.56",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.56",
-    "classnames": "^2.2.6",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "@docusaurus/core": "^2.0.0-alpha.72",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.72",
+    "classnames": "^2.3.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-github-btn": "^1.2.0"
   },
   "browserslist": {
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "import-sort-style-module": "^6.0.0",
-    "prettier": "^2.0.5",
-    "prettier-plugin-import-sort": "^0.0.4"
+    "prettier": "^2.2.1",
+    "prettier-plugin-import-sort": "^0.0.6"
   }
 }

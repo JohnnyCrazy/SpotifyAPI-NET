@@ -11,17 +11,18 @@ requests to Spotify, as well as requests that return back to the "server URI".
 
 The exchange server **must** be able to:
 
-* Return the authorization code from Spotify API authenticate page via GET request to the "server URI".
-* Request the token response object via POST to the Spotify API token page.
-* Request a refreshed token response object via POST to the Spotify API token page.
+- Return the authorization code from Spotify API authenticate page via GET request to the "server URI".
+- Request the token response object via POST to the Spotify API token page.
+- Request a refreshed token response object via POST to the Spotify API token page.
 
 **The good news is that you do not need to code it yourself.**
 
-The advantages of this method are that the client ID and redirect URI are very well hidden and almost unexposed, but more importantly, your client secret is **never** exposed and is completely hidden compared to other methods (excluding [ImplicitGrantAuth](/SpotifyWebAPI/auth#implicitgrantauth)
+The advantages of this method are that the client ID and redirect URI are very well hidden and almost unexposed, but more importantly, your client secret is **never** exposed and is completely hidden compared to other methods (excluding [ImplicitGrantAuth](implicit_grant.md)
 as it does not deal with a client secret). This means
 your Spotify app **cannot** be spoofed by a malicious third party.
 
 ## Using TokenSwapWebAPIFactory
+
 The TokenSwapWebAPIFactory will create and configure a SpotifyWebAPI object for you.
 
 It does this through the method GetWebApiAsync **asynchronously**, which means it will not halt execution of your program while obtaining it for you. If you would like to halt execution, which is **synchronous**, use `GetWebApiAsync().Result` without using **await**.
@@ -55,6 +56,7 @@ catch (Exception ex)
 ```
 
 ## Using TokenSwapAuth
+
 Since the TokenSwapWebAPIFactory not only simplifies the whole process but offers additional functionality too
 (such as AutoRefresh and AuthSuccess AuthFailure events), use of this way is very verbose and is only
 recommended if you are having issues with TokenSwapWebAPIFactory or need access to the tokens.
@@ -84,25 +86,30 @@ auth.OpenBrowser();
 ```
 
 ## Token Swap Endpoint
+
 To keep your client secret completely secure and your client ID and redirect URI as secure as possible, use of a web server (such as a php website) is required.
 
 To use this method, an external HTTP Server (that you may need to create) needs to be able to supply the following HTTP Endpoints to your application:
 
 `/swap` - Swaps out an `authorization_code` with an `access_token` and `refresh_token` - The following parameters are required in the JSON POST Body:
+
 - `grant_type` (set to `"authorization_code"`)
 - `code` (the `authorization_code`)
 - `redirect_uri`
 - - **Important** The page that the redirect URI links to must return the authorization code json to your `serverUri` (default is 'http://localhost:4002') but to the folder 'auth', like this: 'http://localhost:4002/auth'.
 
 `/refresh` - Refreshes an `access_token` - The following parameters are required in the JSON POST Body:
+
 - `grant_type` (set to `"refresh_token"`)
 - `refresh_token`
 
 The following open-source token swap endpoint code can be used for your website:
+
 - [rollersteaam/spotify-token-swap-php](https://github.com/rollersteaam/spotify-token-swap-php)
 - [simontaen/SpotifyTokenSwap](https://github.com/simontaen/SpotifyTokenSwap)
 
 ## Remarks
+
 It should be noted that GitHub Pages does not support hosting php scripts. Hosting php scripts through it will cause the php to render as plain HTML, potentially compromising your client secret while doing absolutely nothing.
 
 Be sure you have whitelisted your redirect uri in the Spotify Developer Dashboard otherwise the authorization will always fail.

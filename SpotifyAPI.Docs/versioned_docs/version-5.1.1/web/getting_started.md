@@ -23,6 +23,7 @@ using SpotifyAPI.Web.Models; //Models for the JSON-responses
 ### Basic-Usage
 
 Now you can actually start doing calls to the SpotifyAPI, just create a new Instance of SpotifyWebAPI:
+
 ```csharp
 private static SpotifyWebAPI _spotify;
 
@@ -50,11 +51,12 @@ _spotify = new SpotifyWebAPI()
 }
 ```
 
-For more info, visit the [Getting Started of SpotifyAPI.Web.Auth](/auth/getting_started/)
-
+For more info, visit the [Getting Started of SpotifyAPI.Web.Auth](auth/getting_started.md)
 
 ## Error-Handling
+
 Every API-Call returns a reponse-model which consists of base-error model. To check if a specific API-Call was successful, use the following approach:
+
 ```csharp
 PrivateProfile profile = _spotify.GetPrivateProfile();
 if (profile.HasError())
@@ -67,6 +69,7 @@ if (profile.HasError())
 In case some or all of the returned values are null, consult error status and message, they can lead to an explanation!
 
 ## Sync vs Asynchronous
+
 Every API-Call has an `asynchronous` and `synchronous` method.
 
 ```csharp
@@ -82,88 +85,99 @@ Note that the `synchronous` call will block the current Thread!
 ## API-Reference
 
 ### Albums
-* [GetAlbumTracks](/web/albums.md#getalbumtracks)
-* [GetAlbum](/web/albums.md#getalbum)
-* [GetSeveralAlbums](/web/albums.md#getseveralalbums)
+
+- [GetAlbumTracks](/web/albums.md#getalbumtracks)
+- [GetAlbum](/web/albums.md#getalbum)
+- [GetSeveralAlbums](/web/albums.md#getseveralalbums)
 
 ### Artists
-* [GetArtist](/web/artists.md#getartist)
-* [GetRelatedArtists](/web/artists.md#getrelatedartists)
-* [GetArtistsTopTracks](/web/artists.md#getartiststoptracks)
-* [GetArtistsAlbums](/web/artists.md#getartistsalbums)
-* [GetSeveralArtists](/web/artists.md#getseveralartists)
+
+- [GetArtist](/web/artists.md#getartist)
+- [GetRelatedArtists](/web/artists.md#getrelatedartists)
+- [GetArtistsTopTracks](/web/artists.md#getartiststoptracks)
+- [GetArtistsAlbums](/web/artists.md#getartistsalbums)
+- [GetSeveralArtists](/web/artists.md#getseveralartists)
 
 ### Browse
-* [GetFeaturedPlaylists](/web/browse.md#getfeaturedplaylists)
-* [GetNewAlbumReleases](/web/browse.md#getnewalbumreleases)
-* [GetCategories](/web/browse.md#getcategories)
-* [GetCategory](/web/browse.md#getcategory)
-* [GetCategoryPlaylists](/web/browse.md#getcategoryplaylists)
+
+- [GetFeaturedPlaylists](/web/browse.md#getfeaturedplaylists)
+- [GetNewAlbumReleases](/web/browse.md#getnewalbumreleases)
+- [GetCategories](/web/browse.md#getcategories)
+- [GetCategory](/web/browse.md#getcategory)
+- [GetCategoryPlaylists](/web/browse.md#getcategoryplaylists)
 
 ### Follow
-* [Follow](/web/follow.md#follow)
-* [Unfollow](/web/follow.md#unfollow)
-* [IsFollowing](/web/follow.md#isfollowing)
-* [FollowPlaylist](/web/follow.md#followplaylist)
-* [UnfollowPlaylist](/web/follow.md#unfollowplaylist)
-* [IsFollowingPlaylist](/web/follow.md#isfollowingplaylist)
+
+- [Follow](/web/follow.md#follow)
+- [Unfollow](/web/follow.md#unfollow)
+- [IsFollowing](/web/follow.md#isfollowing)
+- [FollowPlaylist](/web/follow.md#followplaylist)
+- [UnfollowPlaylist](/web/follow.md#unfollowplaylist)
+- [IsFollowingPlaylist](/web/follow.md#isfollowingplaylist)
 
 ### Library
-* [SaveTracks](/web/library.md#savetracks)
-* [SaveTrack](/web/library.md#savetrack)
-* [GetSavedTracks](/web/library.md#getsavedtracks)
-* [RemoveSavedTracks](/web/library.md#removesavedtracks)
-* [CheckSavedTracks](/web/library.md#checksavedtracks)
-* [SaveAlbums](/web/library.md#savealbums)
-* [SaveAlbum](/web/library.md#savealbum)
-* [GetSavedAlbums](/web/library.md#getsavedalbums)
-* [RemoveSavedAlbums](/web/library.md#removesavedalbums)
-* [CheckSavedAlbums](/web/library.md#checksavedalbums)
+
+- [SaveTracks](/web/library.md#savetracks)
+- [SaveTrack](/web/library.md#savetrack)
+- [GetSavedTracks](/web/library.md#getsavedtracks)
+- [RemoveSavedTracks](/web/library.md#removesavedtracks)
+- [CheckSavedTracks](/web/library.md#checksavedtracks)
+- [SaveAlbums](/web/library.md#savealbums)
+- [SaveAlbum](/web/library.md#savealbum)
+- [GetSavedAlbums](/web/library.md#getsavedalbums)
+- [RemoveSavedAlbums](/web/library.md#removesavedalbums)
+- [CheckSavedAlbums](/web/library.md#checksavedalbums)
 
 ### Personalization
-* [GetUsersTopTracks](/web/personalization.md#getuserstoptracks)
-* [GetUsersTopArtists](/web/personalization.md#getuserstopartists)
-* [GetUsersRecentlyPlayedTracks](/web/personalization.md#getusersrecentlyplayedtracks)
+
+- [GetUsersTopTracks](/web/personalization.md#getuserstoptracks)
+- [GetUsersTopArtists](/web/personalization.md#getuserstopartists)
+- [GetUsersRecentlyPlayedTracks](/web/personalization.md#getusersrecentlyplayedtracks)
 
 ### Player
 
-* [GetDevices](/web/player.md#getdevices)
-* [GetPlayback](/web/player.md#getplayback)
-* [GetPlayingTrack](/web/player.md#getplayingtrack)
-* [TransferPlayback](/web/player.md#transferplayback)
-* [ResumePlayback](/web/player.md#resumeplayback)
-* [PausePlayback](/web/player.md#pauseplayback)
-* [SkipPlaybackToNext](/web/player.md#skipplaybacktonext)
-* [SkipPlaybackToPrevious](/web/player.md#skipplaybacktoprevious)
-* [SetRepeatMode](/web/player.md#setrepeatmode)
-* [SetVolume](/web/player.md#setvolume)
-* [SetShuffle](/web/player.md#setshuffle)
+- [GetDevices](/web/player.md#getdevices)
+- [GetPlayback](/web/player.md#getplayback)
+- [GetPlayingTrack](/web/player.md#getplayingtrack)
+- [TransferPlayback](/web/player.md#transferplayback)
+- [ResumePlayback](/web/player.md#resumeplayback)
+- [PausePlayback](/web/player.md#pauseplayback)
+- [SkipPlaybackToNext](/web/player.md#skipplaybacktonext)
+- [SkipPlaybackToPrevious](/web/player.md#skipplaybacktoprevious)
+- [SetRepeatMode](/web/player.md#setrepeatmode)
+- [SetVolume](/web/player.md#setvolume)
+- [SetShuffle](/web/player.md#setshuffle)
 
 ### Playlists
-* [GetUserPlaylists](/web/playlists.md#getuserplaylists)
-* [GetPlaylist](/web/playlists.md#getplaylist)
-* [GetPlaylistTracks](/web/playlists.md#getplaylisttracks)
-* [CreatePlaylist](/web/playlists.md#createplaylist)
-* [UpdatePlaylist](/web/playlists.md#updateplaylist)
-* [ReplacePlaylistTracks](/web/playlists.md#replaceplaylisttracks)
-* [RemovePlaylistTracks](/web/playlists.md#removeplaylisttracks)
-* [RemovePlaylistTrack](/web/playlists.md#removeplaylisttrack)
-* [AddPlaylistTracks](/web/playlists.md#addplaylisttracks)
-* [AddPlaylistTrack](/web/playlists.md#addplaylisttrack)
-* [ReorderPlaylist](/web/playlists.md#reorderplaylist)
+
+- [GetUserPlaylists](/web/playlists.md#getuserplaylists)
+- [GetPlaylist](/web/playlists.md#getplaylist)
+- [GetPlaylistTracks](/web/playlists.md#getplaylisttracks)
+- [CreatePlaylist](/web/playlists.md#createplaylist)
+- [UpdatePlaylist](/web/playlists.md#updateplaylist)
+- [ReplacePlaylistTracks](/web/playlists.md#replaceplaylisttracks)
+- [RemovePlaylistTracks](/web/playlists.md#removeplaylisttracks)
+- [RemovePlaylistTrack](/web/playlists.md#removeplaylisttrack)
+- [AddPlaylistTracks](/web/playlists.md#addplaylisttracks)
+- [AddPlaylistTrack](/web/playlists.md#addplaylisttrack)
+- [ReorderPlaylist](/web/playlists.md#reorderplaylist)
 
 ### Profiles
-* [GetPublicProfile](/web/profiles.md#getpublicprofile)
-* [GetPrivateProfile](/web/profiles.md#getprivateprofile)
+
+- [GetPublicProfile](/web/profiles.md#getpublicprofile)
+- [GetPrivateProfile](/web/profiles.md#getprivateprofile)
 
 ### Search
-* [SearchItems](/web/search.md#searchitems)
-* [SearchItemsEscaped](/web/search.md#searchitemsescaped)
+
+- [SearchItems](/web/search.md#searchitems)
+- [SearchItemsEscaped](/web/search.md#searchitemsescaped)
 
 ### Tracks
-* [GetSeveralTracks](/web/tracks.md#getseveraltracks)
-* [GetTrack](/web/tracks.md#gettrack)
-* [GetAudioAnalysis](/web/tracks.md#getaudioanalysis)
+
+- [GetSeveralTracks](/web/tracks.md#getseveraltracks)
+- [GetTrack](/web/tracks.md#gettrack)
+- [GetAudioAnalysis](/web/tracks.md#getaudioanalysis)
 
 ### Util
-* [Utility-Functions](/web/utils.md)
+
+- [Utility-Functions](/web/utilities.md)
