@@ -86,7 +86,7 @@ public static async Task Main()
   {
     Scope = new List<string> { Scopes.UserReadEmail }
   };
-  BrowserUtil.Open(uri);
+  BrowserUtil.Open(request.ToUri());
 }
 
 private static async Task OnAuthorizationCodeReceived(object sender, AuthorizationCodeResponse response)
@@ -96,7 +96,7 @@ private static async Task OnAuthorizationCodeReceived(object sender, Authorizati
   var config = SpotifyClientConfig.CreateDefault();
   var tokenResponse = await new OAuthClient(config).RequestToken(
     new AuthorizationCodeTokenRequest(
-      "ClientId", "ClientSecret", response.Code, "http://localhost:5000/callback"
+      "ClientId", "ClientSecret", response.Code, new Uri("http://localhost:5000/callback")
     )
   );
 
