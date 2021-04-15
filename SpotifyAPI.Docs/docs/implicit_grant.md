@@ -89,6 +89,7 @@ public static async Task Main()
   await _server.Start();
 
   _server.ImplictGrantReceived += OnImplicitGrantReceived;
+  _server.ErrorReceived += OnErrorReceived;
 
   var request = new LoginRequest(_server.BaseUri, "ClientId", LoginRequest.ResponseType.Token)
   {
@@ -102,6 +103,12 @@ private static async Task OnImplicitGrantReceived(object sender, ImplictGrantRes
   await _server.Stop();
   var spotify = new SpotifyClient(response.AccessToken);
   // do calls with Spotify
+}
+
+private static async Task OnErrorReceived(object sender, string error, string state)
+{
+  Console.WriteLine($"Aborting authorization, error received: {error}");
+  await _server.Stop();
 }
 ```
 

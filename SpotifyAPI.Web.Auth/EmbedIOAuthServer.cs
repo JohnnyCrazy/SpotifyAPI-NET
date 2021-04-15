@@ -14,6 +14,7 @@ namespace SpotifyAPI.Web.Auth
   {
     public event Func<object, AuthorizationCodeResponse, Task>? AuthorizationCodeReceived;
     public event Func<object, ImplictGrantResponse, Task>? ImplictGrantReceived;
+    public event Func<object, string, string?, Task>? ErrorReceived;
 
     private const string AssetsResourcePath = "SpotifyAPI.Web.Auth.Resources.auth_assets";
     private const string DefaultResourcePath = "SpotifyAPI.Web.Auth.Resources.default_site";
@@ -38,6 +39,7 @@ namespace SpotifyAPI.Web.Auth
           var error = query["error"];
           if (error != null)
           {
+            ErrorReceived?.Invoke(this, error, query["state"]);
             throw new AuthException(error, query["state"]);
           }
 

@@ -81,6 +81,7 @@ public static async Task Main()
   await _server.Start();
 
   _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
+  _server.ErrorReceived += OnErrorReceived;
 
   var request = new LoginRequest(_server.BaseUri, "ClientId", LoginRequest.ResponseType.Code)
   {
@@ -102,6 +103,12 @@ private static async Task OnAuthorizationCodeReceived(object sender, Authorizati
 
   var spotify = new SpotifyClient(tokenResponse.AccessToken);
   // do calls with Spotify and save token?
+}
+
+private static async Task OnErrorReceived(object sender, string error, string state)
+{
+  Console.WriteLine($"Aborting authorization, error received: {error}");
+  await _server.Stop();
 }
 ```
 
