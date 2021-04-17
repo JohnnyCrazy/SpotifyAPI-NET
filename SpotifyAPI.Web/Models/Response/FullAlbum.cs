@@ -20,6 +20,7 @@ namespace SpotifyAPI.Web
     public string ReleaseDate { get; set; } = default!;
     public string ReleaseDatePrecision { get; set; } = default!;
     public Dictionary<string, string> Restrictions { get; set; } = default!;
+    public int TotalTracks { get; set; }
     public Paging<SimpleTrack> Tracks { get; set; } = default!;
     public string Type { get; set; } = default!;
     public string Uri { get; set; } = default!;
