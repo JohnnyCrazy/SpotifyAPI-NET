@@ -15,24 +15,23 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNull(serializer, nameof(serializer));
 
-      var token = JToken.ReadFrom(reader);
-      if (token.Type == JTokenType.Null)
+      if (JToken.ReadFrom(reader) is not JObject obj)
       {
         return null;
       }
 
-      var type = token["type"]?.Value<string>();
-      if (type == "track")
+      var type = obj.GetValue("type", StringComparison.OrdinalIgnoreCase)?.Value<string>();
+      if (string.Equals(type, "track", StringComparison.OrdinalIgnoreCase))
       {
-        var obj = new FullTrack();
-        serializer.Populate(token.CreateReader(), obj);
-        return obj;
+        var track = new FullTrack();
+        serializer.Populate(obj.CreateReader(), track);
+        return track;
       }
-      else if (type == "episode")
+      else if (string.Equals(type, "episode", StringComparison.OrdinalIgnoreCase))
       {
-        var obj = new FullEpisode();
-        serializer.Populate(token.CreateReader(), obj);
-        return obj;
+        var episode = new FullEpisode();
+        serializer.Populate(obj.CreateReader(), episode);
+        return episode;
       }
       else
       {

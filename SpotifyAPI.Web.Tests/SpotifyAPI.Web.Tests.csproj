@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.2</TargetFrameworks>
+    <LangVersion>9.0</LangVersion>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -16,6 +17,12 @@
   <ItemGroup>
     <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj" />
     <ProjectReference Include="..\SpotifyAPI.Web.Auth\SpotifyAPI.Web.Auth.csproj" />
+  </ItemGroup>
+
+   <ItemGroup>
+    <Content Include="Fixtures\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

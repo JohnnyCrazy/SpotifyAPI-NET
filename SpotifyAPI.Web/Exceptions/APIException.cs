@@ -46,9 +46,12 @@ namespace SpotifyAPI.Web
       {
         JObject bodyObject = JObject.Parse(body!);
 
-
         var error = bodyObject.Value<JToken>("error");
-        if (error.Type == JTokenType.String)
+        if (error == null)
+        {
+          return null;
+        }
+        else if (error.Type == JTokenType.String)
         {
           return error.ToString();
         }
