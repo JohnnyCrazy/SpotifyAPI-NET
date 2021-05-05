@@ -52,7 +52,7 @@ class Program
 }
 ```
 
-More examples can be found on [the website](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/next/introduction) and in the `SpotifyAPI.Web.Examples` directory.
+More examples can be found on [the website](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/introduction) and in the `SpotifyAPI.Web.Examples` directory.
 
 
 ### Docs and Usage
@@ -61,7 +61,7 @@ More Information, Installation-Instructions, Examples, Guides can be found at [j
 
 ### Installation
 
-Installation Instructions can be found in the [Getting Started Guide](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/next/getting_started)
+Installation Instructions can be found in the [Getting Started Guide](https://johnnycrazy.github.io/SpotifyAPI-NET/docs/getting_started)
 
 ### Donations
 
