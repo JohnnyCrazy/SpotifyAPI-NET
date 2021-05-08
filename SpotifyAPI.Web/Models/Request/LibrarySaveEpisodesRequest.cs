@@ -7,19 +7,19 @@ namespace SpotifyAPI.Web
     /// <summary>
     ///
     /// </summary>
-    /// <param name="ids">A comma-separated list of Spotify IDs for the shows to be added to the user’s library.</param>
-    public LibrarySaveEpisodesRequest(IList<string> ids)
+    /// <param name="uris">A comma-separated list of Spotify URIs for the shows to be added to the user’s library.</param>
+    public LibrarySaveEpisodesRequest(IList<string> uris)
     {
-      Ensure.ArgumentNotNullOrEmptyList(ids, nameof(ids));
+      Ensure.ArgumentNotNullOrEmptyList(uris, nameof(uris));
 
-      Ids = ids;
+      URIs = uris;
     }
 
     /// <summary>
-    /// A comma-separated list of Spotify IDs for the shows to be added to the user’s library.
+    /// A comma-separated list of Spotify URIs for the shows to be added to the user’s library.
     /// </summary>
     /// <value></value>
-    [QueryParam("ids")]
-    public IList<string> Ids { get; }
+    [QueryParam("uRIs")]
+    public IList<string> URIs { get; }
   }
 }
