@@ -19,7 +19,7 @@ namespace SpotifyAPI.Web
     /// A comma-separated list of Spotify URIs for the shows to be added to the user’s library.
     /// </summary>
     /// <value></value>
-    [QueryParam("uRIs")]
+    [QueryParam("uris")]
     public IList<string> URIs { get; }
   }
 }
