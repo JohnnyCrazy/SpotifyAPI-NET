@@ -16,5 +16,13 @@ namespace SpotifyAPI.Web
     /// <value></value>
     [QueryParam("offset")]
     public int? Offset { get; set; }
+
+    /// <summary>
+    /// An ISO 3166-1 alpha-2 country code or the string from_token.
+    /// Provide this parameter if you want to apply Track Relinking.
+    /// </summary>
+    /// <value></value>
+    [QueryParam("market")]
+    public string? Market { get; set; }
   }
 }
