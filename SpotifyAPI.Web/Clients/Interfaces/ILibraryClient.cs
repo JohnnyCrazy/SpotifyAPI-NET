@@ -40,6 +40,16 @@ namespace SpotifyAPI.Web
     Task<bool> RemoveShows(LibraryRemoveShowsRequest request);
 
     /// <summary>
+    /// Delete one or more episodes from current Spotify user’s library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/#endpoint-remove-episodes-user
+    /// </remarks>
+    /// <returns></returns>
+    Task<bool> RemoveEpisodes(LibraryRemoveEpisodesRequest request);
+
+    /// <summary>
     /// Save one or more tracks to the current user’s ‘Your Music’ library.
     /// </summary>
     /// <param name="request">The request-model which contains required and optional parameters.</param>
@@ -70,6 +80,16 @@ namespace SpotifyAPI.Web
     Task<bool> SaveShows(LibrarySaveShowsRequest request);
 
     /// <summary>
+    /// Save one or more episodes to current Spotify user’s library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/#endpoint-save-episodes-user
+    /// </remarks>
+    /// <returns></returns>
+    Task<bool> SaveEpisodes(LibrarySaveEpisodesRequest request);
+
+    /// <summary>
     /// Check if one or more tracks is already saved in the current Spotify user’s ‘Your Music’ library.
     /// </summary>
     /// <param name="request">The request-model which contains required and optional parameters.</param>
@@ -98,6 +118,16 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<List<bool>> CheckShows(LibraryCheckShowsRequest request);
+
+    /// <summary>
+    /// Check if one or more episodes is already saved in the current Spotify user’s library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/#endpoint-check-users-saved-episodes
+    /// </remarks>
+    /// <returns></returns>
+    Task<List<bool>> CheckEpisodes(LibraryCheckEpisodesRequest request);
 
     /// <summary>
     /// Get a list of the songs saved in the current Spotify user’s ‘Your Music’ library.
@@ -157,5 +187,26 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<Paging<SavedShow>> GetShows(LibraryShowsRequest request);
+
+    /// <summary>
+    /// Get a list of episodes saved in the current Spotify user’s library.
+    /// Optional parameters can be used to limit the number of shows returned.
+    /// </summary>
+    /// <remarks>
+    ///  https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-users-saved-episodes
+    /// </remarks>
+    /// <returns></returns>
+    Task<Paging<SavedEpisodes>> GetEpisodes();
+
+    /// <summary>
+    /// Get a list of episodes saved in the current Spotify user’s library.
+    /// Optional parameters can be used to limit the number of shows returned.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-users-saved-episodes
+    /// </remarks>
+    /// <returns></returns>
+    Task<Paging<SavedEpisodes>> GetEpisodes(LibraryEpisodesRequest request);
   }
 }

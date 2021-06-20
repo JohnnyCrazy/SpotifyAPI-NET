@@ -30,6 +30,13 @@ namespace SpotifyAPI.Web
       return API.Get<List<bool>>(SpotifyUrls.LibraryTracksContains(), request.BuildQueryParams());
     }
 
+    public Task<List<bool>> CheckEpisodes(LibraryCheckEpisodesRequest request)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<List<bool>>(SpotifyUrls.LibraryEpisodesContains(), request.BuildQueryParams());
+    }
+
     public Task<Paging<SavedAlbum>> GetAlbums()
     {
       return API.Get<Paging<SavedAlbum>>(SpotifyUrls.LibraryAlbums());
@@ -66,6 +73,18 @@ namespace SpotifyAPI.Web
       return API.Get<Paging<SavedTrack>>(SpotifyUrls.LibraryTracks(), request.BuildQueryParams());
     }
 
+    public Task<Paging<SavedEpisodes>> GetEpisodes()
+    {
+      return API.Get<Paging<SavedEpisodes>>(SpotifyUrls.LibraryEpisodes());
+    }
+
+    public Task<Paging<SavedEpisodes>> GetEpisodes(LibraryEpisodesRequest request)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<Paging<SavedEpisodes>>(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams());
+    }
+
     public async Task<bool> RemoveAlbums(LibraryRemoveAlbumsRequest request)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -90,6 +109,14 @@ namespace SpotifyAPI.Web
       return statusCode == HttpStatusCode.OK;
     }
 
+    public async Task<bool> RemoveEpisodes(LibraryRemoveEpisodesRequest request)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Delete(SpotifyUrls.LibraryEpisodes(), null, request.BuildBodyParams()).ConfigureAwait(false);
+      return statusCode == HttpStatusCode.OK;
+    }
+
     public async Task<bool> SaveAlbums(LibrarySaveAlbumsRequest request)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -111,6 +138,14 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API.Put(SpotifyUrls.LibraryTracks(), request.BuildQueryParams(), null).ConfigureAwait(false);
+      return statusCode == HttpStatusCode.OK;
+    }
+
+    public async Task<bool> SaveEpisodes(LibrarySaveEpisodesRequest request)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Put(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams(), null).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
   }
