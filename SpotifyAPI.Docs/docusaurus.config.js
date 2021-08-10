@@ -9,7 +9,6 @@ module.exports = {
   organizationName: 'JohnnyCrazy', // Usually your GitHub org/user name.
   projectName: 'SpotifyAPI-NET', // Usually your repo name.
   themeConfig: {
-    sidebarCollapsible: true,
     prism: {
       additionalLanguages: ['csharp'],
     },
@@ -52,6 +51,7 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          sidebarCollapsible: true,
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl: 'https://github.com/JohnnyCrazy/SpotifyAPI-NET/edit/master/SpotifyAPI.Docs/',
