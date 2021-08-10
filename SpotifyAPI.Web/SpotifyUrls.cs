@@ -125,6 +125,10 @@ namespace SpotifyAPI.Web
 
     public static Uri LibraryShows() => EUri($"me/shows");
 
+    public static Uri LibraryEpisodes() => EUri($"me/episodes");
+
+    public static Uri LibraryEpisodesContains() => EUri($"me/episodes/contains");
+
     private static Uri EUri(FormattableString path) => new(path.ToString(_provider), UriKind.Relative);
   }
 }
