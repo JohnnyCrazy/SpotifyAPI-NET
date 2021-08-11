@@ -9,6 +9,8 @@ namespace SpotifyAPI.Web
     public List<Section> Sections { get; set; } = default!;
     public List<Segment> Segments { get; set; } = default!;
     public List<TimeInterval> Tatums { get; set; } = default!;
+    public TrackAudio Track { get; set; } = default!;
+    public TrackMeta Meta { get; set; } = default!;
   }
 }
 
