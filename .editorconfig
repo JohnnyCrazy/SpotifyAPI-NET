@@ -17,6 +17,9 @@ dotnet_diagnostic.CA1308.severity = none
 dotnet_diagnostic.CA1002.severity = none
 # TODO: Enable for next major version, EventArgs breaking change:
 dotnet_diagnostic.CA1003.severity = none
+
+dotnet_diagnostic.IDE0130.severity = none
+
 #
 # Sort using and Import directives with System.* appearing first
 dotnet_sort_system_directives_first = true

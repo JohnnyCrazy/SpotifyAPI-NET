@@ -53,14 +53,18 @@ namespace SpotifyAPI.Web
 
       if (InitialToken.IsExpired)
       {
-        var tokenRequest = new AuthorizationCodeRefreshRequest(ClientId, ClientSecret, InitialToken.RefreshToken);
-        var refreshedToken = await OAuthClient.RequestToken(tokenRequest, apiConnector).ConfigureAwait(false);
+        AuthorizationCodeRefreshRequest? tokenRequest = new(ClientId, ClientSecret, InitialToken.RefreshToken);
+        AuthorizationCodeRefreshResponse? refreshedToken = await OAuthClient.RequestToken(tokenRequest, apiConnector).ConfigureAwait(false);
 
         InitialToken.AccessToken = refreshedToken.AccessToken;
         InitialToken.CreatedAt = refreshedToken.CreatedAt;
         InitialToken.ExpiresIn = refreshedToken.ExpiresIn;
         InitialToken.Scope = refreshedToken.Scope;
         InitialToken.TokenType = refreshedToken.TokenType;
+        if (refreshedToken.RefreshToken != null)
+        {
+          InitialToken.RefreshToken = refreshedToken.RefreshToken;
+        }
 
         TokenRefreshed?.Invoke(this, InitialToken);
       }
