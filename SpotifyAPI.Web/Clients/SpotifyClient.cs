@@ -190,7 +190,6 @@ namespace SpotifyAPI.Web
       return FetchPage<TNext>(paging.Previous);
     }
 
-#if !NETSTANDARD2_0
 
     /// <summary>
     /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
@@ -298,6 +297,5 @@ namespace SpotifyAPI.Web
         yield return item;
       }
     }
-#endif
   }
 }

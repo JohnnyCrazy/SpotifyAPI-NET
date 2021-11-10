@@ -68,7 +68,6 @@ namespace SpotifyAPI.Web
       return results;
     }
 
-#if !NETSTANDARD2_0
     public async IAsyncEnumerable<T> Paginate<T>(
       IPaginatable<T> firstPage,
       IAPIConnector connector,
@@ -125,6 +124,5 @@ namespace SpotifyAPI.Web
         }
       }
     }
-#endif
   }
 }
