@@ -5,7 +5,7 @@
     <UserSecretsId>da29eac4-4c22-4a7f-b393-379e83b60998</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="6.0.1" />
+    <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="6.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SpotifyAPI.Web\SpotifyAPI.Web.csproj" />
