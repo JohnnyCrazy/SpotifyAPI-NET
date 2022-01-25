@@ -91,3 +91,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [Spotify Song Availability Checker](https://github.com/CasualHonest/SpotifySongAvailabilityChecker) by [@CasualHonest](https://github.com/CasualHonest/)
 
 > Spotify Song Availability Checker (SSAC) is a simple and lightweight tool that lets you check the availability of songs and albums on Spotify, giving you basic information about what you enter and displaying the available markets for said entry.
+
+### [ConcertBuddy](https://github.com/skuill/ConcertBuddy) by [@skuill](https://github.com/skuill)
+
+> Telegram bot that can find the latest setlists of an artist or band, listen to tracks and show lyrics.
