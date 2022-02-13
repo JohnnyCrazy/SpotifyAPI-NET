@@ -95,3 +95,6 @@ Send a PR via the "Edit this page" link at the end of the page!
 ### [ConcertBuddy](https://github.com/skuill/ConcertBuddy) by [@skuill](https://github.com/skuill)
 
 > Telegram bot that can find the latest setlists of an artist or band, listen to tracks and show lyrics.
+
+### [SpotifiCLI](https://github.com/kollibroman/SpotifyCLI) by [@kollibroman](https://github.com/kollibroman)
+> Another cross-platform cli tool to interact with spotify api with focus on simplicity
