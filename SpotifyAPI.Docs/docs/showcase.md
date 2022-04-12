@@ -25,7 +25,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 
 > A cross-platform CLI Tool for requesting the Spotify Web API, with a focus on automation. 
 
-### [audio-band](https://github.com/dsafa/audio-band) by [@dsafa](https://github.com/dsafa)
+### [AudioBand](https://github.com/AudioBand/AudioBand) by [@dsafa](https://github.com/dsafa) and [@svr333](https://github.com/svr333)
 
 > Display and control songs from the Windows taskbar
 
