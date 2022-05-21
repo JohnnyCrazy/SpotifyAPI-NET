@@ -3,8 +3,7 @@ import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 import React from 'react';
 
-// Will be removed after beta releases
-const VERSION = '6.0.0';
+const VERSION = '6.2.2';
 
 const installCodeNuget = `Install-Package SpotifyAPI.Web
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
@@ -33,17 +32,17 @@ const InstallInstructions = () => {
         ]}
       >
         <TabItem value="cli">
-          <CodeBlock metastring="shell" className="shell">
+          <CodeBlock language="shell" className="shell">
             {installCodeCLI}
           </CodeBlock>
         </TabItem>
         <TabItem value="nuget">
-          <CodeBlock metastring="shell" className="shell">
+          <CodeBlock language="shell" className="shell">
             {installCodeNuget}
           </CodeBlock>
         </TabItem>
         <TabItem value="reference">
-          <CodeBlock metastring="xml" className="xml">
+          <CodeBlock language="xml" className="xml">
             {installReference}
           </CodeBlock>
         </TabItem>

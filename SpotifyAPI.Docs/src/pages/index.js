@@ -3,8 +3,6 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import CodeBlock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
-import TabItem from '@theme/TabItem';
-import Tabs from '@theme/Tabs';
 import classnames from 'classnames';
 import React from 'react';
 import GitHubButton from 'react-github-btn';
@@ -131,7 +129,7 @@ function Home() {
               </div>
             </div>
             <div className={classnames('col col--7', styles.exampleCode)}>
-              <CodeBlock metastring="csharp" className="csharp">
+              <CodeBlock language="csharp" className="csharp">
                 {exampleCode}
               </CodeBlock>
             </div>
