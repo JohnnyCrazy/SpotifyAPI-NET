@@ -16,6 +16,13 @@ namespace Example.CLI.CustomHTML
 
     public static async Task Main()
     {
+      if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret))
+      {
+        throw new NullReferenceException(
+          "Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET via environment variables before starting the program"
+        );
+      }
+
       _server = new EmbedIOAuthServer(
         new Uri("http://localhost:5000/callback"),
         5000,
