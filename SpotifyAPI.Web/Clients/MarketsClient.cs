@@ -6,7 +6,7 @@ namespace SpotifyAPI.Web
 {
   public class MarketsClient : APIClient, IMarketsClient
   {
-    public SearchClient(IAPIConnector apiConnector) : base(apiConnector) { }
+    public MarketsClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
     public Task<AvailableMarketsResponse> AvailableMarkets()
     {
