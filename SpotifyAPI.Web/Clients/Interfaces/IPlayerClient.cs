@@ -204,5 +204,14 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<bool> AddToQueue(PlayerAddToQueueRequest request);
+
+    /// <summary>
+    /// Get the list of objects that make up the user's queue.
+    /// </summary>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/#/operations/get-queue
+    /// </remarks>
+    /// <returns></returns>
+    Task<QueueResponse> GetQueue();
   }
 }

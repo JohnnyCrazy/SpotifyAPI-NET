@@ -17,6 +17,11 @@ namespace SpotifyAPI.Web
       return statusCode == HttpStatusCode.NoContent;
     }
 
+    public Task<QueueResponse> GetQueue()
+    {
+      return API.Get<QueueResponse>(URLs.PlayerQueue());
+    }
+
     public Task<DeviceResponse> GetAvailableDevices()
     {
       return API.Get<DeviceResponse>(URLs.PlayerDevices());
