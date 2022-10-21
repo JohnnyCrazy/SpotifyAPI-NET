@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web
 {
   public class QueueResponse
   {
-    public FullTrack CurrentlyPlaying { get; set; } = default!;
-    public List<FullTrack> Queue { get; set; } = default!;
+    [JsonConverter(typeof(PlayableItemConverter))]
+    public IPlayableItem CurrentlyPlaying { get; set; } = default!;
+    [JsonProperty(ItemConverterType = typeof(PlayableItemConverter))]
+    public List<IPlayableItem> Queue { get; set; } = default!;
   }
 }
 
