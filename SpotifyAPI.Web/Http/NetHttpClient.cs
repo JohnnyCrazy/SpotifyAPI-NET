@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SpotifyAPI.Web.Http
 {
@@ -30,20 +31,19 @@ namespace SpotifyAPI.Web.Http
       _httpMessageHandler = CreateMessageHandler(proxyConfig);
       _httpClient = new HttpClient(_httpMessageHandler);
     }
-
-    public async Task<IResponse> DoRequest(IRequest request)
+    public async Task<IResponse> DoRequest(IRequest request, CancellationToken cancel)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
       using HttpRequestMessage requestMsg = BuildRequestMessage(request);
       var responseMsg = await _httpClient
-              .SendAsync(requestMsg, HttpCompletionOption.ResponseContentRead)
+              .SendAsync(requestMsg, HttpCompletionOption.ResponseContentRead, cancel)
               .ConfigureAwait(false);
 
-      return await BuildResponse(responseMsg).ConfigureAwait(false);
+      return await BuildResponse(responseMsg, cancel).ConfigureAwait(false);
     }
 
-    private static async Task<IResponse> BuildResponse(HttpResponseMessage responseMsg)
+    private static async Task<IResponse> BuildResponse(HttpResponseMessage responseMsg, CancellationToken cancel)
     {
       Ensure.ArgumentNotNull(responseMsg, nameof(responseMsg));
 

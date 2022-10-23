@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using SpotifyAPI.Web.Http;
+using System.Threading;
 
 namespace SpotifyAPI.Web.Tests
 {
@@ -26,7 +27,7 @@ namespace SpotifyAPI.Web.Tests
       };
 
       await spotify.NextPage(response.Albums);
-      api.Verify(a => a.Get<SearchResponse>(new System.Uri("https://next-url")), Times.Once);
+      api.Verify(a => a.Get<SearchResponse>(new System.Uri("https://next-url"), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Test]
@@ -42,7 +43,7 @@ namespace SpotifyAPI.Web.Tests
       };
 
       await spotify.NextPage(response);
-      api.Verify(a => a.Get<CursorPaging<PlayHistoryItem>>(new System.Uri("https://next-url")), Times.Once);
+      api.Verify(a => a.Get<CursorPaging<PlayHistoryItem>>(new System.Uri("https://next-url"), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Test]
@@ -58,7 +59,7 @@ namespace SpotifyAPI.Web.Tests
       };
 
       await spotify.NextPage(response);
-      api.Verify(a => a.Get<Paging<PlayHistoryItem>>(new System.Uri("https://next-url")), Times.Once);
+      api.Verify(a => a.Get<Paging<PlayHistoryItem>>(new System.Uri("https://next-url"), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Test]
@@ -74,7 +75,7 @@ namespace SpotifyAPI.Web.Tests
       };
 
       await spotify.PreviousPage(response);
-      api.Verify(a => a.Get<Paging<PlayHistoryItem>>(new System.Uri("https://previous-url")), Times.Once);
+      api.Verify(a => a.Get<Paging<PlayHistoryItem>>(new System.Uri("https://previous-url"), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Test]
@@ -90,7 +91,7 @@ namespace SpotifyAPI.Web.Tests
       };
 
       await spotify.PreviousPage(response);
-      api.Verify(a => a.Get<SearchResponse>(new System.Uri("https://previous-url")), Times.Once);
+      api.Verify(a => a.Get<SearchResponse>(new System.Uri("https://previous-url"), It.IsAny<CancellationToken>()), Times.Once);
     }
   }
 }

@@ -17,9 +17,10 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name="firstPage">The first page. Will be included in the result list!</param>
     /// <param name="connector">An API Connector to make requests to spotify</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
     /// <typeparam name="T">Paging Type</typeparam>
     /// <returns>A list containing all pages, including the firstPage</returns>
-    Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IAPIConnector connector);
+    Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IAPIConnector connector, CancellationToken cancel = default);
 
     /// <summary>
     /// Fetches all pages and returns them grouped in a list.
@@ -30,13 +31,15 @@ namespace SpotifyAPI.Web
     /// <param name="firstPage">The first page. Will be included in the result list!</param>
     /// <param name="mapper">A function which returns the actual paging object in another response object</param>
     /// <param name="connector">An API Connector to make requests to spotify</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
     /// <typeparam name="T">Paging Type</typeparam>
     /// <typeparam name="TNext">Outer response Type</typeparam>
     /// <returns>A list containing all pages, including the firstPage</returns>
     Task<IList<T>> PaginateAll<T, TNext>(
       IPaginatable<T, TNext> firstPage,
       Func<TNext, IPaginatable<T, TNext>> mapper,
-      IAPIConnector connector
+      IAPIConnector connector,
+      CancellationToken cancel = default
     );
 
     /// <summary>
@@ -44,7 +47,7 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name="firstPage">The first page. Will be included in the result list!</param>
     /// <param name="connector">An API Connector to make requests to spotify</param>
-    /// <param name="cancel">A CancellationToken</param>
+    /// <param name="cancel">A cancel</param>
     /// <typeparam name="T">Paging Type</typeparam>
     /// <returns></returns>
     IAsyncEnumerable<T> Paginate<T>(IPaginatable<T> firstPage, IAPIConnector connector, CancellationToken cancel = default);
@@ -58,7 +61,7 @@ namespace SpotifyAPI.Web
     /// <param name="firstPage">The first page. Will be included in the result list!</param>
     /// <param name="mapper">A function which returns the actual paging object in another response object</param>
     /// <param name="connector">An API Connector to make requests to spotify</param>
-    /// <param name="cancel">A CancellationToken</param>
+    /// <param name="cancel">A cancel</param>
     /// <typeparam name="T">Paging Type</typeparam>
     /// <typeparam name="TNext">Outer response Type</typeparam>
     /// <returns></returns>

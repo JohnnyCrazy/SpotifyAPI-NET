@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -32,7 +33,8 @@ namespace SpotifyAPI.Web.Tests
         r.HandleRetry(
           It.IsAny<IRequest>(),
           It.IsAny<IResponse>(),
-          It.IsAny<IRetryHandler.RetryFunc>()
+          It.IsAny<IRetryHandler.RetryFunc>(),
+          It.IsAny<CancellationToken>()
         )
       ).Returns(Task.FromResult(response.Object));
 
@@ -47,7 +49,7 @@ namespace SpotifyAPI.Web.Tests
       await apiConnector.SendAPIRequest<string>(new Uri("/me", UriKind.Relative), HttpMethod.Get).ConfigureAwait(false);
 
       authenticator.Verify(a => a.Apply(It.IsAny<IRequest>(), It.IsAny<IAPIConnector>()), Times.Once);
-      httpClient.Verify(h => h.DoRequest(It.IsAny<IRequest>()), Times.Once);
+      httpClient.Verify(h => h.DoRequest(It.IsAny<IRequest>(), It.IsAny<CancellationToken>()), Times.Once);
       serializer.Verify(s => s.DeserializeResponse<string>(response.Object), Times.Once);
     }
 
@@ -67,16 +69,18 @@ namespace SpotifyAPI.Web.Tests
       serializer.Setup(s => s.DeserializeResponse<string>(It.IsAny<IResponse>())).Returns(apiResponse.Object);
 
       var httpClient = new Mock<IHTTPClient>();
-      httpClient.Setup(h => h.DoRequest(It.IsAny<IRequest>())).Returns(Task.FromResult(response.Object));
+      httpClient.Setup(h => h.DoRequest(It.IsAny<IRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(response.Object));
 
       var retryHandler = new Mock<IRetryHandler>();
       retryHandler.Setup(r =>
         r.HandleRetry(
           It.IsAny<IRequest>(),
           It.IsAny<IResponse>(),
-          It.IsAny<IRetryHandler.RetryFunc>()
+          It.IsAny<IRetryHandler.RetryFunc>(),
+          It.IsAny<CancellationToken>()
         )
-      ).Returns((IRequest request, IResponse _, IRetryHandler.RetryFunc retry) => retry(request));
+      ).Returns((IRequest request, IResponse _, IRetryHandler.RetryFunc retry, CancellationToken ct)
+      => retry(request, ct));
 
       var apiConnector = new APIConnector(
         new Uri("https://spotify.com"),
@@ -90,7 +94,7 @@ namespace SpotifyAPI.Web.Tests
 
       serializer.Verify(s => s.SerializeRequest(It.IsAny<IRequest>()), Times.Once);
       authenticator.Verify(a => a.Apply(It.IsAny<IRequest>(), It.IsAny<IAPIConnector>()), Times.Exactly(2));
-      httpClient.Verify(h => h.DoRequest(It.IsAny<IRequest>()), Times.Exactly(2));
+      httpClient.Verify(h => h.DoRequest(It.IsAny<IRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
       serializer.Verify(s => s.DeserializeResponse<string>(response.Object), Times.Once);
     }
   }

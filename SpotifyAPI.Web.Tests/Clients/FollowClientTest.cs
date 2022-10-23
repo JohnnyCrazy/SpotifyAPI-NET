@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -20,7 +21,8 @@ namespace SpotifyAPI.Web.Tests
 
       api.Verify(a => a.Get<FollowedArtistsResponse>(
         SpotifyUrls.CurrentUserFollower(),
-        It.Is<Dictionary<string, string>>(val => val.ContainsKey("type"))
+        It.Is<Dictionary<string, string>>(val => val.ContainsKey("type")),
+        It.IsAny<CancellationToken>()
       ));
     }
   }

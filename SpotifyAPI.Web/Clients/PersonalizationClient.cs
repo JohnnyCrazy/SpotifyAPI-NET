@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using URLs = SpotifyAPI.Web.SpotifyUrls;
@@ -8,28 +9,28 @@ namespace SpotifyAPI.Web
   {
     public PersonalizationClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
-    public Task<Paging<FullArtist>> GetTopArtists()
+    public Task<Paging<FullArtist>> GetTopArtists(CancellationToken cancel = default)
     {
-      return API.Get<Paging<FullArtist>>(URLs.PersonalizationTop("artists"));
+      return API.Get<Paging<FullArtist>>(URLs.PersonalizationTop("artists"), cancel);
     }
 
-    public Task<Paging<FullArtist>> GetTopArtists(PersonalizationTopRequest request)
+    public Task<Paging<FullArtist>> GetTopArtists(PersonalizationTopRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<Paging<FullArtist>>(URLs.PersonalizationTop("artists"), request.BuildQueryParams());
+      return API.Get<Paging<FullArtist>>(URLs.PersonalizationTop("artists"), request.BuildQueryParams(), cancel);
     }
 
-    public Task<Paging<FullTrack>> GetTopTracks()
+    public Task<Paging<FullTrack>> GetTopTracks(CancellationToken cancel = default)
     {
-      return API.Get<Paging<FullTrack>>(URLs.PersonalizationTop("tracks"));
+      return API.Get<Paging<FullTrack>>(URLs.PersonalizationTop("tracks"), cancel);
     }
 
-    public Task<Paging<FullTrack>> GetTopTracks(PersonalizationTopRequest request)
+    public Task<Paging<FullTrack>> GetTopTracks(PersonalizationTopRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<Paging<FullTrack>>(URLs.PersonalizationTop("tracks"), request.BuildQueryParams());
+      return API.Get<Paging<FullTrack>>(URLs.PersonalizationTop("tracks"), request.BuildQueryParams(), cancel);
     }
   }
 }

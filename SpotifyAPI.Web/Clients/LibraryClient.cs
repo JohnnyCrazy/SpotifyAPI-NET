@@ -2,6 +2,7 @@ using System.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
+using System.Threading;
 
 namespace SpotifyAPI.Web
 {
@@ -9,143 +10,143 @@ namespace SpotifyAPI.Web
   {
     public LibraryClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
-    public Task<List<bool>> CheckAlbums(LibraryCheckAlbumsRequest request)
+    public Task<List<bool>> CheckAlbums(LibraryCheckAlbumsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<List<bool>>(SpotifyUrls.LibraryAlbumsContains(), request.BuildQueryParams());
+      return API.Get<List<bool>>(SpotifyUrls.LibraryAlbumsContains(), request.BuildQueryParams(), cancel);
     }
 
-    public Task<List<bool>> CheckShows(LibraryCheckShowsRequest request)
+    public Task<List<bool>> CheckShows(LibraryCheckShowsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<List<bool>>(SpotifyUrls.LibraryShowsContains(), request.BuildQueryParams());
+      return API.Get<List<bool>>(SpotifyUrls.LibraryShowsContains(), request.BuildQueryParams(), cancel);
     }
 
-    public Task<List<bool>> CheckTracks(LibraryCheckTracksRequest request)
+    public Task<List<bool>> CheckTracks(LibraryCheckTracksRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<List<bool>>(SpotifyUrls.LibraryTracksContains(), request.BuildQueryParams());
+      return API.Get<List<bool>>(SpotifyUrls.LibraryTracksContains(), request.BuildQueryParams(), cancel);
     }
 
-    public Task<List<bool>> CheckEpisodes(LibraryCheckEpisodesRequest request)
+    public Task<List<bool>> CheckEpisodes(LibraryCheckEpisodesRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<List<bool>>(SpotifyUrls.LibraryEpisodesContains(), request.BuildQueryParams());
+      return API.Get<List<bool>>(SpotifyUrls.LibraryEpisodesContains(), request.BuildQueryParams(), cancel);
     }
 
-    public Task<Paging<SavedAlbum>> GetAlbums()
+    public Task<Paging<SavedAlbum>> GetAlbums(CancellationToken cancel = default)
     {
-      return API.Get<Paging<SavedAlbum>>(SpotifyUrls.LibraryAlbums());
+      return API.Get<Paging<SavedAlbum>>(SpotifyUrls.LibraryAlbums(), cancel);
     }
 
-    public Task<Paging<SavedAlbum>> GetAlbums(LibraryAlbumsRequest request)
-    {
-      Ensure.ArgumentNotNull(request, nameof(request));
-
-      return API.Get<Paging<SavedAlbum>>(SpotifyUrls.LibraryAlbums(), request.BuildQueryParams());
-    }
-
-    public Task<Paging<SavedShow>> GetShows()
-    {
-      return API.Get<Paging<SavedShow>>(SpotifyUrls.LibraryShows());
-    }
-
-    public Task<Paging<SavedShow>> GetShows(LibraryShowsRequest request)
+    public Task<Paging<SavedAlbum>> GetAlbums(LibraryAlbumsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<Paging<SavedShow>>(SpotifyUrls.LibraryShows(), request.BuildQueryParams());
+      return API.Get<Paging<SavedAlbum>>(SpotifyUrls.LibraryAlbums(), request.BuildQueryParams(), cancel);
     }
 
-    public Task<Paging<SavedTrack>> GetTracks()
+    public Task<Paging<SavedShow>> GetShows(CancellationToken cancel = default)
     {
-      return API.Get<Paging<SavedTrack>>(SpotifyUrls.LibraryTracks());
+      return API.Get<Paging<SavedShow>>(SpotifyUrls.LibraryShows(), cancel);
     }
 
-    public Task<Paging<SavedTrack>> GetTracks(LibraryTracksRequest request)
-    {
-      Ensure.ArgumentNotNull(request, nameof(request));
-
-      return API.Get<Paging<SavedTrack>>(SpotifyUrls.LibraryTracks(), request.BuildQueryParams());
-    }
-
-    public Task<Paging<SavedEpisodes>> GetEpisodes()
-    {
-      return API.Get<Paging<SavedEpisodes>>(SpotifyUrls.LibraryEpisodes());
-    }
-
-    public Task<Paging<SavedEpisodes>> GetEpisodes(LibraryEpisodesRequest request)
+    public Task<Paging<SavedShow>> GetShows(LibraryShowsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<Paging<SavedEpisodes>>(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams());
+      return API.Get<Paging<SavedShow>>(SpotifyUrls.LibraryShows(), request.BuildQueryParams(), cancel);
     }
 
-    public async Task<bool> RemoveAlbums(LibraryRemoveAlbumsRequest request)
+    public Task<Paging<SavedTrack>> GetTracks(CancellationToken cancel = default)
+    {
+      return API.Get<Paging<SavedTrack>>(SpotifyUrls.LibraryTracks(), cancel);
+    }
+
+    public Task<Paging<SavedTrack>> GetTracks(LibraryTracksRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Delete(SpotifyUrls.LibraryAlbums(), null, request.BuildBodyParams()).ConfigureAwait(false);
+      return API.Get<Paging<SavedTrack>>(SpotifyUrls.LibraryTracks(), request.BuildQueryParams(), cancel);
+    }
+
+    public Task<Paging<SavedEpisodes>> GetEpisodes(CancellationToken cancel = default)
+    {
+      return API.Get<Paging<SavedEpisodes>>(SpotifyUrls.LibraryEpisodes(), cancel);
+    }
+
+    public Task<Paging<SavedEpisodes>> GetEpisodes(LibraryEpisodesRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<Paging<SavedEpisodes>>(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams(), cancel);
+    }
+
+    public async Task<bool> RemoveAlbums(LibraryRemoveAlbumsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Delete(SpotifyUrls.LibraryAlbums(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> RemoveShows(LibraryRemoveShowsRequest request)
+    public async Task<bool> RemoveShows(LibraryRemoveShowsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Delete(SpotifyUrls.LibraryShows(), null, request.BuildBodyParams()).ConfigureAwait(false);
+      var statusCode = await API.Delete(SpotifyUrls.LibraryShows(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> RemoveTracks(LibraryRemoveTracksRequest request)
+    public async Task<bool> RemoveTracks(LibraryRemoveTracksRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Delete(SpotifyUrls.LibraryTracks(), null, request.BuildBodyParams()).ConfigureAwait(false);
+      var statusCode = await API.Delete(SpotifyUrls.LibraryTracks(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> RemoveEpisodes(LibraryRemoveEpisodesRequest request)
+    public async Task<bool> RemoveEpisodes(LibraryRemoveEpisodesRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Delete(SpotifyUrls.LibraryEpisodes(), null, request.BuildBodyParams()).ConfigureAwait(false);
+      var statusCode = await API.Delete(SpotifyUrls.LibraryEpisodes(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> SaveAlbums(LibrarySaveAlbumsRequest request)
+    public async Task<bool> SaveAlbums(LibrarySaveAlbumsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(SpotifyUrls.LibraryAlbums(), request.BuildQueryParams(), null).ConfigureAwait(false);
+      var statusCode = await API.Put(SpotifyUrls.LibraryAlbums(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> SaveShows(LibrarySaveShowsRequest request)
+    public async Task<bool> SaveShows(LibrarySaveShowsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(SpotifyUrls.LibraryShows(), request.BuildQueryParams(), null).ConfigureAwait(false);
+      var statusCode = await API.Put(SpotifyUrls.LibraryShows(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> SaveTracks(LibrarySaveTracksRequest request)
+    public async Task<bool> SaveTracks(LibrarySaveTracksRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(SpotifyUrls.LibraryTracks(), request.BuildQueryParams(), null).ConfigureAwait(false);
+      var statusCode = await API.Put(SpotifyUrls.LibraryTracks(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> SaveEpisodes(LibrarySaveEpisodesRequest request)
+    public async Task<bool> SaveEpisodes(LibrarySaveEpisodesRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams(), null).ConfigureAwait(false);
+      var statusCode = await API.Put(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
   }

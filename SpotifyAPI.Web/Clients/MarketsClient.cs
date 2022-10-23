@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using URLs = SpotifyAPI.Web.SpotifyUrls;
@@ -8,9 +9,9 @@ namespace SpotifyAPI.Web
   {
     public MarketsClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
-    public Task<AvailableMarketsResponse> AvailableMarkets()
+    public Task<AvailableMarketsResponse> AvailableMarkets(CancellationToken cancel = default)
     {
-      return API.Get<AvailableMarketsResponse>(URLs.Markets());
+      return API.Get<AvailableMarketsResponse>(URLs.Markets(), cancel);
     }
   }
 }
