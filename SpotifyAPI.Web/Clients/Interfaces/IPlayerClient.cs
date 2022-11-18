@@ -1,4 +1,3 @@
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -225,5 +224,15 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<bool> AddToQueue(PlayerAddToQueueRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Get the list of objects that make up the user's queue.
+    /// </summary>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/#/operations/get-queue
+    /// </remarks>
+    /// <returns></returns>
+    Task<QueueResponse> GetQueue(CancellationToken cancel = default);
   }
 }

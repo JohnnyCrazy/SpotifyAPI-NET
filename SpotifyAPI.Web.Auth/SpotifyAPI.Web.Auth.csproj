@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net5.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;net5.0;netstandard2.1</TargetFrameworks>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <PackageId>SpotifyAPI.Web.Auth</PackageId>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
-    <PackageReference Include="EmbedIO" Version="3.4.3">
+    <PackageReference Include="EmbedIO" Version="3.5.2">
       <PrivateAssets>None</PrivateAssets>
     </PackageReference>
     <ProjectReference Include="..\SpotifyAPI.Web\SpotifyAPI.Web.csproj">
