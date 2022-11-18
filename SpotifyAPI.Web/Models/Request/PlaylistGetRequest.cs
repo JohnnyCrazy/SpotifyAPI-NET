@@ -26,7 +26,7 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <value></value>
     [QueryParam("fields")]
-    public IList<string> Fields { get; }
+    public List<string> Fields { get; }
 
     /// <summary>
     /// An ISO 3166-1 alpha-2 country code or the string from_token.

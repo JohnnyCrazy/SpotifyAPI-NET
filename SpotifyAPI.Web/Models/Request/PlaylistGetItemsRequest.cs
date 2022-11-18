@@ -38,7 +38,7 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <value></value>
     [QueryParam("fields")]
-    public IList<string> Fields { get; }
+    public List<string> Fields { get; }
 
     /// <summary>
     /// The maximum number of items to return. Default: 100. Minimum: 1. Maximum: 100.
