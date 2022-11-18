@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -21,7 +22,7 @@ namespace SpotifyAPI.Web
       });
 
       var retryCalled = 0;
-      setup.Retry = (IRequest request) =>
+      setup.Retry = (IRequest request, CancellationToken ct) =>
       {
         retryCalled++;
         return Task.FromResult(setup.Response.Object);
@@ -50,7 +51,7 @@ namespace SpotifyAPI.Web
       });
 
       var retryCalled = 0;
-      setup.Retry = (IRequest request) =>
+      setup.Retry = (IRequest request, CancellationToken ct) =>
       {
         retryCalled++;
         return Task.FromResult(setup.Response.Object);
@@ -81,7 +82,7 @@ namespace SpotifyAPI.Web
       successResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.OK);
 
       var retryCalled = 0;
-      setup.Retry = (request) =>
+      setup.Retry = (request, ct) =>
       {
         retryCalled++;
         return Task.FromResult(successResponse.Object);
@@ -111,7 +112,7 @@ namespace SpotifyAPI.Web
       successResponse.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.OK);
 
       var retryCalled = 0;
-      setup.Retry = (IRequest request) =>
+      setup.Retry = (IRequest request, CancellationToken ct) =>
       {
         retryCalled++;
         return Task.FromResult(successResponse.Object);
@@ -136,7 +137,7 @@ namespace SpotifyAPI.Web
       setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.BadGateway);
 
       var retryCalled = 0;
-      setup.Retry = (request) =>
+      setup.Retry = (request, ct) =>
       {
         retryCalled++;
         return Task.FromResult(setup.Response.Object);
@@ -162,7 +163,7 @@ namespace SpotifyAPI.Web
       setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.OK);
 
       var retryCalled = 0;
-      setup.Retry = (request) =>
+      setup.Retry = (request, ct) =>
       {
         retryCalled++;
         return Task.FromResult(setup.Response.Object);

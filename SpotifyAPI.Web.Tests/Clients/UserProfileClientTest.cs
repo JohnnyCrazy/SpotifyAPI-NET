@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ namespace SpotifyAPI.Web
 
       await client.Current();
 
-      api.Verify(a => a.Get<PrivateUser>(SpotifyUrls.Me()), Times.Once);
+      api.Verify(a => a.Get<PrivateUser>(SpotifyUrls.Me(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Test]
@@ -28,7 +29,7 @@ namespace SpotifyAPI.Web
 
       await client.Get(userId);
 
-      api.Verify(a => a.Get<PublicUser>(SpotifyUrls.User(userId)), Times.Once);
+      api.Verify(a => a.Get<PublicUser>(SpotifyUrls.User(userId), It.IsAny<CancellationToken>()), Times.Once);
     }
   }
 }

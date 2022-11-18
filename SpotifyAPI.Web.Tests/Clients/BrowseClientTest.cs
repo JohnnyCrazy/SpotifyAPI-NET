@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -19,7 +20,8 @@ namespace SpotifyAPI.Web.Tests
       await client.GetRecommendationGenres();
 
       api.Verify(a => a.Get<RecommendationGenresResponse>(
-        It.Is<Uri>((uri) => uri.ToString().Contains("recommendations/available-genre-seeds"))
+        It.Is<Uri>((uri) => uri.ToString().Contains("recommendations/available-genre-seeds")),
+        It.IsAny<CancellationToken>()
       ));
     }
   }

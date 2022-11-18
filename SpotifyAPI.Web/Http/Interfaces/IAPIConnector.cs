@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SpotifyAPI.Web.Http
 {
@@ -17,34 +18,35 @@ namespace SpotifyAPI.Web.Http
     event EventHandler<IResponse>? ResponseReceived;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
-    Task<T> Get<T>(Uri uri);
+    Task<T> Get<T>(Uri uri, CancellationToken cancel = default);
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
-    Task<T> Get<T>(Uri uri, IDictionary<string, string>? parameters);
+    Task<T> Get<T>(Uri uri, IDictionary<string, string>? parameters, CancellationToken cancel = default);
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
-    Task<HttpStatusCode> Get(Uri uri, IDictionary<string, string>? parameters, object? body);
+    Task<HttpStatusCode> Get(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
 
-    Task<T> Post<T>(Uri uri);
-    Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters);
-    Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters, object? body);
-    Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters, object? body, Dictionary<string, string>? headers);
-    Task<HttpStatusCode> Post(Uri uri, IDictionary<string, string>? parameters, object? body);
+    Task<T> Post<T>(Uri uri, CancellationToken cancel = default);
+    Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters, CancellationToken cancel = default);
+    Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
+    Task<T> Post<T>(Uri uri, IDictionary<string, string>? parameters, object? body, Dictionary<string, string>? headers, CancellationToken cancel = default);
+    Task<HttpStatusCode> Post(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
 
-    Task<T> Put<T>(Uri uri);
-    Task<T> Put<T>(Uri uri, IDictionary<string, string>? parameters);
-    Task<T> Put<T>(Uri uri, IDictionary<string, string>? parameters, object? body);
-    Task<HttpStatusCode> Put(Uri uri, IDictionary<string, string>? parameters, object? body);
-    Task<HttpStatusCode> PutRaw(Uri uri, IDictionary<string, string>? parameters, object? body);
+    Task<T> Put<T>(Uri uri, CancellationToken cancel = default);
+    Task<T> Put<T>(Uri uri, IDictionary<string, string>? parameters, CancellationToken cancel = default);
+    Task<T> Put<T>(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
+    Task<HttpStatusCode> Put(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
+    Task<HttpStatusCode> PutRaw(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
 
-    Task<T> Delete<T>(Uri uri);
-    Task<T> Delete<T>(Uri uri, IDictionary<string, string>? parameters);
-    Task<T> Delete<T>(Uri uri, IDictionary<string, string>? parameters, object? body);
-    Task<HttpStatusCode> Delete(Uri uri, IDictionary<string, string>? parameters, object? body);
+    Task<T> Delete<T>(Uri uri, CancellationToken cancel = default);
+    Task<T> Delete<T>(Uri uri, IDictionary<string, string>? parameters, CancellationToken cancel = default);
+    Task<T> Delete<T>(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
+    Task<HttpStatusCode> Delete(Uri uri, IDictionary<string, string>? parameters, object? body, CancellationToken cancel = default);
 
     Task<T> SendAPIRequest<T>(
       Uri uri, HttpMethod method,
       IDictionary<string, string>? parameters = null,
       object? body = null,
-      IDictionary<string, string>? headers = null);
+      IDictionary<string, string>? headers = null,
+      CancellationToken cancel = default);
 
     void SetRequestTimeout(TimeSpan timeout);
   }

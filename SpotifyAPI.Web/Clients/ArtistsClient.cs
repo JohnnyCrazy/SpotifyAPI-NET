@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using URLs = SpotifyAPI.Web.SpotifyUrls;
@@ -8,48 +9,48 @@ namespace SpotifyAPI.Web
   {
     public ArtistsClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
-    public Task<FullArtist> Get(string artistId)
+    public Task<FullArtist> Get(string artistId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
 
-      return API.Get<FullArtist>(URLs.Artist(artistId));
+      return API.Get<FullArtist>(URLs.Artist(artistId), cancel);
     }
 
-    public Task<Paging<SimpleAlbum>> GetAlbums(string artistId)
+    public Task<Paging<SimpleAlbum>> GetAlbums(string artistId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
 
-      return API.Get<Paging<SimpleAlbum>>(URLs.ArtistAlbums(artistId));
+      return API.Get<Paging<SimpleAlbum>>(URLs.ArtistAlbums(artistId), cancel);
     }
 
-    public Task<Paging<SimpleAlbum>> GetAlbums(string artistId, ArtistsAlbumsRequest request)
-    {
-      Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
-      Ensure.ArgumentNotNull(request, nameof(request));
-
-      return API.Get<Paging<SimpleAlbum>>(URLs.ArtistAlbums(artistId), request.BuildQueryParams());
-    }
-
-    public Task<ArtistsRelatedArtistsResponse> GetRelatedArtists(string artistId)
-    {
-      Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
-
-      return API.Get<ArtistsRelatedArtistsResponse>(URLs.ArtistRelatedArtists(artistId));
-    }
-
-    public Task<ArtistsResponse> GetSeveral(ArtistsRequest request)
-    {
-      Ensure.ArgumentNotNull(request, nameof(request));
-
-      return API.Get<ArtistsResponse>(URLs.Artists(), request.BuildQueryParams());
-    }
-
-    public Task<ArtistsTopTracksResponse> GetTopTracks(string artistId, ArtistsTopTracksRequest request)
+    public Task<Paging<SimpleAlbum>> GetAlbums(string artistId, ArtistsAlbumsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<ArtistsTopTracksResponse>(URLs.ArtistTopTracks(artistId), request.BuildQueryParams());
+      return API.Get<Paging<SimpleAlbum>>(URLs.ArtistAlbums(artistId), request.BuildQueryParams(), cancel);
+    }
+
+    public Task<ArtistsRelatedArtistsResponse> GetRelatedArtists(string artistId, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
+
+      return API.Get<ArtistsRelatedArtistsResponse>(URLs.ArtistRelatedArtists(artistId), cancel);
+    }
+
+    public Task<ArtistsResponse> GetSeveral(ArtistsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<ArtistsResponse>(URLs.Artists(), request.BuildQueryParams(), cancel);
+    }
+
+    public Task<ArtistsTopTracksResponse> GetTopTracks(string artistId, ArtistsTopTracksRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<ArtistsTopTracksResponse>(URLs.ArtistTopTracks(artistId), request.BuildQueryParams(), cancel);
     }
   }
 }

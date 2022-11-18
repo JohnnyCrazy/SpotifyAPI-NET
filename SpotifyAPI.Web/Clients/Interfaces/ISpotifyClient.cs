@@ -135,13 +135,13 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name="firstPage">A first page, will be included in the output list!</param>
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <param name="cancel">An optional Cancellation Token</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>An iterable IAsyncEnumerable</returns>
     IAsyncEnumerable<T> Paginate<T>(
       IPaginatable<T> firstPage,
       IPaginator? paginator = default!,
-      CancellationToken cancellationToken = default!
+      CancellationToken cancel = default!
     );
 
     /// <summary>
@@ -154,7 +154,7 @@ namespace SpotifyAPI.Web
     /// <param name="firstPage">A first page, will be included in the output list!</param>
     /// <param name="mapper">A function which maps response objects to the next paging object</param>
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
-    /// <param name="cancellationToken">An optional Cancellation Token</param>
+    /// <param name="cancel">An optional Cancellation Token</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns></returns>
@@ -162,7 +162,7 @@ namespace SpotifyAPI.Web
       IPaginatable<T, TNext> firstPage,
       Func<TNext, IPaginatable<T, TNext>> mapper,
       IPaginator? paginator = default!,
-      CancellationToken cancellationToken = default!
+      CancellationToken cancel = default!
     );
 
     public Task<Paging<T>> NextPage<T>(Paging<T> paging);

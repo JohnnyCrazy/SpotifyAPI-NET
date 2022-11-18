@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using URLs = SpotifyAPI.Web.SpotifyUrls;
+using System.Threading;
 
 namespace SpotifyAPI.Web
 {
@@ -10,82 +11,82 @@ namespace SpotifyAPI.Web
   {
     public FollowClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
-    public Task<List<bool>> CheckCurrentUser(FollowCheckCurrentUserRequest request)
+    public Task<List<bool>> CheckCurrentUser(FollowCheckCurrentUserRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<List<bool>>(URLs.CurrentUserFollowerContains(), request.BuildQueryParams());
+      return API.Get<List<bool>>(URLs.CurrentUserFollowerContains(), request.BuildQueryParams(), cancel);
     }
 
-    public Task<List<bool>> CheckPlaylist(string playlistId, FollowCheckPlaylistRequest request)
+    public Task<List<bool>> CheckPlaylist(string playlistId, FollowCheckPlaylistRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<List<bool>>(URLs.PlaylistFollowersContains(playlistId), request.BuildQueryParams());
+      return API.Get<List<bool>>(URLs.PlaylistFollowersContains(playlistId), request.BuildQueryParams(), cancel);
     }
 
-    public async Task<bool> Follow(FollowRequest request)
+    public async Task<bool> Follow(FollowRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API
-        .Put(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams())
+        .Put(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams(), cancel)
         .ConfigureAwait(false);
       return statusCode == HttpStatusCode.NoContent;
     }
 
-    public async Task<bool> FollowPlaylist(string playlistId)
+    public async Task<bool> FollowPlaylist(string playlistId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
 
       var statusCode = await API
-        .Put(URLs.PlaylistFollowers(playlistId), null, null)
+        .Put(URLs.PlaylistFollowers(playlistId), null, null, cancel)
         .ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public async Task<bool> FollowPlaylist(string playlistId, FollowPlaylistRequest request)
+    public async Task<bool> FollowPlaylist(string playlistId, FollowPlaylistRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API
-        .Put(URLs.PlaylistFollowers(playlistId), null, request.BuildBodyParams())
+        .Put(URLs.PlaylistFollowers(playlistId), null, request.BuildBodyParams(), cancel)
         .ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 
-    public Task<FollowedArtistsResponse> OfCurrentUser()
+    public Task<FollowedArtistsResponse> OfCurrentUser(CancellationToken cancel = default)
     {
       var request = new FollowOfCurrentUserRequest();
 
-      return OfCurrentUser(request);
+      return OfCurrentUser(request, cancel);
     }
 
-    public Task<FollowedArtistsResponse> OfCurrentUser(FollowOfCurrentUserRequest request)
+    public Task<FollowedArtistsResponse> OfCurrentUser(FollowOfCurrentUserRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<FollowedArtistsResponse>(URLs.CurrentUserFollower(), request.BuildQueryParams());
+      return API.Get<FollowedArtistsResponse>(URLs.CurrentUserFollower(), request.BuildQueryParams(), cancel);
     }
 
-    public async Task<bool> Unfollow(UnfollowRequest request)
+    public async Task<bool> Unfollow(UnfollowRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API
-        .Delete(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams())
+        .Delete(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams(), cancel)
         .ConfigureAwait(false);
       return statusCode == HttpStatusCode.NoContent;
     }
 
-    public async Task<bool> UnfollowPlaylist(string playlistId)
+    public async Task<bool> UnfollowPlaylist(string playlistId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
 
       var statusCode = await API
-        .Delete(URLs.PlaylistFollowers(playlistId), null, null)
+        .Delete(URLs.PlaylistFollowers(playlistId), null, null, cancel)
         .ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }

@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
 using URLs = SpotifyAPI.Web.SpotifyUrls;
@@ -8,11 +9,11 @@ namespace SpotifyAPI.Web
   {
     public SearchClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
-    public Task<SearchResponse> Item(SearchRequest request)
+    public Task<SearchResponse> Item(SearchRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<SearchResponse>(URLs.Search(), request.BuildQueryParams());
+      return API.Get<SearchResponse>(URLs.Search(), request.BuildQueryParams(), cancel);
     }
   }
 }
