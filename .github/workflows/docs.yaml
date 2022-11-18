@@ -14,7 +14,7 @@ jobs:
       - name: Use Node.JS
         uses: actions/setup-node@v1
         with:
-          node-version: 14.15.0
+          node-version: 18.12.1
       - name: Setup GitHub Deploy SSH Key
         uses: webfactory/ssh-agent@v0.4.1
         with:
