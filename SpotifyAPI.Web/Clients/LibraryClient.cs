@@ -90,7 +90,7 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Delete(SpotifyUrls.LibraryAlbums(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
+      var statusCode = await API.Delete(SpotifyUrls.LibraryAlbums(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
     }
 

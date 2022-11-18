@@ -22,7 +22,7 @@ namespace SpotifyAPI.Web
     /// For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
     /// </summary>
     /// <value></value>
-    [BodyParam("ids")]
+    [QueryParam("ids")]
     public IList<string> Ids { get; }
   }
 }
