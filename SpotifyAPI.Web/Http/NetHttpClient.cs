@@ -50,7 +50,7 @@ namespace SpotifyAPI.Web.Http
       // We only support text stuff for now
       using var content = responseMsg.Content;
       var headers = responseMsg.Headers.ToDictionary(header => header.Key, header => header.Value.First());
-      var body = await responseMsg.Content.ReadAsStringAsync().ConfigureAwait(false);
+      var body = await responseMsg.Content.ReadAsStringAsync(cancel).ConfigureAwait(false);
       var contentType = content.Headers?.ContentType?.MediaType;
 
       return new Response(headers)
