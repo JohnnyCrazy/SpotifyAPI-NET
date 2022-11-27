@@ -16,7 +16,7 @@ namespace SpotifyAPI.Web
     }
 
     /// <summary>
-    /// A comma-separated list of the Spotify IDs. 
+    /// A comma-separated list of the Spotify IDs.
     /// Maximum: 50 IDs.
     /// </summary>
     /// <value></value>

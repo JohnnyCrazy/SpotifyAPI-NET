@@ -21,7 +21,7 @@ namespace SpotifyAPI.Web
     /// A comma-separated list of Spotify IDs for the shows to be deleted from the user’s library.
     /// </summary>
     /// <value></value>
-    [BodyParam("ids")]
+    [QueryParam("ids")]
     public IList<string> Ids { get; }
   }
 }

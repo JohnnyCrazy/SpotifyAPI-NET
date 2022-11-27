@@ -9,7 +9,7 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name="ids">
     /// A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M.
-    /// Maximum: 50 IDs.
+    /// Maximum: 20 IDs.
     /// </param>
     public LibraryRemoveTracksRequest(IList<string> ids)
     {
@@ -20,10 +20,10 @@ namespace SpotifyAPI.Web
 
     /// <summary>
     /// A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M.
-    /// Maximum: 50 IDs.
+    /// Maximum: 20 IDs.
     /// </summary>
     /// <value></value>
-    [BodyParam("ids")]
+    [QueryParam("ids")]
     public IList<string> Ids { get; }
   }
 }
