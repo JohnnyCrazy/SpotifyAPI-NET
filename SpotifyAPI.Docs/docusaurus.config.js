@@ -25,7 +25,7 @@ module.exports = {
           position: 'left',
           items: [
             {
-              label: '6.X (current)',
+              label: '7.X (current)',
               to: 'docs/introduction',
             },
             ...versions.map((version) => ({
@@ -60,7 +60,7 @@ module.exports = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '6.X',
+              label: '7.X',
               path: '',
             },
           },
