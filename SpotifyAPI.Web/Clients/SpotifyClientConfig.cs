@@ -1,5 +1,5 @@
-using System.Net.Http;
 using System;
+using System.Net.Http;
 using SpotifyAPI.Web.Http;
 
 namespace SpotifyAPI.Web

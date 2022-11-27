@@ -1,5 +1,5 @@
-using System.Web;
 using System;
+using System.Web;
 namespace SpotifyAPI.Web
 {
   public class URIParameterFormatProvider : IFormatProvider

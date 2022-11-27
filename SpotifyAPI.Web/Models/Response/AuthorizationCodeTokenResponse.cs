@@ -2,7 +2,7 @@ using System;
 
 namespace SpotifyAPI.Web
 {
-  public class AuthorizationCodeTokenResponse: IRefreshableToken
+  public class AuthorizationCodeTokenResponse : IRefreshableToken
   {
     public string AccessToken { get; set; } = default!;
     public string TokenType { get; set; } = default!;

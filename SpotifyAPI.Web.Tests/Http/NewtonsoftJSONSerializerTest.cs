@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using Moq;
 using NUnit.Framework;
 using SpotifyAPI.Web.Http;
-using System.Net.Http;
 
 namespace SpotifyAPI.Web.Tests
 {

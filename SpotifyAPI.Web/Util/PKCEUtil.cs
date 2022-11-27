@@ -55,7 +55,7 @@ namespace SpotifyAPI.Web
       var bit_count = length * 6;
       var byte_count = (bit_count + 7) / 8; // rounded up
       var bytes = new byte[byte_count];
-      
+
       using var generator = RandomNumberGenerator.Create();
       generator.GetBytes(bytes);
       return Base64Util.UrlEncode(bytes);

@@ -1,7 +1,7 @@
 using System;
-using System.Reflection;
-using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
 
 namespace SpotifyAPI.Web
 {

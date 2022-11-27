@@ -1,6 +1,6 @@
+using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-using System;
 using SpotifyAPI.Web.Http;
 
 namespace SpotifyAPI.Web

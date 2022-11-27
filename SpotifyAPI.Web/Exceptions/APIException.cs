@@ -1,8 +1,8 @@
+using System;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SpotifyAPI.Web.Http;
-using System;
-using System.Runtime.Serialization;
 
 namespace SpotifyAPI.Web
 {

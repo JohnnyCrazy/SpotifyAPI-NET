@@ -1,9 +1,9 @@
-using System.Threading;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
-using System.Runtime.CompilerServices;
 
 namespace SpotifyAPI.Web
 {

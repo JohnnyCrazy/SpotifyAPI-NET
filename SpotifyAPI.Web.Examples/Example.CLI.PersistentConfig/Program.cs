@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using System;
-using SpotifyAPI.Web.Auth;
-using SpotifyAPI.Web;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using static SpotifyAPI.Web.Scopes;
+using SpotifyAPI.Web;
+using SpotifyAPI.Web.Auth;
 using Swan.Logging;
+using static SpotifyAPI.Web.Scopes;
 
 namespace Example.CLI.PersistentConfig
 {

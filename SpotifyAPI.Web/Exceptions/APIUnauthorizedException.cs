@@ -1,5 +1,5 @@
-using System.Runtime.Serialization;
 using System;
+using System.Runtime.Serialization;
 using SpotifyAPI.Web.Http;
 
 namespace SpotifyAPI.Web

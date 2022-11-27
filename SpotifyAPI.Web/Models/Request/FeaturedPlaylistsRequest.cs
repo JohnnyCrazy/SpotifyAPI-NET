@@ -1,5 +1,5 @@
-using System.Globalization;
 using System;
+using System.Globalization;
 namespace SpotifyAPI.Web
 {
   public class FeaturedPlaylistsRequest : RequestParams

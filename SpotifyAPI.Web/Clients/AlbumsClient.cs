@@ -13,7 +13,7 @@ namespace SpotifyAPI.Web
     {
       Ensure.ArgumentNotNullOrEmptyString(albumId, nameof(albumId));
 
-      return API.Get<FullAlbum>(URLs.Album(albumId),cancel);
+      return API.Get<FullAlbum>(URLs.Album(albumId), cancel);
     }
 
     public Task<FullAlbum> Get(string albumId, AlbumRequest request, CancellationToken cancel = default)

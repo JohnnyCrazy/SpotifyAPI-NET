@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using SpotifyAPI.Web.Http;
 using System.Threading;
+using System.Threading.Tasks;
+using SpotifyAPI.Web.Http;
 
 namespace SpotifyAPI.Web
 {
