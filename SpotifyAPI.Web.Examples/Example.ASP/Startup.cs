@@ -48,8 +48,8 @@ namespace Example.ASP
         })
         .AddSpotify(options =>
         {
-          options.ClientId = Configuration["SPOTIFY_CLIENT_ID"];
-          options.ClientSecret = Configuration["SPOTIFY_CLIENT_SECRET"];
+          options.ClientId = Configuration["Spotify:ClientId"];
+          options.ClientSecret = Configuration["Spotify:ClientSecert"];
           options.CallbackPath = "/Auth/callback";
           options.SaveTokens = true;
 
