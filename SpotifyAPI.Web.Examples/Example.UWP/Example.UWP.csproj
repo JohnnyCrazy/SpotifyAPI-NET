@@ -157,7 +157,7 @@
       <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="MvvmCross">
-      <Version>9.0.2</Version>
+      <Version>9.0.9</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
