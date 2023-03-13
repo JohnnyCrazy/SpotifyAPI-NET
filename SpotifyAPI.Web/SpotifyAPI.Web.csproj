@@ -32,7 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2">
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3">
       <PrivateAssets>None</PrivateAssets>
     </PackageReference>
   </ItemGroup>
