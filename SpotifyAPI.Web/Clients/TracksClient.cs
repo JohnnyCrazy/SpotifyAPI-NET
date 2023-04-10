@@ -38,6 +38,12 @@ namespace SpotifyAPI.Web
       return API.Get<TrackAudioFeatures>(URLs.AudioFeatures(trackId), cancel);
     }
 
+    public Task<TrackRecommendationResponse> GetRecommendationTracks(TrackRecommendationsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+      return API.Get<TrackRecommendationResponse>(URLs.TracksRecommendation(), request.BuildQueryParams(), cancel);
+    }
+
     public Task<TracksResponse> GetSeveral(TracksRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -51,5 +57,7 @@ namespace SpotifyAPI.Web
 
       return API.Get<TracksAudioFeaturesResponse>(URLs.AudioFeatures(), request.BuildQueryParams(), cancel);
     }
+
+
   }
 }

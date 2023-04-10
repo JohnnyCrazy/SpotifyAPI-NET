@@ -59,6 +59,8 @@ namespace SpotifyAPI.Web
 
     public static Uri Track(string trackId) => EUri($"tracks/{trackId}");
 
+    public static Uri TrackRecommendations() => EUri($"recommendations");
+
     public static Uri AudioAnalysis(string trackId) => EUri($"audio-analysis/{trackId}");
 
     public static Uri AudioFeatures(string trackId) => EUri($"audio-features/{trackId}");
@@ -109,6 +111,7 @@ namespace SpotifyAPI.Web
 
     public static Uri PersonalizationTop(string type) => EUri($"me/top/{type}");
 
+
     public static Uri Episode(string episodeId) => EUri($"episodes/{episodeId}");
 
     public static Uri Episodes() => EUri($"episodes");
@@ -132,5 +135,7 @@ namespace SpotifyAPI.Web
     public static Uri Markets() => EUri($"markets");
 
     private static Uri EUri(FormattableString path) => new(path.ToString(_provider), UriKind.Relative);
+
+    public static Uri TracksRecommendation() => EUri($"recommendations");
   }
 }

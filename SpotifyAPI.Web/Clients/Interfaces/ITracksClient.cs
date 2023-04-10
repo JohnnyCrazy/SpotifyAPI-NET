@@ -73,5 +73,13 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<TracksAudioFeaturesResponse> GetSeveralAudioFeatures(TracksAudioFeaturesRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    ///  
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancel"></param>
+    /// <returns></returns>
+    Task<TrackRecommendationResponse> GetRecommendationTracks(TrackRecommendationsRequest request, CancellationToken cancel = default);
   }
 }
