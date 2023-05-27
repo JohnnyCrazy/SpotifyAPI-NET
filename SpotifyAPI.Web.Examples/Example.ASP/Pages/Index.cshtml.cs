@@ -10,7 +10,7 @@ namespace Example.ASP.Pages
     private const int LIMIT = 10;
     private readonly SpotifyClientBuilder _spotifyClientBuilder;
 
-    public Paging<SimplePlaylist> Playlists { get; set; }
+    public Paging<FullPlaylist> Playlists { get; set; }
 
     public string Next { get; set; }
     public string Previous { get; set; }

@@ -100,7 +100,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-list-users-playlists
     /// </remarks>
     /// <returns></returns>
-    Task<Paging<SimplePlaylist>> GetUsers(string userId, CancellationToken cancel = default);
+    Task<Paging<FullPlaylist>> GetUsers(string userId, CancellationToken cancel = default);
 
     /// <summary>
     /// Get a list of the playlists owned or followed by a Spotify user.
@@ -112,7 +112,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-list-users-playlists
     /// </remarks>
     /// <returns></returns>
-    Task<Paging<SimplePlaylist>> GetUsers(string userId, PlaylistGetUsersRequest request, CancellationToken cancel = default);
+    Task<Paging<FullPlaylist>> GetUsers(string userId, PlaylistGetUsersRequest request, CancellationToken cancel = default);
 
     /// <summary>
     /// Get a playlist owned by a Spotify user.
@@ -160,7 +160,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-a-list-of-current-users-playlists
     /// </remarks>
     /// <returns></returns>
-    Task<Paging<SimplePlaylist>> CurrentUsers(CancellationToken cancel = default);
+    Task<Paging<FullPlaylist>> CurrentUsers(CancellationToken cancel = default);
 
     /// <summary>
     /// Get a list of the playlists owned or followed by the current Spotify user.
@@ -171,7 +171,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-a-list-of-current-users-playlists
     /// </remarks>
     /// <returns></returns>
-    Task<Paging<SimplePlaylist>> CurrentUsers(PlaylistCurrentUsersRequest request, CancellationToken cancel = default);
+    Task<Paging<FullPlaylist>> CurrentUsers(PlaylistCurrentUsersRequest request, CancellationToken cancel = default);
 
     /// <summary>
     /// Change a playlist’s name and public/private state. (The user must, of course, own the playlist.)

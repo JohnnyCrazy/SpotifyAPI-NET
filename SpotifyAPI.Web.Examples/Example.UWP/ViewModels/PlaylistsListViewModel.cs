@@ -15,10 +15,10 @@ namespace Example.UWP.ViewModels
   {
     private SpotifyClient _spotify;
 
-    private IList<SimplePlaylist> _playlists;
-    public IList<SimplePlaylist> Playlists
+    private IList<FullPlaylist> _playlists;
+    public IList<FullPlaylist> Playlists
     {
-      get => _playlists ?? (_playlists = new List<SimplePlaylist>());
+      get => _playlists ?? (_playlists = new List<FullPlaylist>());
       set => SetProperty(ref _playlists, value);
     }
 

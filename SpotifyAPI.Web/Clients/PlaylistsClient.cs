@@ -66,19 +66,19 @@ namespace SpotifyAPI.Web
       return API.Get<List<Image>>(URLs.PlaylistImages(playlistId), cancel);
     }
 
-    public Task<Paging<SimplePlaylist>> GetUsers(string userId, CancellationToken cancel = default)
+    public Task<Paging<FullPlaylist>> GetUsers(string userId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(userId, nameof(userId));
 
-      return API.Get<Paging<SimplePlaylist>>(URLs.UserPlaylists(userId), cancel);
+      return API.Get<Paging<FullPlaylist>>(URLs.UserPlaylists(userId), cancel);
     }
 
-    public Task<Paging<SimplePlaylist>> GetUsers(string userId, PlaylistGetUsersRequest request, CancellationToken cancel = default)
+    public Task<Paging<FullPlaylist>> GetUsers(string userId, PlaylistGetUsersRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(userId, nameof(userId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<Paging<SimplePlaylist>>(URLs.UserPlaylists(userId), request.BuildQueryParams(), cancel);
+      return API.Get<Paging<FullPlaylist>>(URLs.UserPlaylists(userId), request.BuildQueryParams(), cancel);
     }
 
     public Task<FullPlaylist> Get(string playlistId, CancellationToken cancel = default)
@@ -105,16 +105,16 @@ namespace SpotifyAPI.Web
       return statusCode == HttpStatusCode.Created;
     }
 
-    public Task<Paging<SimplePlaylist>> CurrentUsers(CancellationToken cancel = default)
+    public Task<Paging<FullPlaylist>> CurrentUsers(CancellationToken cancel = default)
     {
-      return API.Get<Paging<SimplePlaylist>>(URLs.CurrentUserPlaylists(), cancel);
+      return API.Get<Paging<FullPlaylist>>(URLs.CurrentUserPlaylists(), cancel);
     }
 
-    public Task<Paging<SimplePlaylist>> CurrentUsers(PlaylistCurrentUsersRequest request, CancellationToken cancel = default)
+    public Task<Paging<FullPlaylist>> CurrentUsers(PlaylistCurrentUsersRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<Paging<SimplePlaylist>>(URLs.CurrentUserPlaylists(), request.BuildQueryParams(), cancel);
+      return API.Get<Paging<FullPlaylist>>(URLs.CurrentUserPlaylists(), request.BuildQueryParams(), cancel);
     }
 
     public async Task<bool> ChangeDetails(string playlistId, PlaylistChangeDetailsRequest request, CancellationToken cancel = default)
