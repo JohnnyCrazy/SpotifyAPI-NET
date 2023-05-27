@@ -18,7 +18,7 @@ jobs:
           dotnet-version: "6.x"
       - uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "7.x"
+          dotnet-version: "7.0.203"
       - name: Set RELEASE_VERSION
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Restore Packages
