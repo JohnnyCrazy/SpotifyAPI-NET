@@ -5,22 +5,25 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
-using Swan.Logging;
 using static SpotifyAPI.Web.Scopes;
 
 namespace Example.CLI.PersistentConfig
 {
   /// <summary>
   ///   This is a basic example how to get user access using the Auth package and a CLI Program
-  ///   Your spotify app needs to have http://localhost:5000 as redirect uri whitelisted
+  ///   Your spotify app needs to have http://localhost:5543 as redirect uri whitelisted
   /// </summary>
   public class Program
   {
     private const string CredentialsPath = "credentials.json";
     private static readonly string? clientId = Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID");
-    private static readonly EmbedIOAuthServer _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
+    private static readonly EmbedIOAuthServer _server = new(new Uri("http://localhost:5543/callback"), 5543);
 
-    private static void Exiting() => Console.CursorVisible = true;
+    private static void Exiting()
+    {
+      Console.CursorVisible = true;
+    }
+
     public static async Task<int> Main()
     {
       // This is a bug in the SWAN Logging library, need this hack to bring back the cursor
@@ -42,7 +45,7 @@ namespace Example.CLI.PersistentConfig
         await StartAuthentication();
       }
 
-      Console.ReadKey();
+      _ = Console.ReadKey();
       return 0;
     }
 
@@ -77,7 +80,7 @@ namespace Example.CLI.PersistentConfig
       _server.AuthorizationCodeReceived += async (sender, response) =>
       {
         await _server.Stop();
-        PKCETokenResponse token = await new OAuthClient().RequestToken(
+        var token = await new OAuthClient().RequestToken(
           new PKCETokenRequest(clientId!, response.Code, _server.BaseUri, verifier)
         );
 
@@ -92,7 +95,7 @@ namespace Example.CLI.PersistentConfig
         Scope = new List<string> { UserReadEmail, UserReadPrivate, PlaylistReadPrivate, PlaylistReadCollaborative }
       };
 
-      Uri uri = request.ToUri();
+      var uri = request.ToUri();
       try
       {
         BrowserUtil.Open(uri);

@@ -13,7 +13,7 @@ Very similar to the [Blazor WASM Example](example_blazor_wasm.md), but runs code
 
 ## Run it
 
-Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5001` is a redirect uri of it.
+Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5543` is a redirect uri of it.
 
 ```bash
 # Assumes linux and current working directory is the cloned repository
@@ -22,5 +22,5 @@ dotnet restore
 
 SPOTIFY_CLIENT_ID=YourClientId SPOTIFY_CLIENT_SECRET=YourClientSecret dotnet run
 
-# Visit https://localhost:5001
+# Visit https://localhost:5543
 ```

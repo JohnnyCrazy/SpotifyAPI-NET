@@ -16,7 +16,7 @@ Since this library is compatible with `.NET Standard 2.1`, you can use all featu
 
 ## Run it
 
-Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5001` is a redirect uri of it.
+Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5543` is a redirect uri of it.
 
 ```bash
 # Assumes linux and current working directory is the cloned repository
@@ -26,5 +26,5 @@ dotnet restore
 echo "{ \"SPOTIFY_CLIENT_ID\": \"YourSpotifyClientId\" }" > wwwroot/appsettings.json
 dotnet run
 
-# Visit https://localhost:5001
+# Visit https://localhost:5543
 ```

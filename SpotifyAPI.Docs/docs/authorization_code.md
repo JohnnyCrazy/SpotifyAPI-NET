@@ -10,9 +10,9 @@ title: Authorization Code
 If you are already in control of a Web-Server (like `ASP.NET`), you can start the flow by generating a login uri:
 
 ```csharp
-// Make sure "http://localhost:5000" is in your applications redirect URIs!
+// Make sure "http://localhost:5543" is in your applications redirect URIs!
 var loginRequest = new LoginRequest(
-  new Uri("http://localhost:5000"),
+  new Uri("http://localhost:5543"),
   "ClientId",
   LoginRequest.ResponseType.Code
 )
@@ -23,14 +23,14 @@ var uri = loginRequest.ToUri();
 // Redirect user to uri via your favorite web-server
 ```
 
-When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5000` and a `code` parameter is attached to the query. This `code` has to be exchanged for an `access_token` and `refresh_token`:
+When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5543` and a `code` parameter is attached to the query. This `code` has to be exchanged for an `access_token` and `refresh_token`:
 
 ```csharp
-// This method should be called from your web-server when the user visits "http://localhost:5000"
+// This method should be called from your web-server when the user visits "http://localhost:5543"
 public Task GetCallback(string code)
 {
   var response = await new OAuthClient().RequestToken(
-    new AuthorizationCodeTokenRequest("ClientId", "ClientSecret", code, "http://localhost:5000")
+    new AuthorizationCodeTokenRequest("ClientId", "ClientSecret", code, "http://localhost:5543")
   );
 
   var spotify = new SpotifyClient(response.AccessToken);
@@ -52,7 +52,7 @@ You can also let the `AuthorizationCodeAuthenticator` take care of the refresh p
 
 ```csharp
 var response = await new OAuthClient().RequestToken(
-  new AuthorizationCodeTokenRequest("ClientId", "ClientSecret", code, "http://localhost:5000")
+  new AuthorizationCodeTokenRequest("ClientId", "ClientSecret", code, "http://localhost:5543")
 );
 var config = SpotifyClientConfig
   .CreateDefault()
@@ -76,8 +76,8 @@ private static EmbedIOAuthServer _server;
 
 public static async Task Main()
 {
-  // Make sure "http://localhost:5000/callback" is in your spotify application as redirect uri!
-  _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
+  // Make sure "http://localhost:5543/callback" is in your spotify application as redirect uri!
+  _server = new EmbedIOAuthServer(new Uri("http://localhost:5543/callback"), 5543);
   await _server.Start();
 
   _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
@@ -97,7 +97,7 @@ private static async Task OnAuthorizationCodeReceived(object sender, Authorizati
   var config = SpotifyClientConfig.CreateDefault();
   var tokenResponse = await new OAuthClient(config).RequestToken(
     new AuthorizationCodeTokenRequest(
-      "ClientId", "ClientSecret", response.Code, new Uri("http://localhost:5000/callback")
+      "ClientId", "ClientSecret", response.Code, new Uri("http://localhost:5543/callback")
     )
   );
 

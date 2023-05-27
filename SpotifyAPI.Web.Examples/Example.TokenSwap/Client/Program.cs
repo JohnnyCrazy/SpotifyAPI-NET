@@ -13,7 +13,7 @@ namespace Client
 
     public static async Task Main()
     {
-      _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
+      _server = new EmbedIOAuthServer(new Uri("http://localhost:5543/callback"), 5543);
       await _server.Start();
 
       _server.AuthorizationCodeReceived += OnAuthorizationCodeReceived;
@@ -23,7 +23,7 @@ namespace Client
         Scope = new List<string> { Scopes.UserReadEmail }
       };
 
-      Uri uri = request.ToUri();
+      var uri = request.ToUri();
       try
       {
         BrowserUtil.Open(uri);
@@ -33,20 +33,20 @@ namespace Client
         Console.WriteLine("Unable to open URL, manually open: {0}", uri);
       }
 
-      Console.ReadKey();
+      _ = Console.ReadKey();
     }
 
     private static async Task OnAuthorizationCodeReceived(object sender, AuthorizationCodeResponse response)
     {
       var oauth = new OAuthClient();
 
-      var tokenRequest = new TokenSwapTokenRequest(new Uri("http://localhost:5001/swap"), response.Code);
+      var tokenRequest = new TokenSwapTokenRequest(new Uri("http://localhost:5543/swap"), response.Code);
       var tokenResponse = await oauth.RequestToken(tokenRequest);
 
       Console.WriteLine($"We got an access token from server: {tokenResponse.AccessToken}");
 
       var refreshRequest = new TokenSwapRefreshRequest(
-        new Uri("http://localhost:5001/refresh"),
+        new Uri("http://localhost:5543/refresh"),
         tokenResponse.RefreshToken
       );
       var refreshResponse = await oauth.RequestToken(refreshRequest);

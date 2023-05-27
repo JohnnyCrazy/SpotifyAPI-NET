@@ -25,9 +25,9 @@ var (verifier, challenge) = PKCEUtil.GenerateCodes("YourSecureRandomString");
 Like most auth flows, you'll need to redirect your user to Spotify's servers so they are able to grant access to your application:
 
 ```csharp
-// Make sure "http://localhost:5000/callback" is in your applications redirect URIs!
+// Make sure "http://localhost:5543/callback" is in your applications redirect URIs!
 var loginRequest = new LoginRequest(
-  new Uri("http://localhost:5000/callback"),
+  new Uri("http://localhost:5543/callback"),
   "YourClientId",
   LoginRequest.ResponseType.Code
 )
@@ -40,15 +40,15 @@ var uri = loginRequest.ToUri();
 // Redirect user to uri via your favorite web-server or open a local browser window
 ```
 
-When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5000/callback` and a `code` parameter is attached to the query. The redirect URI can also contain a custom protocol paired with UWP App Custom Protocol handler. This received `code` has to be exchanged for an `access_token` and `refresh_token`:
+When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5543/callback` and a `code` parameter is attached to the query. The redirect URI can also contain a custom protocol paired with UWP App Custom Protocol handler. This received `code` has to be exchanged for an `access_token` and `refresh_token`:
 
 ```csharp
-// This method should be called from your web-server when the user visits "http://localhost:5000/callback"
+// This method should be called from your web-server when the user visits "http://localhost:5543/callback"
 public Task GetCallback(string code)
 {
   // Note that we use the verifier calculated above!
   var initialResponse = await new OAuthClient().RequestToken(
-    new PKCETokenRequest("ClientId", code, "http://localhost:5000", verifier)
+    new PKCETokenRequest("ClientId", code, "http://localhost:5543", verifier)
   );
 
   var spotify = new SpotifyClient(initialResponse.AccessToken);

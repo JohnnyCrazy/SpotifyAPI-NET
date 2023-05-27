@@ -14,9 +14,9 @@ This flow is useful for getting a user access token for a short timespan.
 If you are already in control of a Web-Server (like `ASP.NET`), you can start the flow by generating a login uri:
 
 ```csharp
-// Make sure "http://localhost:5000" is in your applications redirect URIs!
+// Make sure "http://localhost:5543" is in your applications redirect URIs!
 var loginRequest = new LoginRequest(
-  new Uri("http://localhost:5000"),
+  new Uri("http://localhost:5543"),
   "ClientId",
   LoginRequest.ResponseType.Token
 )
@@ -27,7 +27,7 @@ var uri = loginRequest.ToUri();
 // Redirect user to uri via your favorite web-server
 ```
 
-When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5000` and the fragment identifier (`#` part of URI) will contain an access token.
+When the user is redirected to the generated uri, they will have to login with their Spotify account and confirm that your application wants to access their user data. Once confirmed, they will be redirected to `http://localhost:5543` and the fragment identifier (`#` part of URI) will contain an access token.
 
 :::warning
 Note, this parameter is not sent to the server! You need JavaScript to access it.
@@ -77,15 +77,15 @@ For a real example, have a look at the [Example.UWP](https://github.com/JohnnyCr
 
 # Using Spotify.Web.Auth
 
-For cross-platform CLI and desktop apps (non `UWP` apps), custom protocol handlers are sometimes not an option. The fallback here is a small cross-platform embedded web server running on `http://localhost:5000` serving JavaScript. The JavaScript will parse the fragment part of the URI and sends a request to the web server in the background. The web server then notifies your appliciation via an event.
+For cross-platform CLI and desktop apps (non `UWP` apps), custom protocol handlers are sometimes not an option. The fallback here is a small cross-platform embedded web server running on `http://localhost:5543` serving JavaScript. The JavaScript will parse the fragment part of the URI and sends a request to the web server in the background. The web server then notifies your appliciation via an event.
 
 ```csharp
 private static EmbedIOAuthServer _server;
 
 public static async Task Main()
 {
-  // Make sure "http://localhost:5000/callback" is in your spotify application as redirect uri!
-  _server = new EmbedIOAuthServer(new Uri("http://localhost:5000/callback"), 5000);
+  // Make sure "http://localhost:5543/callback" is in your spotify application as redirect uri!
+  _server = new EmbedIOAuthServer(new Uri("http://localhost:5543/callback"), 5543);
   await _server.Start();
 
   _server.ImplictGrantReceived += OnImplicitGrantReceived;

@@ -13,7 +13,7 @@ An example to show how you can display your own HTML resource after the user wen
 
 ## Run it
 
-Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5001` is a redirect uri of it.
+Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5543` is a redirect uri of it.
 
 ```bash
 # Assumes linux and current working directory is the cloned repository

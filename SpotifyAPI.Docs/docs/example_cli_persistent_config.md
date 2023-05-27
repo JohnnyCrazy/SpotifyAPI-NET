@@ -11,7 +11,7 @@ The access and refresh token is saved in a `credentials.json` file of the curren
 
 ## Run it
 
-Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5000` is a redirect uri of it.
+Before running it, make sure you created an app in your [spotify dashboard](https://developer.spotify.com/dashboard/) and `https://localhost:5543` is a redirect uri of it.
 
 ```bash
 # Assumes linux and current working directory is the cloned repository

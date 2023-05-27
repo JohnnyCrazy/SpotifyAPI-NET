@@ -24,8 +24,8 @@ namespace Example.CLI.CustomHTML
       }
 
       _server = new EmbedIOAuthServer(
-        new Uri("http://localhost:5000/callback"),
-        5000,
+        new Uri("http://localhost:5543/callback"),
+        5543,
         Assembly.GetExecutingAssembly(),
         "Example.CLI.CustomHTML.Resources.custom_site"
       );
@@ -38,7 +38,7 @@ namespace Example.CLI.CustomHTML
         Scope = new List<string> { UserReadEmail }
       };
 
-      Uri uri = request.ToUri();
+      var uri = request.ToUri();
       try
       {
         BrowserUtil.Open(uri);
@@ -48,14 +48,14 @@ namespace Example.CLI.CustomHTML
         Console.WriteLine("Unable to open URL, manually open: {0}", uri);
       }
 
-      Console.ReadKey();
+      _ = Console.ReadKey();
     }
 
     private static async Task OnAuthorizationCodeReceived(object sender, AuthorizationCodeResponse response)
     {
       await _server.Stop();
 
-      AuthorizationCodeTokenResponse token = await new OAuthClient().RequestToken(
+      var token = await new OAuthClient().RequestToken(
         new AuthorizationCodeTokenRequest(clientId, clientSecret, response.Code, _server.BaseUri)
       );
 
