@@ -93,9 +93,9 @@ namespace SpotifyAPI.Web
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
-    public Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IPaginator? paginator = null)
+    public Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IPaginator? paginator = null, CancellationToken cancellationToken = default)
     {
-      return (paginator ?? DefaultPaginator).PaginateAll(firstPage, _apiConnector);
+      return (paginator ?? DefaultPaginator).PaginateAll(firstPage, _apiConnector, cancellationToken);
     }
 
     /// <summary>
