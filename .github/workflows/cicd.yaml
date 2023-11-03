@@ -61,17 +61,16 @@ jobs:
           zip -j SpotifyAPI.Web.Auth-net6.0.zip SpotifyAPI.Web.Auth/bin/Release/net6.0/*
           zip -j SpotifyAPI.Web.Auth-net7.0.zip SpotifyAPI.Web.Auth/bin/Release/net7.0/*
 
-          hub release edit \
-            -a "SpotifyAPI.Web-netstandard2.0.zip" \
-            -a "SpotifyAPI.Web-netstandard2.1.zip" \
-            -a "SpotifyAPI.Web-net5.0.zip" \
-            -a "SpotifyAPI.Web-net6.0.zip" \
-            -a "SpotifyAPI.Web-net7.0.zip" \
-            -a "SpotifyAPI.Web.Auth-netstandard2.0.zip" \
-            -a "SpotifyAPI.Web.Auth-netstandard2.1.zip" \
-            -a "SpotifyAPI.Web.Auth-net5.0.zip" \
-            -a "SpotifyAPI.Web.Auth-net6.0.zip" \
-            -a "SpotifyAPI.Web.Auth-net7.0.zip" \
-            -m "" "$RELEASE_VERSION"
+          gh release upload "$RELEASE_VERSION" \
+            "SpotifyAPI.Web-netstandard2.0.zip" \
+            "SpotifyAPI.Web-netstandard2.1.zip" \
+            "SpotifyAPI.Web-net5.0.zip" \
+            "SpotifyAPI.Web-net6.0.zip" \
+            "SpotifyAPI.Web-net7.0.zip" \
+            "SpotifyAPI.Web.Auth-netstandard2.0.zip" \
+            "SpotifyAPI.Web.Auth-netstandard2.1.zip" \
+            "SpotifyAPI.Web.Auth-net5.0.zip" \
+            "SpotifyAPI.Web.Auth-net6.0.zip" \
+            "SpotifyAPI.Web.Auth-net7.0.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
