@@ -105,9 +105,10 @@ namespace SpotifyAPI.Web
     /// </summary>
     /// <param name="firstPage">The first page, will be included in the output list!</param>
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">The cancellation-token to allow to cancel the request.</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
-    Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IPaginator? paginator = default!);
+    Task<IList<T>> PaginateAll<T>(IPaginatable<T> firstPage, IPaginator? paginator = default!, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches all pages and returns them grouped in a list.
