@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: v20.9.0
           cache: "pnpm"
+          cache-dependency-path: |
+            SpotifyAPI.Docs/pnpm-lock.yaml
       - name: Setup GitHub Deploy SSH Key
         uses: webfactory/ssh-agent@v0.4.1
         with:
