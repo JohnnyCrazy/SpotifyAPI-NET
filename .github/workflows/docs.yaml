@@ -14,7 +14,11 @@ jobs:
       - name: Use Node.JS
         uses: actions/setup-node@v1
         with:
-          node-version: 18.12.1
+          node-version: v20.9.0
+          cache: "pnpm"
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Setup GitHub Deploy SSH Key
         uses: webfactory/ssh-agent@v0.4.1
         with:
