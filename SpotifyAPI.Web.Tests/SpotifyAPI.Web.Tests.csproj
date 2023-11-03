@@ -4,6 +4,7 @@
     <TargetFrameworks>net7.0;net6.0;net5.0</TargetFrameworks>
     <LangVersion>9.0</LangVersion>
     <IsPackable>false</IsPackable>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
