@@ -8,5 +8,5 @@ git config --global user.email "jonas@dellinger.dev"
 git config --global user.name "GH Actions Docs Builder"
 
 cd ./SpotifyAPI.Docs
-yarn
-USE_SSH=true GIT_USER=JohnnyCrazy yarn deploy
+pnpm i --frozen-lockfile
+USE_SSH=true GIT_USER=JohnnyCrazy pnpm deploy

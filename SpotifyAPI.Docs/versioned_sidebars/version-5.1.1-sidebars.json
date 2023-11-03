@@ -1,12 +1,12 @@
 {
-  "version-5.1.1/someSidebar": [
+  "someSidebar": [
     {
       "type": "category",
       "label": "SpotifyAPI-NET",
       "items": [
         {
           "type": "doc",
-          "id": "version-5.1.1/home"
+          "id": "home"
         }
       ]
     },
@@ -16,59 +16,59 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-5.1.1/web/getting_started"
+          "id": "web/getting_started"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/albums"
+          "id": "web/albums"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/artists"
+          "id": "web/artists"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/browse"
+          "id": "web/browse"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/follow"
+          "id": "web/follow"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/library"
+          "id": "web/library"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/personalization"
+          "id": "web/personalization"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/player"
+          "id": "web/player"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/playlists"
+          "id": "web/playlists"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/profiles"
+          "id": "web/profiles"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/proxy"
+          "id": "web/proxy"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/search"
+          "id": "web/search"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/tracks"
+          "id": "web/tracks"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/web/utilities"
+          "id": "web/utilities"
         }
       ]
     },
@@ -78,23 +78,23 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-5.1.1/auth/getting_started"
+          "id": "auth/getting_started"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/auth/implicit_grant"
+          "id": "auth/implicit_grant"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/auth/authorization_code"
+          "id": "auth/authorization_code"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/auth/client_credentials"
+          "id": "auth/client_credentials"
         },
         {
           "type": "doc",
-          "id": "version-5.1.1/auth/token_swap"
+          "id": "auth/token_swap"
         }
       ]
     }
