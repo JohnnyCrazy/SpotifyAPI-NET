@@ -21,9 +21,9 @@ namespace SpotifyAPI.Web
       var body = new JObject();
       var type = GetType();
 
-      if (!_bodyParamsCache.IsEmpty && _bodyParamsCache.ContainsKey(type))
+      if (!_bodyParamsCache.IsEmpty && _bodyParamsCache.TryGetValue(type, out var bodyParamsCached))
       {
-        foreach (var (info, attribute) in _bodyParamsCache[type])
+        foreach (var (info, attribute) in bodyParamsCached)
         {
           AddBodyParam(body, info, attribute);
         }
@@ -70,9 +70,9 @@ namespace SpotifyAPI.Web
       var queryParams = new Dictionary<string, string>();
       var type = GetType();
 
-      if (!_queryParamsCache.IsEmpty && _queryParamsCache.ContainsKey(type))
+      if (!_queryParamsCache.IsEmpty && _queryParamsCache.TryGetValue(type, out var queryParamsCached))
       {
-        foreach (var (info, attribute) in _queryParamsCache[type])
+        foreach (var (info, attribute) in queryParamsCached)
         {
           AddQueryParam(queryParams, info, attribute);
         }

@@ -63,8 +63,12 @@ namespace SpotifyAPI.Web
 
     private static byte[] ComputeSHA256(string value)
     {
+#if NETSTANDARD2_1_OR_GREATER
       using var hash = SHA256.Create();
       return hash.ComputeHash(Encoding.UTF8.GetBytes(value));
+#else
+      return SHA256.HashData(Encoding.UTF8.GetBytes(value));
+#endif
     }
   }
 }
