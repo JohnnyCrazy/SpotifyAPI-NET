@@ -120,13 +120,15 @@ namespace SpotifyAPI.Web
     /// <param name="firstPage">A first page, will be included in the output list!</param>
     /// <param name="mapper">A function which maps response objects to the next paging object</param>
     /// <param name="paginator">Optional. If not supplied, DefaultPaginator will be used</param>
+    /// <param name="cancellationToken">The cancellation-token to allow to cancel the request.</param>
     /// <typeparam name="T">The Paging-Type</typeparam>
     /// <typeparam name="TNext">The Response-Type</typeparam>
     /// <returns>A list containing all fetched pages</returns>
     Task<IList<T>> PaginateAll<T, TNext>(
       IPaginatable<T, TNext> firstPage,
       Func<TNext, IPaginatable<T, TNext>> mapper,
-      IPaginator? paginator = default!
+      IPaginator? paginator = default!,
+      CancellationToken cancellationToken = default!
     );
 
     /// <summary>
@@ -142,7 +144,7 @@ namespace SpotifyAPI.Web
     IAsyncEnumerable<T> Paginate<T>(
       IPaginatable<T> firstPage,
       IPaginator? paginator = default!,
-      CancellationToken cancel = default!
+      CancellationToken cancel = default
     );
 
     /// <summary>
