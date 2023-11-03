@@ -9,4 +9,4 @@ git config --global user.name "GH Actions Docs Builder"
 
 cd ./SpotifyAPI.Docs
 pnpm i --frozen-lockfile
-USE_SSH=true GIT_USER=JohnnyCrazy pnpm deploy
+USE_SSH=true GIT_USER=JohnnyCrazy pnpm run deploy
