@@ -11,14 +11,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Use Node.JS
         uses: actions/setup-node@v3
         with:
           node-version: v20.9.0
           cache: "pnpm"
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - name: Setup GitHub Deploy SSH Key
         uses: webfactory/ssh-agent@v0.4.1
         with:
