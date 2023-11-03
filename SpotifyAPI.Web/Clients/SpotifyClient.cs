@@ -196,7 +196,7 @@ namespace SpotifyAPI.Web
       return FetchPage<TNext>(paging.Previous);
     }
 
-
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
     /// <summary>
     /// Paginate through pages by using IAsyncEnumerable, introduced in C# 8
     /// The default paginator will fetch all available resources without a delay between requests.
@@ -303,5 +303,6 @@ namespace SpotifyAPI.Web
         yield return item;
       }
     }
+#endif
   }
 }

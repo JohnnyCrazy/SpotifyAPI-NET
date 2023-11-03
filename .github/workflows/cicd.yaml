@@ -12,6 +12,9 @@ jobs:
         uses: actions/checkout@v2
       - uses: actions/setup-dotnet@v1
         with:
+          dotnet-version: "4.8.1"
+      - uses: actions/setup-dotnet@v1
+        with:
           dotnet-version: "5.x"
       - uses: actions/setup-dotnet@v1
         with:
@@ -49,21 +52,25 @@ jobs:
       - name: Upload to GH Release
         if: startsWith( github.ref, 'refs/tags/')
         run: |
+          zip -j SpotifyAPI.Web-netstandard2.0.zip SpotifyAPI.Web/bin/Release/netstandard2.0/*
           zip -j SpotifyAPI.Web-netstandard2.1.zip SpotifyAPI.Web/bin/Release/netstandard2.1/*
           zip -j SpotifyAPI.Web-net5.0.zip SpotifyAPI.Web/bin/Release/net5.0/*
           zip -j SpotifyAPI.Web-net6.0.zip SpotifyAPI.Web/bin/Release/net6.0/*
           zip -j SpotifyAPI.Web-net7.0.zip SpotifyAPI.Web/bin/Release/net7.0/*
 
+          zip -j SpotifyAPI.Web.Auth-netstandard2.0.zip SpotifyAPI.Web.Auth/bin/Release/netstandard2.0/*
           zip -j SpotifyAPI.Web.Auth-netstandard2.1.zip SpotifyAPI.Web.Auth/bin/Release/netstandard2.1/*
           zip -j SpotifyAPI.Web.Auth-net5.0.zip SpotifyAPI.Web.Auth/bin/Release/net5.0/*
           zip -j SpotifyAPI.Web.Auth-net6.0.zip SpotifyAPI.Web.Auth/bin/Release/net6.0/*
           zip -j SpotifyAPI.Web.Auth-net7.0.zip SpotifyAPI.Web.Auth/bin/Release/net7.0/*
 
           hub release edit \
+            -a "SpotifyAPI.Web-netstandard2.0.zip" \
             -a "SpotifyAPI.Web-netstandard2.1.zip" \
             -a "SpotifyAPI.Web-net5.0.zip" \
             -a "SpotifyAPI.Web-net6.0.zip" \
             -a "SpotifyAPI.Web-net7.0.zip" \
+            -a "SpotifyAPI.Web.Auth-netstandard2.0.zip" \
             -a "SpotifyAPI.Web.Auth-netstandard2.1.zip" \
             -a "SpotifyAPI.Web.Auth-net5.0.zip" \
             -a "SpotifyAPI.Web.Auth-net6.0.zip" \

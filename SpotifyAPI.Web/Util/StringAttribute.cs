@@ -15,7 +15,11 @@ namespace SpotifyAPI.Web
 
     public string Value { get; }
 
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
     public static bool GetValue(Type enumType, Enum enumValue, [NotNullWhen(true)] out string? result)
+#else
+    public static bool GetValue(Type enumType, Enum enumValue, out string? result)
+#endif
     {
       Ensure.ArgumentNotNull(enumType, nameof(enumType));
       Ensure.ArgumentNotNull(enumValue, nameof(enumValue));

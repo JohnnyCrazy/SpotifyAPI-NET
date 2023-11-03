@@ -42,6 +42,7 @@ namespace SpotifyAPI.Web
       CancellationToken cancel = default
     );
 
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
     /// <summary>
     /// Fetches all pages and returns one by one using IAsyncEnumerable
     /// </summary>
@@ -71,5 +72,6 @@ namespace SpotifyAPI.Web
       IAPIConnector connector,
       CancellationToken cancel = default
     );
+#endif
   }
 }

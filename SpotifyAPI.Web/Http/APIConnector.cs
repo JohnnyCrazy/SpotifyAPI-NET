@@ -221,7 +221,11 @@ namespace SpotifyAPI.Web.Http
     {
       if (_authenticator != null
         && !request.Endpoint.IsAbsoluteUri
+#if NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
         || request.Endpoint.AbsoluteUri.Contains("https://api.spotify.com", StringComparison.InvariantCulture))
+#else
+        || request.Endpoint.AbsoluteUri.Contains("https://api.spotify.com"))
+#endif
       {
         await _authenticator!.Apply(request, this).ConfigureAwait(false);
       }
