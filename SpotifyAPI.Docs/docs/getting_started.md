@@ -59,6 +59,9 @@ class Program
 
 :::tip
 Notice that the spotify api does not allow unauthorized API access. Wondering where you should get an access token from? For a quick test, head over to the [Spotify Developer Console](https://developer.spotify.com/console/get-album/) and generate an access token with the required scopes! For a permanent solution, head over to the [authentication guides](auth_introduction.md).
+In particular, in order to setup a quick test, you can also follow the Client Credentials flow and generate the accessToken with the client id and client secret of a your application .
+To obtain a Client Id and Client Secret for that flow, you need to login in [Spotify Developer Console](https://developer.spotify.com/documentation/web-api/reference/get-an-album), going to your personal dashboard [Spotify Developer Dashboard Console](https://developer.spotify.com/dashboard) and create a client application.
+With those Client Id and Client Secret, simply follow the [client credential flow guide](client_credentials.md).
 
 :::
 
