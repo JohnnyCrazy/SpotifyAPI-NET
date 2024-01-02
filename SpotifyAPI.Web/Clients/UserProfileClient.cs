@@ -23,13 +23,13 @@ namespace SpotifyAPI.Web
 
     public Task<UserTopTracksResponse> GetTopTracks(CancellationToken cancel = default)
     {
-
+      //TODO: Add Paramaters for request
       return API.Get<UserTopTracksResponse>(SpotifyUrls.TopTracks(), cancel);
     }
         
     public Task<UserTopArtistsResponse> GetTopArtists(CancellationToken cancel = default)
     {
-
+      //TODO: Add Paramaters for request
       return API.Get<UserTopArtistsResponse>(SpotifyUrls.TopArtists(), cancel);
     }
   }
