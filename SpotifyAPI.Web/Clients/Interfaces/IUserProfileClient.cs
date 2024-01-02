@@ -28,5 +28,10 @@ namespace SpotifyAPI.Web
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<PublicUser> Get(string userId, CancellationToken cancel = default);
+
+    Task<UserTopTracksResponse> GetTopTracks(CancellationToken cancel = default);
+        
+    Task<UserTopArtistsResponse> GetTopArtists(CancellationToken cancel = default);
+
   }
 }
