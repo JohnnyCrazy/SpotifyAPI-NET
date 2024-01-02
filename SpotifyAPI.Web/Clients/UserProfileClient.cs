@@ -20,5 +20,17 @@ namespace SpotifyAPI.Web
 
       return API.Get<PublicUser>(SpotifyUrls.User(userId), cancel);
     }
+
+    public Task<UserTopTracksResponse> GetTopTracks(CancellationToken cancel = default)
+    {
+
+      return API.Get<UserTopTracksResponse>(SpotifyUrls.TopTracks(), cancel);
+    }
+        
+    public Task<UserTopArtistsResponse> GetTopArtists(CancellationToken cancel = default)
+    {
+
+      return API.Get<UserTopArtistsResponse>(SpotifyUrls.TopArtists(), cancel);
+    }
   }
 }
