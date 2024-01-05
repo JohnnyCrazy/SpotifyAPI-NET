@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using SpotifyAPI.Web.Models.Request;
 
 namespace SpotifyAPI.Web
 {
@@ -29,9 +30,23 @@ namespace SpotifyAPI.Web
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<PublicUser> Get(string userId, CancellationToken cancel = default);
 
-    Task<UserTopTracksResponse> GetTopTracks(CancellationToken cancel = default);
-        
-    Task<UserTopArtistsResponse> GetTopArtists(CancellationToken cancel = default);
+    /// <summary>
+    ///   Get Top tracks for the current user
+    /// </summary>
+    /// <param name="request">The query params to send to get Top Artists </param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks</remarks>
+    /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
+    Task<UserTopTracksResponse> GetTopTracks(UsersTopItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    ///   Get Top arsists for the current user
+    /// </summary>
+    /// <param name="request">The query params to send to get Top Artists</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks</remarks>
+    /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
+    Task<UserTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default);
 
   }
 }

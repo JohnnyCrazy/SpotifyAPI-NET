@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
+using SpotifyAPI.Web.Models.Request;
 
 namespace SpotifyAPI.Web
 {
@@ -21,16 +22,19 @@ namespace SpotifyAPI.Web
       return API.Get<PublicUser>(SpotifyUrls.User(userId), cancel);
     }
 
-    public Task<UserTopTracksResponse> GetTopTracks(CancellationToken cancel = default)
+    public Task<UserTopTracksResponse> GetTopTracks(UsersTopItemsRequest request,CancellationToken cancel = default)
     {
-      //TODO: Add Paramaters for request
-      return API.Get<UserTopTracksResponse>(SpotifyUrls.TopTracks(), cancel);
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return  API.Get<UserTopTracksResponse>(SpotifyUrls.TopTracks(), request.BuildQueryParams(),cancel);
+
     }
         
-    public Task<UserTopArtistsResponse> GetTopArtists(CancellationToken cancel = default)
+    public Task<UserTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default)
     {
-      //TODO: Add Paramaters for request
-      return API.Get<UserTopArtistsResponse>(SpotifyUrls.TopArtists(), cancel);
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<UserTopArtistsResponse>(SpotifyUrls.TopArtists(), request.BuildQueryParams(), cancel);
     }
   }
 }
