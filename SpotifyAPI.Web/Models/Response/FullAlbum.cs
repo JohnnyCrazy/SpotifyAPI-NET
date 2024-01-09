@@ -16,7 +16,7 @@ namespace SpotifyAPI.Web
     public List<Image> Images { get; set; } = default!;
     public string Label { get; set; } = default!;
     public string Name { get; set; } = default!;
-    public int Popularity { get; set; }
+    public double Popularity { get; set; }
     public string ReleaseDate { get; set; } = default!;
     public string ReleaseDatePrecision { get; set; } = default!;
     public Dictionary<string, string> Restrictions { get; set; } = default!;

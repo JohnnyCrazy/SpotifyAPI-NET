@@ -4,7 +4,7 @@ namespace SpotifyAPI.Web
   {
     public string Href { get; set; } = default!;
 
-    public int Total { get; set; }
+    public double Total { get; set; }
   }
 }
 
