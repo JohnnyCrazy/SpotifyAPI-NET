@@ -89,7 +89,7 @@ Send a PR via the "Edit this page" link at the end of the page!
 
 ### [Spotify Content Availability Checker](https://github.com/SoNearSonar/SpotifyContentAvailabilityChecker) by [@SoNearSonar](https://github.com/SoNearSonar/)
 
-> Spotify Content Availability Checker is a program that lets you check the country availability and unavailability of songs, albums, and podcasts on Spotify. The program also displays basic information about the content you enter in.le and lightweight tool that lets you check the availability of songs and albums on Spotify, giving you basic information about what you enter and displaying the available markets for said entry.
+> Spotify Content Availability Checker is a program that lets you check the country availability and unavailability of songs, albums, and podcasts on Spotify. The program also displays basic information about the content you enter in.
 
 ### [ConcertBuddy](https://github.com/skuill/ConcertBuddy) by [@skuill](https://github.com/skuill)
 
