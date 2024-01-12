@@ -87,10 +87,9 @@ Send a PR via the "Edit this page" link at the end of the page!
 
 > Sortify is a powerful tool that aims to help people organize their Spotify libraries. It allows you to sort existing playlists or create new ones. When creating, you have an option to merge or split the playlists. It also removes any track duplicates from them. All that, while being very simple and friendly to use.
 
+### [Spotify Content Availability Checker](https://github.com/SoNearSonar/SpotifyContentAvailabilityChecker) by [@SoNearSonar](https://github.com/SoNearSonar/)
 
-### [Spotify Song Availability Checker](https://github.com/CasualHonest/SpotifySongAvailabilityChecker) by [@CasualHonest](https://github.com/CasualHonest/)
-
-> Spotify Song Availability Checker (SSAC) is a simple and lightweight tool that lets you check the availability of songs and albums on Spotify, giving you basic information about what you enter and displaying the available markets for said entry.
+> Spotify Content Availability Checker is a program that lets you check the country availability and unavailability of songs, albums, and podcasts on Spotify. The program also displays basic information about the content you enter in.le and lightweight tool that lets you check the availability of songs and albums on Spotify, giving you basic information about what you enter and displaying the available markets for said entry.
 
 ### [ConcertBuddy](https://github.com/skuill/ConcertBuddy) by [@skuill](https://github.com/skuill)
 
