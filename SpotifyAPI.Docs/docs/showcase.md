@@ -97,3 +97,6 @@ Send a PR via the "Edit this page" link at the end of the page!
 
 ### [SpotifiCLI](https://github.com/kollibroman/SpotifyCLI) by [@kollibroman](https://github.com/kollibroman)
 > Another cross-platform cli tool to interact with spotify api with focus on simplicity
+
+### [BeatSpy](https://github.com/braddotwav/BeatSpy) by [@braddotwav](https://github.com/braddotwav)
+> BeatSpy lets music producers and enthusiasts search for songs and instantly access valuable details like tempo, key, loudness, and more
