@@ -37,7 +37,7 @@ namespace SpotifyAPI.Web
     /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
     /// <remarks>https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks</remarks>
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
-    Task<UserTopTracksResponse> GetTopTracks(UsersTopItemsRequest request, CancellationToken cancel = default);
+    Task<UsersTopTracksResponse> GetTopTracks(UsersTopItemsRequest request, CancellationToken cancel = default);
 
     /// <summary>
     ///   Get Top arsists for the current user
@@ -46,7 +46,7 @@ namespace SpotifyAPI.Web
     /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
     /// <remarks>https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks</remarks>
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
-    Task<UserTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default);
+    Task<UsersTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default);
 
   }
 }
