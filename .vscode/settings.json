@@ -5,6 +5,5 @@
   "omnisharp.enableEditorConfigSupport": true,
   "files.associations": {
     "*.md": "mdx"
-  },
-  "dotnet.preferCSharpExtension": true
+  }
 }
