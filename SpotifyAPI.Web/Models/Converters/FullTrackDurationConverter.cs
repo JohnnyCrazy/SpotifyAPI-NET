@@ -21,15 +21,14 @@ namespace SpotifyAPI.Web
       }
       else if (reader.TokenType == JsonToken.StartObject)
       {
-        // If the duration_ms is an object, assume it's in the format {"totalMilliseconds": 188000}
+        // If not, unpack object
         JObject jsonObject = JObject.Load(reader);
         JToken totalMillisecondsToken = jsonObject["totalMilliseconds"];
 
         if (totalMillisecondsToken != null && totalMillisecondsToken.Type == JTokenType.Integer)
         {
-          // Convert totalMilliseconds to TimeSpan
-          int totalMilliseconds = totalMillisecondsToken.Value<int>();
-          return TimeSpan.FromMilliseconds(totalMilliseconds);
+          // Return totalMilliseconds as an integer
+          return totalMillisecondsToken.Value<int>();
         }
       }
 
@@ -40,20 +39,13 @@ namespace SpotifyAPI.Web
     {
       if (value is int)
       {
-        // If the value is an integer, write it as is
         serializer.Serialize(writer, value);
-      }
-      else if (value is TimeSpan)
-      {
-        // If the value is a TimeSpan, write it in the format {"totalMilliseconds": 188000}
-        TimeSpan timeSpan = (TimeSpan)value;
-        JObject jsonObject = new JObject(new JProperty("totalMilliseconds", (int)timeSpan.TotalMilliseconds));
-        jsonObject.WriteTo(writer);
       }
       else
       {
         throw new JsonSerializationException("Unexpected type for duration_ms");
       }
     }
+  }
   }
 }
