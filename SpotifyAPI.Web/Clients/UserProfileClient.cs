@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using SpotifyAPI.Web.Http;
@@ -19,6 +18,21 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(userId, nameof(userId));
 
       return API.Get<PublicUser>(SpotifyUrls.User(userId), cancel);
+    }
+
+    public Task<UsersTopTracksResponse> GetTopTracks(UsersTopItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<UsersTopTracksResponse>(SpotifyUrls.TopTracks(), request.BuildQueryParams(), cancel);
+
+    }
+
+    public Task<UsersTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<UsersTopArtistsResponse>(SpotifyUrls.TopArtists(), request.BuildQueryParams(), cancel);
     }
   }
 }

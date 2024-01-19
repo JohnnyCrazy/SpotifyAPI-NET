@@ -13,6 +13,10 @@ namespace SpotifyAPI.Web
 
     public static Uri Me() => EUri($"me");
 
+    public static Uri TopTracks() => EUri($"me/top/tracks");
+
+    public static Uri TopArtists() => EUri($"me/top/artists");
+
     public static Uri User(string userId) => EUri($"users/{userId}");
 
     public static Uri Categories() => EUri($"browse/categories");

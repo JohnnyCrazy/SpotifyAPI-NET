@@ -28,5 +28,23 @@ namespace SpotifyAPI.Web
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
     Task<PublicUser> Get(string userId, CancellationToken cancel = default);
+
+    /// <summary>
+    ///   Get Top tracks for the current user
+    /// </summary>
+    /// <param name="request">The query params to send to get Top Artists </param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks</remarks>
+    /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
+    Task<UsersTopTracksResponse> GetTopTracks(UsersTopItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    ///   Get Top arsists for the current user
+    /// </summary>
+    /// <param name="request">The query params to send to get Top Artists</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks</remarks>
+    /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
+    Task<UsersTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default);
   }
 }
