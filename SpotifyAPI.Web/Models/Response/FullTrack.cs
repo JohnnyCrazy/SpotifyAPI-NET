@@ -10,6 +10,7 @@ namespace SpotifyAPI.Web
     public List<SimpleArtist> Artists { get; set; } = default!;
     public List<string> AvailableMarkets { get; set; } = default!;
     public int DiscNumber { get; set; }
+    [JsonConverter(typeof(FullTrackDurationConverter))]
     public int DurationMs { get; set; }
     public bool Explicit { get; set; }
     public Dictionary<string, string> ExternalIds { get; set; } = default!;
