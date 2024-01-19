@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using SpotifyAPI.Web.Models.Request;
 
 namespace SpotifyAPI.Web
 {

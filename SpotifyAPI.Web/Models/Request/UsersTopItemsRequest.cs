@@ -1,6 +1,6 @@
 using System;
 
-namespace SpotifyAPI.Web.Models.Request
+namespace SpotifyAPI.Web
 {
   public class UsersTopItemsRequest : RequestParams
   {

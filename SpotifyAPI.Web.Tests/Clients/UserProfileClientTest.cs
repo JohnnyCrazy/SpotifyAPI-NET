@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using SpotifyAPI.Web.Http;
-using SpotifyAPI.Web.Models.Request;
 
 namespace SpotifyAPI.Web
 {
