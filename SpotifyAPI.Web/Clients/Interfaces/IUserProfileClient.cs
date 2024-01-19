@@ -47,6 +47,5 @@ namespace SpotifyAPI.Web
     /// <remarks>https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks</remarks>
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
     Task<UsersTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default);
-
   }
 }
