@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-#if NET8_0_OR_GREATER
+#if !NETSTANDARD2_0
 using System.Runtime.CompilerServices;
 #endif
 using System.Threading;
