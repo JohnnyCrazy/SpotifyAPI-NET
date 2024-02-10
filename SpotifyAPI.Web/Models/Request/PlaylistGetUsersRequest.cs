@@ -29,4 +29,3 @@ namespace SpotifyAPI.Web
     public string? Locale { get; set; }
   }
 }
-

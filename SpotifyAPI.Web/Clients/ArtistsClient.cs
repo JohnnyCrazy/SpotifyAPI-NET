@@ -19,6 +19,7 @@ namespace SpotifyAPI.Web
     public Task<FullArtist> Get(string artistId, ArtistRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
 
       return API.Get<FullArtist>(URLs.Artist(artistId), request.BuildQueryParams(), cancel);
     }
@@ -48,6 +49,7 @@ namespace SpotifyAPI.Web
     public Task<ArtistsRelatedArtistsResponse> GetRelatedArtists(string artistId, ArtistsRelatedArtistsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
 
       return API.Get<ArtistsRelatedArtistsResponse>(URLs.ArtistRelatedArtists(artistId), request.BuildQueryParams(), cancel);
     }
