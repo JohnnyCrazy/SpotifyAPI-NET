@@ -7,6 +7,7 @@ namespace SpotifyAPI.Web
     public List<string> AvailableMarkets { get; set; } = default!;
     public List<Copyright> Copyrights { get; set; } = default!;
     public string Description { get; set; } = default!;
+    public string HtmlDescription { get; set; } = default!;
     public Paging<SimpleEpisode> Episodes { get; set; } = default!;
     public bool Explicit { get; set; }
     public Dictionary<string, string> ExternalUrls { get; set; } = default!;
@@ -20,6 +21,7 @@ namespace SpotifyAPI.Web
     public string Publisher { get; set; } = default!;
     public string Type { get; set; } = default!;
     public string Uri { get; set; } = default!;
+    public int TotalEpisodes { get; set; } = default!;
   }
 }
 

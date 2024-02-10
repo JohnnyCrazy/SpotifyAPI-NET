@@ -8,6 +8,7 @@ namespace SpotifyAPI.Web
   {
     public string AudioPreviewUrl { get; set; } = default!;
     public string Description { get; set; } = default!;
+    public string HtmlDescription { get; set; } = default!;
     public int DurationMs { get; set; }
     public bool Explicit { get; set; }
     public Dictionary<string, string> ExternalUrls { get; set; } = default!;
