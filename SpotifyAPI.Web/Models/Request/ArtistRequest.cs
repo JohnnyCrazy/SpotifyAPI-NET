@@ -1,15 +1,9 @@
+using System.Collections.Generic;
+
 namespace SpotifyAPI.Web
 {
-  public class TrackRequest : RequestParams
+  public class ArtistRequest : RequestParams
   {
-    /// <summary>
-    /// An ISO 3166-1 alpha-2 country code or the string from_token.
-    /// Provide this parameter if you want to apply Track Relinking.
-    /// </summary>
-    /// <value></value>
-    [QueryParam("market")]
-    public string? Market { get; set; }
-
     /// <summary>
     /// The desired language, consisting of an ISO 639-1 language code and an ISO 3166-1 alpha-2 country code,
     /// joined by an underscore. For example: es_MX, meaning "Spanish (Mexico)".
