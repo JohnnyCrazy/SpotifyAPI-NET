@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 import React from 'react';
 
-const VERSION = '7.0.0';
+const VERSION = '7.1.0';
 
 const installCodeNuget = `Install-Package SpotifyAPI.Web
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
