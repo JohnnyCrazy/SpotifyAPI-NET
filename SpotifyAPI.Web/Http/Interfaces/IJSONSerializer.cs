@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace SpotifyAPI.Web.Http
 {
   public interface IJSONSerializer

@@ -1,5 +1,3 @@
-using System;
-
 namespace SpotifyAPI.Web
 {
   public class TrackMeta

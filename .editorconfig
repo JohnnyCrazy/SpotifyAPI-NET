@@ -20,6 +20,9 @@ dotnet_diagnostic.CA1003.severity = none
 
 dotnet_diagnostic.IDE0130.severity = none
 
+# Unused imports
+dotnet_diagnostic.IDE0005.severity = warning
+
 #
 # Sort using and Import directives with System.* appearing first
 dotnet_sort_system_directives_first = true
