@@ -1,7 +1,8 @@
-
 using System;
 using System.Globalization;
+#if NET8_0_OR_GREATER
 using System.Text;
+#endif
 
 namespace SpotifyAPI.Web
 {
