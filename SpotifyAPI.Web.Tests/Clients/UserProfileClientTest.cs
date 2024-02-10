@@ -31,5 +31,31 @@ namespace SpotifyAPI.Web
 
       api.Verify(a => a.Get<PublicUser>(SpotifyUrls.User(userId), It.IsAny<CancellationToken>()), Times.Once);
     }
+
+    [Test]
+    public async Task GetTopTracks()
+    {
+
+      var request = new UsersTopItemsRequest(TimeRange.LongTerm);
+      var api = new Mock<IAPIConnector>();
+      var client = new UserProfileClient(api.Object);
+
+      var res = await client.GetTopTracks(request);
+
+      api.Verify(a => a.Get<UsersTopTracksResponse>(SpotifyUrls.TopTracks(), request.BuildQueryParams(), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Test]
+    public async Task GetTopArtists()
+    {
+
+      var request = new UsersTopItemsRequest(TimeRange.LongTerm);
+      var api = new Mock<IAPIConnector>();
+      var client = new UserProfileClient(api.Object);
+
+      await client.GetTopArtists(request);
+
+      api.Verify(a => a.Get<UsersTopArtistsResponse>(SpotifyUrls.TopArtists(), request.BuildQueryParams(), It.IsAny<CancellationToken>()), Times.Once);
+    }
   }
 }

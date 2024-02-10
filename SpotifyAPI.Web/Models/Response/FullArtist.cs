@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SpotifyAPI.Web
 {
@@ -11,6 +12,7 @@ namespace SpotifyAPI.Web
     public string Id { get; set; } = default!;
     public List<Image> Images { get; set; } = default!;
     public string Name { get; set; } = default!;
+    [JsonConverter(typeof(DoubleToIntConverter))]
     public int Popularity { get; set; }
     public string Type { get; set; } = default!;
     public string Uri { get; set; } = default!;
