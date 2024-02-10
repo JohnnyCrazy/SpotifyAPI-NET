@@ -77,7 +77,7 @@ jobs:
             "SpotifyAPI.Web.Auth-netstandard2.1.zip" \
             "SpotifyAPI.Web.Auth-net5.0.zip" \
             "SpotifyAPI.Web.Auth-net6.0.zip" \
-            "SpotifyAPI.Web.Auth-net7.0.zip"
+            "SpotifyAPI.Web.Auth-net7.0.zip" \
             "SpotifyAPI.Web.Auth-net8.0.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
