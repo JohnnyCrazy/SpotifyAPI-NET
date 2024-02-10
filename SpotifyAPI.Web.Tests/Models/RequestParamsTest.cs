@@ -17,11 +17,11 @@ namespace SpotifyAPI.Web.Tests
       var second = new SecondRequestModel { Second = false };
       var secondParams = second.BuildQueryParams();
 
-      Assert.AreEqual(1, firstParams.Keys.Count);
-      Assert.AreEqual("true", firstParams["first"]);
+      Assert.That(1, Is.EqualTo(firstParams.Keys.Count));
+      Assert.That("true", Is.EqualTo(firstParams["first"]));
 
-      Assert.AreEqual(1, secondParams.Keys.Count);
-      Assert.AreEqual("false", secondParams["second"]);
+      Assert.That(1, Is.EqualTo(secondParams.Keys.Count));
+      Assert.That("false", Is.EqualTo(secondParams["second"]));
     }
 
     [Test]
@@ -33,17 +33,17 @@ namespace SpotifyAPI.Web.Tests
       var second = new SecondRequestModel { Second = false };
       var secondParams = second.BuildBodyParams();
 
-      Assert.AreEqual("{\"first\":true}", firstParams.ToString(Formatting.None));
-      Assert.AreEqual("{\"second\":false}", secondParams.ToString(Formatting.None));
+      Assert.That("{\"first\":true}", Is.EqualTo(firstParams.ToString(Formatting.None)));
+      Assert.That("{\"second\":false}", Is.EqualTo(secondParams.ToString(Formatting.None)));
     }
 
     [Test]
     public void EmptyListIsSkippedInQueryParams()
     {
       var first = new EmptyListExampleRequestModel();
-      Assert.AreEqual(new Dictionary<string, string> { }, first.BuildQueryParams());
+      Assert.That(new Dictionary<string, string> { }, Is.EqualTo(first.BuildQueryParams()));
       first.List.Add("hello_world");
-      Assert.AreEqual(new Dictionary<string, string> { { "list", "hello_world" } }, first.BuildQueryParams());
+      Assert.That(new Dictionary<string, string> { { "list", "hello_world" } }, Is.EqualTo(first.BuildQueryParams()));
     }
 
     [Test]
@@ -55,8 +55,8 @@ namespace SpotifyAPI.Web.Tests
       };
 
       var result = enumModel.BuildQueryParams();
-      Assert.AreEqual(1, result.Keys.Count);
-      Assert.AreEqual("two", result["an_enum"]);
+      Assert.That(1, Is.EqualTo(result.Keys.Count));
+      Assert.That("two", Is.EqualTo(result["an_enum"]));
     }
 
     [Test]
@@ -68,8 +68,8 @@ namespace SpotifyAPI.Web.Tests
       };
 
       var result = enumModel.BuildQueryParams();
-      Assert.AreEqual(1, result.Keys.Count);
-      Assert.AreEqual("one,two", result["an_enum"]);
+      Assert.That(1, Is.EqualTo(result.Keys.Count));
+      Assert.That("one,two", Is.EqualTo(result["an_enum"]));
     }
   }
 

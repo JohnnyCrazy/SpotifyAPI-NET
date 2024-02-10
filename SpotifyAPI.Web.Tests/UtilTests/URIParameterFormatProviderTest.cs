@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace SpotifyAPI.Web.Tests
@@ -16,7 +15,7 @@ namespace SpotifyAPI.Web.Tests
       var formatter = new URIParameterFormatProvider();
       string func(FormattableString str) => str.ToString(formatter);
 
-      Assert.AreEqual(expected, func($"/users/{user}"));
+      Assert.That(expected, Is.EqualTo(func($"/users/{user}")));
     }
 
     [Test]
@@ -28,7 +27,7 @@ namespace SpotifyAPI.Web.Tests
       var formatter = new URIParameterFormatProvider();
       string func(FormattableString str) => str.ToString(formatter);
 
-      Assert.AreEqual(expected, func($"/users/{user}"));
+      Assert.That(expected, Is.EqualTo(func($"/users/{user}")));
     }
   }
 }

@@ -1,6 +1,5 @@
 using System.Text;
 using NUnit.Framework;
-using SpotifyAPI.Web;
 
 namespace SpotifyAPI.Web.Tests
 {
@@ -12,7 +11,7 @@ namespace SpotifyAPI.Web.Tests
     {
       var encoded = "SGVsbG9Xb3JsZA";
 
-      Assert.AreEqual("HelloWorld", Encoding.UTF8.GetString(Base64Util.UrlDecode(encoded)));
+      Assert.That("HelloWorld", Is.EqualTo(Encoding.UTF8.GetString(Base64Util.UrlDecode(encoded))));
     }
 
     [Test]
@@ -20,7 +19,7 @@ namespace SpotifyAPI.Web.Tests
     {
       var decoded = "HelloWorld";
 
-      Assert.AreEqual("SGVsbG9Xb3JsZA", Base64Util.UrlEncode(Encoding.UTF8.GetBytes(decoded)));
+      Assert.That("SGVsbG9Xb3JsZA", Is.EqualTo(Base64Util.UrlEncode(Encoding.UTF8.GetBytes(decoded))));
     }
 
     [Test]
@@ -29,7 +28,7 @@ namespace SpotifyAPI.Web.Tests
       var bytes = new byte[] { 0x04, 0x9f, 0x9c, 0xff, 0x3f, 0x0a };
 
       // normal base64: BJ+c/z8K
-      Assert.AreEqual("BJ-c_z8K", Base64Util.UrlEncode(bytes));
+      Assert.That("BJ-c_z8K", Is.EqualTo(Base64Util.UrlEncode(bytes)));
     }
 
     [Test]
@@ -38,7 +37,7 @@ namespace SpotifyAPI.Web.Tests
       var bytes = new byte[] { 0x04, 0x9f, 0x9c, 0xff, 0x3f, 0x0a };
 
       // normal base64: BJ+c/z8K
-      Assert.AreEqual(bytes, Base64Util.UrlDecode("BJ-c_z8K"));
+      Assert.That(bytes, Is.EqualTo(Base64Util.UrlDecode("BJ-c_z8K")));
     }
   }
 }

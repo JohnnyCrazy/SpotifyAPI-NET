@@ -18,7 +18,7 @@ namespace SpotifyAPI.Web.Tests
         { "hello", "world" },
         { "nice", "day" }
       };
-      Assert.AreEqual(expected, uri.ApplyParameters(parameters).ToString());
+      Assert.That(expected, Is.EqualTo(uri.ApplyParameters(parameters).ToString()));
     }
 
     [Test]
@@ -32,7 +32,7 @@ namespace SpotifyAPI.Web.Tests
         { "hello", "world" },
         { "nice", "day" }
       };
-      Assert.AreEqual(expected, uri.ApplyParameters(parameters).ToString());
+      Assert.That(expected, Is.EqualTo(uri.ApplyParameters(parameters).ToString()));
     }
 
     [Test]
@@ -45,7 +45,7 @@ namespace SpotifyAPI.Web.Tests
       {
         { "hello", "&world  " },
       };
-      Assert.AreEqual(expected, uri.ApplyParameters(parameters).ToString());
+      Assert.That(expected, Is.EqualTo(uri.ApplyParameters(parameters).ToString()));
     }
   }
 }

@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace SpotifyAPI.Web.Tests
       request.SetupGet(r => r.Headers).Returns(new Dictionary<string, string>());
 
       authenticator.Apply(request.Object, apiConnector.Object);
-      Assert.AreEqual(request.Object.Headers["Authorization"], "Bearer MyToken");
+      Assert.That(request.Object.Headers["Authorization"], Is.EqualTo("Bearer MyToken"));
     }
   }
 }

@@ -31,7 +31,7 @@ namespace SpotifyAPI.Web.Tests
 
       serializer.SerializeRequest(request.Object);
 
-      Assert.AreEqual(input, request.Object.Body);
+      Assert.That(input, Is.EqualTo(request.Object.Body));
     }
 
     public static IEnumerable<object> SerializeTestSource
@@ -65,8 +65,8 @@ namespace SpotifyAPI.Web.Tests
       response.SetupGet(r => r.ContentType).Returns("media/mp4");
 
       IAPIResponse<object> apiResonse = serializer.DeserializeResponse<object>(response.Object);
-      Assert.AreEqual(apiResonse.Body, null);
-      Assert.AreEqual(apiResonse.Response, response.Object);
+      Assert.That(apiResonse.Body, Is.Null);
+      Assert.That(apiResonse.Response, Is.EqualTo(response.Object));
     }
 
     [TestCase]
@@ -78,8 +78,8 @@ namespace SpotifyAPI.Web.Tests
       response.SetupGet(r => r.ContentType).Returns("application/json");
 
       IAPIResponse<TestResponseObject> apiResonse = serializer.DeserializeResponse<TestResponseObject>(response.Object);
-      Assert.AreEqual(apiResonse.Body?.HelloWorld, false);
-      Assert.AreEqual(apiResonse.Response, response.Object);
+      Assert.That(apiResonse.Body?.HelloWorld, Is.False);
+      Assert.That(apiResonse.Response, Is.EqualTo(response.Object));
     }
 
     public class TestResponseObject
