@@ -166,7 +166,7 @@ namespace SpotifyAPI.Web.Http
       _httpClient.SetRequestTimeout(timeout);
     }
 
-    private IRequest CreateRequest(
+    private Request CreateRequest(
         Uri uri,
         HttpMethod method,
         IDictionary<string, string>? parameters,

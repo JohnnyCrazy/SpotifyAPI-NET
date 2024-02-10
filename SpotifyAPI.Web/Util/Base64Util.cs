@@ -1,20 +1,31 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace SpotifyAPI.Web
 {
   internal class Base64Util
   {
     internal const string WebEncoders_InvalidCountOffsetOrLength = "Invalid {0}, {1} or {2} length.";
+
+#if NET8_0_OR_GREATER
+    internal static CompositeFormat WebEncoders_MalformedInput = CompositeFormat.Parse("Malformed input: {0} is an invalid input length.");
+#else
     internal const string WebEncoders_MalformedInput = "Malformed input: {0} is an invalid input length.";
+#endif
 
     public static string UrlEncode(byte[] input)
     {
+#if NET8_0_OR_GREATER
+      ArgumentNullException.ThrowIfNull(input);
+#else
       if (input == null)
       {
         throw new ArgumentNullException(nameof(input));
       }
+#endif
+
 
       // Special-case empty input
       if (input.Length == 0)
@@ -48,11 +59,15 @@ namespace SpotifyAPI.Web
 
     public static byte[] UrlDecode(string input)
     {
-      var buffer = new char[GetArraySizeRequiredToDecode(input.Length)];
+#if NET8_0_OR_GREATER
+      ArgumentNullException.ThrowIfNull(input);
+#else
       if (input == null)
       {
         throw new ArgumentNullException(nameof(input));
       }
+#endif
+      var buffer = new char[GetArraySizeRequiredToDecode(input.Length)];
 
       // Assumption: input is base64url encoded without padding and contains no whitespace.
 
@@ -97,10 +112,14 @@ namespace SpotifyAPI.Web
 
     private static int GetArraySizeRequiredToDecode(int count)
     {
+#if NET8_0_OR_GREATER
+      ArgumentOutOfRangeException.ThrowIfNegative(count);
+#else
       if (count < 0)
       {
         throw new ArgumentOutOfRangeException(nameof(count));
       }
+#endif
 
       if (count == 0)
       {

@@ -112,7 +112,7 @@ namespace SpotifyAPI.Web.Http
       _httpClient.Timeout = timeout;
     }
 
-    private static HttpMessageHandler CreateMessageHandler(IProxyConfig proxyConfig)
+    private static HttpClientHandler CreateMessageHandler(IProxyConfig proxyConfig)
     {
       var proxy = new WebProxy
       {

@@ -30,6 +30,9 @@ namespace SpotifyAPI.Web
     {
     }
 
+#if NET8_0_OR_GREATER
+    [Obsolete("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.")]
+#endif
     protected APIException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
       Response = info.GetValue("APIException.Response", typeof(IResponse)) as IResponse;
@@ -67,6 +70,11 @@ namespace SpotifyAPI.Web
       return null;
     }
 
+
+
+#if NET8_0_OR_GREATER
+    [Obsolete("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.")]
+#endif
     public override void GetObjectData(SerializationInfo info, StreamingContext context)
     {
       base.GetObjectData(info, context);

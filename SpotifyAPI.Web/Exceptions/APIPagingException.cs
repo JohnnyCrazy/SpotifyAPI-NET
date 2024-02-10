@@ -26,6 +26,9 @@ namespace SpotifyAPI.Web
 
     public APIPagingException(string message, Exception innerException) : base(message, innerException) { }
 
+#if NET8_0_OR_GREATER
+    [Obsolete("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.")]
+#endif
     protected APIPagingException(SerializationInfo info, StreamingContext context) : base(info, context) { }
   }
 }

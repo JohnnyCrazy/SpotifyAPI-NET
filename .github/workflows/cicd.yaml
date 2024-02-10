@@ -18,7 +18,10 @@ jobs:
           dotnet-version: "6.x"
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "7.0.203"
+          dotnet-version: "7.x"
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.x"
       - name: Set RELEASE_VERSION
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Restore Packages
@@ -54,12 +57,14 @@ jobs:
           zip -j SpotifyAPI.Web-net5.0.zip SpotifyAPI.Web/bin/Release/net5.0/*
           zip -j SpotifyAPI.Web-net6.0.zip SpotifyAPI.Web/bin/Release/net6.0/*
           zip -j SpotifyAPI.Web-net7.0.zip SpotifyAPI.Web/bin/Release/net7.0/*
+          zip -j SpotifyAPI.Web-net8.0.zip SpotifyAPI.Web/bin/Release/net8.0/*
 
           zip -j SpotifyAPI.Web.Auth-netstandard2.0.zip SpotifyAPI.Web.Auth/bin/Release/netstandard2.0/*
           zip -j SpotifyAPI.Web.Auth-netstandard2.1.zip SpotifyAPI.Web.Auth/bin/Release/netstandard2.1/*
           zip -j SpotifyAPI.Web.Auth-net5.0.zip SpotifyAPI.Web.Auth/bin/Release/net5.0/*
           zip -j SpotifyAPI.Web.Auth-net6.0.zip SpotifyAPI.Web.Auth/bin/Release/net6.0/*
           zip -j SpotifyAPI.Web.Auth-net7.0.zip SpotifyAPI.Web.Auth/bin/Release/net7.0/*
+          zip -j SpotifyAPI.Web.Auth-net8.0.zip SpotifyAPI.Web.Auth/bin/Release/net8.0/*
 
           gh release upload "$RELEASE_VERSION" \
             "SpotifyAPI.Web-netstandard2.0.zip" \
@@ -67,10 +72,12 @@ jobs:
             "SpotifyAPI.Web-net5.0.zip" \
             "SpotifyAPI.Web-net6.0.zip" \
             "SpotifyAPI.Web-net7.0.zip" \
+            "SpotifyAPI.Web-net8.0.zip" \
             "SpotifyAPI.Web.Auth-netstandard2.0.zip" \
             "SpotifyAPI.Web.Auth-netstandard2.1.zip" \
             "SpotifyAPI.Web.Auth-net5.0.zip" \
             "SpotifyAPI.Web.Auth-net6.0.zip" \
             "SpotifyAPI.Web.Auth-net7.0.zip"
+            "SpotifyAPI.Web.Auth-net8.0.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
