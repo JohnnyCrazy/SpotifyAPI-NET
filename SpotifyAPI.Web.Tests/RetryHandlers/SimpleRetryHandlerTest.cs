@@ -38,7 +38,7 @@ namespace SpotifyAPI.Web
         var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
       });
 
-      Assert.AreEqual(1, retryCalled);
+      Assert.That(1, Is.EqualTo(retryCalled));
     }
 
     [Test]
@@ -64,8 +64,8 @@ namespace SpotifyAPI.Web
       };
       var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
-      Assert.AreEqual(2, retryCalled);
-      Assert.AreEqual(setup.Response.Object, response);
+      Assert.That(2, Is.EqualTo(retryCalled));
+      Assert.That(setup.Response.Object, Is.EqualTo(response));
       setup.Sleep.Verify(s => s(TimeSpan.FromSeconds(50)), Times.Exactly(2));
     }
 
@@ -95,8 +95,8 @@ namespace SpotifyAPI.Web
       };
       var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
-      Assert.AreEqual(1, retryCalled);
-      Assert.AreEqual(successResponse.Object, response);
+      Assert.That(1, Is.EqualTo(retryCalled));
+      Assert.That(successResponse.Object, Is.EqualTo(response));
       setup.Sleep.Verify(s => s(TimeSpan.FromSeconds(50)), Times.Once);
     }
 
@@ -125,8 +125,8 @@ namespace SpotifyAPI.Web
       };
       var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
-      Assert.AreEqual(1, retryCalled);
-      Assert.AreEqual(successResponse.Object, response);
+      Assert.That(1, Is.EqualTo(retryCalled));
+      Assert.That(successResponse.Object, Is.EqualTo(response));
       setup.Sleep.Verify(s => s(TimeSpan.FromSeconds(50)), Times.Once);
     }
 
@@ -151,8 +151,8 @@ namespace SpotifyAPI.Web
       };
       var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
-      Assert.AreEqual(10, retryCalled);
-      Assert.AreEqual(setup.Response.Object, response);
+      Assert.That(10, Is.EqualTo(retryCalled));
+      Assert.That(setup.Response.Object, Is.EqualTo(response));
       setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Exactly(10));
     }
 
@@ -177,8 +177,8 @@ namespace SpotifyAPI.Web
       };
       var response = await handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry);
 
-      Assert.AreEqual(0, retryCalled);
-      Assert.AreEqual(setup.Response.Object, response);
+      Assert.That(0, Is.EqualTo(retryCalled));
+      Assert.That(setup.Response.Object, Is.EqualTo(response));
       setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Exactly(0));
     }
 
