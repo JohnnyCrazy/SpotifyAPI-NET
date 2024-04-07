@@ -54,3 +54,8 @@ By requesting just the track name from the items, we don't have any kind of type
 playlistGetItemsRequest.Fields.Add("items(track(name,type))");
 ```
 
+If you're paginating a request with a subset of fields and you don't include the field `next`, we assume there is only one page and your results will be limited. To fix this, you must include `next` as one of the fields:
+
+```csharp
+playlistGetItemsRequest.Fields.Add("next, items(track(name,type))");
+```
