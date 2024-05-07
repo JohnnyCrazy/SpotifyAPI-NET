@@ -100,3 +100,6 @@ Send a PR via the "Edit this page" link at the end of the page!
 
 ### [BeatSpy](https://github.com/braddotwav/BeatSpy) by [@braddotwav](https://github.com/braddotwav)
 > BeatSpy lets music producers and enthusiasts search for songs and instantly access valuable details like tempo, key, loudness, and more
+
+### [SpotifyGPX](https://github.com/TheBoyLeastLikelyTo/SpotifyGPX) by [@TheBoyLeastLikelyTo](https://github.com/TheBoyLeastLikelyTo)
+> SpotifyGPX lets you retrace the steps of a road trip by taking the songs you listened to and a tracked series of points, and pairing the two sets of data.
