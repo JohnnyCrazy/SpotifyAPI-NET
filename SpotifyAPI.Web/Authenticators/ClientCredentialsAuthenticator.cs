@@ -50,7 +50,7 @@ namespace SpotifyAPI.Web
     public string ClientId { get; }
 
     /// <summary>
-    ///   The ClientID, defined in a spotify application in your Spotify Developer Dashboard
+    ///   The Client secret, defined in a spotify application in your Spotify Developer Dashboard
     /// </summary>
     public string ClientSecret { get; }
 
