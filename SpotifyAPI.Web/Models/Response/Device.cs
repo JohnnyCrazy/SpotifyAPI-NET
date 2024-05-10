@@ -7,6 +7,7 @@ namespace SpotifyAPI.Web
     public bool IsPrivateSession { get; set; }
     public bool IsRestricted { get; set; }
     public string Name { get; set; } = default!;
+    public bool SupportsVolume { get; set; }
     public string Type { get; set; } = default!;
     public int? VolumePercent { get; set; }
   }
