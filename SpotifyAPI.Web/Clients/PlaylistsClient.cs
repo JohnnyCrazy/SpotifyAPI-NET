@@ -96,7 +96,7 @@ namespace SpotifyAPI.Web
       return API.Get<FullPlaylist>(URLs.Playlist(playlistId), request.BuildQueryParams(), cancel);
     }
 
-    public async Task<SnapshotResponse> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default)
+    public Task<SnapshotResponse> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
