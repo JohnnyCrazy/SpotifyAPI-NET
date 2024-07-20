@@ -101,7 +101,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return await API.Put<SnapshotResponse>(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
+      return API.Put<SnapshotResponse>(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams(), cancel);
     }
 
     public Task<Paging<FullPlaylist>> CurrentUsers(CancellationToken cancel = default)
