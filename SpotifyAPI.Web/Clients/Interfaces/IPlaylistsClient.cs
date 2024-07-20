@@ -150,7 +150,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-replace-playlists-tracks
     /// </remarks>
     /// <returns></returns>
-    Task<bool> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default);
+    Task<SnapshotResponse> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default);
 
     /// <summary>
     /// Get a list of the playlists owned or followed by the current Spotify user.

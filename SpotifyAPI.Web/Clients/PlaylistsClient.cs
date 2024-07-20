@@ -96,13 +96,12 @@ namespace SpotifyAPI.Web
       return API.Get<FullPlaylist>(URLs.Playlist(playlistId), request.BuildQueryParams(), cancel);
     }
 
-    public async Task<bool> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default)
+    public Task<SnapshotResponse> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      var statusCode = await API.Put(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.Created;
+      return API.Put<SnapshotResponse>(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams(), cancel);
     }
 
     public Task<Paging<FullPlaylist>> CurrentUsers(CancellationToken cancel = default)
