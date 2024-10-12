@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkspotify_api_docs=self.webpackChunkspotify_api_docs||[]).push([[9647],{277:(s,e,r)=>{r.r(e),r.d(e,{default:()=>o});r(9474);var a=r(8923),c=r(1242),p=r(4443),t=r(8301),u=r(9059),i=r(3274);function o(s){return(0,i.jsx)(c.e3,{className:(0,a.A)(p.G.wrapper.docsPages),children:(0,i.jsx)(u.A,{children:(0,t.v)(s.route.routes)})})}}}]);
