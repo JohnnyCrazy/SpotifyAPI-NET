@@ -6,7 +6,8 @@ namespace SpotifyAPI.Web
   public enum ItemType
   {
     Track,
-    Episode
+    Episode,
+    Chapter
   }
 
   public interface IPlayableItem

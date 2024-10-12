@@ -93,6 +93,12 @@ namespace SpotifyAPI.Web
     ILibraryClient Library { get; }
 
     /// <summary>
+    /// Operations related to Spotify Audiobooks
+    /// </summary>
+    /// <value></value>
+    IAudiobooksClient Audiobooks { get; }
+
+    /// <summary>
     /// Returns the last response received by an API call.
     /// </summary>
     /// <value></value>

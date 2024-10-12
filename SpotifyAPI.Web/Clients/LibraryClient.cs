@@ -86,6 +86,13 @@ namespace SpotifyAPI.Web
       return API.Get<Paging<SavedEpisodes>>(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams(), cancel);
     }
 
+    public Task<Paging<SimpleAudiobook>> GetAudiobooks(LibraryAudiobooksRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<Paging<SimpleAudiobook>>(SpotifyUrls.LibraryAudiobooks(), request.BuildQueryParams(), cancel);
+    }
+
     public async Task<bool> RemoveAlbums(LibraryRemoveAlbumsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -148,6 +155,29 @@ namespace SpotifyAPI.Web
 
       var statusCode = await API.Put(SpotifyUrls.LibraryEpisodes(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
       return statusCode == HttpStatusCode.OK;
+    }
+
+    public async Task<bool> SaveAudiobooks(LibrarySaveAudiobooksRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Put(SpotifyUrls.LibraryAudiobooks(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
+      return statusCode == HttpStatusCode.OK;
+    }
+
+    public async Task<bool> RemoveAudiobooks(LibraryRemoveAudiobooksRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Delete(SpotifyUrls.LibraryAudiobooks(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
+      return statusCode == HttpStatusCode.OK;
+    }
+
+    public Task<List<bool>> CheckAudiobooks(LibraryCheckAudiobooksRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<List<bool>>(SpotifyUrls.LibraryAudiobooksContains(), request.BuildQueryParams(), cancel);
     }
   }
 }

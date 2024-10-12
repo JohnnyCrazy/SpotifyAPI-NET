@@ -55,6 +55,17 @@ namespace SpotifyAPI.Web
     Task<bool> RemoveEpisodes(LibraryRemoveEpisodesRequest request, CancellationToken cancel = default);
 
     /// <summary>
+    /// Remove one or more audiobooks from the Spotify user's library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/remove-audiobooks-user
+    /// </remarks>
+    /// <returns></returns>
+    Task<bool> RemoveAudiobooks(LibraryRemoveAudiobooksRequest request, CancellationToken cancel = default);
+
+    /// <summary>
     /// Save one or more tracks to the current user’s ‘Your Music’ library.
     /// </summary>
     /// <param name="request">The request-model which contains required and optional parameters.</param>
@@ -99,6 +110,17 @@ namespace SpotifyAPI.Web
     Task<bool> SaveEpisodes(LibrarySaveEpisodesRequest request, CancellationToken cancel = default);
 
     /// <summary>
+    /// Save one or more audiobooks to the current Spotify user's library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/save-audiobooks-user
+    /// </remarks>
+    /// <returns></returns>
+    Task<bool> SaveAudiobooks(LibrarySaveAudiobooksRequest request, CancellationToken cancel = default);
+
+    /// <summary>
     /// Check if one or more tracks is already saved in the current Spotify user’s ‘Your Music’ library.
     /// </summary>
     /// <param name="request">The request-model which contains required and optional parameters.</param>
@@ -141,6 +163,17 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<List<bool>> CheckEpisodes(LibraryCheckEpisodesRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Check if one or more audiobooks are already saved in the current Spotify user's library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/check-users-saved-audiobooks
+    /// </remarks>
+    /// <returns></returns>
+    Task<List<bool>> CheckAudiobooks(LibraryCheckAudiobooksRequest request, CancellationToken cancel = default);
 
     /// <summary>
     /// Get a list of the songs saved in the current Spotify user’s ‘Your Music’ library.
@@ -229,5 +262,17 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<Paging<SavedEpisodes>> GetEpisodes(LibraryEpisodesRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Get a list of the audiobooks saved in the current Spotify user's 'Your Music' library.
+    /// Optional parameters can be used to limit the number of shows returned.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/get-users-saved-audiobooks
+    /// </remarks>
+    /// <returns></returns>
+    Task<Paging<SimpleAudiobook>> GetAudiobooks(LibraryAudiobooksRequest request, CancellationToken cancel = default);
   }
 }
