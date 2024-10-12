@@ -43,7 +43,7 @@ namespace SpotifyAPI.Web
       var statusCode = await API
         .Put(URLs.PlaylistFollowers(playlistId), null, null, cancel)
         .ConfigureAwait(false);
-      return statusCode == HttpStatusCode.OK;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> FollowPlaylist(string playlistId, FollowPlaylistRequest request, CancellationToken cancel = default)
@@ -54,7 +54,7 @@ namespace SpotifyAPI.Web
       var statusCode = await API
         .Put(URLs.PlaylistFollowers(playlistId), null, request.BuildBodyParams(), cancel)
         .ConfigureAwait(false);
-      return statusCode == HttpStatusCode.OK;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public Task<FollowedArtistsResponse> OfCurrentUser(CancellationToken cancel = default)
@@ -88,7 +88,7 @@ namespace SpotifyAPI.Web
       var statusCode = await API
         .Delete(URLs.PlaylistFollowers(playlistId), null, null, cancel)
         .ConfigureAwait(false);
-      return statusCode == HttpStatusCode.OK;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
   }
 }

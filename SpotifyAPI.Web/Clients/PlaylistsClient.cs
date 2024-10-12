@@ -122,7 +122,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       var statusCode = await API.Put(URLs.Playlist(playlistId), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.OK;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public Task<SnapshotResponse> ReorderItems(string playlistId, PlaylistReorderItemsRequest request, CancellationToken cancel = default)
