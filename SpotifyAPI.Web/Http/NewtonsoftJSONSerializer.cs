@@ -30,10 +30,7 @@ namespace SpotifyAPI.Web.Http
     {
       Ensure.ArgumentNotNull(response, nameof(response));
 
-      if (
-        (
-          response.ContentType?.Equals("application/json", StringComparison.Ordinal) is true || response.ContentType == null
-        ))
+      if (response.ContentType?.Equals("application/json", StringComparison.OrdinalIgnoreCase) is true)
       {
         var body = JsonConvert.DeserializeObject<T>(response.Body as string ?? "", _serializerSettings);
         return new APIResponse<T>(response, body!);

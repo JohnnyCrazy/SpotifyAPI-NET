@@ -33,7 +33,7 @@ namespace SpotifyAPI.Web
       var statusCode = await API
         .Put(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams(), cancel)
         .ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> FollowPlaylist(string playlistId, CancellationToken cancel = default)
@@ -78,7 +78,7 @@ namespace SpotifyAPI.Web
       var statusCode = await API
         .Delete(URLs.CurrentUserFollower(), request.BuildQueryParams(), request.BuildBodyParams(), cancel)
         .ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> UnfollowPlaylist(string playlistId, CancellationToken cancel = default)

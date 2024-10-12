@@ -15,7 +15,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Post(URLs.PlayerQueue(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public Task<QueueResponse> GetQueue(CancellationToken cancel = default)
@@ -62,7 +62,7 @@ namespace SpotifyAPI.Web
     public async Task<bool> PausePlayback(CancellationToken cancel = default)
     {
       HttpStatusCode statusCode = await API.Put(URLs.PlayerPause(), null, null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> PausePlayback(PlayerPausePlaybackRequest request, CancellationToken cancel = default)
@@ -70,13 +70,13 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Put(URLs.PlayerPause(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> ResumePlayback(CancellationToken cancel = default)
     {
       HttpStatusCode statusCode = await API.Put(URLs.PlayerResume(), null, null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> ResumePlayback(PlayerResumePlaybackRequest request, CancellationToken cancel = default)
@@ -86,7 +86,7 @@ namespace SpotifyAPI.Web
       HttpStatusCode statusCode = await API
         .Put(URLs.PlayerResume(), request.BuildQueryParams(), request.BuildBodyParams(), cancel)
         .ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SeekTo(PlayerSeekToRequest request, CancellationToken cancel = default)
@@ -94,7 +94,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Put(URLs.PlayerSeek(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SetRepeat(PlayerSetRepeatRequest request, CancellationToken cancel = default)
@@ -102,7 +102,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Put(URLs.PlayerRepeat(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SetShuffle(PlayerShuffleRequest request, CancellationToken cancel = default)
@@ -110,7 +110,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Put(URLs.PlayerShuffle(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SetVolume(PlayerVolumeRequest request, CancellationToken cancel = default)
@@ -118,13 +118,13 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Put(URLs.PlayerVolume(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SkipNext(CancellationToken cancel = default)
     {
       HttpStatusCode statusCode = await API.Post(URLs.PlayerNext(), null, null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SkipNext(PlayerSkipNextRequest request, CancellationToken cancel = default)
@@ -132,13 +132,13 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Post(URLs.PlayerNext(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SkipPrevious(CancellationToken cancel = default)
     {
       HttpStatusCode statusCode = await API.Post(URLs.PlayerPrevious(), null, null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> SkipPrevious(PlayerSkipPreviousRequest request, CancellationToken cancel = default)
@@ -146,7 +146,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Post(URLs.PlayerPrevious(), request.BuildQueryParams(), null, cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
     public async Task<bool> TransferPlayback(PlayerTransferPlaybackRequest request, CancellationToken cancel = default)
@@ -154,7 +154,7 @@ namespace SpotifyAPI.Web
       Ensure.ArgumentNotNull(request, nameof(request));
 
       HttpStatusCode statusCode = await API.Put(URLs.Player(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
-      return statusCode == HttpStatusCode.NoContent;
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
   }
 }
