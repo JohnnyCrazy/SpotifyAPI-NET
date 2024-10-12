@@ -1,18 +1,12 @@
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import CodeBlock from '@theme/CodeBlock';
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 import React from 'react';
 
-const VERSION = '7.1.1';
-
 const installCodeNuget = `Install-Package SpotifyAPI.Web
 # Optional Auth module, which includes an embedded HTTP Server for OAuth2
 Install-Package SpotifyAPI.Web.Auth
-`;
-
-const installReference = `<PackageReference Include="SpotifyAPI.Web" Version="${VERSION}" />
-<!-- Optional Auth module, which includes an embedded HTTP Server for OAuth2 -->
-<PackageReference Include="SpotifyAPI.Web.Auth" Version="${VERSION}" />
 `;
 
 const installCodeCLI = `dotnet add package SpotifyAPI.Web
@@ -21,6 +15,13 @@ dotnet add package SpotifyAPI.Web.Auth
 `;
 
 const InstallInstructions = () => {
+  const { siteConfig } = useDocusaurusContext();
+
+  const installReference = `<PackageReference Include="SpotifyAPI.Web" Version="${siteConfig.customFields.LATEST_VERSION}" />
+<!-- Optional Auth module, which includes an embedded HTTP Server for OAuth2 -->
+<PackageReference Include="SpotifyAPI.Web.Auth" Version="${siteConfig.customFields.LATEST_VERSION}" />
+`;
+
   return (
     <div style={{ padding: '10px' }}>
       <Tabs

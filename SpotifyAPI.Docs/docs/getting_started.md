@@ -77,6 +77,8 @@ There is no online documentation for every available API call, but XML inline do
 * [Personalization](https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/SpotifyAPI.Web/Clients/Interfaces/IPersonalizationClient.cs)
 * [Episodes](https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/SpotifyAPI.Web/Clients/Interfaces/IEpisodesClient.cs)
 * [Library](https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/SpotifyAPI.Web/Clients/Interfaces/ILibraryClient.cs)
+* [Audiobooks](https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/SpotifyAPI.Web/Clients/Interfaces/IAudiobooksClient.cs)
+* [Chapters](https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/SpotifyAPI.Web/Clients/Interfaces/IChaptersClient.cs)
 
 All calls have the [Spotify Web API documentation reference](https://developer.spotify.com/documentation/web-api/reference-beta/) attached as a remark.
 

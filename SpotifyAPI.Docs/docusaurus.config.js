@@ -8,6 +8,9 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'JohnnyCrazy', // Usually your GitHub org/user name.
   projectName: 'SpotifyAPI-NET', // Usually your repo name.
+  customFields: {
+    LATEST_VERSION: process.env.LATEST_VERSION ?? '?.?.?',
+  },
   themeConfig: {
     prism: {
       additionalLanguages: ['csharp'],
