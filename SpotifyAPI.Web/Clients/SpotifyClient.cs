@@ -53,6 +53,7 @@ namespace SpotifyAPI.Web
       Library = new LibraryClient(_apiConnector);
       Markets = new MarketsClient(_apiConnector);
       Audiobooks = new AudiobooksClient(_apiConnector);
+      Chapters = new ChaptersClient(_apiConnector);
     }
 
     public IPaginator DefaultPaginator { get; }
@@ -86,6 +87,8 @@ namespace SpotifyAPI.Web
     public IMarketsClient Markets { get; }
 
     public IAudiobooksClient Audiobooks { get; }
+
+    public IChaptersClient Chapters { get; }
 
     public IResponse? LastResponse { get; private set; }
 

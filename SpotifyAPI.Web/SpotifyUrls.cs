@@ -145,6 +145,10 @@ namespace SpotifyAPI.Web
 
     public static Uri AudiobookChapters(string audiobookId) => EUri($"audiobooks/{audiobookId}/chapters");
 
+    public static Uri Chapters() => EUri($"chapters");
+
+    public static Uri Chapter(string chapterId) => EUri($"chapters/${chapterId}");
+
     private static Uri EUri(FormattableString path) => new(path.ToString(_provider), UriKind.Relative);
   }
 }
