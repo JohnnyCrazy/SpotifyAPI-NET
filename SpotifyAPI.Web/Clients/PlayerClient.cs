@@ -23,6 +23,13 @@ namespace SpotifyAPI.Web
       return API.Get<QueueResponse>(URLs.PlayerQueue(), cancel);
     }
 
+    public Task<QueueResponse> GetQueue(PlayerGetQueueRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<QueueResponse>(URLs.PlayerQueue(), request.BuildQueryParams(), cancel);
+    }
+
     public Task<DeviceResponse> GetAvailableDevices(CancellationToken cancel = default)
     {
       return API.Get<DeviceResponse>(URLs.PlayerDevices(), cancel);
