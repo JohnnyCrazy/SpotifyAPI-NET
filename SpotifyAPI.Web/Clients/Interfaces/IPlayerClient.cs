@@ -234,5 +234,16 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<QueueResponse> GetQueue(CancellationToken cancel = default);
+
+    /// <summary>
+    /// Get the list of objects that make up the user's queue.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/#/operations/get-queue
+    /// </remarks>
+    /// <returns></returns>
+    Task<QueueResponse> GetQueue(PlayerGetQueueRequest request, CancellationToken cancel = default);
   }
 }
