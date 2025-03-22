@@ -10,10 +10,10 @@ namespace SpotifyAPI.Web
 {
   public class SimpleRetryHandler : IRetryHandler
   {
-    private readonly Func<TimeSpan, Task> _sleep;
+    private readonly Func<TimeSpan, CancellationToken, Task> _sleep;
 
     /// <summary>
-    ///     Specifies after how many miliseconds should a failed request be retried.
+    ///     Specifies after how many milliseconds should a failed request be retried.
     /// </summary>
     public TimeSpan RetryAfter { get; set; }
 
@@ -38,10 +38,11 @@ namespace SpotifyAPI.Web
     ///   the Retry-After header
     /// </summary>
     /// <returns></returns>
-    public SimpleRetryHandler() : this(Task.Delay) { }
-    public SimpleRetryHandler(Func<TimeSpan, Task> sleep)
+    public SimpleRetryHandler() : this(sleepWithCancel: Task.Delay) { }
+    public SimpleRetryHandler(Func<TimeSpan, Task> sleep) : this((t, _) => sleep(t)) { }
+    public SimpleRetryHandler(Func<TimeSpan, CancellationToken, Task> sleepWithCancel)
     {
-      _sleep = sleep;
+      _sleep = sleepWithCancel;
       RetryAfter = TimeSpan.FromMilliseconds(50);
       RetryTimes = 10;
       TooManyRequestsConsumesARetry = false;
@@ -88,7 +89,7 @@ namespace SpotifyAPI.Web
       var secondsToWait = ParseTooManyRetries(response);
       if (secondsToWait != null && (!TooManyRequestsConsumesARetry || triesLeft > 0))
       {
-        await _sleep(secondsToWait.Value).ConfigureAwait(false);
+        await _sleep(secondsToWait.Value, cancel).ConfigureAwait(false);
         response = await retry(request, cancel).ConfigureAwait(false);
         var newTriesLeft = TooManyRequestsConsumesARetry ? triesLeft - 1 : triesLeft;
         return await HandleRetryInternally(request, response, retry, newTriesLeft, cancel).ConfigureAwait(false);
@@ -96,7 +97,7 @@ namespace SpotifyAPI.Web
 
       while (RetryErrorCodes.Contains(response.StatusCode) && triesLeft > 0)
       {
-        await _sleep(RetryAfter).ConfigureAwait(false);
+        await _sleep(RetryAfter, cancel).ConfigureAwait(false);
         response = await retry(request, cancel).ConfigureAwait(false);
         return await HandleRetryInternally(request, response, retry, triesLeft - 1, cancel).ConfigureAwait(false);
       }
