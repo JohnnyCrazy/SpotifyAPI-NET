@@ -20,19 +20,19 @@ namespace SpotifyAPI.Web
       return API.Get<PublicUser>(SpotifyUrls.User(userId), cancel);
     }
 
-    public Task<UsersTopTracksResponse> GetTopTracks(UsersTopItemsRequest request, CancellationToken cancel = default)
+    public Task<CursorPaging<FullTrack>> GetTopTracks(UsersTopItemsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<UsersTopTracksResponse>(SpotifyUrls.TopTracks(), request.BuildQueryParams(), cancel);
+      return API.Get<CursorPaging<FullTrack>>(SpotifyUrls.TopTracks(), request.BuildQueryParams(), cancel);
 
     }
 
-    public Task<UsersTopArtistsResponse> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default)
+    public Task<CursorPaging<FullArtist>> GetTopArtists(UsersTopItemsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
 
-      return API.Get<UsersTopArtistsResponse>(SpotifyUrls.TopArtists(), request.BuildQueryParams(), cancel);
+      return API.Get<CursorPaging<FullArtist>>(SpotifyUrls.TopArtists(), request.BuildQueryParams(), cancel);
     }
   }
 }
