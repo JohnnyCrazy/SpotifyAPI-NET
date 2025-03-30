@@ -42,7 +42,7 @@ namespace SpotifyAPI.Web
 
       var res = await client.GetTopTracks(request);
 
-      api.Verify(a => a.Get<UsersTopTracksResponse>(SpotifyUrls.TopTracks(), request.BuildQueryParams(), It.IsAny<CancellationToken>()), Times.Once);
+      api.Verify(a => a.Get<CursorPaging<FullTrack>>(SpotifyUrls.TopTracks(), request.BuildQueryParams(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Test]
@@ -55,7 +55,7 @@ namespace SpotifyAPI.Web
 
       await client.GetTopArtists(request);
 
-      api.Verify(a => a.Get<UsersTopArtistsResponse>(SpotifyUrls.TopArtists(), request.BuildQueryParams(), It.IsAny<CancellationToken>()), Times.Once);
+      api.Verify(a => a.Get<CursorPaging<FullArtist>>(SpotifyUrls.TopArtists(), request.BuildQueryParams(), It.IsAny<CancellationToken>()), Times.Once);
     }
   }
 }
