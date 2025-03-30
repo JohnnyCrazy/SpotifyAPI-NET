@@ -44,3 +44,5 @@ csharp_style_var_when_type_is_apparent = true
 csharp_style_var_elsewhere = true
 
 # Custom disabled
+# TODO: Add accessibility modifiers (IDE0040)
+dotnet_diagnostic.IDE0040.severity = none

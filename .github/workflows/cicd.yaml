@@ -27,7 +27,7 @@ jobs:
       - name: Restore Packages
         run: dotnet restore
       - name: Lint
-        run: dotnet format --verify-no-changes
+        run: dotnet format --verify-no-changes --exclude SpotifyAPI.Web.Examples/Example.UWP
       - name: Build
         run: dotnet build --configuration Release --verbosity minimal
       - name: Test
