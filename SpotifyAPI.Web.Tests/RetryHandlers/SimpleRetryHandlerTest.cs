@@ -182,6 +182,51 @@ namespace SpotifyAPI.Web
       setup.Sleep.Verify(s => s(TimeSpan.FromMilliseconds(50)), Times.Exactly(0));
     }
 
+    [Test]
+    public async Task HandleRetry_CancellationTokenHonoredInSleep()
+    {
+      var setup = new Setup();
+      setup.Response.SetupGet(r => r.StatusCode).Returns(HttpStatusCode.TooManyRequests);
+      setup.Response.SetupGet(r => r.Headers).Returns(new Dictionary<string, string> {
+        { "Retry-After", "5" }
+      });
+
+      var retryCalled = 0;
+      setup.Retry = (request, ct) =>
+      {
+        retryCalled++;
+        return Task.FromResult(setup.Response.Object);
+      };
+
+      var handler = new SimpleRetryHandler()
+      {
+        TooManyRequestsConsumesARetry = true,
+        RetryTimes = 0,
+        RetryAfter = TimeSpan.FromSeconds(1)
+      };
+
+      var cancellationTokenSource = new CancellationTokenSource();
+
+      var startTime = DateTimeOffset.UtcNow;
+      try
+      {
+        var attemptTask = handler.HandleRetry(setup.Request.Object, setup.Response.Object, setup.Retry, cancellationTokenSource.Token);
+
+        // Wait enough that we're probably in the sleep
+        await Task.Delay(TimeSpan.FromMilliseconds(100));
+
+        cancellationTokenSource.Cancel();
+
+        await attemptTask;
+      }
+      catch (OperationCanceledException)
+      {
+        //Expected
+      }
+
+      Assert.That(DateTimeOffset.UtcNow - startTime, Is.LessThan(TimeSpan.FromSeconds(4)));
+    }
+
     private class Setup
     {
       public Mock<Func<TimeSpan, Task>> Sleep { get; set; } = new Mock<Func<TimeSpan, Task>>();
