@@ -24,6 +24,7 @@ namespace SpotifyAPI.Web
       return API.Get<FullShow>(URLs.Show(showId), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /shows) has been removed.")]
     public Task<ShowsResponse> GetSeveral(ShowsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));

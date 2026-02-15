@@ -42,6 +42,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference/get-multiple-audiobooks
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /audiobooks) has been removed.")]
     Task<AudiobooksResponse> GetSeveral(AudiobooksRequest request, CancellationToken cancel = default);
 
     /// <summary>

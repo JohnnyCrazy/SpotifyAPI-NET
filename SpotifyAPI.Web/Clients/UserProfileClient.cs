@@ -13,6 +13,7 @@ namespace SpotifyAPI.Web
       return API.Get<PrivateUser>(SpotifyUrls.Me(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /users/{id}) has been removed.")]
     public Task<PublicUser> Get(string userId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(userId, nameof(userId));

@@ -16,6 +16,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference/#/operations/get-available-markets
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /markets) has been removed.")]
     Task<AvailableMarketsResponse> AvailableMarkets(CancellationToken cancel = default);
   }
 }

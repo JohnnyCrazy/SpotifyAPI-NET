@@ -24,6 +24,7 @@ namespace SpotifyAPI.Web
       return API.Get<FullAlbum>(URLs.Album(albumId), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /albums) has been removed.")]
     public Task<AlbumsResponse> GetSeveral(AlbumsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));

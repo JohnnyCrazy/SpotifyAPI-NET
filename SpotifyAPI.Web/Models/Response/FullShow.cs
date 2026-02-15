@@ -4,6 +4,7 @@ namespace SpotifyAPI.Web
 {
   public class FullShow
   {
+    [System.Obsolete("Field 'available_markets' has been removed.")]
     public List<string> AvailableMarkets { get; set; } = default!;
     public List<Copyright> Copyrights { get; set; } = default!;
     public string Description { get; set; } = default!;
@@ -18,6 +19,7 @@ namespace SpotifyAPI.Web
     public List<string> Languages { get; set; } = default!;
     public string MediaType { get; set; } = default!;
     public string Name { get; set; } = default!;
+    [System.Obsolete("Field 'publisher' has been removed.")]
     public string Publisher { get; set; } = default!;
     public string Type { get; set; } = default!;
     public string Uri { get; set; } = default!;

@@ -42,6 +42,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-multiple-shows
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /shows) has been removed.")]
     Task<ShowsResponse> GetSeveral(ShowsRequest request, CancellationToken cancel = default);
 
     /// <summary>

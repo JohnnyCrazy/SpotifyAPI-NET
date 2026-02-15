@@ -5,6 +5,7 @@ namespace SpotifyAPI.Web
   public class SimpleAudiobookChapter
   {
     public string? AudioPreviewUrl { get; set; }
+    [System.Obsolete("Field 'available_markets' has been removed.")]
     public List<string> AvailableMarkets { get; set; } = default!;
     public int ChapterNumber { get; set; }
     public string Description { get; set; } = default!;

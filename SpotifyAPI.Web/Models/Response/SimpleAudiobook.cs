@@ -5,6 +5,7 @@ namespace SpotifyAPI.Web
   public class SimpleAudiobook
   {
     public List<Author> Authors { get; set; } = default!;
+    [System.Obsolete("Field 'available_markets' has been removed.")]
     public List<string> AvailableMarkets { get; set; } = default!;
     public List<Copyright> Copyrights { get; set; } = default!;
     public string Description { get; set; } = default!;
@@ -19,6 +20,7 @@ namespace SpotifyAPI.Web
     public string MediaType { get; set; } = default!;
     public string Name { get; set; } = default!;
     public List<Narrator> Narrators { get; set; } = default!;
+    [System.Obsolete("Field 'publisher' has been removed.")]
     public string Publisher { get; set; } = default!;
     public string Type { get; set; } = default!;
     public string Uri { get; set; } = default!;

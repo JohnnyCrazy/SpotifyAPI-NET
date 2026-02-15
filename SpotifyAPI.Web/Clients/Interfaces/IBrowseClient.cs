@@ -16,6 +16,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-categories
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /browse/categories) has been removed.")]
     Task<CategoriesResponse> GetCategories(CancellationToken cancel = default);
 
     /// <summary>
@@ -27,6 +28,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-categories
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /browse/categories) has been removed.")]
     Task<CategoriesResponse> GetCategories(CategoriesRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -38,6 +40,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-a-category
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /browse/categories/{id}) has been removed.")]
     Task<Category> GetCategory(string categoryId, CancellationToken cancel = default);
 
     /// <summary>
@@ -50,6 +53,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-a-category
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /browse/categories/{id}) has been removed.")]
     Task<Category> GetCategory(string categoryId, CategoryRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -106,6 +110,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-new-releases
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /browse/new-releases) has been removed.")]
     Task<NewReleasesResponse> GetNewReleases(CancellationToken cancel = default);
 
     /// <summary>
@@ -117,6 +122,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-new-releases
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /browse/new-releases) has been removed.")]
     Task<NewReleasesResponse> GetNewReleases(NewReleasesRequest request, CancellationToken cancel = default);
 
     /// <summary>

@@ -27,6 +27,7 @@ namespace SpotifyAPI.Web
     /// <remarks>https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-users-profile</remarks>
     /// <exception cref="APIUnauthorizedException">Thrown if the client is not authenticated.</exception>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716")]
+    [System.Obsolete("This endpoint (GET /users/{id}) has been removed.")]
     Task<PublicUser> Get(string userId, CancellationToken cancel = default);
 
     /// <summary>

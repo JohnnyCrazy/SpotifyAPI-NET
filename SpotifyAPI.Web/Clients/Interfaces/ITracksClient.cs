@@ -17,6 +17,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-several-tracks
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /tracks) has been removed.")]
     Task<TracksResponse> GetSeveral(TracksRequest request, CancellationToken cancel = default);
 
     /// <summary>

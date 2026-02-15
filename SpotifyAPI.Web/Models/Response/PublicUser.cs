@@ -6,6 +6,7 @@ namespace SpotifyAPI.Web
   {
     public string DisplayName { get; set; } = default!;
     public Dictionary<string, string> ExternalUrls { get; set; } = default!;
+    [System.Obsolete("Field 'followers' has been removed.")]
     public Followers Followers { get; set; } = default!;
     public string Href { get; set; } = default!;
     public string Id { get; set; } = default!;

@@ -24,6 +24,7 @@ namespace SpotifyAPI.Web
       return API.Get<FullAudiobookChapter>(URLs.Chapter(chapterId), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /chapters) has been removed.")]
     public Task<ChaptersResponse> GetSeveral(ChaptersRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));

@@ -42,6 +42,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference/get-several-chapters
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /chapters) has been removed.")]
     Task<ChaptersResponse> GetSeveral(ChaptersRequest request, CancellationToken cancel = default);
   }
 }

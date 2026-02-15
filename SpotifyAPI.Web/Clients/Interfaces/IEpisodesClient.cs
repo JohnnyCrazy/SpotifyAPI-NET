@@ -42,6 +42,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-multiple-episodes
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /episodes) has been removed.")]
     Task<EpisodesResponse> GetSeveral(EpisodesRequest request, CancellationToken cancel = default);
   }
 }

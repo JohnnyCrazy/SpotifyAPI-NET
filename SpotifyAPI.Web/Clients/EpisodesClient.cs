@@ -24,6 +24,7 @@ namespace SpotifyAPI.Web
       return API.Get<FullEpisode>(URLs.Episode(episodeId), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /episodes) has been removed.")]
     public Task<EpisodesResponse> GetSeveral(EpisodesRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));

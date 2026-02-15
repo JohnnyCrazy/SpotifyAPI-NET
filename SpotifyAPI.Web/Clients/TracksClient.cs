@@ -38,6 +38,7 @@ namespace SpotifyAPI.Web
       return API.Get<TrackAudioFeatures>(URLs.AudioFeatures(trackId), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /tracks) has been removed.")]
     public Task<TracksResponse> GetSeveral(TracksRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));

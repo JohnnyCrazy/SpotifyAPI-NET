@@ -54,6 +54,7 @@ namespace SpotifyAPI.Web
       return API.Get<ArtistsRelatedArtistsResponse>(URLs.ArtistRelatedArtists(artistId), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /artists) has been removed.")]
     public Task<ArtistsResponse> GetSeveral(ArtistsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -61,6 +62,7 @@ namespace SpotifyAPI.Web
       return API.Get<ArtistsResponse>(URLs.Artists(), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /artists/{id}/top-tracks) has been removed.")]
     public Task<ArtistsTopTracksResponse> GetTopTracks(string artistId, ArtistsTopTracksRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(artistId, nameof(artistId));

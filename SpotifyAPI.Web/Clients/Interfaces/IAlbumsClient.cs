@@ -17,6 +17,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-multiple-albums
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /albums) has been removed.")]
     Task<AlbumsResponse> GetSeveral(AlbumsRequest request, CancellationToken cancel = default);
 
     /// <summary>

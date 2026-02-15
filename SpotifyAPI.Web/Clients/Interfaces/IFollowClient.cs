@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-check-current-user-follows
     /// </remarks>
     /// <returns></returns>
+    [Obsolete("Use ILibraryClient.CheckItems instead, which uses the unified GET /me/library/contains endpoint.")]
     Task<List<bool>> CheckCurrentUser(FollowCheckCurrentUserRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -30,6 +32,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-check-if-user-follows-playlist
     /// </remarks>
     /// <returns></returns>
+    [Obsolete("Use ILibraryClient.CheckItems instead, which uses the unified GET /me/library/contains endpoint.")]
     Task<List<bool>> CheckPlaylist(string playlistId, FollowCheckPlaylistRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -41,6 +44,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-follow-artists-users
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (PUT /me/following) has been removed. Use PUT /me/library instead.")]
     Task<bool> Follow(FollowRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -56,6 +60,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-follow-playlist
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (PUT /playlists/{id}/followers) has been removed. Use PUT /me/library instead.")]
     Task<bool> FollowPlaylist(string playlistId, CancellationToken cancel = default);
 
     /// <summary>
@@ -72,10 +77,11 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-follow-playlist
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (PUT /playlists/{id}/followers) has been removed. Use PUT /me/library instead.")]
     Task<bool> FollowPlaylist(string playlistId, FollowPlaylistRequest request, CancellationToken cancel = default);
 
     /// <summary>
-    /// Get the current user’s followed artists.
+    /// Get the current user's followed artists.
     /// </summary>
     /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
     /// <remarks>
@@ -85,7 +91,7 @@ namespace SpotifyAPI.Web
     Task<FollowedArtistsResponse> OfCurrentUser(CancellationToken cancel = default);
 
     /// <summary>
-    /// Get the current user’s followed artists.
+    /// Get the current user's followed artists.
     /// </summary>
     /// <param name="request">The request-model which contains required and optional parameters.</param>
     /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
@@ -104,6 +110,8 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-unfollow-artists-users
     /// </remarks>
     /// <returns></returns>
+    [Obsolete("Use ILibraryClient.RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
+    [System.Obsolete("This endpoint (DELETE /me/following) has been removed. Use DELETE /me/library instead.")]
     Task<bool> Unfollow(UnfollowRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -115,6 +123,8 @@ namespace SpotifyAPI.Web
     /// <remarks>
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-unfollow-playlist
     /// </remarks>
+    [Obsolete("Use ILibraryClient.RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
+    [System.Obsolete("This endpoint (DELETE /playlists/{id}/followers) has been removed. Use DELETE /me/library instead.")]
     Task<bool> UnfollowPlaylist(string playlistId, CancellationToken cancel = default);
   }
 }

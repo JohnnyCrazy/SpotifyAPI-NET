@@ -17,6 +17,7 @@ namespace SpotifyAPI.Web
     /// <param name="request">The request-model which contains required and optional parameters</param>
     /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /artists) has been removed.")]
     Task<ArtistsResponse> GetSeveral(ArtistsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -80,6 +81,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-an-artists-top-tracks
     /// </remarks>
     /// <returns></returns>
+    [System.Obsolete("This endpoint (GET /artists/{id}/top-tracks) has been removed.")]
     Task<ArtistsTopTracksResponse> GetTopTracks(string artistId, ArtistsTopTracksRequest request, CancellationToken cancel = default);
 
 

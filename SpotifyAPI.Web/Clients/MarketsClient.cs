@@ -9,6 +9,7 @@ namespace SpotifyAPI.Web
   {
     public MarketsClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
+    [System.Obsolete("This endpoint (GET /markets) has been removed.")]
     public Task<AvailableMarketsResponse> AvailableMarkets(CancellationToken cancel = default)
     {
       return API.Get<AvailableMarketsResponse>(URLs.Markets(), cancel);

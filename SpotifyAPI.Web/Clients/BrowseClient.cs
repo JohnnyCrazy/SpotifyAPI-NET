@@ -9,11 +9,13 @@ namespace SpotifyAPI.Web
   {
     public BrowseClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
+    [System.Obsolete("This endpoint (GET /browse/categories) has been removed.")]
     public Task<CategoriesResponse> GetCategories(CancellationToken cancel = default)
     {
       return API.Get<CategoriesResponse>(URLs.Categories(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /browse/categories) has been removed.")]
     public Task<CategoriesResponse> GetCategories(CategoriesRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -21,6 +23,7 @@ namespace SpotifyAPI.Web
       return API.Get<CategoriesResponse>(URLs.Categories(), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /browse/categories/{id}) has been removed.")]
     public Task<Category> GetCategory(string categoryId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(categoryId, nameof(categoryId));
@@ -28,6 +31,7 @@ namespace SpotifyAPI.Web
       return API.Get<Category>(URLs.Category(categoryId), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /browse/categories/{id}) has been removed.")]
     public Task<Category> GetCategory(string categoryId, CategoryRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(categoryId, nameof(categoryId));
@@ -63,11 +67,13 @@ namespace SpotifyAPI.Web
       return API.Get<RecommendationGenresResponse>(URLs.RecommendationGenres(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /browse/new-releases) has been removed.")]
     public Task<NewReleasesResponse> GetNewReleases(CancellationToken cancel = default)
     {
       return API.Get<NewReleasesResponse>(URLs.NewReleases(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /browse/new-releases) has been removed.")]
     public Task<NewReleasesResponse> GetNewReleases(NewReleasesRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));

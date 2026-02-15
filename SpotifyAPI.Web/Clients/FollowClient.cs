@@ -10,6 +10,7 @@ namespace SpotifyAPI.Web
   {
     public FollowClient(IAPIConnector apiConnector) : base(apiConnector) { }
 
+    [System.Obsolete("This endpoint (GET /me/following/contains) has been removed. Use GET /me/library/contains instead.")]
     public Task<List<bool>> CheckCurrentUser(FollowCheckCurrentUserRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -17,6 +18,7 @@ namespace SpotifyAPI.Web
       return API.Get<List<bool>>(URLs.CurrentUserFollowerContains(), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (GET /playlists/{id}/followers/contains) has been removed. Use GET /me/library/contains instead.")]
     public Task<List<bool>> CheckPlaylist(string playlistId, FollowCheckPlaylistRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
@@ -25,6 +27,7 @@ namespace SpotifyAPI.Web
       return API.Get<List<bool>>(URLs.PlaylistFollowersContains(playlistId), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (PUT /me/following) has been removed. Use PUT /me/library instead.")]
     public async Task<bool> Follow(FollowRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -35,6 +38,7 @@ namespace SpotifyAPI.Web
       return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
+    [System.Obsolete("This endpoint (PUT /playlists/{id}/followers) has been removed. Use PUT /me/library instead.")]
     public async Task<bool> FollowPlaylist(string playlistId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
@@ -45,6 +49,7 @@ namespace SpotifyAPI.Web
       return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
+    [System.Obsolete("This endpoint (PUT /playlists/{id}/followers) has been removed. Use PUT /me/library instead.")]
     public async Task<bool> FollowPlaylist(string playlistId, FollowPlaylistRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
@@ -70,6 +75,7 @@ namespace SpotifyAPI.Web
       return API.Get<FollowedArtistsResponse>(URLs.CurrentUserFollower(), request.BuildQueryParams(), cancel);
     }
 
+    [System.Obsolete("This endpoint (DELETE /me/following) has been removed. Use DELETE /me/library instead.")]
     public async Task<bool> Unfollow(UnfollowRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNull(request, nameof(request));
@@ -80,6 +86,7 @@ namespace SpotifyAPI.Web
       return HTTPUtil.StatusCodeIsSuccess(statusCode);
     }
 
+    [System.Obsolete("This endpoint (DELETE /playlists/{id}/followers) has been removed. Use DELETE /me/library instead.")]
     public async Task<bool> UnfollowPlaylist(string playlistId, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
