@@ -274,5 +274,38 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<Paging<SimpleAudiobook>> GetAudiobooks(LibraryAudiobooksRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Save a list of Spotify URIs to the current user's library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/save-library-items
+    /// </remarks>
+    /// <returns></returns>
+    Task<bool> SaveItems(LibrarySaveItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Remove a list of Spotify URIs from the current user's library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/remove-library-items
+    /// </remarks>
+    /// <returns></returns>
+    Task<bool> RemoveItems(LibraryRemoveItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Check if one or more items are already saved in the current user's library.
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/check-library-contains
+    /// </remarks>
+    /// <returns></returns>
+    Task<List<bool>> CheckItems(LibraryCheckItemsRequest request, CancellationToken cancel = default);
   }
 }

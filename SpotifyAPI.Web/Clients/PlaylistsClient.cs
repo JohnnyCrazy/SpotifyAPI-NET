@@ -132,5 +132,44 @@ namespace SpotifyAPI.Web
 
       return API.Put<SnapshotResponse>(URLs.PlaylistTracks(playlistId), null, request.BuildBodyParams(), cancel);
     }
+
+    public Task<SnapshotResponse> AddPlaylistItems(string playlistId, PlaylistAddItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Post<SnapshotResponse>(URLs.PlaylistItems(playlistId), null, request.BuildBodyParams(), cancel);
+    }
+
+    public Task<Paging<PlaylistTrack<IPlayableItem>>> GetPlaylistItems(string playlistId, CancellationToken cancel = default)
+    {
+      var request = new PlaylistGetItemsRequest();
+
+      return GetPlaylistItems(playlistId, request, cancel);
+    }
+
+    public Task<Paging<PlaylistTrack<IPlayableItem>>> GetPlaylistItems(string playlistId, PlaylistGetItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<Paging<PlaylistTrack<IPlayableItem>>>(URLs.PlaylistItems(playlistId), request.BuildQueryParams(), cancel);
+    }
+
+    public Task<SnapshotResponse> RemovePlaylistItems(string playlistId, PlaylistRemoveItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Delete<SnapshotResponse>(URLs.PlaylistItems(playlistId), null, request.BuildBodyParams(), cancel);
+    }
+
+    public Task<SnapshotResponse> UpdatePlaylistItems(string playlistId, PlaylistReorderItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Put<SnapshotResponse>(URLs.PlaylistItems(playlistId), null, request.BuildBodyParams(), cancel);
+    }
   }
 }

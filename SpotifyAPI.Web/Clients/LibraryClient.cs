@@ -178,5 +178,28 @@ namespace SpotifyAPI.Web
 
       return API.Get<List<bool>>(SpotifyUrls.LibraryAudiobooksContains(), request.BuildQueryParams(), cancel);
     }
+
+    public async Task<bool> SaveItems(LibrarySaveItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Put(SpotifyUrls.Library(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
+    }
+
+    public async Task<bool> RemoveItems(LibraryRemoveItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      var statusCode = await API.Delete(SpotifyUrls.Library(), null, request.BuildBodyParams(), cancel).ConfigureAwait(false);
+      return HTTPUtil.StatusCodeIsSuccess(statusCode);
+    }
+
+    public Task<List<bool>> CheckItems(LibraryCheckItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Get<List<bool>>(SpotifyUrls.LibraryContains(), request.BuildQueryParams(), cancel);
+    }
   }
 }

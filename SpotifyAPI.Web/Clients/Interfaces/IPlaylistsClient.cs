@@ -196,5 +196,64 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<SnapshotResponse> ReorderItems(string playlistId, PlaylistReorderItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Add one or more items to a user's playlist using the new /items endpoint.
+    /// </summary>
+    /// <param name="playlistId">The Spotify ID for the playlist.</param>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/add-items-to-playlist
+    /// </remarks>
+    /// <returns></returns>
+    Task<SnapshotResponse> AddPlaylistItems(string playlistId, PlaylistAddItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Get full details of the items of a playlist using the new /items endpoint.
+    /// </summary>
+    /// <param name="playlistId">The Spotify ID for the playlist.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/get-playlists-items
+    /// </remarks>
+    /// <returns></returns>
+    Task<Paging<PlaylistTrack<IPlayableItem>>> GetPlaylistItems(string playlistId, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Get full details of the items of a playlist using the new /items endpoint.
+    /// </summary>
+    /// <param name="playlistId">The Spotify ID for the playlist.</param>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/get-playlists-items
+    /// </remarks>
+    /// <returns></returns>
+    Task<Paging<PlaylistTrack<IPlayableItem>>> GetPlaylistItems(string playlistId, PlaylistGetItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Remove one or more items from a user's playlist using the new /items endpoint.
+    /// </summary>
+    /// <param name="playlistId">The Spotify ID for the playlist.</param>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/remove-items-playlist
+    /// </remarks>
+    /// <returns></returns>
+    Task<SnapshotResponse> RemovePlaylistItems(string playlistId, PlaylistRemoveItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Either reorder or replace items in a playlist using the new /items endpoint.
+    /// </summary>
+    /// <param name="playlistId">The Spotify ID for the playlist.</param>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference/reorder-or-replace-playlists-items
+    /// </remarks>
+    /// <returns></returns>
+    Task<SnapshotResponse> UpdatePlaylistItems(string playlistId, PlaylistReorderItemsRequest request, CancellationToken cancel = default);
   }
 }

@@ -41,6 +41,8 @@ namespace SpotifyAPI.Web
 
     public static Uri PlaylistTracks(string playlistId) => EUri($"playlists/{playlistId}/tracks");
 
+    public static Uri PlaylistItems(string playlistId) => EUri($"playlists/{playlistId}/items");
+
     public static Uri UserPlaylists(string userId) => EUri($"users/{userId}/playlists");
 
     public static Uri PlaylistImages(string playlistId) => EUri($"playlists/{playlistId}/images");
@@ -136,6 +138,10 @@ namespace SpotifyAPI.Web
     public static Uri LibraryAudiobooks() => EUri($"me/audiobooks");
 
     public static Uri LibraryAudiobooksContains() => EUri($"me/audiobooks/contains");
+
+    public static Uri Library() => EUri($"me/library");
+
+    public static Uri LibraryContains() => EUri($"me/library/contains");
 
     public static Uri Markets() => EUri($"markets");
 

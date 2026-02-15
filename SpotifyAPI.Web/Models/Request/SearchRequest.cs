@@ -72,9 +72,9 @@ namespace SpotifyAPI.Web
 
     /// <summary>
     /// Maximum number of results to return.
-    /// Default: 20
+    /// Default: 5
     /// Minimum: 1
-    /// Maximum: 50
+    /// Maximum: 10
     /// Note: The limit is applied within each type, not on the total response.
     /// For example, if the limit value is 3 and the type is artist,album,
     /// the response contains 3 artists and 3 albums.
