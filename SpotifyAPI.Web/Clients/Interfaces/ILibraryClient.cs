@@ -21,7 +21,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
-    [System.Obsolete("This endpoint (DELETE /me/albums) has been removed. Use DELETE /me/library instead.")]
     Task<bool> RemoveAlbums(LibraryRemoveAlbumsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -34,7 +33,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
-    [System.Obsolete("This endpoint (DELETE /me/tracks) has been removed. Use DELETE /me/library instead.")]
     Task<bool> RemoveTracks(LibraryRemoveTracksRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -47,7 +45,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
-    [System.Obsolete("This endpoint (DELETE /me/shows) has been removed. Use DELETE /me/library instead.")]
     Task<bool> RemoveShows(LibraryRemoveShowsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -60,7 +57,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
-    [System.Obsolete("This endpoint (DELETE /me/episodes) has been removed. Use DELETE /me/library instead.")]
     Task<bool> RemoveEpisodes(LibraryRemoveEpisodesRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -73,7 +69,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
-    [System.Obsolete("This endpoint (DELETE /me/audiobooks) has been removed. Use DELETE /me/library instead.")]
     Task<bool> RemoveAudiobooks(LibraryRemoveAudiobooksRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -86,7 +81,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use SaveItems instead, which uses the unified PUT /me/library endpoint.")]
-    [System.Obsolete("This endpoint (PUT /me/tracks) has been removed. Use PUT /me/library instead.")]
     Task<bool> SaveTracks(LibrarySaveTracksRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -99,7 +93,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use SaveItems instead, which uses the unified PUT /me/library endpoint.")]
-    [System.Obsolete("This endpoint (PUT /me/albums) has been removed. Use PUT /me/library instead.")]
     Task<bool> SaveAlbums(LibrarySaveAlbumsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -112,7 +105,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use SaveItems instead, which uses the unified PUT /me/library endpoint.")]
-    [System.Obsolete("This endpoint (PUT /me/shows) has been removed. Use PUT /me/library instead.")]
     Task<bool> SaveShows(LibrarySaveShowsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -125,7 +117,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use SaveItems instead, which uses the unified PUT /me/library endpoint.")]
-    [System.Obsolete("This endpoint (PUT /me/episodes) has been removed. Use PUT /me/library instead.")]
     Task<bool> SaveEpisodes(LibrarySaveEpisodesRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -138,7 +129,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use SaveItems instead, which uses the unified PUT /me/library endpoint.")]
-    [System.Obsolete("This endpoint (PUT /me/audiobooks) has been removed. Use PUT /me/library instead.")]
     Task<bool> SaveAudiobooks(LibrarySaveAudiobooksRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -151,7 +141,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use CheckItems instead, which uses the unified GET /me/library/contains endpoint.")]
-    [System.Obsolete("This endpoint (GET /me/tracks/contains) has been removed. Use GET /me/library/contains instead.")]
     Task<List<bool>> CheckTracks(LibraryCheckTracksRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -164,7 +153,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use CheckItems instead, which uses the unified GET /me/library/contains endpoint.")]
-    [System.Obsolete("This endpoint (GET /me/albums/contains) has been removed. Use GET /me/library/contains instead.")]
     Task<List<bool>> CheckAlbums(LibraryCheckAlbumsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -177,7 +165,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use CheckItems instead, which uses the unified GET /me/library/contains endpoint.")]
-    [System.Obsolete("This endpoint (GET /me/shows/contains) has been removed. Use GET /me/library/contains instead.")]
     Task<List<bool>> CheckShows(LibraryCheckShowsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -190,7 +177,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use CheckItems instead, which uses the unified GET /me/library/contains endpoint.")]
-    [System.Obsolete("This endpoint (GET /me/episodes/contains) has been removed. Use GET /me/library/contains instead.")]
     Task<List<bool>> CheckEpisodes(LibraryCheckEpisodesRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -203,7 +189,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use CheckItems instead, which uses the unified GET /me/library/contains endpoint.")]
-    [System.Obsolete("This endpoint (GET /me/audiobooks/contains) has been removed. Use GET /me/library/contains instead.")]
     Task<List<bool>> CheckAudiobooks(LibraryCheckAudiobooksRequest request, CancellationToken cancel = default);
 
     /// <summary>

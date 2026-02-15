@@ -15,13 +15,13 @@ namespace SpotifyAPI.Web
     public bool? Public { get; set; }
     public string? SnapshotId { get; set; } = default!;
 
-    [System.Obsolete("Field 'tracks' has been removed and renamed to 'items'.")]
     /// <summary>
     /// A list of PlaylistTracks, which items can be a FullTrack or FullEpisode
     ///
     /// Used for older API responses
     /// </summary>
     /// <value></value>
+    [System.Obsolete("Field 'tracks' has been removed and renamed to 'items'.")]
     public Paging<PlaylistTrack<IPlayableItem>>? Tracks { get; set; } = default!;
 
     /// <summary>

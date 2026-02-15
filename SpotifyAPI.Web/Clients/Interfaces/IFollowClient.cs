@@ -111,7 +111,6 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     [Obsolete("Use ILibraryClient.RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
-    [System.Obsolete("This endpoint (DELETE /me/following) has been removed. Use DELETE /me/library instead.")]
     Task<bool> Unfollow(UnfollowRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -124,7 +123,6 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-unfollow-playlist
     /// </remarks>
     [Obsolete("Use ILibraryClient.RemoveItems instead, which uses the unified DELETE /me/library endpoint.")]
-    [System.Obsolete("This endpoint (DELETE /playlists/{id}/followers) has been removed. Use DELETE /me/library instead.")]
     Task<bool> UnfollowPlaylist(string playlistId, CancellationToken cancel = default);
   }
 }
