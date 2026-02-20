@@ -46,6 +46,13 @@ namespace SpotifyAPI.Web
       return API.Get<Paging<PlaylistTrack<IPlayableItem>>>(URLs.PlaylistTracks(playlistId), request.BuildQueryParams(), cancel);
     }
 
+    public Task<FullPlaylist> Create(PlaylistCreateRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Post<FullPlaylist>(URLs.CurrentUserPlaylists(), null, request.BuildBodyParams(), cancel);
+    }
+
     [System.Obsolete("This endpoint (POST /users/{user_id}/playlists) has been removed. Use POST /me/playlists instead.")]
     public Task<FullPlaylist> Create(string userId, PlaylistCreateRequest request, CancellationToken cancel = default)
     {

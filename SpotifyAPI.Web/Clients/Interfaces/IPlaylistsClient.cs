@@ -62,6 +62,17 @@ namespace SpotifyAPI.Web
     Task<Paging<PlaylistTrack<IPlayableItem>>> GetItems(string playlistId, PlaylistGetItemsRequest request, CancellationToken cancel = default);
 
     /// <summary>
+    /// Create a playlist for the current user. (The playlist will be empty until you add tracks.)
+    /// </summary>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-create-playlist
+    /// </remarks>
+    /// <returns></returns>
+    Task<FullPlaylist> Create(PlaylistCreateRequest request, CancellationToken cancel = default);
+
+    /// <summary>
     /// Create a playlist for a Spotify user. (The playlist will be empty until you add tracks.)
     /// </summary>
     /// <param name="userId">The user's Spotify user ID.</param>
