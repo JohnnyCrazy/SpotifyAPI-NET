@@ -110,7 +110,7 @@ namespace SpotifyAPI.Web
       return API.Get<FullPlaylist>(URLs.Playlist(playlistId), request.BuildQueryParams(), cancel);
     }
 
-    [System.Obsolete("This endpoint (PUT /playlists/{playlist_id}/tracks) has been removed. Use UpdatePlaylistItems instead, which uses the new PUT /playlists/{id}/items endpoint.")]
+    [System.Obsolete("This endpoint (PUT /playlists/{playlist_id}/tracks) has been removed. Use ReplacePlaylistItems instead, which uses the new PUT /playlists/{id}/items endpoint.")]
     public Task<SnapshotResponse> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
@@ -181,6 +181,14 @@ namespace SpotifyAPI.Web
     }
 
     public Task<SnapshotResponse> UpdatePlaylistItems(string playlistId, PlaylistReorderItemsRequest request, CancellationToken cancel = default)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
+      Ensure.ArgumentNotNull(request, nameof(request));
+
+      return API.Put<SnapshotResponse>(URLs.PlaylistItems(playlistId), null, request.BuildBodyParams(), cancel);
+    }
+
+    public Task<SnapshotResponse> ReplacePlaylistItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));

@@ -169,7 +169,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-replace-playlists-tracks
     /// </remarks>
     /// <returns></returns>
-    [Obsolete("Use UpdatePlaylistItems instead, which uses the new PUT /playlists/{id}/items endpoint.")]
+    [Obsolete("Use ReplacePlaylistItems instead, which uses the new PUT /playlists/{id}/items endpoint.")]
     Task<SnapshotResponse> ReplaceItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default);
 
     /// <summary>
@@ -276,5 +276,18 @@ namespace SpotifyAPI.Web
     /// </remarks>
     /// <returns></returns>
     Task<SnapshotResponse> UpdatePlaylistItems(string playlistId, PlaylistReorderItemsRequest request, CancellationToken cancel = default);
+
+    /// <summary>
+    /// Replace all the items in a playlist, overwriting its existing items.
+    /// This powerful request can be useful for replacing items, re-ordering existing items, or clearing the playlist.
+    /// </summary>
+    /// <param name="playlistId">The Spotify ID for the playlist.</param>
+    /// <param name="request">The request-model which contains required and optional parameters.</param>
+    /// <param name="cancel">The cancellation-token to allow to cancel the request.</param>
+    /// <remarks>
+    /// https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-replace-playlists-tracks
+    /// </remarks>
+    /// <returns></returns>
+    Task<SnapshotResponse> ReplacePlaylistItems(string playlistId, PlaylistReplaceItemsRequest request, CancellationToken cancel = default);
   }
 }
