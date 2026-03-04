@@ -263,7 +263,7 @@ namespace SpotifyAPI.Web
     /// https://developer.spotify.com/documentation/web-api/reference/remove-items-playlist
     /// </remarks>
     /// <returns></returns>
-    Task<SnapshotResponse> RemovePlaylistItems(string playlistId, PlaylistRemoveItemsRequest request, CancellationToken cancel = default);
+    Task<SnapshotResponse> RemovePlaylistItems(string playlistId, PlaylistRemoveItemsRequestV2 request, CancellationToken cancel = default);
 
     /// <summary>
     /// Either reorder or replace items in a playlist.

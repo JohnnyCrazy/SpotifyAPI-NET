@@ -172,7 +172,7 @@ namespace SpotifyAPI.Web
       return API.Get<Paging<PlaylistTrack<IPlayableItem>>>(URLs.PlaylistItems(playlistId), request.BuildQueryParams(), cancel);
     }
 
-    public Task<SnapshotResponse> RemovePlaylistItems(string playlistId, PlaylistRemoveItemsRequest request, CancellationToken cancel = default)
+    public Task<SnapshotResponse> RemovePlaylistItems(string playlistId, PlaylistRemoveItemsRequestV2 request, CancellationToken cancel = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(playlistId, nameof(playlistId));
       Ensure.ArgumentNotNull(request, nameof(request));
